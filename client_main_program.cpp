@@ -4,8 +4,14 @@
 #include <string>
 #include <iostream>
 
-#include "character.h"
-#include "main_program.h"
+#include "client_character.h"
+#include "client_main_program.h"
+#include "common_protocol_message.h"
+#include "common_queue.h"
+#include "client_sender_thread.h"
+#include "client_receiver_thread.h"
+#include "common_sockets.h"
+#include "client_drawer_thread.h"
 
 #define WALKING_ANIMATION_FRAMES 6
 
@@ -25,45 +31,60 @@ void MainProgram::run() {
 		return;
 	}
 
-	//Event handler
-	SDL_Event e;
+	Queue queue;
+	
+	Socket skt;
+	skt.connect_to("localhost", "8080");
 
-	//Current animation frame
-	int frame = 0;
+	std::cout << "EMPEZANDO THREAD" << std::endl;
+	this->skt.connect_to("localhost", "8080");
+
+	
+	Thread* sender = new SenderThread(skt, queue);
+	sender->start();
+
 
 	Character character;
 	if (!character.load_images(this->gRenderer))
 		exit(1);
 
 
-	this->skt.connect_to("localhost", "8080");
+	Thread* receiver = new ClientReceiverThread(skt, character);
+	receiver->start();
 
+
+	Thread* drawer = new ClientDrawerThread(character, gRenderer);
+	drawer->start();
+
+	//Event handler
+	SDL_Event e;
 	while(this->running) {
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
 			} else {
 				
-				character.handleEvent( e );
+				ProtocolMessage msg = character.handleEvent( e );
+				queue.push(msg);	
 			}
 
 			character.get_position(); // a borrar
 			
 		}
 
-		character.move();
+		// character.move();
 
 		//Clear screen
-		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-		SDL_RenderClear( gRenderer );
+		// // SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		// // SDL_RenderClear( gRenderer );
 
 		
-		character.render(this->gRenderer);
+		// // character.render(this->gRenderer);
 
-		//Update screen
-		SDL_RenderPresent( this->gRenderer );
+		// // //Update screen
+		// // SDL_RenderPresent( this->gRenderer );
 
-		character.update_frames();
+		// // character.update_frames();
 
 	}
 }

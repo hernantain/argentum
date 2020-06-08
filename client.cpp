@@ -1,7 +1,7 @@
 
 #include "SDL2/SDL.h"
 
-#include "main_program.h"
+#include "client_main_program.h"
 
 #include "common_sockets.h"
 

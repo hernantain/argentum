@@ -3,10 +3,14 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <stdint.h>
+#include <mutex>
 
 
-#include "character.h"
-#include "texture.h"
+#include "client_character.h"
+#include "client_texture.h"
+#include "common_protocol_message.h"
+
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -17,7 +21,8 @@ Character::Character() :
 	mPosY(0), 
 	mVelX(0), 
 	mVelY(0), 
-	frame(0) {
+	frame(0), 
+	notified(true) {
 		orientation = STANDING;
 	}
 
@@ -39,7 +44,7 @@ bool Character::load_images(SDL_Renderer *gRenderer) {
 }
 
 
-void Character::handleEvent( SDL_Event& e ) {
+ProtocolMessage Character::handleEvent( SDL_Event& e ) {
 	//If a key was pressed
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ) {
 		switch( e.key.keysym.sym ) { 						//Adjust velocity
@@ -95,49 +100,66 @@ void Character::handleEvent( SDL_Event& e ) {
 		// Event * ev = new MouseClickEvent(x,y);
 		// this->pq.push(ev);
 	}
+
+	ProtocolMessage msg((uint16_t) 1, (uint16_t) this->mPosX, (uint16_t) this->mPosY, (int16_t) this->mVelX, (int16_t) this->mVelY);
+	return std::move(msg);
 }
 
 
-void Character::move() {
-	//PressMove the dot left or right
-	mPosX += mVelX;
-
-	//If the dot went too far to the left or right
-	if( ( mPosX < 0 ) || ( mPosX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) )
-		mPosX -= mVelX;
-
-	//PressMove the dot up or down
-	mPosY += mVelY;
-
-	//If the dot went too far up or down
-	if( ( mPosY < 0 ) || ( mPosY + (CHARACTER_HEIGHT) > SCREEN_HEIGHT ) ) 
-		mPosY -= mVelY;
-
-	
+void Character::set_position(int newPosX, int newPosY) {
+	std::unique_lock<std::mutex> lock(this->m);
+	this->mPosX = newPosX;
+	this->mPosY = newPosY;
+    notified = true;
+	this->cond_var.notify_all();
 }
+
+// void Character::move() {
+// 	//PressMove the dot left or right
+// 	mPosX += mVelX;
+
+// 	//If the dot went too far to the left or right
+// 	if( ( mPosX < 0 ) || ( mPosX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) )
+// 		mPosX -= mVelX;
+
+// 	//PressMove the dot up or down
+// 	mPosY += mVelY;
+
+// 	//If the dot went too far up or down
+// 	if( ( mPosY < 0 ) || ( mPosY + (CHARACTER_HEIGHT) > SCREEN_HEIGHT ) ) 
+// 		mPosY -= mVelY;
+
+// }
 
 void Character::render(SDL_Renderer* gRenderer) {
+	
+	
+	std::unique_lock<std::mutex> lock(this->m);
+	while (!this->notified) {
+        this->cond_var.wait(lock);
+    }
+
 	//Show Character
 	if (orientation == RIGHT) {
-		SDL_Rect *currentClip = &this->gWalkingRightCharacter[ this->frame / 10 ];
+		SDL_Rect *currentClip = &this->gWalkingRightCharacter[ this->frame / 5 ];
 		this->gTextureCharacter.render(mPosX,
 										mPosY,
 										gRenderer,
 										currentClip);
 	} else if(orientation == LEFT)  {
-		SDL_Rect *currentClip = &this->gWalkingLeftCharacter[ this->frame / 10 ];
+		SDL_Rect *currentClip = &this->gWalkingLeftCharacter[ this->frame / 5 ];
 		this->gTextureCharacter.render(mPosX,
 										mPosY,
 										gRenderer,
 										currentClip);
 	} else if(orientation == UP)  {
-		SDL_Rect *currentClip = &this->gWalkingBackCharacter[ this->frame / 12 ];
+		SDL_Rect *currentClip = &this->gWalkingBackCharacter[ this->frame / 6 ];
 		this->gTextureCharacter.render(mPosX,
 										mPosY,
 										gRenderer,
 										currentClip);
 	} else if(orientation == DOWN)  {
-		SDL_Rect *currentClip = &this->gWalkingFrontCharacter[ this->frame / 12 ];
+		SDL_Rect *currentClip = &this->gWalkingFrontCharacter[ this->frame / 6 ];
 		this->gTextureCharacter.render(mPosX,
 										mPosY,
 										gRenderer,
@@ -147,6 +169,7 @@ void Character::render(SDL_Renderer* gRenderer) {
 		this->gTextureCharacter.render( mPosX, mPosY, gRenderer, currentClip);
 	}
 	this->frame++;
+	notified = false;
 }
 
 Character::~Character() {
@@ -156,7 +179,7 @@ Character::~Character() {
 
 
 void Character::update_frames() {
-	if (this->frame / 10 >= 5)
+	if (this->frame / 5 >= 5)
 		this->frame = 0;
 }
 
