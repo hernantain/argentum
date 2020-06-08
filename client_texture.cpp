@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string>
 
-#include "texture.h"
+#include "client_texture.h"
 
 LTexture::LTexture() {
 	//Initialize

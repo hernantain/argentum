@@ -5,8 +5,12 @@
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
+#include <mutex>
+#include <atomic>
+#include <condition_variable>
 
-#include "texture.h"
+#include "common_protocol_message.h"
+#include "client_texture.h"
 
 #define WALKING_FRONT_ANIMATION_FRAMES 6
 #define WALKING_BACK_ANIMATION_FRAMES 6
@@ -23,6 +27,8 @@ class Character {
 	SDL_Rect gWalkingRightCharacter[ WALKING_RIGHT_ANIMATION_FRAMES ];
 
 	int orientation;
+	std::mutex m;
+	std::condition_variable cond_var;
     
 	public: 
 
@@ -31,13 +37,13 @@ class Character {
 		static const int CHARACTER_HEIGHT = 31;
 
 		//Maximum axis velocity of the dot
-		static const int CHARACTER_VEL = 1;
+		static const int CHARACTER_VEL = 3;
 
 		Character();
 
 		bool load_images(SDL_Renderer *gRenderer);
 
-		void handleEvent( SDL_Event& e );
+		ProtocolMessage handleEvent( SDL_Event& e );
 
 		void move();
 
@@ -47,6 +53,7 @@ class Character {
 
 		void get_position();
 
+		void set_position(int newPosX, int newPosY);
 
 		~Character();
 
@@ -58,6 +65,7 @@ class Character {
         int mVelX, mVelY; //The velocity of the dot
 
 		int frame;
+		std::atomic<bool>notified;
 
 		void load_front_walking_sprite();
 		void load_back_walking_sprite();

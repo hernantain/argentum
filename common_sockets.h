@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <string>
-
+#include <msgpack.hpp>
 
 /**
  * Clase Socket: Encapsula la logica de los sockets, como el TDA del TP1.
@@ -36,23 +36,25 @@ class Socket {
 
         void bind_and_listen(const char *port);
 
-        void send_message(char *buf, int size);
+        void send_message(char *buf, int size) const;
 
-        void receive(char *buf, int size);
+        void receive(char *buf, int size) const;
 
         Socket accept_client();
 
         void close_socket();
     
-        void operator()(uint8_t &com);
-        void operator()(uint16_t &number);
-        void operator()(uint32_t &len);
-        void operator()(const std::string &message);
+        void operator()(uint8_t &com) const;
+        void operator()(uint16_t &number) const;
+        void operator()(uint32_t &len) const;
+        void operator()(const std::string &message) const;
+        void operator()(msgpack::sbuffer &sbuf) const;
 
-        void operator>>(uint8_t &com);
-        void operator>>(uint16_t &buf);
-        void operator>>(uint32_t &len);
-        void operator>>(std::string &message);
+        void operator>>(uint8_t &com) const;
+        void operator>>(uint16_t &buf) const;
+        void operator>>(uint32_t &len) const;
+        void operator>>(std::string &message) const;
+        void operator>>(msgpack::unpacker &pack) const;
 };
 
 

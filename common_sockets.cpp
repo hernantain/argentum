@@ -1,5 +1,6 @@
 #define _POSIX_C_SOURCE 200112L
 
+#include <msgpack.hpp>
 #include <iostream>
 #include <utility>
 #include <stdio.h>
@@ -94,7 +95,7 @@ void Socket::bind_and_listen(const char *port) {
 }
 
 
-void Socket::send_message(char *buf, int size) {
+void Socket::send_message(char *buf, int size) const {
     int sent = 0;
 	int s = 0;
 
@@ -111,7 +112,7 @@ void Socket::send_message(char *buf, int size) {
 }
 
 
-void Socket::receive(char *buf, int size) {
+void Socket::receive(char *buf, int size) const {
     int received = 0;
 	int s = 0;
 
@@ -138,51 +139,57 @@ Socket Socket::accept_client() {
 }
 
 
-void Socket::close_socket() {
+void Socket::close_socket()  {
 	shutdown(this->fd, SHUT_RDWR);
     close(this->fd);
 }
 
 
-void Socket::operator()(uint8_t &com) {
+void Socket::operator()(uint8_t &com) const {
 	this->send_message((char*) &com, ONE_BYTE);	
 }
 
 
-void Socket::operator()(uint16_t &number) {
+void Socket::operator()(uint16_t &number) const {
 	number = htons(number);
 	this->send_message((char*) &number, TWO_BYTES);	
 }
 
 
-void Socket::operator()(uint32_t &len) {
+void Socket::operator()(uint32_t &len) const {
 	this->send_message((char*) &len, FOUR_BYTES);	
 }
 
-void Socket::operator()(const std::string &message) {
+void Socket::operator()(const std::string &message) const {
 	uint32_t len = htonl(message.length());
 	this->send_message((char*) &len, FOUR_BYTES);
 	this->send_message((char*) message.c_str(), (int) message.length());	
 }
 
+void Socket::operator()(msgpack::sbuffer &sbuf) const {
+	uint16_t size = sbuf.size();
+	this->operator()(size);
+	this->send_message((char*) sbuf.data(), (int) sbuf.size());
+}
 
 
-void Socket::operator>>(uint8_t &com) {
+
+void Socket::operator>>(uint8_t &com) const {
 	this->receive((char*) &com, ONE_BYTE);
 }
 
 
-void Socket::operator>>(uint16_t &buf) {
+void Socket::operator>>(uint16_t &buf) const {
 	this->receive((char*) &buf, TWO_BYTES);
 	buf = ntohs(buf);
 }
 
 
-void Socket::operator>>(uint32_t &len) {
+void Socket::operator>>(uint32_t &len) const {
 	this->receive((char*) &len, FOUR_BYTES);
 }
 
-void Socket::operator>>(std::string &message) {
+void Socket::operator>>(std::string &message) const {
 	uint32_t len;
 	this->receive((char*) &len, FOUR_BYTES);
 	len = ntohl(len);
@@ -190,4 +197,13 @@ void Socket::operator>>(std::string &message) {
 	this->receive(tmp, len);
 	message = tmp;
 	free(tmp);
+}
+
+
+void Socket::operator>>(msgpack::unpacker &pack) const {
+	uint16_t size;
+	this->operator>>(size);
+	pack.reserve_buffer(size);
+	this->receive(pack.buffer(), size);
+	pack.buffer_consumed(size);
 }
