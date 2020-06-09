@@ -3,10 +3,10 @@
 
 #include <atomic>
 
-#include "common_sockets.h"
-#include "common_thread.h"
-#include "common_queue.h"
-#include "common_protocol_message.h"
+#include "../common_sockets.h"
+#include "../common_thread.h"
+#include "../common_queue.h"
+#include "../common_protocol_message.h"
 
 class ServerSenderThread : public Thread {
 

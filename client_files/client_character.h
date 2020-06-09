@@ -9,7 +9,7 @@
 #include <atomic>
 #include <condition_variable>
 
-#include "common_protocol_message.h"
+#include "../common_protocol_message.h"
 #include "client_texture.h"
 
 #define WALKING_FRONT_ANIMATION_FRAMES 6

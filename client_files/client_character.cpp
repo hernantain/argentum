@@ -9,7 +9,7 @@
 
 #include "client_character.h"
 #include "client_texture.h"
-#include "common_protocol_message.h"
+#include "../common_protocol_message.h"
 
 
 #define SCREEN_WIDTH 640

@@ -8,7 +8,7 @@
 
 #include "client_texture.h"
 
-#include "common_sockets.h"
+#include "../common_sockets.h"
 
 class MainProgram {
 	

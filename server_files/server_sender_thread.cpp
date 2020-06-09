@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <msgpack.hpp>
 
-#include "common_protocol_message.h"
+#include "../common_protocol_message.h"
 #include "server_sender_thread.h"
 
 #define CHARACTER_WIDTH 21

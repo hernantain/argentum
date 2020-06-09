@@ -6,12 +6,13 @@
 
 #include "client_character.h"
 #include "client_main_program.h"
-#include "common_protocol_message.h"
-#include "common_queue.h"
 #include "client_sender_thread.h"
 #include "client_receiver_thread.h"
-#include "common_sockets.h"
 #include "client_drawer_thread.h"
+#include "../common_protocol_message.h"
+#include "../common_queue.h"
+#include "../common_sockets.h"
+
 
 #define WALKING_ANIMATION_FRAMES 6
 

@@ -4,9 +4,9 @@
 #include <atomic>
 
 #include "client_character.h"
-#include "common_sockets.h"
-#include "common_thread.h"
-#include "common_protocol_message.h"
+#include "../common_sockets.h"
+#include "../common_thread.h"
+#include "../common_protocol_message.h"
 
 class ClientReceiverThread : public Thread {
 

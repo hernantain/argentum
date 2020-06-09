@@ -4,7 +4,7 @@
 #include <atomic>
 
 #include "client_character.h"
-#include "common_thread.h"
+#include "../common_thread.h"
 
 class ClientDrawerThread : public Thread {
     Character &character;

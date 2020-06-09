@@ -3,10 +3,11 @@
 #include <msgpack.hpp>
 
 #include "server.h"
-#include "common_sockets.h"
-#include "common_protocol_message.h"
-#include "common_queue.h"
 #include "server_sender_thread.h"
+
+#include "../common_sockets.h"
+#include "../common_protocol_message.h"
+#include "../common_queue.h"
 
 Server::Server() : running(true) {}
 
