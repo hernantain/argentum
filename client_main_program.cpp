@@ -19,10 +19,13 @@
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
+
+
 MainProgram::MainProgram() : 
 	gWindow(NULL), 
 	gRenderer(NULL), 
 	running(true) {}
+
 
 
 void MainProgram::run() {
@@ -36,10 +39,7 @@ void MainProgram::run() {
 	Socket skt;
 	skt.connect_to("localhost", "8080");
 
-	std::cout << "EMPEZANDO THREAD" << std::endl;
-	this->skt.connect_to("localhost", "8080");
 
-	
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
@@ -49,10 +49,12 @@ void MainProgram::run() {
 		exit(1);
 
 
+	// Recibe la respuesta del server y modifica o no en el modelo
 	Thread* receiver = new ClientReceiverThread(skt, character);
 	receiver->start();
 
 
+	// Dibuja el personaje del cliente. 
 	Thread* drawer = new ClientDrawerThread(character, gRenderer);
 	drawer->start();
 
@@ -71,23 +73,10 @@ void MainProgram::run() {
 			character.get_position(); // a borrar
 			
 		}
-
-		// character.move();
-
-		//Clear screen
-		// // SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-		// // SDL_RenderClear( gRenderer );
-
-		
-		// // character.render(this->gRenderer);
-
-		// // //Update screen
-		// // SDL_RenderPresent( this->gRenderer );
-
-		// // character.update_frames();
-
 	}
 }
+
+
 
 bool MainProgram::init() {
 
@@ -128,13 +117,12 @@ bool MainProgram::init() {
 
 MainProgram::~MainProgram() {
 
-	//Destroy window	
+
 	SDL_DestroyRenderer( this->gRenderer );
-	SDL_DestroyWindow( this->gWindow );
+	SDL_DestroyWindow( this->gWindow );  //Destroy window	
 	this->gWindow = NULL;
 	this->gRenderer = NULL;
 
-	//Quit SDL subsystems
-	IMG_Quit();
+	IMG_Quit(); //Quit SDL subsystems
 	SDL_Quit();
 }

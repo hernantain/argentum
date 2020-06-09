@@ -19,16 +19,21 @@
 
 
 class Character {
+
+	int mPosX, mPosY; //The X and Y offsets of the character
+	int mVelX, mVelY; //The velocity of the character
+	int frame;
+	std::atomic<bool>notified;
+	std::condition_variable cond_var;
+	std::mutex m;
+	int orientation;
+	
 	LTexture gTextureCharacter;
 
 	SDL_Rect gWalkingFrontCharacter[ WALKING_FRONT_ANIMATION_FRAMES ];
 	SDL_Rect gWalkingBackCharacter[ WALKING_BACK_ANIMATION_FRAMES ];
 	SDL_Rect gWalkingLeftCharacter[ WALKING_LEFT_ANIMATION_FRAMES ];
 	SDL_Rect gWalkingRightCharacter[ WALKING_RIGHT_ANIMATION_FRAMES ];
-
-	int orientation;
-	std::mutex m;
-	std::condition_variable cond_var;
     
 	public: 
 
@@ -36,8 +41,7 @@ class Character {
 		static const int CHARACTER_WIDTH = 21;
 		static const int CHARACTER_HEIGHT = 31;
 
-		//Maximum axis velocity of the dot
-		static const int CHARACTER_VEL = 3;
+		static const int CHARACTER_VEL = 3; //Maximum axis velocity of the dot
 
 		Character();
 
@@ -58,21 +62,11 @@ class Character {
 		~Character();
 
 	private:
-
-        int mPosX, mPosY; //The X and Y offsets of the dot
-
-
-        int mVelX, mVelY; //The velocity of the dot
-
-		int frame;
-		std::atomic<bool>notified;
-
 		void load_front_walking_sprite();
 		void load_back_walking_sprite();
 		void load_left_walking_sprite();
 		void load_right_walking_sprite();
 };
-
 
 
 

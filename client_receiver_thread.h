@@ -1,6 +1,8 @@
 #ifndef _CLIENT_RECEIVER_THREAD
 #define _CLIENT_RECEIVER_THREAD
 
+#include <atomic>
+
 #include "client_character.h"
 #include "common_sockets.h"
 #include "common_thread.h"
@@ -10,7 +12,7 @@ class ClientReceiverThread : public Thread {
 
     Socket &skt;
     Character &character;
-
+    std::atomic<bool> running;
 
     void process_response(ProtocolMessage &msg);
     void process_move(ProtocolMessage &msg);
@@ -18,10 +20,7 @@ class ClientReceiverThread : public Thread {
         ClientReceiverThread(Socket &skt, Character &character);
 
         virtual void run() override;
-
-
-
-
+        
 };
 
 

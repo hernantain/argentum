@@ -13,15 +13,12 @@
 
 ServerSenderThread::ServerSenderThread(
     Socket &skt, 
-    Queue &queue) : skt(skt), queue(queue) {}
-
+    Queue &queue) : skt(skt), queue(queue), running(true) {}
 
 
 void ServerSenderThread::run() {
 
-    bool running = true;
-
-    while (running) {
+    while (this->running) {
         ProtocolMessage msg = this->queue.pop();
         this->process_message(msg);
 
@@ -50,7 +47,6 @@ void ServerSenderThread::process_message(ProtocolMessage &msg) {
 
 void ServerSenderThread::process_move(ProtocolMessage &msg) {
     
-
 	msg.posX += msg.velX;
 	if( ( msg.posX < 0 ) || ( msg.posX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) )
 		msg.posX -= msg.velX;

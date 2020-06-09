@@ -38,7 +38,6 @@ void Socket::connect_to(const char *host, const char *port) {
 	for (rp = results; rp != NULL; rp = rp->ai_next) {
 		this->fd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
 		if (this->fd == -1) {
-			// printf("Error: %s\n", strerror(errno));
             std::cout << "ERROR" << std::endl;
 			continue;
 		} 

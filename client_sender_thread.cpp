@@ -4,12 +4,12 @@
 #include "common_protocol_message.h"
 
 
-SenderThread::SenderThread(Socket &skt, Queue &queue) : skt(skt), queue(queue) {}
+SenderThread::SenderThread(
+    Socket &skt, 
+    Queue &queue) : skt(skt), queue(queue), running(true) {}
 
 
 void SenderThread::run() {
-
-    bool running = true;
 
     while (running) {
         ProtocolMessage msg = this->queue.pop();

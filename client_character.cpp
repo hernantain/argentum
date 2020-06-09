@@ -95,6 +95,8 @@ ProtocolMessage Character::handleEvent( SDL_Event& e ) {
         }
 
 	} else if ( e.type == SDL_MOUSEBUTTONDOWN) {
+		
+		// CODIGO PARA CUANDO QUERRAMOS MANEJAR EL CLICK DEL PERSONAJE
 		// int x, y; 
 		// SDL_GetMouseState( &x, &y ); 
 		// Event * ev = new MouseClickEvent(x,y);
@@ -114,22 +116,7 @@ void Character::set_position(int newPosX, int newPosY) {
 	this->cond_var.notify_all();
 }
 
-// void Character::move() {
-// 	//PressMove the dot left or right
-// 	mPosX += mVelX;
 
-// 	//If the dot went too far to the left or right
-// 	if( ( mPosX < 0 ) || ( mPosX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) )
-// 		mPosX -= mVelX;
-
-// 	//PressMove the dot up or down
-// 	mPosY += mVelY;
-
-// 	//If the dot went too far up or down
-// 	if( ( mPosY < 0 ) || ( mPosY + (CHARACTER_HEIGHT) > SCREEN_HEIGHT ) ) 
-// 		mPosY -= mVelY;
-
-// }
 
 void Character::render(SDL_Renderer* gRenderer) {
 	

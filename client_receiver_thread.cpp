@@ -5,15 +5,15 @@
 
 ClientReceiverThread::ClientReceiverThread(
     Socket &skt, 
-    Character &character) : skt(skt), character(character) {}
+    Character &character) : skt(skt), 
+                            character(character),
+                            running(true) {}
 
 
 
 void ClientReceiverThread::run() {
 
-    bool running = true;
-
-    while (running) {
+    while (this->running) {
         ProtocolMessage msg;
         msgpack::unpacker pac;
         std::cout << "Corriendo" << std::endl;
