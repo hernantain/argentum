@@ -8,7 +8,7 @@
 #include "client_main_program.h"
 #include "client_sender_thread.h"
 #include "client_receiver_thread.h"
-#include "client_drawer_thread.h"
+
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
 #include "../common_sockets.h"
@@ -55,10 +55,6 @@ void MainProgram::run() {
 	receiver->start();
 
 
-	// Dibuja el personaje del cliente. 
-	Thread* drawer = new ClientDrawerThread(character, gRenderer);
-	drawer->start();
-
 	//Event handler
 	SDL_Event e;
 	while(this->running) {
@@ -70,10 +66,18 @@ void MainProgram::run() {
 				ProtocolMessage msg = character.handleEvent( e );
 				queue.push(msg);	
 			}
-
-			character.get_position(); // a borrar
-			
 		}
+
+		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		SDL_RenderClear( gRenderer );
+
+		character.render(this->gRenderer);
+
+		SDL_RenderPresent( this->gRenderer ); //Update screen
+
+		character.update_frames();
+
+		// sleep
 	}
 }
 

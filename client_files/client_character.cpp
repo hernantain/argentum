@@ -112,8 +112,6 @@ void Character::set_position(int newPosX, int newPosY) {
 	std::unique_lock<std::mutex> lock(this->m);
 	this->mPosX = newPosX;
 	this->mPosY = newPosY;
-    notified = true;
-	this->cond_var.notify_all();
 }
 
 
@@ -122,10 +120,6 @@ void Character::render(SDL_Renderer* gRenderer) {
 	
 	
 	std::unique_lock<std::mutex> lock(this->m);
-	while (!this->notified) {
-        this->cond_var.wait(lock);
-    }
-
 	//Show Character
 	if (orientation == RIGHT) {
 		SDL_Rect *currentClip = &this->gWalkingRightCharacter[ this->frame / 5 ];
@@ -156,7 +150,6 @@ void Character::render(SDL_Renderer* gRenderer) {
 		this->gTextureCharacter.render( mPosX, mPosY, gRenderer, currentClip);
 	}
 	this->frame++;
-	notified = false;
 }
 
 Character::~Character() {
