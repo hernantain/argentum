@@ -22,10 +22,10 @@ void ServerSenderThread::run() {
         ProtocolMessage msg = this->queue.pop();
         this->process_message(msg);
 
-        std::cout << "MANDANDO: " << std::endl;
-        std::cout << "POS X: " << msg.posX << std::endl;
-        std::cout << "POS Y: " << msg.posY << std::endl;
-        std::cout << "ID: " << msg.id << std::endl;
+        // std::cout << "MANDANDO: " << std::endl;
+        // std::cout << "POS X: " << msg.posX << std::endl;
+        // std::cout << "POS Y: " << msg.posY << std::endl;
+        // std::cout << "ID: " << msg.id << std::endl;
 
 
         msgpack::sbuffer buffer;
@@ -47,13 +47,19 @@ void ServerSenderThread::process_message(ProtocolMessage &msg) {
 
 void ServerSenderThread::process_move(ProtocolMessage &msg) {
     
-	msg.posX += msg.velX;
-	if( ( msg.posX < 0 ) || ( msg.posX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) )
-		msg.posX -= msg.velX;
+	msg.bodyPosX += msg.velX;
+    msg.headPosX += msg.velX;
+	if( ( msg.bodyPosX < 0 ) || ( msg.bodyPosX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) ) {
+		msg.bodyPosX -= msg.velX;
+        msg.headPosX -= msg.velX;
+    }
 
-	msg.posY += msg.velY;
-	if( ( msg.posY < 0 ) || ( msg.posY + (CHARACTER_HEIGHT) > SCREEN_HEIGHT ) ) 
-		msg.posY -= msg.velY;
+	msg.bodyPosY += msg.velY;
+    msg.headPosY += msg.velY;
+	if( ( msg.headPosY < 0 ) || ( msg.bodyPosY + (CHARACTER_HEIGHT) > SCREEN_HEIGHT ) ) { 
+		msg.bodyPosY -= msg.velY;
+        msg.headPosY -= msg.velY;
+    }
 
     msg.id = 2;
 }

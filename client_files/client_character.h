@@ -20,20 +20,23 @@
 
 class Character {
 
-	int mPosX, mPosY; //The X and Y offsets of the character
-	int mVelX, mVelY; //The velocity of the character
+	int bodyPosX, bodyPosY; //The X and Y offsets of the character
+	int headPosX, headPosY;
+	int velX, velY; //The velocity of the character
 	int frame;
 	std::atomic<bool>notified;
 	std::condition_variable cond_var;
 	std::mutex m;
 	int orientation;
 	
-	LTexture gTextureCharacter;
+	LTexture bodyTexture;
+	LTexture headTexture;
 
-	SDL_Rect gWalkingFrontCharacter[ WALKING_FRONT_ANIMATION_FRAMES ];
-	SDL_Rect gWalkingBackCharacter[ WALKING_BACK_ANIMATION_FRAMES ];
-	SDL_Rect gWalkingLeftCharacter[ WALKING_LEFT_ANIMATION_FRAMES ];
-	SDL_Rect gWalkingRightCharacter[ WALKING_RIGHT_ANIMATION_FRAMES ];
+	SDL_Rect walkingFrontCharacter[ WALKING_FRONT_ANIMATION_FRAMES ];
+	SDL_Rect walkingBackCharacter[ WALKING_BACK_ANIMATION_FRAMES ];
+	SDL_Rect walkingLeftCharacter[ WALKING_LEFT_ANIMATION_FRAMES ];
+	SDL_Rect walkingRightCharacter[ WALKING_RIGHT_ANIMATION_FRAMES ];
+	SDL_Rect headOrientations[4];
     
 	public: 
 
@@ -57,7 +60,7 @@ class Character {
 
 		void get_position();
 
-		void set_position(int newPosX, int newPosY);
+		void set_position(int newBodyPosX, int newBodyPosY, int newHeadPosX, int newHeadPosY);
 
 		~Character();
 
@@ -66,6 +69,7 @@ class Character {
 		void load_back_walking_sprite();
 		void load_left_walking_sprite();
 		void load_right_walking_sprite();
+		void loadHeadSprite();
 };
 
 

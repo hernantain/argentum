@@ -34,5 +34,5 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_move(ProtocolMessage &msg) {
-    this->character.set_position((int) msg.posX, (int) msg.posY);
+    this->character.set_position((int) msg.bodyPosX, (int) msg.bodyPosY, (int) msg.headPosX, (int) msg.headPosY);
 }
