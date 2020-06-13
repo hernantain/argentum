@@ -26,11 +26,11 @@ struct ProtocolMessage {
 
     ProtocolMessage();
 
-    // ProtocolMessage(const ProtocolMessage&) = delete;
-    // ProtocolMessage& operator=(const ProtocolMessage&) = delete;
-    
-    // ProtocolMessage(ProtocolMessage&& other) = default;
-    // ProtocolMessage& operator=(ProtocolMessage&& other) = default;
+    ProtocolMessage(ProtocolMessage&& other);
+    ProtocolMessage& operator=(ProtocolMessage&& other);
+
+    ProtocolMessage(const ProtocolMessage&) = delete;
+    ProtocolMessage& operator=(const ProtocolMessage&) = delete;
 
     MSGPACK_DEFINE(id, bodyPosX, bodyPosY, headPosX, headPosY, velX, velY)
 

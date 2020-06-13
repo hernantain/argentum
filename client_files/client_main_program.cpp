@@ -61,6 +61,7 @@ void MainProgram::run() {
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
+				skt.close_socket();
 			} else {
 				
 				ProtocolMessage msg = character.handleEvent( e );
@@ -72,11 +73,9 @@ void MainProgram::run() {
 		SDL_RenderClear( gRenderer );
 
 		character.render(this->gRenderer);
-
 		SDL_RenderPresent( this->gRenderer ); //Update screen
-
 		character.update_frames();
-
+		
 		// sleep
 	}
 }

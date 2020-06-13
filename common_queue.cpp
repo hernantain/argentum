@@ -9,10 +9,10 @@
 Queue::Queue() : operating(true) {} 
 
 
-void Queue::push(const ProtocolMessage &message) {
+void Queue::push(ProtocolMessage &message) {
     std::cout << "PASA POR ACA" << std::endl;
     std::unique_lock<std::mutex> lock(this->m);
-	this->messages.push(message);
+	this->messages.push(std::move(message));
     this->cond_var.notify_all();
 }
 
@@ -26,9 +26,9 @@ ProtocolMessage Queue::pop() {
         this->cond_var.wait(lock);
     }
 
-    ProtocolMessage msg = this->messages.front();
+    ProtocolMessage msg = std::move(this->messages.front());
     this->messages.pop();
-    return msg;
+    return std::move(msg);
 }
 
 void Queue::stop() {

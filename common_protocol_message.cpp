@@ -1,6 +1,6 @@
 
-
-
+#include <iostream>
+#include <utility>
 #include "common_protocol_message.h"
 
 
@@ -23,24 +23,26 @@ ProtocolMessage::ProtocolMessage(
 ProtocolMessage::ProtocolMessage() {}
 
 
-// ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
-//     this->id = other.id;
-//     this->bodyPosX = other.bodyPosX;
-//     this->bodyPosY = other.bodyPosY;
-//     this->headPosX = other.headPosX;
-//     this->headPosY = other.headPosY;
-//     this->velX = other.velX;
-//     this->velY = other.velY;
-// }
+ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
+    // std::cout << "Constructor por movimiento" << std::endl;
+    this->id = std::move(other.id);
+    this->bodyPosX = std::move(other.bodyPosX);
+    this->bodyPosY = std::move(other.bodyPosY);
+    this->headPosX = std::move(other.headPosX);
+    this->headPosY = std::move(other.headPosY);
+    this->velX = std::move(other.velX);
+    this->velY = std::move(other.velY);
+}
 
 
-// ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
-//     this->id = other.id;
-//     this->bodyPosX = other.bodyPosX;
-//     this->bodyPosY = other.bodyPosY;
-//     this->headPosX = other.headPosX;
-//     this->headPosY = other.headPosY;
-//     this->velX = other.velX;
-//     this->velY = other.velY;
-//     return *this;
-// }
+ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
+    // std::cout << "Asignando por movimiento" << std::endl;
+    this->id = std::move(other.id);
+    this->bodyPosX = std::move(other.bodyPosX);
+    this->bodyPosY = std::move(other.bodyPosY);
+    this->headPosX = std::move(other.headPosX);
+    this->headPosY = std::move(other.headPosY);
+    this->velX = std::move(other.velX);
+    this->velY = std::move(other.velY);
+    return *this;
+}

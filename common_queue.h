@@ -18,7 +18,7 @@ class Queue {
     public:
         Queue();
 
-        void push(const ProtocolMessage &message);
+        void push(ProtocolMessage &message);
 
         
         ProtocolMessage pop();
