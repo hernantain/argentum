@@ -17,24 +17,32 @@
 
 
 Character::Character() : 
-	mPosX(0), 
-	mPosY(0), 
-	mVelX(0), 
-	mVelY(0), 
+	bodyPosX(0), 
+	bodyPosY(25), 
+	headPosX(3),
+	headPosY(13),
+	velX(0), 
+	velY(0), 
 	frame(0), 
 	notified(true) {
 		orientation = STANDING;
 	}
 
 
-bool Character::load_images(SDL_Renderer *gRenderer) {
+bool Character::load_images(SDL_Renderer* gRenderer) {
 
 	//Load sprite sheet texture
-	if( !this->gTextureCharacter.loadFromFile( "images/character.png", gRenderer ) ) {
+	if( !this->bodyTexture.loadFromFile( "images/character.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
+
+	if (!this->headTexture.loadFromFile("images/head.png", gRenderer)) {
+		printf( "Failed to load head texture!\n" );
+		return false;
+	}
 	
+	this->loadHeadSprite();
 	this->load_front_walking_sprite();
 	this->load_back_walking_sprite();
 	this->load_left_walking_sprite();
@@ -50,21 +58,22 @@ ProtocolMessage Character::handleEvent( SDL_Event& e ) {
 		switch( e.key.keysym.sym ) { 						//Adjust velocity
             
             case SDLK_UP: 
-				mVelY -= CHARACTER_VEL; 
+				velY -= CHARACTER_VEL; 
 				orientation = UP;
 				break;
 
             case SDLK_DOWN: 
-				mVelY += CHARACTER_VEL;
+				velY += CHARACTER_VEL;
 				orientation = DOWN;
 				break;
 
             case SDLK_LEFT: 
-				mVelX -= CHARACTER_VEL;
+				velX -= CHARACTER_VEL;
 				orientation = LEFT; 
 				break;
+
             case SDLK_RIGHT: 
-				mVelX += CHARACTER_VEL; 
+				velX += CHARACTER_VEL; 
 				orientation = RIGHT;
 				break;
 
@@ -73,26 +82,23 @@ ProtocolMessage Character::handleEvent( SDL_Event& e ) {
 	} else if( e.type == SDL_KEYUP && e.key.repeat == 0 ) {
 		switch( e.key.keysym.sym ) { 						//Adjust velocity
 			case SDLK_UP: 
-				mVelY += CHARACTER_VEL; 
-				orientation = STANDING;
+				velY += CHARACTER_VEL; 
 				break;
 
             case SDLK_DOWN: 
-				mVelY -= CHARACTER_VEL; 
-				orientation = STANDING;
+				velY -= CHARACTER_VEL; 
 				break;
 
             case SDLK_LEFT: 
-				mVelX += CHARACTER_VEL; 
-				orientation = STANDING;
+				velX += CHARACTER_VEL; 
 				break;
 
             case SDLK_RIGHT: 
-				mVelX -= CHARACTER_VEL; 
-				orientation = STANDING;
+				velX -= CHARACTER_VEL; 
 				break;
 
         }
+		orientation = STANDING;
 
 	} else if ( e.type == SDL_MOUSEBUTTONDOWN) {
 		
@@ -103,15 +109,24 @@ ProtocolMessage Character::handleEvent( SDL_Event& e ) {
 		// this->pq.push(ev);
 	}
 
-	ProtocolMessage msg((uint16_t) 1, (uint16_t) this->mPosX, (uint16_t) this->mPosY, (int16_t) this->mVelX, (int16_t) this->mVelY);
+	ProtocolMessage msg(
+		(int16_t) 1, 
+		(int16_t) this->bodyPosX, 
+		(int16_t) this->bodyPosY,
+		(int16_t) this->headPosX, 
+		(int16_t) this->headPosY, 
+		(int16_t) this->velX, 
+		(int16_t) this->velY);
 	return std::move(msg);
 }
 
 
-void Character::set_position(int newPosX, int newPosY) {
+void Character::set_position(int newBodyPosX, int newBodyPosY, int newHeadPosX, int newHeadPosY) {
 	std::unique_lock<std::mutex> lock(this->m);
-	this->mPosX = newPosX;
-	this->mPosY = newPosY;
+	this->bodyPosX = newBodyPosX;
+	this->bodyPosY = newBodyPosY;
+	this->headPosX = newHeadPosX;
+	this->headPosY = newHeadPosY;
 }
 
 
@@ -122,32 +137,34 @@ void Character::render(SDL_Renderer* gRenderer) {
 	std::unique_lock<std::mutex> lock(this->m);
 	//Show Character
 	if (orientation == RIGHT) {
-		SDL_Rect *currentClip = &this->gWalkingRightCharacter[ this->frame / 5 ];
-		this->gTextureCharacter.render(mPosX,
-										mPosY,
-										gRenderer,
-										currentClip);
+		SDL_Rect* currentClip = &this->walkingRightCharacter[ this->frame / 5 ];
+		SDL_Rect* headClip = &this->headOrientations[1];
+		this->headTexture.render(headPosX, headPosY, gRenderer, headClip);
+		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+
 	} else if(orientation == LEFT)  {
-		SDL_Rect *currentClip = &this->gWalkingLeftCharacter[ this->frame / 5 ];
-		this->gTextureCharacter.render(mPosX,
-										mPosY,
-										gRenderer,
-										currentClip);
+		SDL_Rect *currentClip = &this->walkingLeftCharacter[ this->frame / 5 ];
+		SDL_Rect* headClip = &this->headOrientations[2];
+		this->headTexture.render(headPosX, headPosY, gRenderer, headClip);
+		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+
 	} else if(orientation == UP)  {
-		SDL_Rect *currentClip = &this->gWalkingBackCharacter[ this->frame / 6 ];
-		this->gTextureCharacter.render(mPosX,
-										mPosY,
-										gRenderer,
-										currentClip);
+		SDL_Rect *currentClip = &this->walkingBackCharacter[ this->frame / 5 ];
+		SDL_Rect* headClip = &this->headOrientations[3];
+		this->headTexture.render(headPosX, headPosY, gRenderer, headClip);
+		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+
 	} else if(orientation == DOWN)  {
-		SDL_Rect *currentClip = &this->gWalkingFrontCharacter[ this->frame / 6 ];
-		this->gTextureCharacter.render(mPosX,
-										mPosY,
-										gRenderer,
-										currentClip);
+		SDL_Rect *currentClip = &this->walkingFrontCharacter[ this->frame / 5 ];
+		SDL_Rect* headClip = &this->headOrientations[0];
+		this->headTexture.render(headPosX, headPosY, gRenderer, headClip);
+		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+
 	} else {
-		SDL_Rect* currentClip = &this->gWalkingFrontCharacter[0];
-		this->gTextureCharacter.render( mPosX, mPosY, gRenderer, currentClip);
+		SDL_Rect* currentClip = &this->walkingFrontCharacter[0];
+		SDL_Rect* headClip = &this->headOrientations[0];
+		this->headTexture.render(headPosX, headPosY, gRenderer, headClip);
+		this->bodyTexture.render( bodyPosX, bodyPosY, gRenderer, currentClip);
 	}
 	this->frame++;
 }
@@ -165,7 +182,7 @@ void Character::update_frames() {
 
 
 void Character::get_position() {
-	std::cout << "X: " << this->mPosX << " // Y: " << this->mPosY << std::endl;
+	std::cout << "X: " << this->bodyPosX << " // Y: " << this->bodyPosY << std::endl;
 }
 
 
@@ -184,123 +201,146 @@ void Character::get_position() {
  */
 
 void Character::load_front_walking_sprite() {
-	this->gWalkingFrontCharacter[0].x = 2;
-	this->gWalkingFrontCharacter[0].y = 13;
-	this->gWalkingFrontCharacter[0].w = 21;
-	this->gWalkingFrontCharacter[0].h = 31;
+	this->walkingFrontCharacter[0].x = 2;
+	this->walkingFrontCharacter[0].y = 13;
+	this->walkingFrontCharacter[0].w = 21;
+	this->walkingFrontCharacter[0].h = 31;
 
-	this->gWalkingFrontCharacter[1].x = 27;
-	this->gWalkingFrontCharacter[1].y = 13;
-	this->gWalkingFrontCharacter[1].w = 21;
-	this->gWalkingFrontCharacter[1].h = 31;
+	this->walkingFrontCharacter[1].x = 27;
+	this->walkingFrontCharacter[1].y = 13;
+	this->walkingFrontCharacter[1].w = 21;
+	this->walkingFrontCharacter[1].h = 31;
 
-	this->gWalkingFrontCharacter[2].x = 52;
-	this->gWalkingFrontCharacter[2].y = 13;
-	this->gWalkingFrontCharacter[2].w = 21;
-	this->gWalkingFrontCharacter[2].h = 31;
+	this->walkingFrontCharacter[2].x = 52;
+	this->walkingFrontCharacter[2].y = 13;
+	this->walkingFrontCharacter[2].w = 21;
+	this->walkingFrontCharacter[2].h = 31;
 
-	this->gWalkingFrontCharacter[3].x = 77;
-	this->gWalkingFrontCharacter[3].y = 13;
-	this->gWalkingFrontCharacter[3].w = 21;
-	this->gWalkingFrontCharacter[3].h = 31;
+	this->walkingFrontCharacter[3].x = 77;
+	this->walkingFrontCharacter[3].y = 13;
+	this->walkingFrontCharacter[3].w = 21;
+	this->walkingFrontCharacter[3].h = 31;
 
-	this->gWalkingFrontCharacter[4].x = 102;
-	this->gWalkingFrontCharacter[4].y = 13;
-	this->gWalkingFrontCharacter[4].w = 21;
-	this->gWalkingFrontCharacter[4].h = 31;
+	this->walkingFrontCharacter[4].x = 102;
+	this->walkingFrontCharacter[4].y = 13;
+	this->walkingFrontCharacter[4].w = 21;
+	this->walkingFrontCharacter[4].h = 31;
 
-	this->gWalkingFrontCharacter[5].x = 127;
-	this->gWalkingFrontCharacter[5].y = 13;
-	this->gWalkingFrontCharacter[5].w = 21;
-	this->gWalkingFrontCharacter[5].h = 31;
+	this->walkingFrontCharacter[5].x = 127;
+	this->walkingFrontCharacter[5].y = 13;
+	this->walkingFrontCharacter[5].w = 21;
+	this->walkingFrontCharacter[5].h = 31;
 }
 
 
 void Character::load_back_walking_sprite() {
-	this->gWalkingBackCharacter[0].x = 2;
-	this->gWalkingBackCharacter[0].y = 58;
-	this->gWalkingBackCharacter[0].w = 21;
-	this->gWalkingBackCharacter[0].h = 31;
+	this->walkingBackCharacter[0].x = 2;
+	this->walkingBackCharacter[0].y = 58;
+	this->walkingBackCharacter[0].w = 21;
+	this->walkingBackCharacter[0].h = 31;
 
-	this->gWalkingBackCharacter[1].x = 27;
-	this->gWalkingBackCharacter[1].y = 58;
-	this->gWalkingBackCharacter[1].w = 21;
-	this->gWalkingBackCharacter[1].h = 31;
+	this->walkingBackCharacter[1].x = 27;
+	this->walkingBackCharacter[1].y = 58;
+	this->walkingBackCharacter[1].w = 21;
+	this->walkingBackCharacter[1].h = 31;
 
-	this->gWalkingBackCharacter[2].x = 52;
-	this->gWalkingBackCharacter[2].y = 58;
-	this->gWalkingBackCharacter[2].w = 21;
-	this->gWalkingBackCharacter[2].h = 31;
+	this->walkingBackCharacter[2].x = 52;
+	this->walkingBackCharacter[2].y = 58;
+	this->walkingBackCharacter[2].w = 21;
+	this->walkingBackCharacter[2].h = 31;
 
-	this->gWalkingBackCharacter[3].x = 77;
-	this->gWalkingBackCharacter[3].y = 58;
-	this->gWalkingBackCharacter[3].w = 21;
-	this->gWalkingBackCharacter[3].h = 31;
+	this->walkingBackCharacter[3].x = 77;
+	this->walkingBackCharacter[3].y = 58;
+	this->walkingBackCharacter[3].w = 21;
+	this->walkingBackCharacter[3].h = 31;
 
-	this->gWalkingBackCharacter[4].x = 102;
-	this->gWalkingBackCharacter[4].y = 58;
-	this->gWalkingBackCharacter[4].w = 21;
-	this->gWalkingBackCharacter[4].h = 31;
+	this->walkingBackCharacter[4].x = 102;
+	this->walkingBackCharacter[4].y = 58;
+	this->walkingBackCharacter[4].w = 21;
+	this->walkingBackCharacter[4].h = 31;
 
-	this->gWalkingBackCharacter[5].x = 127;
-	this->gWalkingBackCharacter[5].y = 58;
-	this->gWalkingBackCharacter[5].w = 21;
-	this->gWalkingBackCharacter[5].h = 31;
+	this->walkingBackCharacter[5].x = 127;
+	this->walkingBackCharacter[5].y = 58;
+	this->walkingBackCharacter[5].w = 21;
+	this->walkingBackCharacter[5].h = 31;
 }
 
 
 void Character::load_left_walking_sprite() {
-	this->gWalkingLeftCharacter[0].x = 2;
-	this->gWalkingLeftCharacter[0].y = 103;
-	this->gWalkingLeftCharacter[0].w = 21;
-	this->gWalkingLeftCharacter[0].h = 31;
+	this->walkingLeftCharacter[0].x = 2;
+	this->walkingLeftCharacter[0].y = 103;
+	this->walkingLeftCharacter[0].w = 21;
+	this->walkingLeftCharacter[0].h = 31;
 
-	this->gWalkingLeftCharacter[1].x = 27;
-	this->gWalkingLeftCharacter[1].y = 103;
-	this->gWalkingLeftCharacter[1].w = 21;
-	this->gWalkingLeftCharacter[1].h = 31;
+	this->walkingLeftCharacter[1].x = 27;
+	this->walkingLeftCharacter[1].y = 103;
+	this->walkingLeftCharacter[1].w = 21;
+	this->walkingLeftCharacter[1].h = 31;
 
-	this->gWalkingLeftCharacter[2].x = 52;
-	this->gWalkingLeftCharacter[2].y = 103;
-	this->gWalkingLeftCharacter[2].w = 21;
-	this->gWalkingLeftCharacter[2].h = 31;
+	this->walkingLeftCharacter[2].x = 52;
+	this->walkingLeftCharacter[2].y = 103;
+	this->walkingLeftCharacter[2].w = 21;
+	this->walkingLeftCharacter[2].h = 31;
 
-	this->gWalkingLeftCharacter[3].x = 77;
-	this->gWalkingLeftCharacter[3].y = 103;
-	this->gWalkingLeftCharacter[3].w = 21;
-	this->gWalkingLeftCharacter[3].h = 31;
+	this->walkingLeftCharacter[3].x = 77;
+	this->walkingLeftCharacter[3].y = 103;
+	this->walkingLeftCharacter[3].w = 21;
+	this->walkingLeftCharacter[3].h = 31;
 
-	this->gWalkingLeftCharacter[4].x = 102;
-	this->gWalkingLeftCharacter[4].y = 103;
-	this->gWalkingLeftCharacter[4].w = 21;
-	this->gWalkingLeftCharacter[4].h = 31;
+	this->walkingLeftCharacter[4].x = 102;
+	this->walkingLeftCharacter[4].y = 103;
+	this->walkingLeftCharacter[4].w = 21;
+	this->walkingLeftCharacter[4].h = 31;
 }
 
 
 void Character::load_right_walking_sprite() {
-	this->gWalkingRightCharacter[0].x = 2;
-	this->gWalkingRightCharacter[0].y = 148;
-	this->gWalkingRightCharacter[0].w = 21;
-	this->gWalkingRightCharacter[0].h = 31;
+	this->walkingRightCharacter[0].x = 2;
+	this->walkingRightCharacter[0].y = 148;
+	this->walkingRightCharacter[0].w = 21;
+	this->walkingRightCharacter[0].h = 31;
 
-	this->gWalkingRightCharacter[1].x = 27;
-	this->gWalkingRightCharacter[1].y = 148;
-	this->gWalkingRightCharacter[1].w = 21;
-	this->gWalkingRightCharacter[1].h = 31;
+	this->walkingRightCharacter[1].x = 27;
+	this->walkingRightCharacter[1].y = 148;
+	this->walkingRightCharacter[1].w = 21;
+	this->walkingRightCharacter[1].h = 31;
 
-	this->gWalkingRightCharacter[2].x = 52;
-	this->gWalkingRightCharacter[2].y = 148;
-	this->gWalkingRightCharacter[2].w = 21;
-	this->gWalkingRightCharacter[2].h = 31;
+	this->walkingRightCharacter[2].x = 52;
+	this->walkingRightCharacter[2].y = 148;
+	this->walkingRightCharacter[2].w = 21;
+	this->walkingRightCharacter[2].h = 31;
 
-	this->gWalkingRightCharacter[3].x = 77;
-	this->gWalkingRightCharacter[3].y = 148;
-	this->gWalkingRightCharacter[3].w = 21;
-	this->gWalkingRightCharacter[3].h = 31;
+	this->walkingRightCharacter[3].x = 77;
+	this->walkingRightCharacter[3].y = 148;
+	this->walkingRightCharacter[3].w = 21;
+	this->walkingRightCharacter[3].h = 31;
 
-	this->gWalkingRightCharacter[4].x = 102;
-	this->gWalkingRightCharacter[4].y = 148;
-	this->gWalkingRightCharacter[4].w = 21;
-	this->gWalkingRightCharacter[4].h = 31;
+	this->walkingRightCharacter[4].x = 102;
+	this->walkingRightCharacter[4].y = 148;
+	this->walkingRightCharacter[4].w = 21;
+	this->walkingRightCharacter[4].h = 31;
 }
 
+
+
+void Character::loadHeadSprite() {
+	this->headOrientations[0].x = 1;
+	this->headOrientations[0].y = 0;
+	this->headOrientations[0].w = 15;
+	this->headOrientations[0].h = 17;
+
+	this->headOrientations[1].x = 18;
+	this->headOrientations[1].y = 0;
+	this->headOrientations[1].w = 15;
+	this->headOrientations[1].h = 17;
+
+	this->headOrientations[2].x = 36;
+	this->headOrientations[2].y = 0;
+	this->headOrientations[2].w = 15;
+	this->headOrientations[2].h = 17;
+
+	this->headOrientations[3].x = 52;
+	this->headOrientations[3].y = 0;
+	this->headOrientations[3].w = 15;
+	this->headOrientations[3].h = 17;
+}

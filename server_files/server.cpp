@@ -38,8 +38,10 @@ void Server::run() {
         queue.push(msg);
 
         std::cout << "ID: " << msg.id << std::endl;
-        std::cout << "pos X: " << msg.posX << std::endl;
-        std::cout << "pos Y: " << msg.posY << std::endl;
+        std::cout << "BODY pos X: " << msg.bodyPosX << std::endl;
+        std::cout << "BODY pos Y: " << msg.bodyPosY << std::endl;
+        std::cout << "HEAD pos X: " << msg.headPosX << std::endl;
+        std::cout << "HEAD pos Y: " << msg.headPosY << std::endl;
         std::cout << "vel X: " << msg.velX << std::endl;
         std::cout << "vel Y: " << msg.velY << std::endl;
     }
