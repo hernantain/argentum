@@ -13,7 +13,7 @@ struct ProtocolMessage {
     int16_t headPosY;
     int16_t velX;
     int16_t velY;
-    
+    int a;
 
     ProtocolMessage(
         int16_t id,
