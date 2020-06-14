@@ -31,12 +31,20 @@ class Character {
 	
 	LTexture bodyTexture;
 	LTexture headTexture;
+	LTexture helmetTexture;
+	LTexture tallTexture;
+
+	SDL_Rect tallWalkingFrontCharacter[ WALKING_FRONT_ANIMATION_FRAMES ];
+	SDL_Rect tallWalkingBackCharacter[ WALKING_BACK_ANIMATION_FRAMES ];
+	SDL_Rect tallWalkingLeftCharacter[ WALKING_LEFT_ANIMATION_FRAMES ];
+	SDL_Rect tallWalkingRightCharacter[ WALKING_RIGHT_ANIMATION_FRAMES ];
 
 	SDL_Rect walkingFrontCharacter[ WALKING_FRONT_ANIMATION_FRAMES ];
 	SDL_Rect walkingBackCharacter[ WALKING_BACK_ANIMATION_FRAMES ];
 	SDL_Rect walkingLeftCharacter[ WALKING_LEFT_ANIMATION_FRAMES ];
 	SDL_Rect walkingRightCharacter[ WALKING_RIGHT_ANIMATION_FRAMES ];
 	SDL_Rect headOrientations[4];
+	SDL_Rect helmetOrientations[4];
     
 	public: 
 
@@ -52,13 +60,9 @@ class Character {
 
 		ProtocolMessage handleEvent( SDL_Event& e );
 
-		void move();
-
 		void render(SDL_Renderer *gRenderer); 
 
 		void update_frames();
-
-		void get_position();
 
 		void set_position(int newBodyPosX, int newBodyPosY, int newHeadPosX, int newHeadPosY);
 
@@ -70,6 +74,12 @@ class Character {
 		void load_left_walking_sprite();
 		void load_right_walking_sprite();
 		void loadHeadSprite();
+		void loadHelmetSprite();
+
+		void loadTallWalkingFrontSprite();
+		void loadTallWalkingBackSprite();
+		void loadTallWalkingLeftSprite();
+		void loadTallWalkingRightSprite();
 };
 
 
