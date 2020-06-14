@@ -4,10 +4,10 @@
 #include <string>
 #include <iostream>
 
-#include "client_character.h"
 #include "client_main_program.h"
 #include "client_sender_thread.h"
 #include "client_receiver_thread.h"
+#include "client_drawable.h"
 
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
@@ -45,13 +45,13 @@ void MainProgram::run() {
 	sender->start();
 
 
-	Character character;
-	if (!character.load_images(this->gRenderer))
+	TallPlayer player;
+	if (!player.load_images(this->gRenderer))
 		exit(1);
 
 
 	// Recibe la respuesta del server y modifica o no en el modelo
-	Thread* receiver = new ClientReceiverThread(skt, character);
+	Thread* receiver = new ClientReceiverThread(skt, player);
 	receiver->start();
 
 
@@ -64,7 +64,7 @@ void MainProgram::run() {
 				skt.close_socket();
 			} else {
 				
-				ProtocolMessage msg = character.handleEvent( e );
+				ProtocolMessage msg = player.handleEvent( e );
 				queue.push(msg);	
 			}
 		}
@@ -72,9 +72,9 @@ void MainProgram::run() {
 		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderClear( gRenderer );
 
-		character.render(this->gRenderer);
+		player.render(this->gRenderer);
 		SDL_RenderPresent( this->gRenderer ); //Update screen
-		character.update_frames();
+		player.update_frames();
 		
 		// sleep
 	}

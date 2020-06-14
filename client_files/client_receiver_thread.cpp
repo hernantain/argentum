@@ -1,13 +1,14 @@
 #include <msgpack.hpp>
 
 #include "client_receiver_thread.h"
+#include "client_drawable.h"
 
 
 ClientReceiverThread::ClientReceiverThread(
     Socket &skt, 
-    Character &character) : skt(skt), 
-                            character(character),
-                            running(true) {}
+    Player &player) : skt(skt), 
+                        player(player),
+                        running(true) {}
 
 
 
@@ -34,5 +35,5 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_move(ProtocolMessage &msg) {
-    this->character.set_position((int) msg.bodyPosX, (int) msg.bodyPosY, (int) msg.headPosX, (int) msg.headPosY);
+    this->player.set_position((int) msg.bodyPosX, (int) msg.bodyPosY, (int) msg.headPosX, (int) msg.headPosY);
 }
