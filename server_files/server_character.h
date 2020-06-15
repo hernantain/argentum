@@ -44,6 +44,9 @@ public:
   // Dropea los items y el oro correspondiente
   void drop();
 
+  // Dropea el item que recibe por parametro
+  void drop_item(Item& item);
+
   // Toma una suma de oro del suelo;
   void take_gold(int amount);
 

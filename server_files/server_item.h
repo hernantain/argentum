@@ -6,14 +6,20 @@
 /* Clase que representa a un item del juego */
 class Item {
 private:
+    int id;
     std::string name;
-    int amount;
 
 public:
     // Contructor, recibe la cantidad de ese objeto
-    Item(int amount);
+    Item();
 
     std::string get_name();
+
+    int get_id();
+
+    bool operator <(const Item& other) const {
+        return id < other.id;
+    }
 };
 
 

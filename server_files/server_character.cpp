@@ -35,6 +35,11 @@ void Character::drop() {
   drop_items();
 }
 
+void Character::drop_item(Item& item) {
+  std::cout << "Dropping an item" << std::endl;
+  inventory.remove_item(item);
+}
+
 const int Character::max_secure_gold() {
   return config["gold"]["secure_gold_constant"].asInt() 
   * (pow(level, config["gold"]["power_constant"].asFloat()));
@@ -71,12 +76,9 @@ int Character::drop_gold() {
 void Character::take_item(Item& item) {
   // TODO: heres just the logic, we should send some message to the client
   inventory.add_item(item);
+  std::cout << "Inv size: " << inventory.size() << std::endl;
 }
 
 void Character::drop_items() {
-  // TODO: heres just the logic, we should send some message to the client
-  for (size_t i = 0; i < inventory.size(); i++) {
-    Item last = inventory.remove_item();
-    std::cout << "Item to drop name: " << last.get_name() << std::endl;
-  }
+  inventory.drop_items();
 }
