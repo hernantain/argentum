@@ -4,6 +4,9 @@
 #include "SDL2/SDL.h"
 #include "../common_protocol_message.h"
 #include "client_texture.h"
+#include "client_player_picture.h"
+
+#include <vector>
 #include <mutex>
 
 #define WALKING_FRONT_ANIMATION_FRAMES 6
@@ -31,24 +34,11 @@ class Player : public Drawable {
     protected:
         int bodyPosX, bodyPosY;
         int headPosX, headPosY;
-        LTexture bodyTexture;
-        LTexture headTexture;
-        LTexture helmetTexture;
-
-        SDL_Rect walkingFrontPlayer[ WALKING_FRONT_ANIMATION_FRAMES ];
-        SDL_Rect walkingBackPlayer[ WALKING_BACK_ANIMATION_FRAMES ];
-        SDL_Rect walkingLeftPlayer[ WALKING_LEFT_ANIMATION_FRAMES ];
-        SDL_Rect walkingRightPlayer[ WALKING_RIGHT_ANIMATION_FRAMES ];
-        SDL_Rect headOrientations[4];
-        SDL_Rect helmetOrientations[4];
-
-        void loadHeadSprite();
-		void loadHelmetSprite();
+        std::vector<Clothes*> clothes;
+        PlayerPicture* playerPicture = NULL;
 
     public:
         Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY);
-
-        virtual bool load_images(SDL_Renderer* gRenderer) = 0;
 
 		ProtocolMessage handleEvent( SDL_Event& e );
 
@@ -69,15 +59,10 @@ class TallPlayer: public Player {
     const int PLAYER_HEIGHT = 42;
 
     public:
-        TallPlayer();
-
-        virtual bool load_images(SDL_Renderer* gRenderer) override;
+        TallPlayer(SDL_Renderer* gRenderer);
 
     private:
-        void loadTallWalkingFrontSprite();
-		void loadTallWalkingBackSprite();
-		void loadTallWalkingLeftSprite();
-		void loadTallWalkingRightSprite();
+        void load_clothes(SDL_Renderer* gRenderer);
 
 };
 
@@ -90,15 +75,10 @@ class ShortPlayer: public Player {
     const int PLAYER_HEIGHT = 31;
 
     public:
-        ShortPlayer();
-
-        virtual bool load_images(SDL_Renderer* gRenderer) override;
+        ShortPlayer(SDL_Renderer* gRenderer);
 
     private:
-        void load_front_walking_sprite();
-		void load_back_walking_sprite();
-		void load_left_walking_sprite();
-		void load_right_walking_sprite();
+        void load_clothes(SDL_Renderer* gRenderer);
 
 };
 

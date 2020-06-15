@@ -45,9 +45,9 @@ void MainProgram::run() {
 	sender->start();
 
 
-	TallPlayer player;
-	if (!player.load_images(this->gRenderer))
-		exit(1);
+	ShortPlayer player(gRenderer);
+	// if (!player.load_images(this->gRenderer))
+	// 	exit(1);
 
 
 	// Recibe la respuesta del server y modifica o no en el modelo
