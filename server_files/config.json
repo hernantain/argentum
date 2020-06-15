@@ -1,0 +1,11 @@
+{
+    "service": "8080",
+    "gold": {
+        "extra_gold_rate": 0.5,
+        "power_constant": 1.1,
+        "secure_gold_constant": 100
+    },
+    "inventory": {
+        "max_items": 10
+    }
+}
