@@ -7,6 +7,11 @@
 #include "server_mana_points.h"
 #include "server_inventory.h"
 #include "server_item.h"
+#include "server_equipment.h"
+#include "server_armor.h"
+#include "server_weapon.h"
+#include "server_helmet.h"
+#include "server_shield.h"
 
 /* Clase que representa a un personaje del juego.
  * Es no copiable.
@@ -15,12 +20,13 @@ class Character {
 private:
     size_t id;
     Json::Value& config;
+    // Movement movement;
     LifePoints life;
     ManaPoints mana;
     Inventory inventory;
+    Equipment equipment;
     int gold;
     int level;
-    // Movement movement;
 
     // No copiable.
     Character(const Character&) = delete;
@@ -52,6 +58,18 @@ public:
 
   // Toma un item del suelo
   void take_item(Item& item);
+
+   // Equipa un arma
+  void equip_weapon(Weapon& item);
+
+  // Equipa una armadura
+  void equip_armor(Armor& item);
+
+  // Equipa un escudo
+  void equip_shield(Shield& item);
+
+  // Equipa un casco
+  void equip_helmet(Helmet& item);
 
   // Recupera la mana en mana points
   void recover_mana(int mana_points);

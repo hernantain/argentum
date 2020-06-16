@@ -2,10 +2,11 @@
 #define _SERVER_ITEM
 
 #include <string>
+#include <jsoncpp/json/json.h>
 
 /* Clase que representa a un item del juego */
 class Item {
-private:
+protected:
     int id;
     std::string name;
 

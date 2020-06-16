@@ -7,5 +7,67 @@
     },
     "inventory": {
         "max_items": 10
+    },
+    "leatherArmor": {
+        "min_defense": 2,
+        "max_defense": 6
+    },
+    "plateArmor": {
+        "min_defense": 15,
+        "max_defense": 30
+    },
+    "blueRobe": {
+        "min_defense": 6,
+        "max_defense": 10
+    },
+    "hoodHelmet": {
+        "min_defense": 1,
+        "max_defense": 4
+    },
+    "ironHelmet": {
+        "min_defense": 4,
+        "max_defense": 8
+    },
+    "magicHat": {
+        "min_defense": 4,
+        "max_defense": 12
+    },
+    "tortoiseShield": {
+        "min_defense": 1,
+        "max_defense": 2
+    },
+    "ironShield": {
+        "min_defense": 1,
+        "max_defense": 4
+    },
+    "sword": {
+        "min_damage": 2,
+        "max_damage": 5
+    },
+    "axe": {
+        "min_damage": 4,
+        "max_damage": 5
+    },
+    "hammer": {
+        "min_damage": 1,
+        "max_damage": 9
+    },
+    "elficFlute": {
+        "mana": 100
+    },
+    "ashStaff": {
+        "min_damage": 2,
+        "max_damage": 4,
+        "mana": 5
+    },
+    "gnarledStaff": {
+        "min_damage": 4,
+        "max_damage": 8,
+        "mana": 15
+    },
+    "crimpStaff": {
+        "min_damage": 8,
+        "max_damage": 20,
+        "mana": 30
     }
 }

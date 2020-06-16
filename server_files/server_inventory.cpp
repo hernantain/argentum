@@ -49,6 +49,14 @@ void Inventory::drop_items() {
     std::cout << "Item size after dropping: " << items.size() << std::endl;
 }
 
+bool Inventory::has(Item& item) {
+    if (items.find(item) != items.end()) {
+        std::cout << "Item que tenemos en el inventario" << std::endl;
+        return true;
+    }
+    return false;
+}
+
 bool Inventory::is_full() {
     return items.size() == max_size;
 }

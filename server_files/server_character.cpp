@@ -6,7 +6,7 @@
 #define INITIAL_GOLD 0
 #define INITIAL_LEVEL 1
 
-Character::Character(size_t id, Json::Value &config, int life, int mana) 
+Character::Character(size_t id, Json::Value &config, int life, int mana)
   : config(config), life(life), mana(mana), inventory(config["inventory"]["max_items"].asUInt()) {
   this->id = id;
   this->gold = INITIAL_GOLD;
@@ -81,4 +81,28 @@ void Character::take_item(Item& item) {
 
 void Character::drop_items() {
   inventory.drop_items();
+}
+
+void Character::equip_weapon(Weapon& item) {
+  if (inventory.has(item)) {
+    equipment.equip_weapon(item);
+  } 
+}
+
+void Character::equip_armor(Armor& item) {
+  if (inventory.has(item)) {
+    equipment.equip_armor(item);
+  }
+}
+
+void Character::equip_shield(Shield& item) {
+  if (inventory.has(item)) {
+    equipment.equip_shield(item);
+  }
+}
+
+void Character::equip_helmet(Helmet& item) {
+  if (inventory.has(item)) {
+    equipment.equip_helmet(item);
+  }
 }

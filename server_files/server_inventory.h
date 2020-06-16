@@ -31,6 +31,9 @@ public:
     // Devuelve el tam del inventario
     unsigned int size();
 
+    // Boleana, verdadera si posee el item
+    bool has(Item& item);
+
     // Booleana, esta lleno el inventario
     bool is_full();
 };
