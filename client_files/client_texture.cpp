@@ -86,7 +86,7 @@ void LTexture::render( int x, int y, SDL_Renderer* gRenderer, SDL_Rect* clip, SD
 		renderQuad.h = clip->h;
 	}
 
-	// SDL_RenderSetScale(gRenderer, 2.0, 2.0);
+	SDL_RenderSetScale(gRenderer, 2.0, 2.0);		
 	
 	//Render to screen
 	SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, 0, NULL, flip );

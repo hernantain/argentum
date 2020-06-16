@@ -1,6 +1,7 @@
 #ifndef _PLAYER_PICTURE
 #define _PLAYER_PICTURE
 
+#include <vector>
 #include "client_texture.h"
 
 
@@ -35,8 +36,8 @@ class Clothes {
         void set_short_sprites();
 
         Clothes(int width, int height);
-        public:
-            virtual void render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame);
+    public:
+        virtual void render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame);
 };
 
 
@@ -96,30 +97,132 @@ class LeatherShortArmor: public Clothes {
 };
 
 
+class Picture {
+
+    protected:
+        virtual void render(
+            int &bodyPosX, 
+            int &bodyPosY,
+            int &headPosX, 
+            int &headPosY, 
+            SDL_Renderer* gRenderer, 
+            int &orientation, 
+            int &frame) = 0;
+
+};
 
 
 
-class PlayerPicture {
+class PlayerPicture: public Picture {
     
     Clothes* clothes;
     LTexture headTexture;
     SDL_Rect headOrientations[4];
 
     void set_head_sprite();
-    bool load_pictures(SDL_Renderer* gRenderer);
+    bool load_pictures(SDL_Renderer* gRenderer, const char* head_path);
     public:
-        PlayerPicture(SDL_Renderer* gRenderer);
+        PlayerPicture(SDL_Renderer* gRenderer, const char* head_path);
         
         void set_clothes(Clothes* clothes);
 
-        void render(
+        virtual void render(
             int &bodyPosX, 
             int &bodyPosY,
             int &headPosX, 
             int &headPosY, 
             SDL_Renderer* gRenderer, 
-            int &orientation, int &frame);
+            int &orientation, 
+            int &frame) override;
+};
 
+
+
+
+
+
+
+
+
+
+class Helmet {
+
+    int offset;
+    void load_front_walking_sprite();
+    void load_left_walking_sprite();
+    void load_right_walking_sprite();
+    void load_back_walking_sprite();
+
+    protected:
+        Helmet(int offset);
+        LTexture helmetTexture;
+        SDL_Rect helmetOrientation[ 4 ];
+        virtual bool load_pictures(SDL_Renderer* gRenderer) = 0;
+
+    public:
+        virtual void render(int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame);
+
+};
+
+
+class Hood: public Helmet {
+
+    void set_sprites();
+    public:
+        Hood(SDL_Renderer* gRenderer);
+
+        virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+};
+
+
+class IronHelmet: public Helmet {
+
+    void set_sprites();
+    public:
+        IronHelmet(SDL_Renderer* gRenderer);
+
+        virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+};
+
+
+class MagicHat: public Helmet {
+
+    void set_sprites();
+    public:
+        MagicHat(SDL_Renderer* gRenderer);
+
+        virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+};
+
+
+
+class HelmetPicture: public Picture {
+
+    Helmet* activeHat;
+
+};
+
+
+class Equipment: public Picture {
+
+    PlayerPicture* player;
+    Helmet* helmet;
+    public: 
+        Equipment(PlayerPicture* player);
+
+        void setHelmet(Helmet* helmet);
+
+        virtual void render(
+            int &bodyPosX, 
+            int &bodyPosY,
+            int &headPosX, 
+            int &headPosY, 
+            SDL_Renderer* gRenderer, 
+            int &orientation, 
+            int &frame) override;
 };
 
 

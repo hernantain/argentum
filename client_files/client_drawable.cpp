@@ -25,11 +25,14 @@ Player::Player(
     
 
 
-TallPlayer::TallPlayer(SDL_Renderer* gRenderer) : Player(25, 25, 29, 15) {
+TallPlayer::TallPlayer(SDL_Renderer* gRenderer, const char* head_path) : Player(25, 25, 29, 15) {
 	this->load_clothes(gRenderer);
-	this->playerPicture = new PlayerPicture(gRenderer);
+	this->load_helmets(gRenderer);
+	this->playerPicture = new PlayerPicture(gRenderer, head_path);
 	this->playerPicture->set_clothes(this->clothes[0]);
+	this->equipment = new Equipment(playerPicture);
 }
+
 
 
 void TallPlayer::load_clothes(SDL_Renderer* gRenderer) {
@@ -42,10 +45,28 @@ void TallPlayer::load_clothes(SDL_Renderer* gRenderer) {
 }
 
 
-ShortPlayer::ShortPlayer(SDL_Renderer* gRenderer) : Player(25, 25, 28, 13) {
+
+
+void Player::load_helmets(SDL_Renderer* gRenderer) {
+	Helmet* hood = new Hood(gRenderer);
+	Helmet* ironHelmet = new IronHelmet(gRenderer);
+	Helmet* magicHat = new MagicHat(gRenderer);
+	this->helmets.push_back(hood);
+	this->helmets.push_back(ironHelmet);
+	this->helmets.push_back(magicHat);
+}
+
+
+
+
+
+
+ShortPlayer::ShortPlayer(SDL_Renderer* gRenderer, const char* head_path) : Player(25, 25, 28, 13) {
 	this->load_clothes(gRenderer);
-	this->playerPicture = new PlayerPicture(gRenderer);
+	this->load_helmets(gRenderer);
+	this->playerPicture = new PlayerPicture(gRenderer, head_path);
 	this->playerPicture->set_clothes(this->clothes[0]);
+	this->equipment = new Equipment(playerPicture);
 }
 
 void ShortPlayer::load_clothes(SDL_Renderer* gRenderer) {
@@ -58,6 +79,13 @@ void ShortPlayer::load_clothes(SDL_Renderer* gRenderer) {
 }
 
 
+Human::Human(SDL_Renderer* gRenderer) : TallPlayer(gRenderer, "images/humano.png") {}
+
+Elf::Elf(SDL_Renderer* gRenderer) : TallPlayer(gRenderer, "images/elfo.png") {}
+
+Gnome::Gnome(SDL_Renderer* gRenderer) : ShortPlayer(gRenderer, "images/gnomo.png") {}
+
+Dwarf::Dwarf(SDL_Renderer* gRenderer) : ShortPlayer(gRenderer, "images/enano.png") {}
 
 
 
@@ -101,6 +129,21 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 				this->playerPicture->set_clothes(this->clothes[0]);
 				break;
 
+			case SDLK_h:
+				this->equipment->setHelmet(this->helmets[0]);
+				break;
+
+			case SDLK_j:
+				this->equipment->setHelmet(this->helmets[1]);
+				break;
+
+			case SDLK_k:
+				this->equipment->setHelmet(this->helmets[2]);
+				break;
+
+			case SDLK_l:
+				this->equipment->setHelmet(NULL);
+				break;
         }
 
 	} else if( e.type == SDL_KEYUP && e.key.repeat == 0 ) {
@@ -161,7 +204,7 @@ void Player::update_frames() {
 
 void Player::render(SDL_Renderer* gRenderer) {
 	std::unique_lock<std::mutex> lock(this->m);
-	playerPicture->render(
+	equipment->render(
 		this->bodyPosX, 
 		this->bodyPosY, 
 		this->headPosX, 
@@ -190,28 +233,6 @@ void Player::render(SDL_Renderer* gRenderer) {
  * 
  */
 
-
-// void Player::loadHelmetSprite() {
-// 	this->helmetOrientations[0].x = 0;
-// 	this->helmetOrientations[0].y = 0;
-// 	this->helmetOrientations[0].w= 17;
-// 	this->helmetOrientations[0].h= 17;
-
-// 	this->helmetOrientations[1].x = 17;
-// 	this->helmetOrientations[1].y = 0;
-// 	this->helmetOrientations[1].w= 17;
-// 	this->helmetOrientations[1].h= 17;
-
-// 	this->helmetOrientations[2].x = 34;
-// 	this->helmetOrientations[2].y = 0;
-// 	this->helmetOrientations[2].w= 17;
-// 	this->helmetOrientations[2].h= 17;
-
-// 	this->helmetOrientations[3].x = 51;
-// 	this->helmetOrientations[3].y = 0;
-// 	this->helmetOrientations[3].w= 17;
-// 	this->helmetOrientations[3].h= 17;
-// }
 
 
 // void TallPlayer::loadBaculoSprites() {

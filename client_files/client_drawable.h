@@ -35,8 +35,11 @@ class Player : public Drawable {
         int bodyPosX, bodyPosY;
         int headPosX, headPosY;
         std::vector<Clothes*> clothes;
-        PlayerPicture* playerPicture = NULL;
+        std::vector<Helmet*> helmets;
+        PlayerPicture* playerPicture;
+        Equipment* equipment;
 
+    void load_helmets(SDL_Renderer* gRenderer);
     public:
         Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY);
 
@@ -59,7 +62,7 @@ class TallPlayer: public Player {
     const int PLAYER_HEIGHT = 42;
 
     public:
-        TallPlayer(SDL_Renderer* gRenderer);
+        TallPlayer(SDL_Renderer* gRenderer, const char* head_path);
 
     private:
         void load_clothes(SDL_Renderer* gRenderer);
@@ -75,13 +78,46 @@ class ShortPlayer: public Player {
     const int PLAYER_HEIGHT = 31;
 
     public:
-        ShortPlayer(SDL_Renderer* gRenderer);
+        ShortPlayer(SDL_Renderer* gRenderer, const char* head_path);
 
     private:
         void load_clothes(SDL_Renderer* gRenderer);
 
 };
 
+
+
+class Human: public TallPlayer {
+
+    public:
+        Human(SDL_Renderer* gRenderer);
+
+};
+
+
+class Elf: public TallPlayer {
+
+    public:
+        Elf(SDL_Renderer* gRenderer);
+
+};
+
+
+class Dwarf: public ShortPlayer {
+
+    public: 
+        Dwarf(SDL_Renderer* gRenderer);
+
+};
+
+
+
+class Gnome: public ShortPlayer {
+
+    public: 
+        Gnome(SDL_Renderer* gRenderer);
+
+};
 
 
 enum PlayerMoving {

@@ -45,7 +45,7 @@ void MainProgram::run() {
 	sender->start();
 
 
-	ShortPlayer player(gRenderer);
+	Human player(gRenderer);
 	// if (!player.load_images(this->gRenderer))
 	// 	exit(1);
 

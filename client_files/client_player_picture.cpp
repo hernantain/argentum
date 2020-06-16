@@ -145,16 +145,16 @@ bool LeatherShortArmor::load_pictures(SDL_Renderer* gRenderer) {
  * PlayerPicture
  */
 
-PlayerPicture::PlayerPicture(SDL_Renderer* gRenderer) {
+PlayerPicture::PlayerPicture(SDL_Renderer* gRenderer, const char* head_path) {
 
-    this->load_pictures(gRenderer); 
+    this->load_pictures(gRenderer, head_path); 
 
 }
 
 
 
-bool PlayerPicture::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->headTexture.loadFromFile( "images/head.png", gRenderer ) ) {
+bool PlayerPicture::load_pictures(SDL_Renderer* gRenderer, const char* head_path) {
+    if( !this->headTexture.loadFromFile( head_path, gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
@@ -168,22 +168,22 @@ void PlayerPicture::set_head_sprite() {
     this->headOrientations[0].x = 1;
 	this->headOrientations[0].y = 0;
 	this->headOrientations[0].w= 15;
-	this->headOrientations[0].h= 17;
+	this->headOrientations[0].h= 20;
 
 	this->headOrientations[1].x = 18;
 	this->headOrientations[1].y = 0;
 	this->headOrientations[1].w= 15;
-	this->headOrientations[1].h= 17;
+	this->headOrientations[1].h= 20;
 
 	this->headOrientations[2].x = 36;
 	this->headOrientations[2].y = 0;
 	this->headOrientations[2].w= 15;
-	this->headOrientations[2].h= 17;
+	this->headOrientations[2].h= 20;
 
 	this->headOrientations[3].x = 52;
 	this->headOrientations[3].y = 0;
 	this->headOrientations[3].w= 15;
-	this->headOrientations[3].h= 17;
+	this->headOrientations[3].h= 20;
 }
 
 
@@ -528,4 +528,225 @@ void Clothes::loadTallWalkingRightSprite() {
 	this->walkingRightPlayer[4].y = 138;
 	this->walkingRightPlayer[4].w  = width;
 	this->walkingRightPlayer[4].h  = height;
+}
+
+
+
+
+
+
+
+
+
+/**
+ * Equipment
+ */
+
+
+
+Equipment::Equipment(PlayerPicture* player) {
+	this->player = player;
+	this->helmet = NULL;
+}
+
+
+
+void Equipment::setHelmet(Helmet* helmet) {
+	this->helmet = helmet;
+}
+
+
+void Equipment::render(
+	int &bodyPosX, 
+	int &bodyPosY,int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
+
+	player->render(bodyPosX, bodyPosY, headPosX, headPosY, gRenderer, orientation, frame);
+	
+	if (helmet != NULL)
+		helmet->render(headPosX, headPosY, gRenderer, orientation, frame);		
+			
+}
+
+
+
+
+/**
+ * Helmet
+ */
+
+
+Helmet::Helmet(int offset) : offset(offset) {}
+
+
+void Helmet::render(int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
+	//Show Character
+	if (orientation == RIGHT) {
+		SDL_Rect* headClip = &this->helmetOrientation[1];
+		this->helmetTexture.render(headPosX-1, headPosY+offset, gRenderer, headClip);
+        
+	} else if(orientation == LEFT)  {
+		SDL_Rect* headClip = &this->helmetOrientation[2];
+		this->helmetTexture.render(headPosX-1, headPosY+offset, gRenderer, headClip);
+	
+    } else if(orientation == UP)  {
+		SDL_Rect* headClip = &this->helmetOrientation[3];
+		this->helmetTexture.render(headPosX-1, headPosY+offset, gRenderer, headClip);
+	
+    } else if(orientation == DOWN)  {
+		SDL_Rect* headClip = &this->helmetOrientation[0];
+		this->helmetTexture.render(headPosX-1, headPosY+offset, gRenderer, headClip);
+
+	} else {
+		SDL_Rect* headClip = &this->helmetOrientation[0];
+		this->helmetTexture.render(headPosX-1, headPosY+offset, gRenderer, headClip);
+    }
+}
+
+
+
+/**
+ * Hood
+ * 
+ */
+
+
+Hood::Hood(SDL_Renderer* gRenderer) : Helmet(-2) {
+
+    this->load_pictures(gRenderer); 
+
+}
+
+
+bool Hood::load_pictures(SDL_Renderer* gRenderer) {
+    if( !this->helmetTexture.loadFromFile( "images/capucha.png", gRenderer ) ) {
+		printf( "Failed to load walking animation texture!\n" );
+		return false;
+	}
+
+    this->set_sprites();
+    return true;
+}
+
+
+void Hood::set_sprites() {
+	this->helmetOrientation[0].x = 0;
+	this->helmetOrientation[0].y = 0;
+	this->helmetOrientation[0].h = 17;
+	this->helmetOrientation[0].w = 17;
+
+	this->helmetOrientation[1].x = 17;
+	this->helmetOrientation[1].y = 0;
+	this->helmetOrientation[1].h = 17;
+	this->helmetOrientation[1].w = 17;
+
+	this->helmetOrientation[2].x = 35;
+	this->helmetOrientation[2].y = 0;
+	this->helmetOrientation[2].h = 17;
+	this->helmetOrientation[2].w = 17;
+
+	this->helmetOrientation[3].x = 51;
+	this->helmetOrientation[3].y = 0;
+	this->helmetOrientation[3].h = 17;
+	this->helmetOrientation[3].w = 17;
+}
+
+
+
+/**
+ * Hood
+ * 
+ */
+
+
+IronHelmet::IronHelmet(SDL_Renderer* gRenderer) : Helmet(-2) {
+
+    this->load_pictures(gRenderer); 
+
+}
+
+
+bool IronHelmet::load_pictures(SDL_Renderer* gRenderer) {
+    if( !this->helmetTexture.loadFromFile( "images/casco_hierro.png", gRenderer ) ) {
+		printf( "Failed to load walking animation texture!\n" );
+		return false;
+	}
+
+    this->set_sprites();
+    return true;
+}
+
+
+void IronHelmet::set_sprites() {
+	this->helmetOrientation[0].x = 0;
+	this->helmetOrientation[0].y = 0;
+	this->helmetOrientation[0].h = 17;
+	this->helmetOrientation[0].w = 17;
+
+	this->helmetOrientation[1].x = 17;
+	this->helmetOrientation[1].y = 0;
+	this->helmetOrientation[1].h = 17;
+	this->helmetOrientation[1].w = 17;
+
+	this->helmetOrientation[2].x = 35;
+	this->helmetOrientation[2].y = 0;
+	this->helmetOrientation[2].h = 17;
+	this->helmetOrientation[2].w = 17;
+
+	this->helmetOrientation[3].x = 51;
+	this->helmetOrientation[3].y = 0;
+	this->helmetOrientation[3].h = 17;
+	this->helmetOrientation[3].w = 17;
+}
+
+
+
+
+
+
+
+
+/**
+ * MagicHat
+ * 
+ */
+
+
+MagicHat::MagicHat(SDL_Renderer* gRenderer) : Helmet(-12) {
+
+    this->load_pictures(gRenderer); 
+
+}
+
+
+bool MagicHat::load_pictures(SDL_Renderer* gRenderer) {
+    if( !this->helmetTexture.loadFromFile( "images/sombrero_magico.png", gRenderer ) ) {
+		printf( "Failed to load walking animation texture!\n" );
+		return false;
+	}
+
+    this->set_sprites();
+    return true;
+}
+
+
+void MagicHat::set_sprites() {
+	this->helmetOrientation[0].x = 0;
+	this->helmetOrientation[0].y = 2;
+	this->helmetOrientation[0].h = 17;
+	this->helmetOrientation[0].w = 18;
+
+	this->helmetOrientation[1].x = 17;
+	this->helmetOrientation[1].y = 0;
+	this->helmetOrientation[1].h = 17;
+	this->helmetOrientation[1].w = 18;
+
+	this->helmetOrientation[2].x = 34;
+	this->helmetOrientation[2].y = 2;
+	this->helmetOrientation[2].h = 17;
+	this->helmetOrientation[2].w = 18;
+
+	this->helmetOrientation[3].x = 51;
+	this->helmetOrientation[3].y = 2;
+	this->helmetOrientation[3].h = 17;
+	this->helmetOrientation[3].w = 18;
 }
