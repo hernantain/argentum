@@ -5,4 +5,6 @@ Axe::Axe(Json::Value &config) :
 	       config["axe"]["max_damage"].asInt()) {
         this->id = 10;
         this->name = "Hacha";
+        this->ranged = false;
+        this->magical = false;
     }

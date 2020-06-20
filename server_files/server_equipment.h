@@ -31,6 +31,18 @@ public:
     // Equipa un casco al personaje
     void equip_helmet(Helmet& item);
 
+    // Obtiene el daño del arma equipada si la hubiere
+    int get_weapon_damage();
+
+    // Obtiene el consumo de mana del arma si lo hubiere
+    int get_weapon_consumption();
+
+    // Devuelve verdadero si el arma equipada es magica, falso i no
+    bool is_weapon_magical();
+
+    // Obtiene el daño del arma equipada si la hubiere
+    int get_equipment_defense();
+
 };
 
 

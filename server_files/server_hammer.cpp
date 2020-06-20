@@ -5,4 +5,6 @@ Hammer::Hammer(Json::Value &config) :
 	       config["hammer"]["max_damage"].asInt()) {
         this->id = 11;
         this->name = "Martillo";
+        this->ranged = false;
+        this->magical = false;
     }

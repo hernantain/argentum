@@ -8,6 +8,12 @@
     "inventory": {
         "max_items": 10
     },
+    "attack": {
+        "critical_probability": 0.2
+    },
+    "defense": {
+        "evasion_constant": 0.001
+    },
     "leatherArmor": {
         "min_defense": 2,
         "max_defense": 6
@@ -69,5 +75,13 @@
         "min_damage": 8,
         "max_damage": 20,
         "mana": 30
+    },
+    "simpleBow": {
+        "min_damage": 1,
+        "max_damage": 4
+    },
+    "compoundBow": {
+        "min_damage": 4,
+        "max_damage": 16
     }
 }

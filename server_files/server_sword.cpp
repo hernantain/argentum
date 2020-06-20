@@ -5,4 +5,6 @@ Sword::Sword(Json::Value &config) :
 	       config["sword"]["max_damage"].asInt()) {
         this->id = 9;
         this->name = "Espada";
+        this->ranged = false;
+        this->magical = false;
     }

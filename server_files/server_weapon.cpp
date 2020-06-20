@@ -1,5 +1,6 @@
 #include "server_weapon.h"
-#include <stdlib.h> 
+#include <stdlib.h>
+#include <time.h>
 #include <iostream> 
 
 Weapon::Weapon(int min_damage, int max_damage) {
@@ -8,7 +9,16 @@ Weapon::Weapon(int min_damage, int max_damage) {
 }
 
 int Weapon::get_damage() {
+    srand (time(NULL));
     int damage = rand() % (max_damage - min_damage + 1) + min_damage;
     std::cout << "This weapon attacks: " << damage << std::endl;
     return damage;
+}
+
+int Weapon::is_magical() {
+    return magical;
+}
+
+int Weapon::is_ranged() {
+    return ranged;
 }

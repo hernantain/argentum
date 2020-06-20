@@ -2,6 +2,7 @@
 #define _SERVER_CHARACTER
 
 #include <stdlib.h>
+#include <time.h>
 #include <jsoncpp/json/json.h>
 #include "server_life_points.h"
 #include "server_mana_points.h"
@@ -36,16 +37,33 @@ private:
     void drop_items();
     const int max_secure_gold();
     const int max_gold();
+    bool is_critical();
+    bool evade_attack();
 
 public:
   // Contructor, recibe el id, la vida inicial
   Character(size_t id, Json::Value& config, int life, int mana);
+
+  // Devuelve el id
+  size_t get_id();
 
   // Devuelve la mana actual del personaje
   int get_mana();
 
   // Devuelve la vida actual del personaje
   int get_life();
+
+  // Le quita vida al personaje
+  void take_off_life(int life_points);
+
+  // Le quita mana al personaje
+  void take_off_mana(int mana_points);
+
+  // Recupera la mana en mana points
+  void recover_mana(int mana_points);
+
+  // Recupera la vida en life points
+  void recover_life(int life_points);
 
   // Dropea los items y el oro correspondiente
   void drop();
@@ -71,14 +89,12 @@ public:
   // Equipa un casco
   void equip_helmet(Helmet& item);
 
-  // Recupera la mana en mana points
-  void recover_mana(int mana_points);
+  // Ataca a otro personaje o a un NPC
+  void attack(Character& other);
 
-  // Recupera la vida en life points
-  void recover_life(int life_points);
+  // Defiende al personaje de un ataque
+  void defense(int damage);
 
-  // Devuelve el id
-  size_t get_id();
 };
 
 

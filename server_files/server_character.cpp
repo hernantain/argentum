@@ -5,6 +5,7 @@
 
 #define INITIAL_GOLD 0
 #define INITIAL_LEVEL 1
+#define CRITICAL_MULTIPLIER 2
 
 Character::Character(size_t id, Json::Value &config, int life, int mana)
   : config(config), life(life), mana(mana), inventory(config["inventory"]["max_items"].asUInt()) {
@@ -21,16 +22,25 @@ int Character::get_mana() {
   return mana.current();
 }
 
-void Character::recover_mana(int mana_points) {
-  mana.add(mana_points);
-}
-
 void Character::recover_life(int life_points) {
   life.add(life_points);
 }
 
+void Character::recover_mana(int mana_points) {
+  mana.add(mana_points);
+}
+
+void Character::take_off_life(int life_points) {
+  life.subtract(life_points);
+}
+
+void Character::take_off_mana(int mana_points) {
+  mana.subtract(mana_points);
+}
+
 void Character::drop() {
   std::cout << "Dropping gold & items" << std::endl;
+  // unequip everything;
   drop_gold();
   drop_items();
 }
@@ -105,4 +115,39 @@ void Character::equip_helmet(Helmet& item) {
   if (inventory.has(item)) {
     equipment.equip_helmet(item);
   }
+}
+
+bool Character::is_critical() {
+  int critical_percentage = config["attack"]["critical_probability"].asFloat() * 100;
+  srand (time(NULL));
+  int critical_chances = rand() % 100 + 1;
+  std::cout << "Critical chances: " << critical_chances << std::endl;
+  if (critical_chances <= critical_percentage) return true;
+  return false;
+}
+
+void Character::attack(Character& other) {
+  // TODO: si !es a distancia el arma, chequear que este al lado
+  int damage = equipment.get_weapon_damage();
+  if (is_critical()) damage *= CRITICAL_MULTIPLIER;
+  if (equipment.is_weapon_magical()) {
+    int mana_consumption = equipment.get_weapon_consumption();
+    take_off_mana(mana_consumption);
+  }
+  std::cout << "Ataque::Dano:: " << damage << std::endl;
+  other.defense(damage);
+}
+
+bool Character::evade_attack() {
+  // TODO: cuando razas y clases esten implementadas
+  return false;
+}
+
+void Character::defense(int damage) {
+  if (evade_attack()) return;
+  int defense = equipment.get_equipment_defense();
+  if (damage <= defense) return;
+  int final_damage = damage - defense;
+  take_off_life(final_damage);
+  std::cout << "Defensa:: " << defense << std::endl;
 }
