@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <msgpack.hpp>
-#include <jsoncpp/json/json.h>
 
 #include "server.h"
 #include "server_sender_thread.h"
@@ -22,8 +21,6 @@ Server::Server(const char* config_file) : running(true) {
 }
 
 void Server::run() {
-
-    this->skt.bind_and_listen("8080");
 
     Socket exchange_skt = this->skt.accept_client();
 
