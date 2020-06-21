@@ -1,17 +1,25 @@
 
 #include <iostream>
+#include <fstream>
 #include <msgpack.hpp>
+#include <jsoncpp/json/json.h>
 
 #include "server.h"
 #include "server_sender_thread.h"
+#include "server_os_error.h"
+#include "server_character.h"
 
 #include "../common_sockets.h"
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
 
-Server::Server() : running(true) {}
+#define FILE_ERROR_MSG "No se pudo abrir el archivo de configuración"
 
-
+Server::Server(const char* config_file) : running(true) {
+    this->initialize_config(config_file);
+    const char* port = config["service"].asCString();
+    this->skt.bind_and_listen(port);
+}
 
 void Server::run() {
 
@@ -48,5 +56,10 @@ void Server::run() {
 
 }
 
-
-
+void Server::initialize_config(const char* config_file) {
+    std::ifstream file(config_file);
+	if (!file.is_open()) throw OSError(FILE_ERROR_MSG);
+    Json::Reader reader;
+    reader.parse(file, config);
+    file.close();
+}
