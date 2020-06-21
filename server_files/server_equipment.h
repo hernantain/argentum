@@ -11,9 +11,9 @@
 class Equipment {
 private:
     Weapon weapon;
-    Armor armor;
     Shield shield;
     Helmet helmet;
+    Armor armor;
 
 public:
     // Contructor

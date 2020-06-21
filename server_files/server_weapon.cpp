@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream> 
 
-Weapon::Weapon(int min_damage, int max_damage) {
+Weapon::Weapon(int min_damage = 0, int max_damage = 0) {
     this->min_damage = min_damage;
     this->max_damage = max_damage;
 }

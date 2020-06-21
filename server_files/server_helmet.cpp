@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream>
 
-Helmet::Helmet(int min_defense, int max_defense) {
+Helmet::Helmet(int min_defense = 0, int max_defense = 0) {
     this->min_defense = min_defense;
     this->max_defense = max_defense;
 }

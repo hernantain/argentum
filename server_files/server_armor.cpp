@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream> 
 
-Armor::Armor(int min_defense, int max_defense) {
+Armor::Armor(int min_defense = 0, int max_defense = 0) {
     this->min_defense = min_defense;
     this->max_defense = max_defense;
 }

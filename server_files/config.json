@@ -1,5 +1,59 @@
 {
     "service": "8080",
+    "initialAttributes": 18,
+    "paladin": {
+        "life_multiplier": 0.7,
+        "mana_multiplier": 0.2,
+        "meditation_multiplier": 0.3
+    },
+    "warrior": {
+        "life_multiplier": 0.9,
+        "mana_multiplier": 0,
+        "meditation_multiplier": 0
+    },
+    "magician": {
+        "life_multiplier": 0.3,
+        "mana_multiplier": 0.8,
+        "meditation_multiplier": 0.8
+    },
+    "cleric": {
+        "life_multiplier": 0.5,
+        "mana_multiplier": 0.5,
+        "meditation_multiplier": 0.6
+    },
+    "human": {
+        "strength_modifier": 1,
+        "agility_modifier": 1,
+        "constitution_modifier": 2,
+        "life_multiplier": 1,
+        "mana_multiplier": 1,
+        "recovery_multiplier": 0.5
+    },
+    "elf": {
+        "strength_modifier": -1,
+        "agility_modifier": 3,
+        "intelligence_modifier": 2,
+        "constitution_modifier": 1,
+        "life_multiplier": 1,
+        "mana_multiplier": 1,
+        "recovery_multiplier": 0.5
+    },
+    "gnome": {
+        "strength_modifier": -2,
+        "agility_modifier": 3,
+        "intelligence_modifier": 4,
+        "life_multiplier": 1,
+        "mana_multiplier": 1,
+        "recovery_multiplier": 0.5
+    },
+    "dwarf": {
+        "strength_modifier": 3,
+        "intelligence_modifier": -2,
+        "constitution_modifier": 3,
+        "life_multiplier": 1,
+        "mana_multiplier": 1,
+        "recovery_multiplier": 0.5
+    },
     "gold": {
         "extra_gold_rate": 0.5,
         "power_constant": 1.1,

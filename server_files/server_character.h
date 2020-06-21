@@ -6,6 +6,8 @@
 #include <jsoncpp/json/json.h>
 #include "server_life_points.h"
 #include "server_mana_points.h"
+#include "server_character_class.h"
+#include "server_race.h"
 #include "server_inventory.h"
 #include "server_item.h"
 #include "server_equipment.h"
@@ -22,12 +24,15 @@ private:
     size_t id;
     Json::Value& config;
     // Movement movement;
+    CharacterClass& character_class;
+    Race& race;
     LifePoints life;
     ManaPoints mana;
     Inventory inventory;
     Equipment equipment;
     int gold;
     int level;
+    bool alive;
 
     // No copiable.
     Character(const Character&) = delete;
@@ -42,7 +47,7 @@ private:
 
 public:
   // Contructor, recibe el id, la vida inicial
-  Character(size_t id, Json::Value& config, int life, int mana);
+  Character(size_t id, Json::Value& config, CharacterClass& character_class, Race& race);
 
   // Devuelve el id
   size_t get_id();
@@ -64,6 +69,9 @@ public:
 
   // Recupera la vida en life points
   void recover_life(int life_points);
+
+  // Devuelve verdadero si el jugador esta vivo, falso si no.
+  bool is_alive();
 
   // Dropea los items y el oro correspondiente
   void drop();

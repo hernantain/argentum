@@ -1,11 +1,15 @@
 #include "server_equipment.h"
 #include <iostream>
 
-#define NO_WEAPON_DAMAGE 0
-#define NO_ARMOR_DEFENSE 0
+#define NO_DAMAGE 0
+#define NO_DEFENSE 0
 #define NO_MANA_CONSUMPTION 0
 
-Equipment::Equipment() {}
+Equipment::Equipment() : 
+    weapon(NO_DAMAGE, NO_DAMAGE), 
+    shield(NO_DEFENSE, NO_DEFENSE), 
+    helmet(NO_DEFENSE, NO_DEFENSE), 
+    armor(NO_DEFENSE, NO_DEFENSE) {}
 
 void Equipment::equip_weapon(Weapon& item) {
     weapon = std::move(item);
@@ -28,7 +32,6 @@ void Equipment::equip_helmet(Helmet& item) {
 }
 
 int Equipment::get_weapon_damage() {
-    if (!weapon.get_damage()) return NO_WEAPON_DAMAGE;
     return weapon.get_damage();
 }
 

@@ -7,9 +7,10 @@ private:
     int current_life;
     int max_life;
 
+    int initial_life(int constitution, float class_multiplier, float race_multiplier);
 public:
-    // Contructor, recibe la vida inicial
-    LifePoints(int life);
+    // Contructor, recibe la constitucion del personaje
+    LifePoints(int constitution, float class_multiplier, float race_multiplier);
 
     // Disminuye la vida en life_points
     void subtract(int life_points);

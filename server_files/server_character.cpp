@@ -3,15 +3,22 @@
 #include <stdio.h>
 #include "server_character.h"
 
+#define NO_LIFE 0
 #define INITIAL_GOLD 0
 #define INITIAL_LEVEL 1
 #define CRITICAL_MULTIPLIER 2
 
-Character::Character(size_t id, Json::Value &config, int life, int mana)
-  : config(config), life(life), mana(mana), inventory(config["inventory"]["max_items"].asUInt()) {
+Character::Character(size_t id, Json::Value &config, CharacterClass& character_class, Race& race) : 
+  config(config), 
+  character_class(character_class),
+  race(race), 
+  life(race.get_constitution(), character_class.get_life_multiplier(), race.get_life_multiplier()), 
+  mana(race.get_intelligence(), character_class.get_mana_multiplier(), race.get_mana_multiplier()),
+  inventory(config["inventory"]["max_items"].asUInt()) {
   this->id = id;
   this->gold = INITIAL_GOLD;
   this->level = INITIAL_LEVEL;
+  this->alive = true;
 }
 
 int Character::get_life() {
@@ -28,6 +35,10 @@ void Character::recover_life(int life_points) {
 
 void Character::recover_mana(int mana_points) {
   mana.add(mana_points);
+}
+
+bool Character::is_alive() {
+  return alive;
 }
 
 void Character::take_off_life(int life_points) {
@@ -86,7 +97,6 @@ int Character::drop_gold() {
 void Character::take_item(Item& item) {
   // TODO: heres just the logic, we should send some message to the client
   inventory.add_item(item);
-  std::cout << "Inv size: " << inventory.size() << std::endl;
 }
 
 void Character::drop_items() {
@@ -121,7 +131,6 @@ bool Character::is_critical() {
   int critical_percentage = config["attack"]["critical_probability"].asFloat() * 100;
   srand (time(NULL));
   int critical_chances = rand() % 100 + 1;
-  std::cout << "Critical chances: " << critical_chances << std::endl;
   if (critical_chances <= critical_percentage) return true;
   return false;
 }
@@ -139,8 +148,11 @@ void Character::attack(Character& other) {
 }
 
 bool Character::evade_attack() {
-  // TODO: cuando razas y clases esten implementadas
-  return false;
+  srand (time(NULL));
+  double evasion_chances = ((double) rand() / (RAND_MAX));
+  double evasion_power = pow(evasion_chances, race.get_agility());
+  bool evade = evasion_power < config["defense"]["evasion_constant"].asDouble();
+  return evade;
 }
 
 void Character::defense(int damage) {
@@ -149,5 +161,6 @@ void Character::defense(int damage) {
   if (damage <= defense) return;
   int final_damage = damage - defense;
   take_off_life(final_damage);
+  if (life.current() == NO_LIFE) alive = false;
   std::cout << "Defensa:: " << defense << std::endl;
 }

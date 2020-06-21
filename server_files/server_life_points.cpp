@@ -1,11 +1,13 @@
 #include "server_life_points.h"
 #include "server_os_error.h"
+#include <iostream>
 
 #define FULL_LIFE_ERROR "Error: Su vida ya se encuentra llena!"
 
-  LifePoints::LifePoints(int life) {
-    this->current_life = life;
-    this->max_life = life;
+  LifePoints::LifePoints(int constitution, float class_multiplier, float race_multiplier) {
+    int initial_life = this->initial_life(constitution, class_multiplier, race_multiplier);
+    this->current_life = initial_life;
+    this->max_life = initial_life;
   }
 
   void LifePoints::subtract(int life_points){
@@ -23,5 +25,9 @@
 
   int LifePoints::current(){
     return current_life;
+  }
+
+  int LifePoints::initial_life(int constitution, float class_multiplier, float race_multiplier) {
+    return constitution * class_multiplier * race_multiplier;
   }
 
