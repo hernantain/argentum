@@ -13,12 +13,13 @@ class ClientReceiverThread : public Thread {
 
     Socket &skt;
     Player &player;
+    SDL_Rect &camera;
     std::atomic<bool> running;
 
     void process_response(ProtocolMessage &msg);
     void process_move(ProtocolMessage &msg);
     public:
-        ClientReceiverThread(Socket &skt, Player &player);
+        ClientReceiverThread(Socket &skt, Player &player, SDL_Rect &camera);
 
         virtual void run() override;
         

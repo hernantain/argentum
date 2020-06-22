@@ -37,7 +37,7 @@ class Player : public Drawable {
         std::vector<Clothes*> clothes;
         std::vector<Helmet*> helmets;
         PlayerPicture* playerPicture;
-        Equipment* equipment;
+        EquippedPlayer* equippedPlayer;
 
     void load_helmets(SDL_Renderer* gRenderer);
     public:
@@ -45,11 +45,15 @@ class Player : public Drawable {
 
 		ProtocolMessage handleEvent( SDL_Event& e );
 
-		void render(SDL_Renderer *gRenderer); 
+		void render(SDL_Renderer *gRenderer, int camPosX, int camPosY); 
 
 		void update_frames();
 
 		void set_position(int newBodyPosX, int newBodyPosY, int newHeadPosX, int newHeadPosY);
+        void set_camera(SDL_Rect &camera);
+
+        int getPosX() const;
+        int getPosY() const;
 
 };
 

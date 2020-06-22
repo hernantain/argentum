@@ -16,16 +16,15 @@
 
 #define WALKING_ANIMATION_FRAMES 6
 
+#include "client_texture.h"
+
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
+#include "client_map.h"
 
-
-MainProgram::MainProgram() : 
-	gWindow(NULL), 
-	gRenderer(NULL), 
-	running(true) {}
+MainProgram::MainProgram() :  gRenderer(NULL), running(true) {}
 
 
 
@@ -34,6 +33,10 @@ void MainProgram::run() {
 		printf( "Failed to initialize!\n" );
 		return;
 	}
+
+	Map map(this->gRenderer);
+    map.load();
+
 
 	Queue queue;
 	
@@ -44,14 +47,18 @@ void MainProgram::run() {
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
+	// LTexture background;
+	// background.loadFromFile("images/argentum2.png", gRenderer);
 
-	Human player(gRenderer);
+	SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+
+	Elf player(gRenderer);
 	// if (!player.load_images(this->gRenderer))
 	// 	exit(1);
 
 
 	// Recibe la respuesta del server y modifica o no en el modelo
-	Thread* receiver = new ClientReceiverThread(skt, player);
+	Thread* receiver = new ClientReceiverThread(skt, player, camera);
 	receiver->start();
 
 
@@ -69,10 +76,15 @@ void MainProgram::run() {
 			}
 		}
 
+
 		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderClear( gRenderer );
 
-		player.render(this->gRenderer);
+		// background.render( 0, 0, gRenderer, &camera );
+
+		map.render(camera);
+
+		player.render(this->gRenderer, camera.x, camera.y);
 		SDL_RenderPresent( this->gRenderer ); //Update screen
 		player.update_frames();
 		
@@ -93,14 +105,15 @@ bool MainProgram::init() {
 		printf( "Warning: Linear texture filtering not enabled!" );
 	} 
 
-	this->gWindow = SDL_CreateWindow( "Argentum - Taller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-	if( this->gWindow == NULL ) {
+	// this->gWindow = SDL_CreateWindow( "Argentum - Taller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+	if( !this->window.init() ) {
 		printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 		return false;
 	} 
 	
 	//Create vsynced renderer for window
-	this->gRenderer = SDL_CreateRenderer( this->gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+	// this->gRenderer = SDL_CreateRenderer( this->gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+	this->gRenderer = this->window.createRenderer();
 	if( this->gRenderer == NULL ) {
 		printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
 		return false;
@@ -123,8 +136,6 @@ MainProgram::~MainProgram() {
 
 
 	SDL_DestroyRenderer( this->gRenderer );
-	SDL_DestroyWindow( this->gWindow );  //Destroy window	
-	this->gWindow = NULL;
 	this->gRenderer = NULL;
 
 	IMG_Quit(); //Quit SDL subsystems

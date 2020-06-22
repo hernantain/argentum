@@ -16,13 +16,39 @@ Player::Player(
     int bodyPosX, 
     int bodyPosY, 
     int headPosX, 
-    int headPosY) : Drawable(3),
+    int headPosY) : Drawable(10),
                     bodyPosX(bodyPosX), 
                     bodyPosY(bodyPosY),
                     headPosX(headPosX),
                     headPosY(headPosY) {}
 
+
+int Player::getPosX() const {
+	return this->bodyPosX;
+}
     
+int Player::getPosY() const {
+	return this->bodyPosY;
+}
+    
+void Player::set_camera(SDL_Rect &camera) {
+
+	camera.x = ( this->bodyPosX +  18 ) - 640 / 2;
+	camera.y = ( this->bodyPosY + 18 ) - 480 / 2;
+
+	//Keep the camera in bounds
+	if( camera.x < 0 )
+		camera.x = 0;
+	
+	if( camera.y < 0 ) 
+		camera.y = 0;
+	
+	if( camera.x > 3200 - camera.w )
+		camera.x = 3200 - camera.w;
+	
+	if( camera.y > 3200 - camera.h )
+		camera.y = 3200 - camera.h; 
+}
 
 
 TallPlayer::TallPlayer(SDL_Renderer* gRenderer, const char* head_path) : Player(25, 25, 29, 15) {
@@ -30,7 +56,7 @@ TallPlayer::TallPlayer(SDL_Renderer* gRenderer, const char* head_path) : Player(
 	this->load_helmets(gRenderer);
 	this->playerPicture = new PlayerPicture(gRenderer, head_path);
 	this->playerPicture->set_clothes(this->clothes[0]);
-	this->equipment = new Equipment(playerPicture);
+	this->equippedPlayer = new EquippedPlayer(playerPicture);
 }
 
 
@@ -66,8 +92,9 @@ ShortPlayer::ShortPlayer(SDL_Renderer* gRenderer, const char* head_path) : Playe
 	this->load_helmets(gRenderer);
 	this->playerPicture = new PlayerPicture(gRenderer, head_path);
 	this->playerPicture->set_clothes(this->clothes[0]);
-	this->equipment = new Equipment(playerPicture);
+	this->equippedPlayer = new EquippedPlayer(playerPicture);
 }
+
 
 void ShortPlayer::load_clothes(SDL_Renderer* gRenderer) {
 	Clothes* common = new CommonShortClothes(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -130,19 +157,19 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 				break;
 
 			case SDLK_h:
-				this->equipment->setHelmet(this->helmets[0]);
+				this->equippedPlayer->setHelmet(this->helmets[0]);
 				break;
 
 			case SDLK_j:
-				this->equipment->setHelmet(this->helmets[1]);
+				this->equippedPlayer->setHelmet(this->helmets[1]);
 				break;
 
 			case SDLK_k:
-				this->equipment->setHelmet(this->helmets[2]);
+				this->equippedPlayer->setHelmet(this->helmets[2]);
 				break;
 
 			case SDLK_l:
-				this->equipment->setHelmet(NULL);
+				this->equippedPlayer->setHelmet(NULL);
 				break;
         }
 
@@ -202,13 +229,17 @@ void Player::update_frames() {
 
 
 
-void Player::render(SDL_Renderer* gRenderer) {
+void Player::render(SDL_Renderer* gRenderer, int camPosX, int camPosY) {
 	std::unique_lock<std::mutex> lock(this->m);
-	equipment->render(
-		this->bodyPosX, 
-		this->bodyPosY, 
-		this->headPosX, 
-		this->headPosY, 
+	int bodyCenteredX = this->bodyPosX - camPosX;
+	int bodyCenteredY = this->bodyPosY - camPosY;
+	int headCenteredX = this->headPosX - camPosX;
+	int headCenteredY = this->headPosY - camPosY;
+	equippedPlayer->render(
+		bodyCenteredX, 
+		bodyCenteredY, 
+		headCenteredX, 
+		headCenteredY, 
 		gRenderer, 
 		this->orientation, 
 		this->frame);

@@ -6,8 +6,10 @@
 
 ClientReceiverThread::ClientReceiverThread(
     Socket &skt, 
-    Player &player) : skt(skt), 
+    Player &player,
+    SDL_Rect &camera) : skt(skt), 
                         player(player),
+                        camera(camera),
                         running(true) {}
 
 
@@ -31,6 +33,8 @@ void ClientReceiverThread::run() {
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id == 2)
         this->process_move(msg);
+
+    this->player.set_camera(camera);
 }
 
 

@@ -7,12 +7,13 @@
 #include <string>
 
 #include "client_texture.h"
+#include "client_window.h"
 
 #include "../common_sockets.h"
 
 class MainProgram {
 	
-	SDL_Window *gWindow;
+	LWindow window;
 	SDL_Renderer *gRenderer;
 	bool running;
 	Socket skt;

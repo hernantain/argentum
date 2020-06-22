@@ -539,24 +539,24 @@ void Clothes::loadTallWalkingRightSprite() {
 
 
 /**
- * Equipment
+ * EquippedPlayer
  */
 
 
 
-Equipment::Equipment(PlayerPicture* player) {
+EquippedPlayer::EquippedPlayer(PlayerPicture* player) {
 	this->player = player;
 	this->helmet = NULL;
 }
 
 
 
-void Equipment::setHelmet(Helmet* helmet) {
+void EquippedPlayer::setHelmet(Helmet* helmet) {
 	this->helmet = helmet;
 }
 
 
-void Equipment::render(
+void EquippedPlayer::render(
 	int &bodyPosX, 
 	int &bodyPosY,int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
 

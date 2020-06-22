@@ -199,19 +199,19 @@ class MagicHat: public Helmet {
 
 
 
-class HelmetPicture: public Picture {
+// class HelmetPicture: public Picture {
 
-    Helmet* activeHat;
+//     Helmet* activeHat;
 
-};
+// };
 
 
-class Equipment: public Picture {
+class EquippedPlayer: public Picture {
 
     PlayerPicture* player;
     Helmet* helmet;
     public: 
-        Equipment(PlayerPicture* player);
+        EquippedPlayer(PlayerPicture* player);
 
         void setHelmet(Helmet* helmet);
 
