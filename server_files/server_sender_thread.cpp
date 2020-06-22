@@ -35,15 +35,10 @@ void ServerSenderThread::run() {
     }
 }
 
-
-
 void ServerSenderThread::process_message(ProtocolMessage &msg) {
     if (msg.id == 1) 
         return this->process_move(msg);
 }
-
-
-
 
 void ServerSenderThread::process_move(ProtocolMessage &msg) {
     

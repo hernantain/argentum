@@ -17,7 +17,6 @@ public:
 
     // Devuelve la defensa del casco
     int get_defense();
-
 };
 
 

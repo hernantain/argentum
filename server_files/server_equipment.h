@@ -42,7 +42,6 @@ public:
 
     // Obtiene el daño del arma equipada si la hubiere
     int get_equipment_defense();
-
 };
 
 

@@ -18,7 +18,7 @@ protected:
 
 public:
     // Contructor
-    Race(int initial_attributes);
+    explicit Race(int initial_attributes);
 
     // getter fuerza
     int get_strength();

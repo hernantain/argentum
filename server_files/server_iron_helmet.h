@@ -7,7 +7,7 @@
 class IronHelmet : public Helmet {
 public:
     // Contructor
-    IronHelmet(Json::Value& config);
+    explicit IronHelmet(Json::Value& config);
 };
 
 

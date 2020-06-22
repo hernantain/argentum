@@ -9,7 +9,6 @@
 
 
 class Server {
-
     std::atomic<bool> running;
     Socket skt;
     Json::Value config;
@@ -17,7 +16,7 @@ class Server {
     void initialize_config(const char* config_file);
 
     public:
-        Server(const char* config_file);
+        explicit Server(const char* config_file);
 
         void run();
 

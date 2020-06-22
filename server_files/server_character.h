@@ -47,7 +47,8 @@ private:
 
 public:
   // Contructor, recibe el id, la vida inicial
-  Character(size_t id, Json::Value& config, CharacterClass& character_class, Race& race);
+  Character(size_t id, Json::Value& config, CharacterClass& character_class,
+  Race& race);
 
   // Devuelve el id
   size_t get_id();
@@ -102,7 +103,6 @@ public:
 
   // Defiende al personaje de un ataque
   void defense(int damage);
-
 };
 
 

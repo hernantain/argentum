@@ -7,7 +7,8 @@ private:
     int current_mana;
     int max_mana;
 
-    int initial_mana(int intelligence, float class_multiplier, float race_multiplier);
+    int initial_mana(int intelligence, float class_multiplier, 
+    float race_multiplier);
 public:
     // Contructor, recibe la inteligencia de la raza
     ManaPoints(int intelligence, float class_multiplier, float race_multiplier);

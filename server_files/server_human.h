@@ -7,8 +7,7 @@
 class Human : public Race {
 public:
     // Contructor
-    Human(Json::Value& config);
+    explicit Human(Json::Value& config);
 };
-
 
 #endif //_SERVER_HUMAN

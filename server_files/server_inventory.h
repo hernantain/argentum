@@ -13,7 +13,7 @@ private:
 
 public:
     // Contructor, recibe el tamaño del inventario
-    Inventory(int size);
+    explicit Inventory(int size);
 
     // Agrega un item al inventario
     void add_item(Item& item);
