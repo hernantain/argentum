@@ -19,6 +19,8 @@ ServerSenderThread::ServerSenderThread(
 void ServerSenderThread::run() {
 
     while (this->running) {
+        // Check ID and process what you have to process
+        // Send the updated data
         ProtocolMessage msg = this->queue.pop();
         this->process_message(msg);
 
@@ -26,7 +28,6 @@ void ServerSenderThread::run() {
         // std::cout << "POS X: " << msg.posX << std::endl;
         // std::cout << "POS Y: " << msg.posY << std::endl;
         // std::cout << "ID: " << msg.id << std::endl;
-
 
         msgpack::sbuffer buffer;
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
@@ -42,18 +43,18 @@ void ServerSenderThread::process_message(ProtocolMessage &msg) {
 
 void ServerSenderThread::process_move(ProtocolMessage &msg) {
     
-	msg.bodyPosX += msg.velX;
-    msg.headPosX += msg.velX;
-	if( ( msg.bodyPosX < 0 ) || ( msg.bodyPosX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) ) {
-		msg.bodyPosX -= msg.velX;
-        msg.headPosX -= msg.velX;
+	msg.character.bodyPosX += msg.character.velX;
+    msg.character.headPosX += msg.character.velX;
+	if( ( msg.character.bodyPosX < 0 ) || ( msg.character.bodyPosX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) ) {
+		msg.character.bodyPosX -= msg.character.velX;
+        msg.character.headPosX -= msg.character.velX;
     }
 
-	msg.bodyPosY += msg.velY;
-    msg.headPosY += msg.velY;
-	if( ( msg.headPosY < 0 ) || ( msg.bodyPosY + (CHARACTER_HEIGHT) > SCREEN_HEIGHT ) ) { 
-		msg.bodyPosY -= msg.velY;
-        msg.headPosY -= msg.velY;
+	msg.character.bodyPosY += msg.character.velY;
+    msg.character.headPosY += msg.character.velY;
+	if( ( msg.character.headPosY < 0 ) || ( msg.character.bodyPosY + (CHARACTER_HEIGHT) > SCREEN_HEIGHT ) ) { 
+		msg.character.bodyPosY -= msg.character.velY;
+        msg.character.headPosY -= msg.character.velY;
     }
 
     msg.id = 2;

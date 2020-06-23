@@ -50,13 +50,14 @@ void Server::run() {
 
         queue.push(msg);
 
-        std::cout << "ID: " << msg.id << std::endl;
-        std::cout << "BODY pos X: " << msg.bodyPosX << std::endl;
-        std::cout << "BODY pos Y: " << msg.bodyPosY << std::endl;
-        std::cout << "HEAD pos X: " << msg.headPosX << std::endl;
-        std::cout << "HEAD pos Y: " << msg.headPosY << std::endl;
-        std::cout << "vel X: " << msg.velX << std::endl;
-        std::cout << "vel Y: " << msg.velY << std::endl;
+        // This is what we receive from client
+        std::cout << "ID: " << msg.character.id << std::endl;
+        std::cout << "BODY pos X: " << msg.character.bodyPosX << std::endl;
+        std::cout << "BODY pos Y: " << msg.character.bodyPosY << std::endl;
+        std::cout << "HEAD pos X: " << msg.character.headPosX << std::endl;
+        std::cout << "HEAD pos Y: " << msg.character.headPosY << std::endl;
+        std::cout << "vel X: " << msg.character.velX << std::endl;
+        std::cout << "vel Y: " << msg.character.velY << std::endl;
     }
 }
 

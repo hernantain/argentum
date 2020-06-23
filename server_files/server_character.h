@@ -23,7 +23,7 @@ class Character {
 private:
     size_t id;
     Json::Value& config;
-    // Movement movement;
+    Movement movement;
     CharacterClass& character_class;
     Race& race;
     LifePoints life;
