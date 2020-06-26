@@ -10,7 +10,6 @@
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
-
 ServerSenderThread::ServerSenderThread(
     Socket &skt, 
     Queue &queue) : skt(skt), queue(queue), running(true) {}

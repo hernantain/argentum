@@ -10,7 +10,7 @@
 
 Character::Character(size_t id, Json::Value &config, CharacterClass& character_class, Race& race) : 
   config(config),
-  movement(config["movement"]["pixel_square"].asUInt()),
+  movement(config["graphics"]["pixel_square"].asUInt()),
   character_class(character_class),
   race(race), 
   life(race.get_constitution(), character_class.get_life_multiplier(), race.get_life_multiplier()), 

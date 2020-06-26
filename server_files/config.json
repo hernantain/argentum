@@ -1,8 +1,12 @@
 {
     "service": "8080",
     "initialAttributes": 18,
-    "movement": {
-        "pixel_square": 3
+    "graphics": {
+        "pixel_square": 3,
+        "screen_width": 640,
+        "screen_height": 480,
+        "character_width": 21,
+        "character_height": 31
     },
     "paladin": {
         "life_multiplier": 0.7,
