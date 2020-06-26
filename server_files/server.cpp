@@ -11,10 +11,6 @@
 #include "server_elf.h"
 #include "server_cleric.h"
 
-#include "../common_sockets.h"
-#include "../common_protocol_message.h"
-#include "../common_queue.h"
-
 #define FILE_ERROR_MSG "No se pudo abrir el archivo de configuración"
 
 Server::Server(const char* config_file) : running(true) {
@@ -33,31 +29,27 @@ void Server::run() {
     Thread* server_sender = new ServerSenderThread(exchange_skt, queue);
     server_sender->start();
 
+    Elf race(config);
+    Cleric c(config);
+    Character character(1, config, c, race);
+
     while (this->running) {
         // TODO: ClientHandler
-        Elf race(config);
-        Cleric c(config);
-        Character character(1, config, c, race);
         
-        ProtocolMessage msg;
-        msgpack::unpacker pac;
-        std::cout << "Corriendo" << std::endl;
-        exchange_skt >> pac;
-        msgpack::object_handle oh;
-        pac.next(oh);
-        msgpack::object obj = oh.get();
-        obj.convert(msg);
-
-        queue.push(msg);
+        ProtocolMessage received_msg = receive_msg(exchange_skt);
+        // int code = receive_msg.id;
+        // ProtocolMessage msg = protocol_translator.translate(msg, character);
+        // if (msg) this->queue->push(msg);
+        queue.push(received_msg);
 
         // This is what we receive from client
-        std::cout << "ID: " << msg.character.id << std::endl;
-        std::cout << "BODY pos X: " << msg.character.bodyPosX << std::endl;
-        std::cout << "BODY pos Y: " << msg.character.bodyPosY << std::endl;
-        std::cout << "HEAD pos X: " << msg.character.headPosX << std::endl;
-        std::cout << "HEAD pos Y: " << msg.character.headPosY << std::endl;
-        std::cout << "vel X: " << msg.character.velX << std::endl;
-        std::cout << "vel Y: " << msg.character.velY << std::endl;
+        std::cout << "ID: " << received_msg.character.id << std::endl;
+        std::cout << "BODY pos X: " << received_msg.character.bodyPosX << std::endl;
+        std::cout << "BODY pos Y: " << received_msg.character.bodyPosY << std::endl;
+        std::cout << "HEAD pos X: " << received_msg.character.headPosX << std::endl;
+        std::cout << "HEAD pos Y: " << received_msg.character.headPosY << std::endl;
+        std::cout << "vel X: " << received_msg.character.velX << std::endl;
+        std::cout << "vel Y: " << received_msg.character.velY << std::endl;
     }
 }
 
@@ -67,4 +59,16 @@ void Server::initialize_config(const char* config_file) {
     Json::Reader reader;
     reader.parse(file, config);
     file.close();
+}
+
+ProtocolMessage Server::receive_msg(Socket skt) {
+    std::cout << "Corriendo" << std::endl;
+    ProtocolMessage msg;
+    msgpack::unpacker pac;
+    skt >> pac;
+    msgpack::object_handle oh;
+    pac.next(oh);
+    msgpack::object obj = oh.get();
+    obj.convert(msg);
+    return msg;
 }

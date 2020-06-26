@@ -23,12 +23,6 @@ void ServerSenderThread::run() {
         // Send the updated data
         ProtocolMessage msg = this->queue.pop();
         this->process_message(msg);
-
-        // std::cout << "MANDANDO: " << std::endl;
-        // std::cout << "POS X: " << msg.posX << std::endl;
-        // std::cout << "POS Y: " << msg.posY << std::endl;
-        // std::cout << "ID: " << msg.id << std::endl;
-
         msgpack::sbuffer buffer;
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
         pk.pack(msg);

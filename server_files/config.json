@@ -1,6 +1,9 @@
 {
     "service": "8080",
     "initialAttributes": 18,
+    "movement": {
+        "pixel_square": 3
+    },
     "paladin": {
         "life_multiplier": 0.7,
         "mana_multiplier": 0.2,

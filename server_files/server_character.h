@@ -15,6 +15,7 @@
 #include "server_weapon.h"
 #include "server_helmet.h"
 #include "server_shield.h"
+#include "server_movement.h"
 
 /* Clase que representa a un personaje del juego.
  * Es no copiable.
