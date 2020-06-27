@@ -173,13 +173,15 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 		// std::cout << "CLICK EN: " << x << " Y EN: " << y << std::endl; 
 	}
 
-	ProtocolMessage msg(
+	ProtocolCharacter character(
 		(int16_t) 1, 
 		(int16_t) this->bodyPosX, 
 		(int16_t) this->bodyPosY,
 		(int16_t) this->headPosX, 
 		(int16_t) this->headPosY, 
 		(int16_t) this->velX, 
-		(int16_t) this->velY);
+		(int16_t) this->velY
+	);
+	ProtocolMessage msg(1, std::move(character));
 	return std::move(msg);
 }
