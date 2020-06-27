@@ -19,8 +19,8 @@
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
 #include "../common_sockets.h"
-
 #include "../common_mapinfo.h"
+
 #include <msgpack.hpp>
 
 
