@@ -4,54 +4,75 @@
 #include <string>
 #include <iostream>
 
-#include "client_character.h"
-#include "client_main_program.h"
+#include "client_game.h"
 #include "client_sender_thread.h"
 #include "client_receiver_thread.h"
+
+#include "client_player.h"
+#include "client_elf.h"
+#include "client_human.h"
+#include "client_dwarf.h"
+#include "client_gnome.h"
+
+#include "client_map.h"
 
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
 #include "../common_sockets.h"
+#include "../common_mapinfo.h"
+
+#include <msgpack.hpp>
 
 
 #define WALKING_ANIMATION_FRAMES 6
-
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
 
 
-MainProgram::MainProgram() : 
-	gWindow(NULL), 
-	gRenderer(NULL), 
-	running(true) {}
+Game::Game() :  gRenderer(NULL), running(true) {}
 
 
+Map Game::loadMap() {
+	MapInfo mapInfo;
 
-void MainProgram::run() {
+	msgpack::unpacker pac;
+	skt >> pac;
+	msgpack::object_handle oh;
+	pac.next(oh);
+	msgpack::object obj = oh.get();
+	obj.convert(mapInfo);
+	
+	Map map(gRenderer);
+    map.load(mapInfo);
+
+	return std::move(map);
+}
+
+
+void Game::run() {
 	if( !this->init() ) {
 		printf( "Failed to initialize!\n" );
 		return;
 	}
-
-	Queue queue;
+		
+	std::cout << "Corriendo" << std::endl;
 	
-	Socket skt;
 	skt.connect_to("localhost", "8080");
+	Map map = this->loadMap();
 
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
+	SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
-	Character character;
-	if (!character.load_images(this->gRenderer))
-		exit(1);
+	Dwarf player(gRenderer);
 
 
 	// Recibe la respuesta del server y modifica o no en el modelo
-	Thread* receiver = new ClientReceiverThread(skt, character);
+	Thread* receiver = new ClientReceiverThread(skt, player, camera);
 	receiver->start();
 
 
@@ -64,17 +85,20 @@ void MainProgram::run() {
 				skt.close_socket();
 			} else {
 				
-				ProtocolMessage msg = character.handleEvent( e );
+				ProtocolMessage msg = player.handleEvent( e );
 				queue.push(msg);	
 			}
 		}
 
+
 		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderClear( gRenderer );
 
-		character.render(this->gRenderer);
+		map.render(camera);
+
+		player.render(this->gRenderer, camera.x, camera.y);
 		SDL_RenderPresent( this->gRenderer ); //Update screen
-		character.update_frames();
+		player.update_frames();
 		
 		// sleep
 	}
@@ -82,7 +106,7 @@ void MainProgram::run() {
 
 
 
-bool MainProgram::init() {
+bool Game::init() {
 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
@@ -93,14 +117,15 @@ bool MainProgram::init() {
 		printf( "Warning: Linear texture filtering not enabled!" );
 	} 
 
-	this->gWindow = SDL_CreateWindow( "Argentum - Taller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-	if( this->gWindow == NULL ) {
+	// this->gWindow = SDL_CreateWindow( "Argentum - Taller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+	if( !this->window.init() ) {
 		printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 		return false;
 	} 
 	
 	//Create vsynced renderer for window
-	this->gRenderer = SDL_CreateRenderer( this->gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+	// this->gRenderer = SDL_CreateRenderer( this->gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+	this->gRenderer = this->window.createRenderer();
 	if( this->gRenderer == NULL ) {
 		printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
 		return false;
@@ -119,12 +144,9 @@ bool MainProgram::init() {
 }
 
 
-MainProgram::~MainProgram() {
-
+Game::~Game() {
 
 	SDL_DestroyRenderer( this->gRenderer );
-	SDL_DestroyWindow( this->gWindow );  //Destroy window	
-	this->gWindow = NULL;
 	this->gRenderer = NULL;
 
 	IMG_Quit(); //Quit SDL subsystems

@@ -1,5 +1,5 @@
-#ifndef _MAIN_PROGRAM
-#define _MAIN_PROGRAM
+#ifndef _CLIENT_GAME
+#define _CLIENT_GAME
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -7,24 +7,29 @@
 #include <string>
 
 #include "client_texture.h"
+#include "client_window.h"
+#include "client_map.h"
 
 #include "../common_sockets.h"
+#include "../common_queue.h"
 
-class MainProgram {
+class Game {
 	
-	SDL_Window *gWindow;
+	LWindow window;
 	SDL_Renderer *gRenderer;
+	Queue queue;
 	bool running;
 	Socket skt;
 
 	bool init();
 
+	Map loadMap(); 
 	public:
-		explicit MainProgram();
+		explicit Game();
 
 		void run();
 
-		~MainProgram();
+		~Game();
 
 };
 
