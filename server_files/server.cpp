@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <msgpack.hpp>
+#include "../common_mapinfo.h"
 
 #include "server.h"
 #include "server_sender_thread.h"
@@ -25,6 +26,15 @@ void Server::run() {
     Socket exchange_skt = this->skt.accept_client();
 
     Queue queue;
+
+    MapInfo mapInfo;
+    mapInfo.load();
+
+    msgpack::sbuffer buffer;
+    msgpack::packer<msgpack::sbuffer> pk(&buffer);
+    pk.pack(mapInfo);
+    exchange_skt(buffer);
+
 
     Thread* server_sender = new ServerSenderThread(exchange_skt, queue);
     server_sender->start();

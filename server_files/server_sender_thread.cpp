@@ -38,14 +38,14 @@ void ServerSenderThread::process_move(ProtocolMessage &msg) {
     
 	msg.character.bodyPosX += msg.character.velX;
     msg.character.headPosX += msg.character.velX;
-	if( ( msg.character.bodyPosX < 0 ) || ( msg.character.bodyPosX + (CHARACTER_WIDTH) > SCREEN_WIDTH ) ) {
+	if( ( msg.character.bodyPosX < 0 ) || ( msg.character.bodyPosX + (CHARACTER_WIDTH) > 3200 ) ) {
 		msg.character.bodyPosX -= msg.character.velX;
         msg.character.headPosX -= msg.character.velX;
     }
 
 	msg.character.bodyPosY += msg.character.velY;
     msg.character.headPosY += msg.character.velY;
-	if( ( msg.character.headPosY < 0 ) || ( msg.character.bodyPosY + (CHARACTER_HEIGHT) > SCREEN_HEIGHT ) ) { 
+	if( ( msg.character.headPosY < 0 ) || ( msg.character.bodyPosY + (CHARACTER_HEIGHT) > 3200 ) ) { 
 		msg.character.bodyPosY -= msg.character.velY;
         msg.character.headPosY -= msg.character.velY;
     }
