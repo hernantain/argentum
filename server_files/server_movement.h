@@ -14,8 +14,6 @@ class Movement {
 private:
     int bodyPosX, bodyPosY;
     int headPosX, headPosY;
-    int velX, velY;
-    int pixel_square;
     _lastMovement last_movement;
   
     // No copiable
@@ -24,7 +22,7 @@ private:
 
 public:
     // Constructor.
-    explicit Movement(int pixel_square);
+    explicit Movement();
 
     // Devuelve un float indicando la posición horizontal del personaje.
     int get_horizontal_position();
@@ -39,16 +37,16 @@ public:
     int get_vertical_velocity();
 
     // Setea el movimiento del personaje hacia la derecha
-    void move_right();
+    void move_right(int velocity);
 
     // Setea el movimiento del personaje hacia la izquierda
-    void move_left();
+    void move_left(int velocity);
 
     // Setea el movimiento del personaje hacia la derecha
-    void move_top();
+    void move_top(int velocity);
 
     // Setea el movimiento del personaje hacia la izquierda
-    void move_down();
+    void move_down(int velocity);
 
     // Devuelve true si el personaje está mirando hacia la derecha, false en caso contrario.
     bool is_facing_right();
