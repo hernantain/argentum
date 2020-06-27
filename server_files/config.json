@@ -1,6 +1,13 @@
 {
     "service": "8080",
     "initialAttributes": 18,
+    "graphics": {
+        "velocity": 3,
+        "screen_width": 640,
+        "screen_height": 480,
+        "character_width": 21,
+        "character_height": 31
+    },
     "paladin": {
         "life_multiplier": 0.7,
         "mana_multiplier": 0.2,

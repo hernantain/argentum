@@ -109,7 +109,7 @@ ProtocolMessage Character::handleEvent( SDL_Event& e ) {
 		// this->pq.push(ev);
 	}
 
-	ProtocolMessage msg(
+	ProtocolCharacter character(
 		(int16_t) 1, 
 		(int16_t) this->bodyPosX, 
 		(int16_t) this->bodyPosY,
@@ -117,6 +117,9 @@ ProtocolMessage Character::handleEvent( SDL_Event& e ) {
 		(int16_t) this->headPosY, 
 		(int16_t) this->velX, 
 		(int16_t) this->velY);
+	// This id is not going to be here
+	int protocol_move_id = 1;
+	ProtocolMessage msg(protocol_move_id, std::move(character));
 	return std::move(msg);
 }
 

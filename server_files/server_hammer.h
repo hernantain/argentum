@@ -7,7 +7,7 @@
 class Hammer : public Weapon {
 public:
     // Contructor
-    Hammer(Json::Value& config);
+    explicit Hammer(Json::Value& config);
 };
 
 

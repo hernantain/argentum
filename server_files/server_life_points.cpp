@@ -4,8 +4,10 @@
 
 #define FULL_LIFE_ERROR "Error: Su vida ya se encuentra llena!"
 
-  LifePoints::LifePoints(int constitution, float class_multiplier, float race_multiplier) {
-    int initial_life = this->initial_life(constitution, class_multiplier, race_multiplier);
+  LifePoints::LifePoints(int constitution, float class_multiplier, 
+  float race_multiplier) {
+    int initial_life = this->initial_life(constitution, class_multiplier, 
+    race_multiplier);
     this->current_life = initial_life;
     this->max_life = initial_life;
   }
@@ -27,7 +29,8 @@
     return current_life;
   }
 
-  int LifePoints::initial_life(int constitution, float class_multiplier, float race_multiplier) {
+  int LifePoints::initial_life(int constitution, float class_multiplier, 
+  float race_multiplier) {
     return constitution * class_multiplier * race_multiplier;
   }
 

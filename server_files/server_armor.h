@@ -17,7 +17,6 @@ public:
 
     // Devuelve la defensa de la armadura
     int get_defense();
-
 };
 
 

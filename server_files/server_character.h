@@ -15,6 +15,7 @@
 #include "server_weapon.h"
 #include "server_helmet.h"
 #include "server_shield.h"
+#include "server_movement.h"
 
 /* Clase que representa a un personaje del juego.
  * Es no copiable.
@@ -23,7 +24,7 @@ class Character {
 private:
     size_t id;
     Json::Value& config;
-    // Movement movement;
+    Movement movement;
     CharacterClass& character_class;
     Race& race;
     LifePoints life;
@@ -47,7 +48,8 @@ private:
 
 public:
   // Contructor, recibe el id, la vida inicial
-  Character(size_t id, Json::Value& config, CharacterClass& character_class, Race& race);
+  Character(size_t id, Json::Value& config, CharacterClass& character_class,
+  Race& race);
 
   // Devuelve el id
   size_t get_id();
@@ -102,7 +104,6 @@ public:
 
   // Defiende al personaje de un ataque
   void defense(int damage);
-
 };
 
 

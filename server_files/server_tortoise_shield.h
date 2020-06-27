@@ -7,7 +7,7 @@
 class TortoiseShield : public Shield {
 public:
     // Contructor
-    TortoiseShield(Json::Value& config);
+    explicit TortoiseShield(Json::Value& config);
 };
 
 

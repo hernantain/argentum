@@ -7,7 +7,7 @@
 class Warrior : public CharacterClass {
 public:
     // Contructor
-    Warrior(Json::Value& config);
+    explicit Warrior(Json::Value& config);
 };
 
 

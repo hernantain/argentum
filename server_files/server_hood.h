@@ -7,7 +7,7 @@
 class Hood : public Helmet {
 public:
     // Contructor
-    Hood(Json::Value& config);
+    explicit Hood(Json::Value& config);
 };
 
 

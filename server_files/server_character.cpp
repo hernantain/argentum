@@ -9,7 +9,7 @@
 #define CRITICAL_MULTIPLIER 2
 
 Character::Character(size_t id, Json::Value &config, CharacterClass& character_class, Race& race) : 
-  config(config), 
+  config(config),
   character_class(character_class),
   race(race), 
   life(race.get_constitution(), character_class.get_life_multiplier(), race.get_life_multiplier()), 

@@ -17,7 +17,6 @@ public:
 
     // Devuelve la defensa del escudo
     int get_defense();
-
 };
 
 

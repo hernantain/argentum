@@ -7,7 +7,7 @@
 class Magician : public CharacterClass {
 public:
     // Contructor
-    Magician(Json::Value& config);
+    explicit Magician(Json::Value& config);
 };
 
 

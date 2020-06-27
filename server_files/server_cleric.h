@@ -7,7 +7,7 @@
 class Cleric : public CharacterClass {
 public:
     // Contructor
-    Cleric(Json::Value& config);
+    explicit Cleric(Json::Value& config);
 };
 
 

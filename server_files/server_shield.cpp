@@ -9,7 +9,7 @@ Shield::Shield(int min_defense = 0, int max_defense = 0) {
 }
 
 int Shield::get_defense() {
-    srand (time(NULL));
+    srand(time(NULL));
     int defense = rand() % (max_defense - min_defense + 1) + min_defense;
     std::cout << "This shield defends: " << defense << std::endl;
     return defense;
