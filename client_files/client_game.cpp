@@ -68,7 +68,7 @@ void Game::run() {
 
 	SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
-	Elf player(gRenderer);
+	Dwarf player(gRenderer);
 
 
 	// Recibe la respuesta del server y modifica o no en el modelo

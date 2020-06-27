@@ -13,7 +13,8 @@
 class Map {
     SDL_Renderer* gRenderer;
     TileInfo tileInfo;
-    std::vector<Tile> tiles;
+    std::vector<Tile> tilesFirstLayer;
+    // std::vector<Tile> tilesSecondLayer;
 
     public:
         Map(SDL_Renderer* gRenderer);
