@@ -1,10 +1,10 @@
 
-#include "client_main_program.h"
+#include "client_game.h"
 
 
 int main(int argc, char* argv[]) {
 
-    MainProgram mp;
+    Game mp;
     mp.run();
 
 	return 0;

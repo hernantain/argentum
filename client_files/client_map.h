@@ -6,6 +6,7 @@
 #include <map>
 #include "client_texture.h"
 
+#include "../common_mapinfo.h"
 
 
 class TileInfo {
@@ -52,13 +53,17 @@ class Map {
     public:
         Map(SDL_Renderer* gRenderer);
 
-        void load();
+        void load(MapInfo &mapInfo);
 
         void render(SDL_Rect &camera);
 
+        Map(Map&& other);
+        Map& operator=(Map&& other);
+
+        Map(const Map&) = delete;
+        Map& operator=(const Map&) = delete;
+
 };
-
-
 
 
 

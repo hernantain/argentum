@@ -3,7 +3,7 @@
 
 #include <atomic>
 
-#include "client_drawable.h"
+#include "client_player.h"
 #include "../common_sockets.h"
 #include "../common_thread.h"
 #include "../common_protocol_message.h"

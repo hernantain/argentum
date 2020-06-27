@@ -64,28 +64,18 @@ Tile::Tile( int x, int y, int tileType ) {
 }
 
 
-void Map::load() {
-    std::ifstream map("argentum.json");
-    Json::Reader reader;
-    Json::Value obj, tileJson;
-    reader.parse(map, obj); 
-    const Json::Value& tilesets = obj["tilesets"]; 
-    const Json::Value& layers = obj["layers"];
-    const Json::Value& grounds = layers[0]["data"]; 
+void Map::load(MapInfo &mapInfo) {
     
-    std::cout << "TILESETS SIZE: " << tilesets.size() << std::endl;
+    std::vector<TileInfos> tile_info = mapInfo.get_tile_info();
+    for (unsigned int i = 0; i < tile_info.size(); ++i) {
+        int tilecount = tile_info[i].get_tilecount();
 
-    std::string source;
-    for (unsigned int i = 0; i < tilesets.size(); ++i) {
-        source = tilesets[i]["source"].asString();
-        std::cout << "Procesando... " << source << std::endl;
-        std::ifstream tileInfo(source);
-        reader.parse(tileInfo, tileJson);
-        if (tileJson["tilecount"].asInt() == 1) {
+        if (tilecount == 1) {
             this->tileInfo.addTile();
 
         } else {
-            int width = tileJson["imagewidth"].asInt() / 128;
+            int imagewidth = tile_info[i].get_imagewidth();
+            int width = imagewidth / 128;
             int x = 0;
             for (int i = 0; i < width; ++i) {
                 this->tileInfo.addTile(x, 0);
@@ -93,16 +83,17 @@ void Map::load() {
                 x += 128;
             }
         }
+        std::string imagePath = tile_info[i].get_imagePath();
+        int first_gid = tile_info[i].get_first_gid();
 
-        this->tileInfo.addTexture(tilesets[i]["firstgid"].asInt(), tileJson["image"].asString(), gRenderer, tileJson["tilecount"].asInt());
+        this->tileInfo.addTexture(first_gid, imagePath, gRenderer, tilecount);
     }   
 
-
-    std::cout << grounds.size() << std::endl;
-
+    std::vector<int> layer1 = mapInfo.get_layer1();
+    // std::vector<int> layer2 = mapInfo.get_layer2();
     int x = 0, y = 0;
-    for (unsigned int i = 0; i < grounds.size(); ++i) {
-        Tile tile(x, y, grounds[i].asInt());
+    for (unsigned int i = 0; i < layer1.size(); ++i) {
+        Tile tile(x, y, layer1[i]);
         this->tiles.push_back(tile);
 
         std::cout << "X: " << x << " Y: " << y << std::endl;
@@ -124,3 +115,12 @@ void Map::render(SDL_Rect &camera) {
         tiles[i].render(tileInfo, gRenderer, camera);
     }
 }
+
+
+Map::Map(Map&& other) {
+    // std::cout << "Constructor por movimiento" << std::endl;
+    this->gRenderer = other.gRenderer;
+    this->tiles = std::move(other.tiles);
+    this->tileInfo = std::move(other.tileInfo);
+}
+

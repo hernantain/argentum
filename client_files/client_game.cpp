@@ -4,57 +4,71 @@
 #include <string>
 #include <iostream>
 
-#include "client_main_program.h"
+#include "client_game.h"
 #include "client_sender_thread.h"
 #include "client_receiver_thread.h"
-#include "client_drawable.h"
+
+#include "client_player.h"
+#include "client_elf.h"
+#include "client_human.h"
+#include "client_dwarf.h"
+#include "client_gnome.h"
+
+#include "client_map.h"
 
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
 #include "../common_sockets.h"
 
+#include "../common_mapinfo.h"
+#include <msgpack.hpp>
+
 
 #define WALKING_ANIMATION_FRAMES 6
-
-#include "client_texture.h"
-
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
-#include "client_map.h"
-
-MainProgram::MainProgram() :  gRenderer(NULL), running(true) {}
 
 
+Game::Game() :  gRenderer(NULL), running(true) {}
 
-void MainProgram::run() {
+
+Map Game::loadMap() {
+	MapInfo mapInfo;
+
+	msgpack::unpacker pac;
+	skt >> pac;
+	msgpack::object_handle oh;
+	pac.next(oh);
+	msgpack::object obj = oh.get();
+	obj.convert(mapInfo);
+	
+	Map map(gRenderer);
+    map.load(mapInfo);
+
+	return std::move(map);
+}
+
+
+void Game::run() {
 	if( !this->init() ) {
 		printf( "Failed to initialize!\n" );
 		return;
 	}
-
-	Map map(this->gRenderer);
-    map.load();
-
-
-	Queue queue;
+		
+	std::cout << "Corriendo" << std::endl;
 	
-	Socket skt;
 	skt.connect_to("localhost", "8080");
+	Map map = this->loadMap();
 
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
-	// LTexture background;
-	// background.loadFromFile("images/argentum2.png", gRenderer);
-
 	SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	Elf player(gRenderer);
-	// if (!player.load_images(this->gRenderer))
-	// 	exit(1);
 
 
 	// Recibe la respuesta del server y modifica o no en el modelo
@@ -80,8 +94,6 @@ void MainProgram::run() {
 		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderClear( gRenderer );
 
-		// background.render( 0, 0, gRenderer, &camera );
-
 		map.render(camera);
 
 		player.render(this->gRenderer, camera.x, camera.y);
@@ -94,7 +106,7 @@ void MainProgram::run() {
 
 
 
-bool MainProgram::init() {
+bool Game::init() {
 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
@@ -132,8 +144,7 @@ bool MainProgram::init() {
 }
 
 
-MainProgram::~MainProgram() {
-
+Game::~Game() {
 
 	SDL_DestroyRenderer( this->gRenderer );
 	this->gRenderer = NULL;
