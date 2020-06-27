@@ -31,7 +31,7 @@ void ClientReceiverThread::run() {
 
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
-    if (msg.id == 2)
+    if (msg.id == 20)
         this->process_move(msg);
 
     this->player.set_camera(camera);

@@ -104,6 +104,30 @@ public:
 
   // Defiende al personaje de un ataque
   void defense(int damage);
+
+  // Mueve el personaje hacia la derecha
+  void move_right(int velocity);
+
+  // Mueve el personaje hacia la izquierda
+  void move_left(int velocity);
+
+  // Mueve el personaje hacia arriba
+  void move_top(int velocity);
+
+  // Mueve el personaje hacia abajo
+  void move_down(int velocity);
+
+  // Getter de la posicion del cuerpo en X
+  int get_body_pos_X();
+
+  // Getter de la posicion de la cabeza en X
+  int get_head_pos_X();
+
+  // Getter de la posicion del cuerpo en Y
+  int get_body_pos_Y();
+
+  // Getter de la posicion de la cabeza en Y
+  int get_head_pos_Y();
 };
 
 

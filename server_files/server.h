@@ -10,11 +10,13 @@
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
 
+#include "server_protocol_translator.h"
+
 class Server {
     std::atomic<bool> running;
     Socket skt;
     Json::Value config;
-    // ProtocolTranslator protocol_translator;
+    ProtocolTranslator protocol_translator;
 
     void initialize_config(const char* config_file);
     ProtocolMessage receive_msg(Socket skt);
