@@ -39,5 +39,5 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_move(ProtocolMessage &msg) {
-    this->player.set_position((int) msg.bodyPosX, (int) msg.bodyPosY, (int) msg.headPosX, (int) msg.headPosY);
+    this->player.set_position((int) msg.character.bodyPosX, (int) msg.character.bodyPosY, (int) msg.character.headPosX, (int) msg.character.headPosY);
 }

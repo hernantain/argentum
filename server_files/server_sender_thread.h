@@ -9,7 +9,6 @@
 #include "../common_protocol_message.h"
 
 class ServerSenderThread : public Thread {
-
     Socket &skt;
     Queue &queue;
     std::atomic<bool> running;
@@ -20,10 +19,6 @@ class ServerSenderThread : public Thread {
         ServerSenderThread(Socket &skt, Queue &queue);
 
         virtual void run() override;
-
 };
-
-
-
 
 #endif

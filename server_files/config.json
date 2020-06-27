@@ -1,0 +1,148 @@
+{
+    "service": "8080",
+    "initialAttributes": 18,
+    "graphics": {
+        "velocity": 3,
+        "screen_width": 640,
+        "screen_height": 480,
+        "character_width": 21,
+        "character_height": 31
+    },
+    "paladin": {
+        "life_multiplier": 0.7,
+        "mana_multiplier": 0.2,
+        "meditation_multiplier": 0.3
+    },
+    "warrior": {
+        "life_multiplier": 0.9,
+        "mana_multiplier": 0,
+        "meditation_multiplier": 0
+    },
+    "magician": {
+        "life_multiplier": 0.3,
+        "mana_multiplier": 0.8,
+        "meditation_multiplier": 0.8
+    },
+    "cleric": {
+        "life_multiplier": 0.5,
+        "mana_multiplier": 0.5,
+        "meditation_multiplier": 0.6
+    },
+    "human": {
+        "strength_modifier": 1,
+        "agility_modifier": 1,
+        "constitution_modifier": 2,
+        "life_multiplier": 1,
+        "mana_multiplier": 1,
+        "recovery_multiplier": 0.5
+    },
+    "elf": {
+        "strength_modifier": -1,
+        "agility_modifier": 3,
+        "intelligence_modifier": 2,
+        "constitution_modifier": 1,
+        "life_multiplier": 1,
+        "mana_multiplier": 1,
+        "recovery_multiplier": 0.5
+    },
+    "gnome": {
+        "strength_modifier": -2,
+        "agility_modifier": 3,
+        "intelligence_modifier": 4,
+        "life_multiplier": 1,
+        "mana_multiplier": 1,
+        "recovery_multiplier": 0.5
+    },
+    "dwarf": {
+        "strength_modifier": 3,
+        "intelligence_modifier": -2,
+        "constitution_modifier": 3,
+        "life_multiplier": 1,
+        "mana_multiplier": 1,
+        "recovery_multiplier": 0.5
+    },
+    "gold": {
+        "extra_gold_rate": 0.5,
+        "power_constant": 1.1,
+        "secure_gold_constant": 100
+    },
+    "inventory": {
+        "max_items": 10
+    },
+    "attack": {
+        "critical_probability": 0.2
+    },
+    "defense": {
+        "evasion_constant": 0.001
+    },
+    "leatherArmor": {
+        "min_defense": 2,
+        "max_defense": 6
+    },
+    "plateArmor": {
+        "min_defense": 15,
+        "max_defense": 30
+    },
+    "blueRobe": {
+        "min_defense": 6,
+        "max_defense": 10
+    },
+    "hoodHelmet": {
+        "min_defense": 1,
+        "max_defense": 4
+    },
+    "ironHelmet": {
+        "min_defense": 4,
+        "max_defense": 8
+    },
+    "magicHat": {
+        "min_defense": 4,
+        "max_defense": 12
+    },
+    "tortoiseShield": {
+        "min_defense": 1,
+        "max_defense": 2
+    },
+    "ironShield": {
+        "min_defense": 1,
+        "max_defense": 4
+    },
+    "sword": {
+        "min_damage": 2,
+        "max_damage": 5
+    },
+    "axe": {
+        "min_damage": 4,
+        "max_damage": 5
+    },
+    "hammer": {
+        "min_damage": 1,
+        "max_damage": 9
+    },
+    "elficFlute": {
+        "mana": 100
+    },
+    "ashStaff": {
+        "min_damage": 2,
+        "max_damage": 4,
+        "mana": 5
+    },
+    "gnarledStaff": {
+        "min_damage": 4,
+        "max_damage": 8,
+        "mana": 15
+    },
+    "crimpStaff": {
+        "min_damage": 8,
+        "max_damage": 20,
+        "mana": 30
+    },
+    "simpleBow": {
+        "min_damage": 1,
+        "max_damage": 4
+    },
+    "compoundBow": {
+        "min_damage": 4,
+        "max_damage": 16
+    }
+}
