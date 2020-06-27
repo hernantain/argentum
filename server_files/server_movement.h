@@ -24,17 +24,17 @@ public:
     // Constructor.
     explicit Movement();
 
-    // Devuelve un float indicando la posición horizontal del personaje.
-    int get_horizontal_position();
+    // Devuelve un int indicando la posicion en X del cuerpo.
+    int get_horizontal_body_position();
 
-    // Devuelve un float indicando la posición vertical del personaje.
-    int get_vertical_position();
+    // Devuelve un int indicando la posicion en X de la cabeza.
+    int get_horizontal_head_position();
 
-    // Devuelve un float indicando la velocidad horizontal del personaje.
-    int get_horizontal_velocity();
+    // Devuelve un int indicando la posicion en Y del cuerpo.
+    int get_vertical_body_position();
 
-    // Devuelve un float indicando la velocidad vertical del personaje.
-    int get_vertical_velocity();
+    // Devuelve un int indicando la posicion en Y de la cabeza
+    int get_vertical_head_position();
 
     // Setea el movimiento del personaje hacia la derecha
     void move_right(int velocity);
@@ -67,6 +67,12 @@ public:
     // Devuelve un booleano indicando si está colisionando
     // con algún objeto.
     bool is_colliding();
+
+    // Corrige la posicion en X si el personaje se va de los limites del mapa
+    void check_out_of_bounds_X(int velocity);
+
+    // Corrige la posicion en Y si el personaje se va de los limites del mapa
+    void check_out_of_bounds_Y(int velocity);
 
 };
 

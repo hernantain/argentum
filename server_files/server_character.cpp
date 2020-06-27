@@ -164,3 +164,36 @@ void Character::defense(int damage) {
   if (life.current() == NO_LIFE) alive = false;
   std::cout << "Defensa:: " << defense << std::endl;
 }
+
+void Character::move_right(int velocity) {
+  movement.move_right(velocity);
+}
+
+void Character::move_left(int velocity) {
+  movement.move_left(velocity);
+}
+
+void Character::move_top(int velocity) {
+  movement.move_top(velocity);
+}
+
+void Character::move_down(int velocity) {
+  movement.move_down(velocity);
+}
+
+int Character::get_body_pos_X() {
+  return movement.get_horizontal_body_position();
+}
+
+int Character::get_head_pos_X() {
+  return movement.get_horizontal_head_position();
+}
+
+int Character::get_body_pos_Y() {
+  return movement.get_vertical_body_position();
+}
+
+int Character::get_head_pos_Y() {
+  return movement.get_vertical_head_position();
+}
+
