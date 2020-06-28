@@ -9,20 +9,19 @@
 #include "client_texture.h"
 
 
-class TileInfo {
+struct TileInfo {
 
     std::vector<SDL_Rect> tiles;
     std::map<int, LTexture*> textures;
 
-    public:
-        TileInfo();
+    TileInfo();
 
-        void addTile(int x = 0, int y = 0);
+    void addTile(int x = 0, int y = 0);
 
-        void addTexture(int id, std::string image, SDL_Renderer* gRenderer, int numTiles=1);
+    void addTexture(int id, std::string image, SDL_Renderer* gRenderer, int numTiles=1);
 
-        LTexture* getTexture(int i);
-        SDL_Rect getTileBox(int i);
+    LTexture* getTexture(int i);
+    SDL_Rect getTileBox(int i);
 };
 
 
