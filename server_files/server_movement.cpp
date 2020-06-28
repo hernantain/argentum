@@ -33,32 +33,48 @@ int Movement::get_vertical_head_position() {
   return headPosY;
 }
 
-void Movement::move_right(int velocity) {
-  bodyPosX += velocity;
-  headPosX += velocity;
-  last_movement = RIGHT;
-  check_out_of_bounds_X(velocity);
+void Movement::move_right(int velocity, CollisionInfo &collisionInfo) {
+    bodyPosX += velocity;
+    headPosX += velocity;
+    last_movement = RIGHT;
+    check_out_of_bounds_X(velocity);
+    if (check_map_collision(collisionInfo)) {
+        bodyPosY -= velocity;
+        headPosY -= velocity; 
+    }
 }
 
-void Movement::move_left(int velocity) {
-  bodyPosX += velocity;
-  headPosX += velocity;
-  last_movement = LEFT;
-  check_out_of_bounds_X(velocity);
+void Movement::move_left(int velocity, CollisionInfo &collisionInfo) {
+    bodyPosX += velocity;
+    headPosX += velocity;
+    last_movement = LEFT;
+    check_out_of_bounds_X(velocity);
+    if (check_map_collision(collisionInfo)) {
+        bodyPosY -= velocity;
+        headPosY -= velocity; 
+    }
 }
 
-void Movement::move_top(int velocity) {
-  bodyPosY += velocity;
-  headPosY += velocity;
-  last_movement = TOP;
-  check_out_of_bounds_Y(velocity);
+void Movement::move_top(int velocity, CollisionInfo &collisionInfo) {
+    bodyPosY += velocity;
+    headPosY += velocity;
+    last_movement = TOP;
+    check_out_of_bounds_Y(velocity);
+    if (check_map_collision(collisionInfo)) {
+        bodyPosY -= velocity;
+        headPosY -= velocity; 
+    }
 }
 
-void Movement::move_down(int velocity) {
-  bodyPosY += velocity;
-  headPosY += velocity;
-  last_movement = DOWN;
-  check_out_of_bounds_Y(velocity);
+void Movement::move_down(int velocity, CollisionInfo &collisionInfo) {
+    bodyPosY += velocity;
+    headPosY += velocity;
+    last_movement = DOWN;
+    check_out_of_bounds_Y(velocity);
+    if (check_map_collision(collisionInfo)) {
+        bodyPosY -= velocity;
+        headPosY -= velocity; 
+    }
 }
 
 bool Movement::is_facing_right(){
@@ -80,7 +96,7 @@ bool Movement::is_facing_down(){
 void Movement::check_out_of_bounds_X(int velocity){
   if(bodyPosX < 0 || bodyPosX + CHARACTER_WIDTH > WINDOW_SIZE) {
     std::cout << "Te estas chocando contra un costado" << std::endl;
-		bodyPosX -= velocity;
+    bodyPosX -= velocity;
     headPosX -= velocity;
   }
 }
@@ -88,9 +104,37 @@ void Movement::check_out_of_bounds_X(int velocity){
 void Movement::check_out_of_bounds_Y(int velocity){
   if(headPosY < 0 || bodyPosY + CHARACTER_HEIGHT > WINDOW_SIZE) { 
     std::cout << "Te estas chocando contra un tope" << std::endl;
-		bodyPosY -= velocity;
+    bodyPosY -= velocity;
     headPosY -= velocity;
   }
+}
+
+bool Movement::check_map_collision(CollisionInfo &collisionInfo) {
+    int offsetX = bodyPosX / 128;
+    int offsetY = bodyPosY / 128;
+    int tileNumber = (offsetY * 25) + offsetX; 
+    int tile = collisionInfo.layer[tileNumber];
+
+    if (tile == 0)
+        return false;
+
+    CollisionTile collisionTile = collisionInfo.tiles[tile];
+    
+    int collisionX = offsetX * 128 + collisionTile.x;
+    int collisionY = offsetY * 128 + collisionTile.y;
+    if ((bodyPosX + 21 > collisionX) && (bodyPosX + 21 < collisionX + collisionTile.w)) {
+        return true;
+    }
+
+    if ((bodyPosX > collisionX) && (bodyPosX + 21 < collisionX + collisionTile.w)) {
+        return true;
+    }
+
+    if ((bodyPosY + 31 > collisionY) && (bodyPosY + 31 < collisionY + collisionTile.h)) {
+        return true;
+    }
+
+    return false;
 }
 
 // TODO: this two methods

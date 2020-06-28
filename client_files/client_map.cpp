@@ -29,11 +29,11 @@ void Map::load(MapInfo &mapInfo) {
         } else {
             int imagewidth = tileset_info[i].get_imagewidth();
             int width = imagewidth / 128;
-            int x = 0;
+            int y = 0;
             for (int i = 0; i < width; ++i) {
-                this->tileInfo.addTile(x, 0);
-                this->tileInfo.addTile(x, 128);
-                x += 128;
+                this->tileInfo.addTile(0, y);
+                this->tileInfo.addTile(128, y);
+                y += 128;
             }
         }
         std::string imagePath = tileset_info[i].get_imagePath();
@@ -42,14 +42,28 @@ void Map::load(MapInfo &mapInfo) {
         this->tileInfo.addTexture(first_gid, imagePath, gRenderer, tilecount);
     }   
 
+    std::map<int, LTexture*>::iterator itr;  
+    for (itr = tileInfo.textures.begin(); itr != tileInfo.textures.end(); ++itr) { 
+        std::cout << '\t' << itr->first << '\n'; 
+    } 
+    std::cout << std::endl; 
+  
+
+
     std::vector<int> layer1 = mapInfo.get_layer1();
     std::vector<int> layer2 = mapInfo.get_layer2();
+
+    for (unsigned int i = 0; i < layer2.size(); ++i) {
+        std::cout << layer2[i];
+    }
+    std::cout << std::endl;
+
     int x = 0, y = 0;
     for (unsigned int i = 0; i < layer1.size(); ++i) {
         Tile tile1(x, y, layer1[i]);
-        // Tile tile2(x, y, layer2[i]);
+        Tile tile2(x, y, layer2[i]);
         this->tilesFirstLayer.push_back(tile1);
-        // this->tilesSecondLayer.push_back(tile2);
+        this->tilesSecondLayer.push_back(tile2);
 
         std::cout << "X: " << x << " Y: " << y << std::endl;
 
@@ -60,17 +74,16 @@ void Map::load(MapInfo &mapInfo) {
         }
     }
 
+
+
 }
 
 
 void Map::render(SDL_Rect &camera) {
     for (unsigned int i = 0; i < tilesFirstLayer.size(); ++i) {
         tilesFirstLayer[i].render(tileInfo, gRenderer, camera);
+        tilesSecondLayer[i].render(tileInfo, gRenderer, camera);
     }
-
-    // for (unsigned int i = 0; i < tilesSecondLayer.size(); ++i) {
-    //     tilesSecondLayer[i].render(tileInfo, gRenderer, camera);
-    // }
 }
 
 
@@ -79,7 +92,7 @@ Map::Map(Map&& other) {
     // std::cout << "Constructor por movimiento" << std::endl;
     this->gRenderer = other.gRenderer;
     this->tilesFirstLayer = std::move(other.tilesFirstLayer);
-    // this->tilesSecondLayer = std::move(other.tilesSecondLayer);
+    this->tilesSecondLayer = std::move(other.tilesSecondLayer);
     this->tileInfo = std::move(other.tileInfo);
 }
 

@@ -1,6 +1,8 @@
 #ifndef _SERVER_MOVEMENT
 #define _SERVER_MOVEMENT
 
+#include "../common_collision_info.h"
+
 // Which was the last movement.
 enum _lastMovement {
     LEFT,
@@ -37,16 +39,16 @@ public:
     int get_vertical_head_position();
 
     // Setea el movimiento del personaje hacia la derecha
-    void move_right(int velocity);
+    void move_right(int velocity, CollisionInfo &collisionInfo);
 
     // Setea el movimiento del personaje hacia la izquierda
-    void move_left(int velocity);
+    void move_left(int velocity, CollisionInfo &collisionInfo);
 
     // Setea el movimiento del personaje hacia la derecha
-    void move_top(int velocity);
+    void move_top(int velocity, CollisionInfo &collisionInfo);
 
     // Setea el movimiento del personaje hacia la izquierda
-    void move_down(int velocity);
+    void move_down(int velocity, CollisionInfo &collisionInfo);
 
     // Devuelve true si el personaje está mirando hacia la derecha, false en caso contrario.
     bool is_facing_right();
@@ -73,6 +75,8 @@ public:
 
     // Corrige la posicion en Y si el personaje se va de los limites del mapa
     void check_out_of_bounds_Y(int velocity);
+
+    bool check_map_collision(CollisionInfo &collisionInfo);
 
 };
 

@@ -6,11 +6,30 @@
 
 #include "common_mapinfo.h"
 
-
 MapInfo::MapInfo() {}
 
 
-void MapInfo::load() {
+void MapInfo::loadCollisionInfo(CollisionInfo &collisionInfo, Json::Value &tileJson, int &first_tile_gid) {
+
+    const Json::Value& tiles = tileJson["tiles"];
+    int id;
+    for (unsigned int i = 0; i < tiles.size(); ++i) {
+        CollisionTile collisionTile;
+        collisionTile.x = tiles[i]["objectgroup"]["objects"][0]["x"].asInt();
+        collisionTile.y = tiles[i]["objectgroup"]["objects"][0]["y"].asInt() ;
+        collisionTile.w = tiles[i]["objectgroup"]["objects"][0]["width"].asInt();
+        collisionTile.h = tiles[i]["objectgroup"]["objects"][0]["height"].asInt();
+        std::cout << "X: " << collisionTile.x << " Y: " <<  collisionTile.y << " WIDTH: " << collisionTile.w << " HEIGHT:  " << collisionTile.h << std::endl;
+        id = tiles[i]["id"].asInt();
+        collisionInfo.tiles.insert(std::pair<int, CollisionTile> (id+first_tile_gid, collisionTile));
+    }
+}
+
+
+
+CollisionInfo MapInfo::load() {
+
+    CollisionInfo collisionInfo;
 
     std::ifstream map("argentum.json");
     Json::Reader reader;
@@ -25,6 +44,7 @@ void MapInfo::load() {
     for (unsigned int i = 0; i < tilesets.size(); ++i) {
         
         source = tilesets[i]["source"].asString();
+        std::cout << "Procesando... " << source << std::endl;
         std::ifstream tileInfo(source);
         reader.parse(tileInfo, tileJson);
 
@@ -32,6 +52,12 @@ void MapInfo::load() {
         int first_gid = tilesets[i]["firstgid"].asInt();
         int tilecount = tileJson["tilecount"].asInt();
         int imagewidth = tileJson["imagewidth"].asInt();
+
+        std::cout << tileJson["tiles"].isNull() << std::endl; 
+        if (!tileJson["tiles"].isNull()) {
+            std::cout << "PASA POR IS NULL" << std::endl;
+            this->loadCollisionInfo(collisionInfo, tileJson, first_gid);
+        }
 
         TileSetInfo tile(imagePath, first_gid, tilecount, imagewidth);
         this->tileSetInfo.push_back(tile);
@@ -41,10 +67,13 @@ void MapInfo::load() {
         this->layer1.push_back(grounds[i].asInt());
     }
 
+
     for (unsigned int i = 0; i < trees.size(); ++i) {
         this->layer2.push_back(trees[i].asInt());
+        collisionInfo.layer.push_back(trees[i].asInt());
     }
 
+    return std::move(collisionInfo);
 }
 
 

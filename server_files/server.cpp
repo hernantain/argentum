@@ -11,6 +11,7 @@
 #include "server_character.h"
 #include "server_elf.h"
 #include "server_cleric.h"
+#include "../common_collision_info.h"
 
 #define FILE_ERROR_MSG "No se pudo abrir el archivo de configuración"
 
@@ -28,7 +29,7 @@ void Server::run() {
     Queue queue;
 
     MapInfo mapInfo;
-    mapInfo.load();
+    CollisionInfo collisionInfo = mapInfo.load();
 
     msgpack::sbuffer buffer;
     msgpack::packer<msgpack::sbuffer> pk(&buffer);
@@ -41,7 +42,7 @@ void Server::run() {
 
     Elf race(config);
     Cleric c(config);
-    Character character(1, config, c, race);
+    Character character(1, config, c, race, collisionInfo);
 
     while (this->running) {
         // TODO: ClientHandler
