@@ -17,6 +17,7 @@ class Player : public Drawable {
     protected:
         int bodyPosX, bodyPosY;
         int headPosX, headPosY;
+        int helmetId, armorId, shieldId, weaponId;
         std::vector<Clothes*> clothes;
         std::vector<Helmet*> helmets;
         PlayerPicture* playerPicture;
@@ -34,6 +35,8 @@ class Player : public Drawable {
 
 		void set_position(int newBodyPosX, int newBodyPosY, int newHeadPosX, int newHeadPosY);
         void set_camera(SDL_Rect &camera);
+
+        void set_helmet(int helmetId);
 
         int getPosX() const;
         int getPosY() const;

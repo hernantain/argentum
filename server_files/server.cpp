@@ -13,6 +13,10 @@
 #include "server_cleric.h"
 #include "../common_collision_info.h"
 
+#include "server_hood.h"
+#include "server_magic_hat.h"
+#include "server_iron_helmet.h"
+
 #define FILE_ERROR_MSG "No se pudo abrir el archivo de configuración"
 
 Server::Server(const char* config_file) : running(true) {
@@ -43,6 +47,8 @@ void Server::run() {
     Elf race(config);
     Cleric c(config);
     Character character(1, config, c, race, collisionInfo);
+
+    ProtocolTranslator protocol_translator(config);
 
     while (this->running) {
         // TODO: ClientHandler

@@ -3,7 +3,7 @@
 #include "client_magic_hat.h"
 #include "client_iron_helmet.h"
 #include "client_player.h"
-
+#include <iostream>
 
 Player::Player(
     int bodyPosX, 
@@ -87,28 +87,43 @@ void Player::load_helmets(SDL_Renderer* gRenderer) {
 	this->helmets.push_back(magicHat);
 }
 
+void Player::set_helmet(int helmetId) {
+	if (helmetId == 4) {
+		this->equippedPlayer->setHelmet(this->helmets[0]);
+	} else if (helmetId == 5) {
+		this->equippedPlayer->setHelmet(this->helmets[1]);
+	} else {
+		this->equippedPlayer->setHelmet(this->helmets[2]);
+	}
+}
+
 
 ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 	//If a key was pressed
+	int event_id = 1;
 	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ) {
 		switch( e.key.keysym.sym ) { 						//Adjust velocity
             
             case SDLK_UP: 
+				event_id = 1;
 				velY -= drawable_speed; 
 				orientation = UP;
 				break;
 
-            case SDLK_DOWN: 
+            case SDLK_DOWN:
+				event_id = 1;
 				velY += drawable_speed;
 				orientation = DOWN;
 				break;
 
-            case SDLK_LEFT: 
+            case SDLK_LEFT:
+				event_id = 1;
 				velX -= drawable_speed;
 				orientation = LEFT; 
 				break;
 
-            case SDLK_RIGHT: 
+            case SDLK_RIGHT:
+				event_id = 1;
 				velX += drawable_speed; 
 				orientation = RIGHT;
 				break;
@@ -128,15 +143,21 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 				break;
 
 			case SDLK_h:
-				this->equippedPlayer->setHelmet(this->helmets[0]);
+				event_id = 3;
+				// This line will be setted on the "onClick" event
+				helmetId = this->helmets[0]->get_id();
 				break;
 
 			case SDLK_j:
-				this->equippedPlayer->setHelmet(this->helmets[1]);
+				event_id = 3;
+				// This line will be setted on the "onClick" event
+				helmetId = this->helmets[1]->get_id();
 				break;
 
 			case SDLK_k:
-				this->equippedPlayer->setHelmet(this->helmets[2]);
+				event_id = 3;
+				// This line will be setted on the "onClick" event
+				helmetId = this->helmets[2]->get_id();
 				break;
 
 			case SDLK_l:
@@ -180,8 +201,9 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 		(int16_t) this->headPosX, 
 		(int16_t) this->headPosY, 
 		(int16_t) this->velX, 
-		(int16_t) this->velY
+		(int16_t) this->velY,
+		(int16_t) this->helmetId
 	);
-	ProtocolMessage msg(1, std::move(character));
+	ProtocolMessage msg(event_id, std::move(character));
 	return std::move(msg);
 }

@@ -14,6 +14,7 @@ class Helmet {
     void load_back_walking_sprite();
 
     protected:
+        int id;
         Helmet(int offset);
         LTexture helmetTexture;
         SDL_Rect helmetOrientation[ 4 ];
@@ -21,6 +22,8 @@ class Helmet {
 
     public:
         virtual void render(int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame);
+
+        int get_id();
 
 };
 

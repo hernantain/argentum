@@ -12,6 +12,7 @@ struct ProtocolCharacter {
     int16_t headPosY;
     int16_t velX;
     int16_t velY;
+    int16_t helmetId;
 
     ProtocolCharacter(
         int16_t id,
@@ -20,7 +21,8 @@ struct ProtocolCharacter {
         int16_t headPosX,
         int16_t headPosY,
         int16_t velX, 
-        int16_t velY);
+        int16_t velY,
+        int16_t helmetId);
 
     ProtocolCharacter();
 
@@ -30,7 +32,7 @@ struct ProtocolCharacter {
     ProtocolCharacter(const ProtocolCharacter&) = delete;
     ProtocolCharacter& operator=(const ProtocolCharacter&) = delete;
 
-    MSGPACK_DEFINE(id, bodyPosX, bodyPosY, headPosX, headPosY, velX, velY)
+    MSGPACK_DEFINE(id, bodyPosX, bodyPosY, headPosX, headPosY, velX, velY, helmetId)
 };
 
 #endif

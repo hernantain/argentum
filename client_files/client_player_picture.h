@@ -54,7 +54,7 @@ class EquippedPlayer: public Picture {
         EquippedPlayer(PlayerPicture* player);
 
         void setHelmet(Helmet* helmet);
-
+        
         virtual void render(
             int &bodyPosX, 
             int &bodyPosY,

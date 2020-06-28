@@ -4,8 +4,8 @@
 
 MagicHat::MagicHat(SDL_Renderer* gRenderer) : Helmet(-12) {
 
-    this->load_pictures(gRenderer); 
-
+    this->load_pictures(gRenderer);
+	this->id = 6;
 }
 
 
