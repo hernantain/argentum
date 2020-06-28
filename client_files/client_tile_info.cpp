@@ -20,7 +20,7 @@ void TileInfo::addTexture(int id, std::string image, SDL_Renderer* gRenderer, in
         this->textures.insert(std::pair<int, LTexture*> (id, texture));
     } else {
         for (int i = id; i < id+numTiles; ++i) 
-            this->textures.insert(std::pair<int, LTexture*> (id, texture));
+            this->textures.insert(std::pair<int, LTexture*> (i, texture));
     }
 }
 

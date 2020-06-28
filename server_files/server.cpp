@@ -11,6 +11,7 @@
 #include "server_character.h"
 #include "server_elf.h"
 #include "server_cleric.h"
+#include "../common_collision_info.h"
 
 #include "server_hood.h"
 #include "server_magic_hat.h"
@@ -32,7 +33,7 @@ void Server::run() {
     Queue queue;
 
     MapInfo mapInfo;
-    mapInfo.load();
+    CollisionInfo collisionInfo = mapInfo.load();
 
     msgpack::sbuffer buffer;
     msgpack::packer<msgpack::sbuffer> pk(&buffer);
@@ -45,13 +46,7 @@ void Server::run() {
 
     Elf race(config);
     Cleric c(config);
-    Character character(1, config, c, race);
-    IronHelmet iron(config);
-    Hood hood(config);
-    MagicHat hat(config);
-    character.take_item(hood);
-    character.take_item(iron);
-    character.take_item(hat);
+    Character character(1, config, c, race, collisionInfo);
 
     ProtocolTranslator protocol_translator(config);
 

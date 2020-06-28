@@ -16,6 +16,7 @@
 #include "server_helmet.h"
 #include "server_shield.h"
 #include "server_movement.h"
+#include "../common_collision_info.h"
 
 /* Clase que representa a un personaje del juego.
  * Es no copiable.
@@ -31,6 +32,8 @@ private:
     ManaPoints mana;
     Inventory inventory;
     Equipment equipment;
+    CollisionInfo &collisionInfo;
+
     int gold;
     int level;
     bool alive;
@@ -49,7 +52,7 @@ private:
 public:
   // Contructor, recibe el id, la vida inicial
   Character(size_t id, Json::Value& config, CharacterClass& character_class,
-  Race& race);
+  Race& race, CollisionInfo &collisionInfo);
 
   // Devuelve el id
   size_t get_id();

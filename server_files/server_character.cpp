@@ -8,13 +8,14 @@
 #define INITIAL_LEVEL 1
 #define CRITICAL_MULTIPLIER 2
 
-Character::Character(size_t id, Json::Value &config, CharacterClass& character_class, Race& race) : 
+Character::Character(size_t id, Json::Value &config, CharacterClass& character_class, Race& race, CollisionInfo &collisionInfo) : 
   config(config),
   character_class(character_class),
   race(race), 
   life(race.get_constitution(), character_class.get_life_multiplier(), race.get_life_multiplier()), 
   mana(race.get_intelligence(), character_class.get_mana_multiplier(), race.get_mana_multiplier()),
-  inventory(config["inventory"]["max_items"].asUInt()) {
+  inventory(config["inventory"]["max_items"].asUInt()),
+  collisionInfo(collisionInfo) {
   this->id = id;
   this->gold = INITIAL_GOLD;
   this->level = INITIAL_LEVEL;
@@ -166,19 +167,19 @@ void Character::defense(int damage) {
 }
 
 void Character::move_right(int velocity) {
-  movement.move_right(velocity);
+  movement.move_right(velocity, collisionInfo);
 }
 
 void Character::move_left(int velocity) {
-  movement.move_left(velocity);
+  movement.move_left(velocity, collisionInfo);
 }
 
 void Character::move_top(int velocity) {
-  movement.move_top(velocity);
+  movement.move_top(velocity, collisionInfo);
 }
 
 void Character::move_down(int velocity) {
-  movement.move_down(velocity);
+  movement.move_down(velocity, collisionInfo);
 }
 
 int Character::get_body_pos_X() {
