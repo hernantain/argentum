@@ -8,6 +8,13 @@
         "character_width": 21,
         "character_height": 31
     },
+    "npc": {
+        "max_limit": 10,
+        "nothing_drop_probability": 0.9,
+        "gold_drop_probability": 0.08,
+        "potion_drop_probability": 0.01,
+        "another_item_probability": 0.01
+    },
     "paladin": {
         "life_multiplier": 0.7,
         "mana_multiplier": 0.2,
