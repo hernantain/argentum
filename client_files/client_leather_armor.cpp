@@ -7,7 +7,8 @@ LeatherTallArmor::LeatherTallArmor(
     int width, 
     int height) : Clothes(width, height) {
 
-    this->load_pictures(gRenderer); 
+    this->load_pictures(gRenderer);
+    this->id = 1;
 
 }
 
@@ -28,7 +29,8 @@ LeatherShortArmor::LeatherShortArmor(
     int width, 
     int height) : Clothes(width, height) {
 
-    this->load_pictures(gRenderer); 
+    this->load_pictures(gRenderer);
+    this->id = 1;
 
 }
 

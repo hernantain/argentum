@@ -9,7 +9,21 @@ ProtocolMessage ProtocolTranslator::translate(ProtocolMessage& msg, Character& c
     switch (code) {
         case PROTOCOL_MOVE: return move_event(msg, character);
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, character);
+        case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, character);
     }
+    return std::move(msg);
+}
+
+ProtocolMessage ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, Character& character) {
+    int armor_id = msg.character.armorId;
+    ArmorFactory factory;
+    Armor armor = factory.make_armor(armor_id, config);
+    character.equip_armor(armor);
+    msg.id = PROTOCOL_ARMOR_CONFIRM;
+
+    std::cout << "ID: " << msg.id << std::endl;
+    std::cout << "Updated Armor ID: " << msg.character.armorId << std::endl;
+
     return std::move(msg);
 }
 
@@ -17,9 +31,8 @@ ProtocolMessage ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, Cha
     int helmet_id = msg.character.helmetId;
     HelmetFactory factory;
     Helmet helmet = factory.make_helmet(helmet_id, config);
-    std::cout << "The real helmet object id: " << helmet.get_id() << std::endl;
     character.equip_helmet(helmet);
-    msg.id = PROTOCOL_EQUIP_CONFIRM;
+    msg.id = PROTOCOL_HELMET_CONFIRM;
 
     std::cout << "ID: " << msg.id << std::endl;
     std::cout << "Updated Helmet ID: " << msg.character.helmetId << std::endl;

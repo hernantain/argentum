@@ -13,10 +13,6 @@
 #include "server_cleric.h"
 #include "../common_collision_info.h"
 
-#include "server_hood.h"
-#include "server_magic_hat.h"
-#include "server_iron_helmet.h"
-
 #define FILE_ERROR_MSG "No se pudo abrir el archivo de configuración"
 
 Server::Server(const char* config_file) : running(true) {

@@ -37,6 +37,7 @@ class Player : public Drawable {
         void set_camera(SDL_Rect &camera);
 
         void set_helmet(int helmetId);
+        void set_armor(int armorId);
 
         int getPosX() const;
         int getPosY() const;

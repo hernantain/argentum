@@ -33,9 +33,10 @@ void ClientReceiverThread::run() {
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id == 20)
         this->process_move(msg);
-    if (msg.id == 30) {
+    if (msg.id == 30)
         this->process_equip_helmet(msg);
-    }
+    if (msg.id == 31)
+        this->process_equip_armor(msg);
 
     this->player.set_camera(camera);
 }
@@ -47,4 +48,8 @@ void ClientReceiverThread::process_move(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     this->player.set_helmet(msg.character.helmetId);
+}
+
+void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
+    this->player.set_armor(msg.character.armorId);
 }

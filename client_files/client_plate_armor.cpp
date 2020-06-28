@@ -7,7 +7,8 @@ PlateTallArmor::PlateTallArmor(
     int width, 
     int height) : Clothes(width, height) {
 
-    this->load_pictures(gRenderer); 
+    this->load_pictures(gRenderer);
+    this->id = 2;
 
 }
 
@@ -28,7 +29,8 @@ PlateShortArmor::PlateShortArmor(
     int width, 
     int height) : Clothes(width, height) {
 
-    this->load_pictures(gRenderer); 
+    this->load_pictures(gRenderer);
+    this->id = 2;
 
 }
 

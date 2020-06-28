@@ -16,10 +16,13 @@ ShortPlayer::ShortPlayer(SDL_Renderer* gRenderer, const char* head_path) : Playe
 
 void ShortPlayer::load_clothes(SDL_Renderer* gRenderer) {
 	Clothes* common = new CommonShortClothes(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
-	Clothes* plateArmor = new PlateShortArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
 	Clothes* leatherArmor = new LeatherShortArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
+	Clothes* plateArmor = new PlateShortArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
+	// Clothes* blueRobe = new BlueShortRobe(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
+
 	this->clothes.push_back(common);
-	this->clothes.push_back(plateArmor);
 	this->clothes.push_back(leatherArmor);
+	this->clothes.push_back(plateArmor);
+	// this->clothes.push_back(blueRobe);
 }
 

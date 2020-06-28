@@ -24,6 +24,7 @@ class Clothes {
     void loadTallWalkingRightSprite();
 
     protected:
+        int id;
         LTexture bodyTexture;
         SDL_Rect walkingFrontPlayer[ WALKING_FRONT_ANIMATION_FRAMES ];
         SDL_Rect walkingBackPlayer[ WALKING_BACK_ANIMATION_FRAMES ];
@@ -37,6 +38,8 @@ class Clothes {
         Clothes(int width, int height);
     public:
         virtual void render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame);
+
+        int get_id();
 };
 
 

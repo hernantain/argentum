@@ -16,9 +16,12 @@ TallPlayer::TallPlayer(SDL_Renderer* gRenderer, const char* head_path) : Player(
 
 void TallPlayer::load_clothes(SDL_Renderer* gRenderer) {
 	Clothes* common = new CommonTallClothes(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
-	Clothes* plateArmor = new PlateTallArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
 	Clothes* leatherArmor = new LeatherTallArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
+	Clothes* plateArmor = new PlateTallArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
+	// Clothes* blueRobe = new BlueTallRobe(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
 	this->clothes.push_back(common);
-	this->clothes.push_back(plateArmor);
 	this->clothes.push_back(leatherArmor);
+	this->clothes.push_back(plateArmor);
+	// this->clothes.push_back(blueRobe);
+
 }

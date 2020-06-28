@@ -19,6 +19,7 @@ class ClientReceiverThread : public Thread {
     void process_response(ProtocolMessage &msg);
     void process_move(ProtocolMessage &msg);
     void process_equip_helmet(ProtocolMessage &msg);
+    void process_equip_armor(ProtocolMessage &msg);
     public:
         ClientReceiverThread(Socket &skt, Player &player, SDL_Rect &camera);
     

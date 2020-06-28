@@ -76,14 +76,17 @@
         "evasion_constant": 0.001
     },
     "leatherArmor": {
+        "id": 1,
         "min_defense": 2,
         "max_defense": 6
     },
     "plateArmor": {
+        "id": 2,
         "min_defense": 15,
         "max_defense": 30
     },
     "blueRobe": {
+        "id": 3,
         "min_defense": 6,
         "max_defense": 10
     },

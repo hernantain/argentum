@@ -97,6 +97,17 @@ void Player::set_helmet(int helmetId) {
 	}
 }
 
+void Player::set_armor(int armorId) {
+	if (armorId == 1) {
+		this->playerPicture->set_clothes(this->clothes[1]);
+	} else if (armorId == 2) {
+		this->playerPicture->set_clothes(this->clothes[2]);
+	} 
+	// TODO: When blueRobe added
+	// else { 
+	// 	this->playerPicture->set_clothes(this->clothes[3]);
+	// }
+}
 
 ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 	//If a key was pressed
@@ -131,15 +142,20 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 
 			/* A CAMBIAR */
 			case SDLK_m:
-				this->playerPicture->set_clothes(this->clothes[1]);
+				event_id = 4;
+				// this->playerPicture->set_clothes(this->clothes[1]);
+				armorId = this->clothes[1]->get_id();
 				break;
 
 			case SDLK_n:
-				this->playerPicture->set_clothes(this->clothes[2]);
+				event_id = 4;
+				// this->playerPicture->set_clothes(this->clothes[2]);
+				armorId = this->clothes[2]->get_id();
 				break;
 
 			case SDLK_b:
 				this->playerPicture->set_clothes(this->clothes[0]);
+				// armorId = this->clothes[0]->get_id();
 				break;
 
 			case SDLK_h:
@@ -202,7 +218,8 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 		(int16_t) this->headPosY, 
 		(int16_t) this->velX, 
 		(int16_t) this->velY,
-		(int16_t) this->helmetId
+		(int16_t) this->helmetId,
+		(int16_t) this->armorId
 	);
 	ProtocolMessage msg(event_id, std::move(character));
 	return std::move(msg);

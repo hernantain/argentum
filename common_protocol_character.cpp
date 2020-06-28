@@ -11,14 +11,16 @@ ProtocolCharacter::ProtocolCharacter(
         int16_t headPosY,
         int16_t velX, 
         int16_t velY,
-        int16_t helmetId) : id(id), 
+        int16_t helmetId,
+        int16_t armorId) : id(id), 
                         bodyPosX(bodyPosX), 
                         bodyPosY(bodyPosY), 
                         headPosX(headPosX),
                         headPosY(headPosY),
                         velX(velX), 
                         velY(velY),
-                        helmetId(helmetId) {}
+                        helmetId(helmetId),
+                        armorId(armorId) {}
 
 
 ProtocolCharacter::ProtocolCharacter() {}
@@ -33,6 +35,7 @@ ProtocolCharacter::ProtocolCharacter(ProtocolCharacter&& other) {
     this->velX = std::move(other.velX);
     this->velY = std::move(other.velY);
     this->helmetId = std::move(other.helmetId);
+    this->armorId = std::move(other.armorId);
 }
 
 ProtocolCharacter& ProtocolCharacter::operator=(ProtocolCharacter&& other) {
@@ -45,6 +48,7 @@ ProtocolCharacter& ProtocolCharacter::operator=(ProtocolCharacter&& other) {
     this->velX = std::move(other.velX);
     this->velY = std::move(other.velY);
     this->helmetId = std::move(other.helmetId);
+    this->armorId = std::move(other.armorId);
     return *this;
 }
     

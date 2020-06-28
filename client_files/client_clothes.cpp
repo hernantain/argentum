@@ -32,9 +32,9 @@ void Clothes::render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int 
     }
 }
 
-
-
-
+int Clothes::get_id() {
+	return id;
+}
 
 void Clothes::set_short_sprites() {
     this->load_front_walking_sprite();

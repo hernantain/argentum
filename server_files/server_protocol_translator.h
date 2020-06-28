@@ -3,7 +3,9 @@
 #include "../common_protocol_message.h"
 #include "server_character.h"
 #include "server_helmet.h"
+#include "server_armor.h"
 #include "server_helmet_factory.h"
+#include "server_armor_factory.h"
 
 #ifndef _PROTOCOL_TRANSLATOR
 #define _PROTOCOL_TRANSLATOR
@@ -16,7 +18,10 @@
 
 // Sending to the client
 #define PROTOCOL_MOVE_CONFIRM 20
-#define PROTOCOL_EQUIP_CONFIRM 30
+#define PROTOCOL_HELMET_CONFIRM 30
+#define PROTOCOL_ARMOR_CONFIRM 31
+#define PROTOCOL_WEAPON_CONFIRM 32
+#define PROTOCOL_SHIELD_CONFIRM 33
 
 /* Clase que se encarga de ejecutar los codigos recibidos y matchearlos a una
  * función del personaje.
@@ -27,6 +32,8 @@ private:
 
     ProtocolMessage move_event(ProtocolMessage& msg, Character& character);
     ProtocolMessage equip_helmet_event(ProtocolMessage& msg, Character& character);
+    ProtocolMessage equip_armor_event(ProtocolMessage& msg, Character& character);
+
 public:
     ProtocolTranslator(Json::Value &config);
 
