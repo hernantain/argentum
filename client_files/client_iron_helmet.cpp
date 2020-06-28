@@ -4,8 +4,8 @@
 
 IronHelmet::IronHelmet(SDL_Renderer* gRenderer) : Helmet(-2) {
 
-    this->load_pictures(gRenderer); 
-
+    this->load_pictures(gRenderer);
+	this->id = 5;
 }
 
 

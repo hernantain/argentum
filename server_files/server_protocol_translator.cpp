@@ -2,14 +2,28 @@
 #include <iostream>
 #include "server_protocol_translator.h"
 
-ProtocolTranslator::ProtocolTranslator() {}
+ProtocolTranslator::ProtocolTranslator(Json::Value &config) : config(config) {}
 
 ProtocolMessage ProtocolTranslator::translate(ProtocolMessage& msg, Character& character) {
     int code = msg.id;
     switch (code) {
         case PROTOCOL_MOVE: return move_event(msg, character);
-        // case PROTOCOL_ATTACK: return attack_event();
+        case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, character);
     }
+    return std::move(msg);
+}
+
+ProtocolMessage ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, Character& character) {
+    int helmet_id = msg.character.helmetId;
+    HelmetFactory factory;
+    Helmet helmet = factory.make_helmet(helmet_id, config);
+    std::cout << "The real helmet object id: " << helmet.get_id() << std::endl;
+    character.equip_helmet(helmet);
+    msg.id = PROTOCOL_EQUIP_CONFIRM;
+
+    std::cout << "ID: " << msg.id << std::endl;
+    std::cout << "Updated Helmet ID: " << msg.character.helmetId << std::endl;
+
     return std::move(msg);
 }
 
@@ -19,19 +33,15 @@ ProtocolMessage ProtocolTranslator::move_event(ProtocolMessage &msg, Character& 
 
     if (velX > 0) {
         character.move_right(velX);
-        std::cout << "Me muevo pa la derecha" << std::endl;
     }
     if (velX < 0) {
         character.move_left(velX);;
-        std::cout << "Me muevo pa la izq" << std::endl;
     }
     if (velY > 0) {
         character.move_top(velY);
-        std::cout << "Me muevo pa arriba" << std::endl;
     }
     if (velY < 0) {
         character.move_down(velY);
-        std::cout << "Me muevo pa abajo" << std::endl;
     }
     msg.character.bodyPosX = character.get_body_pos_X();
     msg.character.headPosX = character.get_head_pos_X();

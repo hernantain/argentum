@@ -12,6 +12,10 @@
 #include "server_elf.h"
 #include "server_cleric.h"
 
+#include "server_hood.h"
+#include "server_magic_hat.h"
+#include "server_iron_helmet.h"
+
 #define FILE_ERROR_MSG "No se pudo abrir el archivo de configuración"
 
 Server::Server(const char* config_file) : running(true) {
@@ -42,6 +46,14 @@ void Server::run() {
     Elf race(config);
     Cleric c(config);
     Character character(1, config, c, race);
+    IronHelmet iron(config);
+    Hood hood(config);
+    MagicHat hat(config);
+    character.take_item(hood);
+    character.take_item(iron);
+    character.take_item(hat);
+
+    ProtocolTranslator protocol_translator(config);
 
     while (this->running) {
         // TODO: ClientHandler

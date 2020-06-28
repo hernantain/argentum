@@ -16,7 +16,6 @@ class Server {
     std::atomic<bool> running;
     Socket skt;
     Json::Value config;
-    ProtocolTranslator protocol_translator;
 
     void initialize_config(const char* config_file);
     ProtocolMessage receive_msg(Socket skt);

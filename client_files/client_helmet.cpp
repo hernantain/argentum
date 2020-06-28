@@ -5,7 +5,6 @@
 
 Helmet::Helmet(int offset) : offset(offset) {}
 
-
 void Helmet::render(int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
 	//Show Character
 	if (orientation == RIGHT) {
@@ -28,4 +27,8 @@ void Helmet::render(int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &
 		SDL_Rect* headClip = &this->helmetOrientation[0];
 		this->helmetTexture.render(headPosX-1, headPosY+offset, gRenderer, headClip);
     }
+}
+
+int Helmet::get_id() {
+	return id;
 }
