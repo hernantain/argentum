@@ -20,10 +20,12 @@ class Player : public Drawable {
         int helmetId, armorId, shieldId, weaponId;
         std::vector<Clothes*> clothes;
         std::vector<Helmet*> helmets;
+        std::vector<Weapon*> weapons;
         PlayerPicture* playerPicture;
         EquippedPlayer* equippedPlayer;
 
     void load_helmets(SDL_Renderer* gRenderer);
+    void load_weapons(SDL_Renderer* gRenderer);
     public:
         Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY);
 
