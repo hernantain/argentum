@@ -7,6 +7,7 @@
 TallPlayer::TallPlayer(SDL_Renderer* gRenderer, const char* head_path) : Player(25, 25, 29, 15) {
 	this->load_clothes(gRenderer);
 	this->load_helmets(gRenderer);
+	this->load_weapons(gRenderer);
 	this->playerPicture = new PlayerPicture(gRenderer, head_path);
 	this->playerPicture->set_clothes(this->clothes[0]);
 	this->equippedPlayer = new EquippedPlayer(playerPicture);
