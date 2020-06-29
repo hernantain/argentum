@@ -19,8 +19,6 @@ Server::Server(const char* config_file) : running(true) {
     this->initialize_config(config_file);
     const char* port = config["service"].asCString();
     this->skt.bind_and_listen(port);
-    // TODO: Parse players file as we dont have creation window
-    // SUGGESTION: use a character factory with its races/clases fctory as well
 }
 
 void Server::run() {
