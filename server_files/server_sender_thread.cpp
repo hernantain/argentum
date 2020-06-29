@@ -12,10 +12,8 @@ ServerSenderThread::ServerSenderThread(
 void ServerSenderThread::run() {
 
     while (this->running) {
-        // Check ID and process what you have to process
         // Send the updated data
         ProtocolMessage msg = this->queue.pop();
-        // this->process_message(msg);
         msgpack::sbuffer buffer;
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
         pk.pack(msg);

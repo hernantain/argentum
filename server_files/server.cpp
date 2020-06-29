@@ -2,16 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <msgpack.hpp>
-#include "../common_mapinfo.h"
 
 #include "server.h"
-#include "server_sender_thread.h"
 #include "server_os_error.h"
 
-#include "server_character.h"
 #include "server_elf.h"
 #include "server_cleric.h"
-#include "../common_collision_info.h"
 
 #define FILE_ERROR_MSG "No se pudo abrir el archivo de configuración"
 
@@ -34,6 +30,9 @@ void Server::run() {
     pk.pack(mapInfo);
     exchange_skt(buffer);
 
+    int npc_limit = config["npc"]["max_limit"].asInt();
+    Thread* npc_thread = new ServerNPCThread(exchange_skt, queue, npc_limit);
+    npc_thread->start();
 
     Thread* server_sender = new ServerSenderThread(exchange_skt, queue);
     server_sender->start();
