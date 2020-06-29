@@ -6,6 +6,7 @@
 #include "common_protocol_character.h"
 
 
+
 struct ProtocolMessage {
     int16_t id;
     ProtocolCharacter character;
@@ -21,7 +22,7 @@ struct ProtocolMessage {
     ProtocolMessage& operator=(const ProtocolMessage&) = delete;
 
     MSGPACK_DEFINE(id, character)
-
 };
+
 
 #endif

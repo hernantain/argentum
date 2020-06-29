@@ -31,8 +31,8 @@ int Player::getPosY() const {
     
 void Player::set_camera(SDL_Rect &camera) {
 
-	camera.x = ( this->bodyPosX +  18 ) - 640 / 2;
-	camera.y = ( this->bodyPosY + 18 ) - 480 / 2;
+	camera.x = ( this->bodyPosX +  18 ) - camera.w / 2;
+	camera.y = ( this->bodyPosY + 18 ) - camera.h / 2;
 
 	//Keep the camera in bounds
 	if( camera.x < 0 )
@@ -70,6 +70,7 @@ void Player::render(SDL_Renderer* gRenderer, int camPosX, int camPosY) {
 	int bodyCenteredY = this->bodyPosY - camPosY;
 	int headCenteredX = this->headPosX - camPosX;
 	int headCenteredY = this->headPosY - camPosY;
+	
 	equippedPlayer->render(
 		bodyCenteredX, 
 		bodyCenteredY, 

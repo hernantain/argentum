@@ -34,7 +34,6 @@ void Server::run() {
     pk.pack(mapInfo);
     exchange_skt(buffer);
 
-
     Thread* server_sender = new ServerSenderThread(exchange_skt, queue);
     server_sender->start();
 

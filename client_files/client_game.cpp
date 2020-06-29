@@ -24,14 +24,18 @@
 #include <msgpack.hpp>
 
 
-#define WALKING_ANIMATION_FRAMES 6
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+Game::Game() :  gRenderer(NULL), running(true) {
+	if( !this->init() ) {
+		printf( "Failed to initialize!\n" );
+		exit(1); // LANZAR EXCEPCION?
+	}
 
-
-
-Game::Game() :  gRenderer(NULL), running(true) {}
+	camera.x = 0;
+	camera.y = 0;
+	camera.w = this->window.getWidth();
+	camera.h = this->window.getHeight();
+}
 
 
 Map Game::loadMap() {
@@ -52,21 +56,13 @@ Map Game::loadMap() {
 
 
 void Game::run() {
-	if( !this->init() ) {
-		printf( "Failed to initialize!\n" );
-		return;
-	}
 		
-	std::cout << "Corriendo" << std::endl;
-	
 	skt.connect_to("localhost", "8080");
 	Map map = this->loadMap();
 
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
-
-	SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	Dwarf player(gRenderer);	
 
@@ -83,6 +79,10 @@ void Game::run() {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
 				skt.close_socket();
+			} else if (e.type == SDL_WINDOWEVENT) {
+				this->window.handleEvent(e);
+				this->adjust_camera(this->window.getWidth(), this->window.getHeight());
+
 			} else {
 				
 				ProtocolMessage msg = player.handleEvent( e );
@@ -94,9 +94,10 @@ void Game::run() {
 		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderClear( gRenderer );
 
-		map.render(camera);
-
+		map.renderFirstLayer(camera);
 		player.render(this->gRenderer, camera.x, camera.y);
+		map.renderSecondLayer(camera);
+		
 		SDL_RenderPresent( this->gRenderer ); //Update screen
 		player.update_frames();
 		
@@ -117,14 +118,13 @@ bool Game::init() {
 		printf( "Warning: Linear texture filtering not enabled!" );
 	} 
 
-	// this->gWindow = SDL_CreateWindow( "Argentum - Taller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+
 	if( !this->window.init() ) {
 		printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 		return false;
 	} 
 	
-	//Create vsynced renderer for window
-	// this->gRenderer = SDL_CreateRenderer( this->gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+
 	this->gRenderer = this->window.createRenderer();
 	if( this->gRenderer == NULL ) {
 		printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -142,6 +142,14 @@ bool Game::init() {
 
 	return true;
 }
+
+
+void Game::adjust_camera(int width, int height) {
+	this->camera.w = width;
+	this->camera.h = height;
+}
+
+
 
 
 Game::~Game() {

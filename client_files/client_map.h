@@ -21,7 +21,8 @@ class Map {
 
         void load(MapInfo &mapInfo);
 
-        void render(SDL_Rect &camera);
+        void renderFirstLayer(SDL_Rect &camera);
+        void renderSecondLayer(SDL_Rect &camera);
 
         Map(Map&& other);
         Map& operator=(Map&& other);
