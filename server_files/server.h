@@ -9,8 +9,13 @@
 #include "../common_sockets.h"
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
+#include "../common_mapinfo.h"
+#include "../common_collision_info.h"
 
+#include "server_sender_thread.h"
+#include "server_npc_thread.h"
 #include "server_protocol_translator.h"
+#include "server_character.h"
 
 class Server {
     std::atomic<bool> running;

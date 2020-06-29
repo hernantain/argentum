@@ -78,35 +78,35 @@ void Movement::move_down(int velocity, CollisionInfo &collisionInfo) {
 }
 
 bool Movement::is_facing_right(){
-  return last_movement == RIGHT;
+    return last_movement == RIGHT;
 }
 
 bool Movement::is_facing_left(){
-  return last_movement == LEFT;
+    return last_movement == LEFT;
 }
 
 bool Movement::is_facing_top(){
-  return last_movement == TOP;
+    return last_movement == TOP;
 }
 
 bool Movement::is_facing_down(){
-  return last_movement == DOWN;
+    return last_movement == DOWN;
 }
 
 void Movement::check_out_of_bounds_X(int velocity){
-  if(bodyPosX < 0 || bodyPosX + CHARACTER_WIDTH > WINDOW_SIZE) {
-    std::cout << "Te estas chocando contra un costado" << std::endl;
-    bodyPosX -= velocity;
-    headPosX -= velocity;
-  }
+    if(bodyPosX < 0 || bodyPosX + CHARACTER_WIDTH > WINDOW_SIZE) {
+        std::cout << "Te estas chocando contra un costado" << std::endl;
+        bodyPosX -= velocity;
+        headPosX -= velocity;
+    }
 }
 
 void Movement::check_out_of_bounds_Y(int velocity){
-  if(headPosY < 0 || bodyPosY + CHARACTER_HEIGHT > WINDOW_SIZE) { 
-    std::cout << "Te estas chocando contra un tope" << std::endl;
-    bodyPosY -= velocity;
-    headPosY -= velocity;
-  }
+    if(headPosY < 0 || bodyPosY + CHARACTER_HEIGHT > WINDOW_SIZE) { 
+        std::cout << "Te estas chocando contra un tope" << std::endl;
+        bodyPosY -= velocity;
+        headPosY -= velocity;
+    }
 }
 
 bool Movement::check_map_collision(CollisionInfo &collisionInfo) {
