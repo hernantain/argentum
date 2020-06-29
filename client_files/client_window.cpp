@@ -4,8 +4,8 @@
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
+
 LWindow::LWindow() {
-	//Initialize non-existant window
 	mWindow = NULL;
 	mFullScreen = false;
 	mMinimized = false;
@@ -13,9 +13,10 @@ LWindow::LWindow() {
 	mHeight = 0;
 }
 
+
 bool LWindow::init() {
 	//Create window
-	mWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+	mWindow = SDL_CreateWindow( "Argentum - Taller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
 	if( mWindow != NULL ) {
 		mWidth = SCREEN_WIDTH;
 		mHeight = SCREEN_HEIGHT;
@@ -33,11 +34,9 @@ SDL_Renderer* LWindow::createRenderer() {
 
 void LWindow::handleEvent( SDL_Event& e ) {
 	//Window event occured
-	if( e.type == SDL_WINDOWEVENT )
-	{
+	if( e.type == SDL_WINDOWEVENT ) {
 
-		switch( e.window.event )
-		{
+		switch( e.window.event ) {
 			//Get new dimensions and repaint on window size change
 			case SDL_WINDOWEVENT_SIZE_CHANGED:
                 mWidth = e.window.data1;

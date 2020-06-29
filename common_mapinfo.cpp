@@ -52,14 +52,13 @@ CollisionInfo MapInfo::load() {
         int first_gid = tilesets[i]["firstgid"].asInt();
         int tilecount = tileJson["tilecount"].asInt();
         int imagewidth = tileJson["imagewidth"].asInt();
-
-        std::cout << tileJson["tiles"].isNull() << std::endl; 
-        if (!tileJson["tiles"].isNull()) {
-            std::cout << "PASA POR IS NULL" << std::endl;
+        int imageheight = tileJson["imageheight"].asInt();
+ 
+        if (!tileJson["tiles"].isNull()) 
             this->loadCollisionInfo(collisionInfo, tileJson, first_gid);
-        }
 
-        TileSetInfo tile(imagePath, first_gid, tilecount, imagewidth);
+
+        TileSetInfo tile(imagePath, first_gid, tilecount, imagewidth, imageheight);
         this->tileSetInfo.push_back(tile);
     }
 

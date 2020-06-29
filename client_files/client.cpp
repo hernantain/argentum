@@ -4,8 +4,8 @@
 
 int main(int argc, char* argv[]) {
 
-    Game mp;
-    mp.run();
+    Game game;
+    game.run();
 
 	return 0;
 }
