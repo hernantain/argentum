@@ -37,6 +37,7 @@ private:
     int gold;
     int level;
     bool alive;
+    bool newbie;
 
     // No copiable.
     Character(const Character&) = delete;

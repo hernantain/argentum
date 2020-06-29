@@ -20,6 +20,7 @@ Character::Character(size_t id, Json::Value &config, CharacterClass& character_c
   this->gold = INITIAL_GOLD;
   this->level = INITIAL_LEVEL;
   this->alive = true;
+  this->newbie = true;
 }
 
 int Character::get_life() {
