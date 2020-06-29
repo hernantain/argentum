@@ -2,6 +2,11 @@
 #include "client_hood.h"
 #include "client_magic_hat.h"
 #include "client_iron_helmet.h"
+#include "client_axe.h"
+#include "client_hammer.h"
+#include "client_baculo_nudoso.h"
+#include "client_baculo_engarzado.h"
+#include "client_sword.h"
 #include "client_player.h"
 #include <iostream>
 
@@ -84,8 +89,23 @@ void Player::load_helmets(SDL_Renderer* gRenderer) {
 	Helmet* magicHat = new MagicHat(gRenderer);
 	this->helmets.push_back(hood);
 	this->helmets.push_back(ironHelmet);
-	this->helmets.push_back(magicHat);
+	this->helmets.push_back(magicHat);	
 }
+
+
+void Player::load_weapons(SDL_Renderer* gRenderer) {
+	Weapon* sword = new Sword(gRenderer);
+	Axe* axe = new Axe(gRenderer);
+	Hammer* hammer = new Hammer(gRenderer);
+	BaculoEngarzado* baculoEngarzado = new BaculoEngarzado(gRenderer);
+	BaculoNudoso* baculoNudoso = new BaculoNudoso(gRenderer);
+	this->weapons.push_back(sword);
+	this->weapons.push_back(axe);
+	this->weapons.push_back(hammer);
+	this->weapons.push_back(baculoEngarzado);
+	this->weapons.push_back(baculoNudoso);
+}
+
 
 void Player::set_helmet(int helmetId) {
 	if (helmetId == 4) {
@@ -179,6 +199,27 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 			case SDLK_l:
 				this->equippedPlayer->setHelmet(NULL);
 				break;
+
+			case SDLK_u:
+				this->equippedPlayer->setWeapon(this->weapons[0]);
+				break;
+
+			case SDLK_y:
+				this->equippedPlayer->setWeapon(this->weapons[1]);
+				break;
+
+			case SDLK_i:
+				this->equippedPlayer->setWeapon(this->weapons[2]);
+				break;
+
+			case SDLK_o:
+				this->equippedPlayer->setWeapon(this->weapons[3]);
+				break;
+
+			case SDLK_p:
+				this->equippedPlayer->setWeapon(this->weapons[4]);
+				break;
+			
         }
 
 	} else if( e.type == SDL_KEYUP && e.key.repeat == 0 ) {

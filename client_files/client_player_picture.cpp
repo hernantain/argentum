@@ -89,12 +89,18 @@ void PlayerPicture::render(int &bodyPosX, int &bodyPosY, int &headPosX, int &hea
 EquippedPlayer::EquippedPlayer(PlayerPicture* player) {
 	this->player = player;
 	this->helmet = NULL;
+	this->weapon = NULL;
 }
 
 
 
 void EquippedPlayer::setHelmet(Helmet* helmet) {
 	this->helmet = helmet;
+}
+
+
+void EquippedPlayer::setWeapon(Weapon* weapon) {
+	this->weapon = weapon;
 }
 
 
@@ -105,6 +111,9 @@ void EquippedPlayer::render(
 	player->render(bodyPosX, bodyPosY, headPosX, headPosY, gRenderer, orientation, frame);
 	
 	if (helmet != NULL)
-		helmet->render(headPosX, headPosY, gRenderer, orientation, frame);		
+		helmet->render(headPosX, headPosY, gRenderer, orientation, frame);
+		
+	if (weapon != NULL)
+		weapon->render(bodyPosX, bodyPosY, gRenderer, orientation, frame);
 			
 }
