@@ -64,7 +64,7 @@ void Game::run() {
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
-	Dwarf player(gRenderer);	
+	Elf player(gRenderer);	
 
 
 	// Recibe la respuesta del server y modifica o no en el modelo

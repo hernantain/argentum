@@ -130,7 +130,8 @@ bool Movement::check_map_collision(CollisionInfo &collisionInfo) {
         return true;
     }
 
-    if ((bodyPosY + 31 > collisionY) && (bodyPosY + 31 < collisionY + collisionTile.h)) {
+    if ((bodyPosY + 31 > collisionY) && (bodyPosY + 31 < collisionY + collisionTile.h)
+        && ((bodyPosX > collisionX) && (bodyPosX + 21 < collisionX + collisionTile.w))) {
         return true;
     }
 
