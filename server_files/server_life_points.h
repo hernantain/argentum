@@ -20,6 +20,9 @@ public:
 
     // Devuelve la vida actual
     int current();
+
+    // Devuelve el maximo de vida
+    int max();
 };
 
 

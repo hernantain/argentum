@@ -4,9 +4,12 @@
 #include "server_character.h"
 
 #define NO_LIFE 0
+#define NO_DAMAGE 0
 #define INITIAL_GOLD 0
 #define INITIAL_LEVEL 1
 #define CRITICAL_MULTIPLIER 2
+#define LOW_CONSTANT_EXP 0
+#define HIGH_CONSTANT_EXP 10
 
 Character::Character(size_t id, Json::Value &config, CharacterClass& character_class, Race& race, CollisionInfo &collisionInfo) : 
     config(config),
@@ -14,6 +17,7 @@ Character::Character(size_t id, Json::Value &config, CharacterClass& character_c
     race(race), 
     life(race.get_constitution(), character_class.get_life_multiplier(), race.get_life_multiplier()), 
     mana(race.get_intelligence(), character_class.get_mana_multiplier(), race.get_mana_multiplier()),
+    experience(config["experience"]["difficulty_constant"].asUInt(), config["experience"]["level_multiplier"].asFloat()),
     inventory(config["inventory"]["max_items"].asUInt()),
     collisionInfo(collisionInfo) {
     this->id = id;
@@ -27,8 +31,16 @@ int Character::get_life() {
     return life.current();
 }
 
+int Character::get_max_life() {
+    return life.max();
+}
+
 int Character::get_mana() {
     return mana.current();
+}
+
+int Character::get_level() {
+    return level;
 }
 
 void Character::recover_life(int life_points) {
@@ -105,6 +117,20 @@ void Character::drop_items() {
     inventory.drop_items();
 }
 
+void Character::equip_life_potion(Potion& item) {
+    int recovery = item.get_recovery_points();
+    if (inventory.has(item)) {
+        life.add(recovery);
+    } 
+}
+
+void Character::equip_mana_potion(Potion& item) {
+    int recovery = item.get_recovery_points();
+    if (inventory.has(item)) {
+        mana.add(recovery);
+    } 
+}
+
 void Character::equip_weapon(Weapon& item) {
     if (inventory.has(item)) {
         equipment.equip_weapon(item);
@@ -139,6 +165,7 @@ bool Character::is_critical() {
 
 void Character::attack(Character& other) {
     // TODO: si !es a distancia el arma, chequear que este al lado
+    // TODO: Check fairplay
     int damage = equipment.get_weapon_damage();
     if (is_critical()) damage *= CRITICAL_MULTIPLIER;
     if (equipment.is_weapon_magical()) {
@@ -146,7 +173,9 @@ void Character::attack(Character& other) {
         take_off_mana(mana_consumption);
     }
     std::cout << "Ataque::Dano:: " << damage << std::endl;
-    other.defense(damage);
+    int final_damage = other.defense(damage);
+    get_experience(other, final_damage);
+    update_level();
 }
 
 bool Character::evade_attack() {
@@ -157,14 +186,51 @@ bool Character::evade_attack() {
     return evade;
 }
 
-void Character::defense(int damage) {
-    if (evade_attack()) return;
+int Character::defense(int damage) {
+    if (evade_attack()) return NO_DAMAGE;
     int defense = equipment.get_equipment_defense();
-    if (damage <= defense) return;
+    if (damage <= defense) return NO_DAMAGE;
     int final_damage = damage - defense;
     take_off_life(final_damage);
     if (life.current() == NO_LIFE) alive = false;
     std::cout << "Defensa:: " << defense << std::endl;
+    return final_damage;
+}
+
+int Character::experience_formula(Character& other) {
+    return std::max(other.get_level() - level + HIGH_CONSTANT_EXP, LOW_CONSTANT_EXP);
+}
+
+int Character::get_extra_experience(Character& other) {
+    srand (time(NULL));
+    float min = config["experience"]["min_extra_probability"].asFloat();
+    float max = config["experience"]["max_extra_probability"].asFloat();
+    float random = ((float) rand()) / (float) RAND_MAX;
+    float ponderation = min + (random * (max - min));
+    std::cout << "ExtraPonderation:: " << ponderation << std::endl;
+    int extra_exp = ponderation * other.get_max_life() * experience_formula(other);
+    std::cout << "ExtraExperienceWon:: " << extra_exp << std::endl;
+    return extra_exp;
+}
+
+void Character::get_experience(Character& other, int damage) {
+    int won_experience = damage * experience_formula(other);
+    std::cout << "ExperienceWon:: " << won_experience << std::endl;
+    if (!other.is_alive()) {
+        won_experience += get_extra_experience(other);
+    }
+    experience.add(won_experience);
+}
+
+void Character::update_level() {
+    while (experience.current() >= experience.max()) {
+        level++;
+        // Update mana & life
+        // Update Newbie
+        experience.subtract(experience.max());
+        experience.set_new_max(level);
+        std::cout << "NewMaxExp:: " << experience.max() << std::endl;
+    }
 }
 
 void Character::move_right(int velocity) {

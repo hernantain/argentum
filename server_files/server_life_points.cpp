@@ -27,6 +27,10 @@ int LifePoints::current(){
     return current_life;
 }
 
+int LifePoints::max(){
+    return max_life;
+}
+
 int LifePoints::initial_life(int constitution, float class_multiplier, float race_multiplier) {
     return constitution * class_multiplier * race_multiplier;
 }
