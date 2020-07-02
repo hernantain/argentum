@@ -2,16 +2,19 @@
 #define _PROTOCOL_MESSAGE
 
 #include <msgpack.hpp>
+
 #include <stdint.h>
+#include <vector>
+
 #include "common_protocol_character.h"
 
 
-
 struct ProtocolMessage {
-    int16_t id;
-    ProtocolCharacter character;
+    int16_t id_message;
+    int16_t id_player;
+    std::vector<ProtocolCharacter> characters;
     
-    ProtocolMessage(int16_t id, ProtocolCharacter character);
+    ProtocolMessage(int16_t id_message, int16_t id_player, ProtocolCharacter character);
 
     ProtocolMessage();
 
@@ -21,7 +24,7 @@ struct ProtocolMessage {
     ProtocolMessage(const ProtocolMessage&) = delete;
     ProtocolMessage& operator=(const ProtocolMessage&) = delete;
 
-    MSGPACK_DEFINE(id, character)
+    MSGPACK_DEFINE(id_message, id_player, characters)
 };
 
 

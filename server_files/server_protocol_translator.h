@@ -6,6 +6,7 @@
 #include "server_armor.h"
 #include "server_helmet_factory.h"
 #include "server_armor_factory.h"
+#include "common_collision_info.h"
 
 #ifndef _PROTOCOL_TRANSLATOR
 #define _PROTOCOL_TRANSLATOR
@@ -29,13 +30,15 @@
 class ProtocolTranslator {
 private:
     Json::Value &config;
+    CollisionInfo &collisionInfo;
 
     ProtocolMessage move_event(ProtocolMessage& msg, Character& character);
     ProtocolMessage equip_helmet_event(ProtocolMessage& msg, Character& character);
     ProtocolMessage equip_armor_event(ProtocolMessage& msg, Character& character);
+    ProtocolMessage create_character(ProtocolMessage& msg, ServerWorld &world);
 
 public:
-    ProtocolTranslator(Json::Value &config);
+    ProtocolTranslator(Json::Value &config, CollisionInfo &collisionInfo);
 
     // Transforma el codigo recibido un mensaje del protocolo
     ProtocolMessage translate(ProtocolMessage& msg, Character& character);

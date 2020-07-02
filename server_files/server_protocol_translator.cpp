@@ -1,12 +1,23 @@
 #include <stdint.h>
 #include <iostream>
+
+#include "server_world.h"
 #include "server_protocol_translator.h"
 
-ProtocolTranslator::ProtocolTranslator(Json::Value &config) : config(config) {}
+#include "server_elf.h"
+#include "server_cleric.h"
 
-ProtocolMessage ProtocolTranslator::translate(ProtocolMessage& msg, Character& character) {
-    int code = msg.id;
+ProtocolTranslator::ProtocolTranslator(
+    Json::Value &config, 
+    CollisionInfo &collisionInfo) : config(config),
+                                    collisionInfo(collisionInfo) {}
+
+
+ProtocolMessage ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
+    int code = msg.id_message;
+    // Character character = world.get(msg.id_player);
     switch (code) {
+        case 65: return create_character(msg, world);
         case PROTOCOL_MOVE: return move_event(msg, character);
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, character);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, character);
@@ -71,3 +82,15 @@ ProtocolMessage ProtocolTranslator::move_event(ProtocolMessage &msg, Character& 
     return std::move(msg);
 }
 
+
+ProtocolMessage ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &world) {
+    
+    Elf race(config);
+    Cleric c(config);
+    Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
+    world.add(msg.id_player, character);
+
+    msg.id_message = 66;
+    
+
+}

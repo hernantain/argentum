@@ -23,7 +23,7 @@
 
 #include <msgpack.hpp>
 
-
+#include <vector>
 
 Game::Game() :  gRenderer(NULL), running(true) {
 	if( !this->init() ) {
@@ -55,14 +55,35 @@ Map Game::loadMap() {
 }
 
 
+ClientWorld Game::createPlayer() {
+	ProtocolCharacter character(this->player_id, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
+	msgpack::sbuffer buffer;
+	msgpack::packer<msgpack::sbuffer> pk(&buffer);
+	pk.pack(msg);
+	skt(buffer);
+
+
+
+
+
+
+}
+
+
 void Game::run() {
 		
 	skt.connect_to("localhost", "8080");
+
+	skt >> this->player_id;
 	Map map = this->loadMap();
 
+	this->createPlayer();
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
+
+	std::vector<Player*> players;
 
 	Elf player(gRenderer);	
 
@@ -75,6 +96,7 @@ void Game::run() {
 	//Event handler
 	SDL_Event e;
 	while(this->running) {
+		
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
