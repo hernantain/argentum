@@ -12,7 +12,7 @@
 class ClientReceiverThread : public Thread {
 
     Socket &skt;
-    Player &player;
+    Player* player;
     SDL_Rect &camera;
     std::atomic<bool> running;
 
@@ -21,7 +21,7 @@ class ClientReceiverThread : public Thread {
     void process_equip_helmet(ProtocolMessage &msg);
     void process_equip_armor(ProtocolMessage &msg);
     public:
-        ClientReceiverThread(Socket &skt, Player &player, SDL_Rect &camera);
+        ClientReceiverThread(Socket &skt, Player* player, SDL_Rect &camera);
     
         virtual void run() override;
         

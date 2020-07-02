@@ -6,17 +6,18 @@
 #include "server_character.h"
 
 
-class ServerWorld {
+struct ServerWorld {
 
     std::map<int16_t, Character*> characters;
-    public:
-        ServerWorld();
 
-        Character* get(int16_t message_id);
+    ServerWorld();
 
-        bool empty();
+    Character* get(int16_t message_id);
 
-        void add(int16_t id, Character* character);
+    bool empty();
+
+    void add(int16_t id, Character* character);
+        
 
 };
 

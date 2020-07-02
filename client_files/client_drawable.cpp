@@ -4,11 +4,13 @@
 
 
 Drawable::Drawable( 
-    int drawable_speed) : velX(0),
-                        velY(0),
-                        frame(0),
-                        orientation(STANDING),
-                        drawable_speed(drawable_speed) {}
+    int drawable_speed, 
+    int16_t id) : id(id),
+                velX(0),
+                velY(0),
+                frame(0),
+                orientation(STANDING),
+                drawable_speed(drawable_speed) {}
 
 
 

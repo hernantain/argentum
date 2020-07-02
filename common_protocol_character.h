@@ -4,10 +4,9 @@
 #include <msgpack.hpp>
 #include <stdint.h>
 
-struct Character;
 
 struct ProtocolCharacter {
-    int16_t id;
+    uint16_t id;
     int16_t id_race;
     int16_t id_class;
     int16_t bodyPosX; 
@@ -20,7 +19,7 @@ struct ProtocolCharacter {
     int16_t armorId;
 
     ProtocolCharacter(
-        int16_t id,
+        uint16_t id,
         int16_t id_race,
         int16_t id_class,
         int16_t bodyPosX, 
@@ -33,8 +32,6 @@ struct ProtocolCharacter {
         int16_t armorId);
 
     ProtocolCharacter();
-
-    ProtocolCharacter(Character* character);
 
     ProtocolCharacter(ProtocolCharacter&& other);
     ProtocolCharacter& operator=(ProtocolCharacter&& other);

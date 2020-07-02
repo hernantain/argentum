@@ -1,6 +1,6 @@
 
 
-
+#include <iostream>
 #include "server_client.h"
 
 
@@ -19,5 +19,12 @@ SrvClient::SrvClient(
 
     cSenderThread = new SrvClientSenderThread(client_id, skt, messageQueue, mapInfo);
     cSenderThread->start();
+    
+    std::cout << "client ID EN CLIENT CREATION ES: " << client_id << std::endl;
 
+}
+
+
+void SrvClient::send_message(ProtocolMessage &updated_msg) {
+    this->messageQueue.push(updated_msg);
 }

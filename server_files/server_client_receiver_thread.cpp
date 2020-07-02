@@ -1,7 +1,7 @@
 
 #include "server_client_receiver_thread.h"
 
-
+#include <iostream>
 
 
 SrvClientReceiverThread::SrvClientReceiverThread(
@@ -17,9 +17,11 @@ SrvClientReceiverThread::SrvClientReceiverThread(
 
 void SrvClientReceiverThread::run() {
 
-
+    std::cout << "RECEIVER RUNNING" << std::endl;
     while (running) {
         ProtocolMessage msg = this->receive_msg();
+        std::cout << "MESSAGE ID: " << msg.id_message << std::endl;
+        std::cout << "PLAYER ID: " << msg.id_player << std::endl;
         this->receiversQueue.push(msg);
     }
 }

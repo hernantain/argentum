@@ -1,11 +1,11 @@
 
-#include "common_mapinfo.h"
+#include "../common_mapinfo.h"
 #include "server_processor_thread.h"
 
 
 ServerProcessorThread::ServerProcessorThread(
     Queue &receiversQueue,
-    std::vector<SrvClient> &clients,
+    std::vector<SrvClient*> &clients,
     CollisionInfo &collisionInfo,
     Json::Value &config) : receiversQueue(receiversQueue),
                             clients(clients),
@@ -25,10 +25,16 @@ void ServerProcessorThread::run() {
         ProtocolMessage received_msg = this->receiversQueue.pop();
         ProtocolMessage updated_msg = protocol_translator.translate(received_msg, serverWorld);
 
-        // this->broadcastMessage
+        this->broadcastMessage(updated_msg);
 
     }
-
-
-
 }
+
+
+
+void ServerProcessorThread::broadcastMessage(ProtocolMessage &updated_msg) {
+    for (unsigned int i = 0; i < clients.size(); ++i) {
+        this->clients[i]->send_message(updated_msg);
+    }
+}
+

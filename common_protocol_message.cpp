@@ -5,7 +5,7 @@
 
 ProtocolMessage::ProtocolMessage(
     int16_t id_message,
-    int16_t id_player, 
+    uint16_t id_player, 
     ProtocolCharacter character) : id_message(id_message),
                                    id_player(id_player) {
     this->characters.push_back(std::move(character));

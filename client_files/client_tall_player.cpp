@@ -4,7 +4,7 @@
 #include "client_leather_armor.h"
 #include "client_tall_player.h"
 
-TallPlayer::TallPlayer(SDL_Renderer* gRenderer, const char* head_path) : Player(25, 25, 29, 15) {
+TallPlayer::TallPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id) : Player(25, 25, 29, 15, id) {
 	this->load_clothes(gRenderer);
 	this->load_helmets(gRenderer);
 	this->load_weapons(gRenderer);

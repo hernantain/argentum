@@ -27,40 +27,9 @@ void Server::run() {
     Thread* acceptor = new AcceptorThread(this->skt, this->config);
     acceptor->start();
 
-    // LOOP q
-
-    
-    // Socket exchange_skt = this->skt.accept_client();
-
-    // Queue queue;
-
-    // MapInfo mapInfo;
-    // CollisionInfo collisionInfo = mapInfo.load();
-
-    // msgpack::sbuffer buffer;
-    // msgpack::packer<msgpack::sbuffer> pk(&buffer);
-    // pk.pack(mapInfo);
-    // exchange_skt(buffer);
-
-    // int npc_limit = config["npc"]["max_limit"].asInt();
-    // Thread* npc_thread = new ServerNPCThread(exchange_skt, queue, npc_limit);
-    // npc_thread->start();
-
-    // Thread* server_sender = new ServerSenderThread(exchange_skt, queue);
-    // server_sender->start();
-
-    // Elf race(config);
-    // Cleric c(config);
-    // Character character(1, config, c, race, collisionInfo);
-
-    // ProtocolTranslator protocol_translator(config);
-
-    // while (this->running) {
-    //     // TODO: ClientHandler
-    //     ProtocolMessage received_msg = receive_msg(exchange_skt);
-    //     ProtocolMessage updated_msg = protocol_translator.translate(received_msg, character);
-    //     queue.push(updated_msg);
-    // }
+    while (true) {
+        
+    }
 }
 
 void Server::initialize_config(const char* config_file) {
@@ -70,6 +39,8 @@ void Server::initialize_config(const char* config_file) {
     reader.parse(file, config);
     file.close();
 }
+
+
 
 // ProtocolMessage Server::receive_msg(Socket skt) {
 //     std::cout << "Corriendo" << std::endl;

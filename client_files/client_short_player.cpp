@@ -5,7 +5,7 @@
 #include "client_short_player.h"
 
 
-ShortPlayer::ShortPlayer(SDL_Renderer* gRenderer, const char* head_path) : Player(25, 25, 28, 13) {
+ShortPlayer::ShortPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id) : Player(25, 25, 28, 13, id) {
 	this->load_clothes(gRenderer);
 	this->load_helmets(gRenderer);
 	this->load_weapons(gRenderer);

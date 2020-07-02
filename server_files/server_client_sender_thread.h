@@ -4,10 +4,10 @@
 #include <stdint.h>
 #include <atomic>
 
-#include "common_thread.h"
-#include "common_sockets.h"
-#include "common_queue.h"
-#include "common_mapinfo.h"
+#include "../common_thread.h"
+#include "../common_sockets.h"
+#include "../common_queue.h"
+#include "../common_mapinfo.h"
 
 
 class SrvClientSenderThread: public Thread {

@@ -6,7 +6,7 @@
 
 ClientReceiverThread::ClientReceiverThread(
     Socket &skt, 
-    Player &player,
+    Player* player,
     SDL_Rect &camera) : skt(skt), 
                         player(player),
                         camera(camera),
@@ -31,25 +31,25 @@ void ClientReceiverThread::run() {
 
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
-    if (msg.id == 20)
+    if (msg.id_message == 20)
         this->process_move(msg);
-    if (msg.id == 30)
+    if (msg.id_message == 30)
         this->process_equip_helmet(msg);
-    if (msg.id == 31)
+    if (msg.id_message == 31)
         this->process_equip_armor(msg);
 
-    this->player.set_camera(camera);
+    this->player->set_camera(camera);
 }
 
 
 void ClientReceiverThread::process_move(ProtocolMessage &msg) {
-    this->player.set_position((int) msg.character.bodyPosX, (int) msg.character.bodyPosY, (int) msg.character.headPosX, (int) msg.character.headPosY);
+    this->player->set_position((int) msg.characters[0].bodyPosX, (int) msg.characters[0].bodyPosY, (int) msg.characters[0].headPosX, (int) msg.characters[0].headPosY);
 }
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
-    this->player.set_helmet(msg.character.helmetId);
+    this->player->set_helmet(msg.characters[0].helmetId);
 }
 
 void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
-    this->player.set_armor(msg.character.armorId);
+    this->player->set_armor(msg.characters[0].armorId);
 }

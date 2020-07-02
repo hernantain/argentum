@@ -22,14 +22,19 @@ void SrvClientSenderThread::run() {
 
 
     skt(this->client_id);
-
+    std::cout << "Mandando ID: " << this->client_id << std::endl;
+    
     msgpack::sbuffer buffer;
     msgpack::packer<msgpack::sbuffer> pk(&buffer);
     pk.pack(mapInfo);
     skt(buffer);
 
+    std::cout << "Mandando ID y MAPA" << std::endl;
+    
+
     while (running) {
         ProtocolMessage msg = this->messageQueue.pop();
+        std::cout << "MSG ID: " << msg.id_message << std::endl;
         msgpack::sbuffer message;
         msgpack::packer<msgpack::sbuffer> pk(&message);
         pk.pack(msg);

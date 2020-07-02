@@ -16,6 +16,7 @@
 #include "../common_sockets.h"
 #include "../common_queue.h"
 
+
 class Game {
 	
 	SDL_Renderer *gRenderer;

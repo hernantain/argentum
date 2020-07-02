@@ -10,9 +10,10 @@
 
 #include <vector>
 #include <mutex>
+#include <stdint.h>
 
 
-class Player : public Drawable {
+class Player: public Drawable {
     std::mutex m;
     protected:
         int bodyPosX, bodyPosY;
@@ -27,7 +28,7 @@ class Player : public Drawable {
     void load_helmets(SDL_Renderer* gRenderer);
     void load_weapons(SDL_Renderer* gRenderer);
     public:
-        Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY);
+        Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY, int16_t id);
 
 		ProtocolMessage handleEvent( SDL_Event& e );
 

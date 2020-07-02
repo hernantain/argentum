@@ -2,6 +2,7 @@
 #define _CLIENT_TALL_PLAYER
 
 #include <SDL2/SDL.h>
+#include <stdint.h>
 #include "client_player.h"
 
 
@@ -11,7 +12,7 @@ class TallPlayer: public Player {
     const int PLAYER_HEIGHT = 42;
 
     public:
-        TallPlayer(SDL_Renderer* gRenderer, const char* head_path);
+        TallPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id);
 
     private:
         void load_clothes(SDL_Renderer* gRenderer);

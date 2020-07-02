@@ -14,7 +14,8 @@ Player::Player(
     int bodyPosX, 
     int bodyPosY, 
     int headPosX, 
-    int headPosY) : Drawable(10),
+    int headPosY,
+	int16_t id) : Drawable(10, id),
                     bodyPosX(bodyPosX), 
                     bodyPosY(bodyPosY),
                     headPosX(headPosX),
@@ -253,7 +254,9 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 	}
 
 	ProtocolCharacter character(
-		(int16_t) 1, 
+		this->id,
+		(int16_t) 1,
+		(int16_t) 1,
 		(int16_t) this->bodyPosX, 
 		(int16_t) this->bodyPosY,
 		(int16_t) this->headPosX, 
@@ -263,6 +266,6 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 		(int16_t) this->helmetId,
 		(int16_t) this->armorId
 	);
-	ProtocolMessage msg(event_id, std::move(character));
+	ProtocolMessage msg(event_id, this->id, std::move(character));
 	return std::move(msg);
 }

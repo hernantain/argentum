@@ -2,12 +2,13 @@
 #define _CLIENT_WORLD
 
 #include "client_player.h"
-#include <vector>
+#include <map>
+#include <stdint.h>
 
 
-class ClientWorld {
+struct ClientWorld {
 
-    std::vector<Player*> players;
+    std::map<int16_t, Player*> players;
 
     ClientWorld();
 

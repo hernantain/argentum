@@ -18,5 +18,4 @@ bool ServerWorld::empty() {
 
 void ServerWorld::add(int16_t id, Character* character) {
     this->characters.insert(std::pair<int16_t, Character*> (id, character));
-
 }

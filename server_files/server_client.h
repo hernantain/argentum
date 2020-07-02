@@ -7,9 +7,10 @@
 #include "server_client_receiver_thread.h"
 #include "server_client_sender_thread.h"
 
-#include "common_queue.h"
-#include "common_sockets.h"
-#include "common_mapinfo.h"
+#include "../common_protocol_message.h"
+#include "../common_queue.h"
+#include "../common_sockets.h"
+#include "../common_mapinfo.h"
 
 
 class SrvClient {
@@ -26,7 +27,7 @@ class SrvClient {
 
         SrvClient(uint16_t client_id, Socket skt, Queue &receiversQueue, MapInfo &mapInfo);
 
-
+        void send_message(ProtocolMessage &updated_msg);
 };
 
 

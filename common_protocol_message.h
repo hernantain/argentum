@@ -11,10 +11,10 @@
 
 struct ProtocolMessage {
     int16_t id_message;
-    int16_t id_player;
+    uint16_t id_player;
     std::vector<ProtocolCharacter> characters;
     
-    ProtocolMessage(int16_t id_message, int16_t id_player, ProtocolCharacter character);
+    ProtocolMessage(int16_t id_message, uint16_t id_player, ProtocolCharacter character);
 
     ProtocolMessage();
 

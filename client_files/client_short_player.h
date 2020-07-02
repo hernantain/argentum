@@ -3,6 +3,7 @@
 
 #include "client_player.h"
 #include <SDL2/SDL.h>
+#include <stdint.h>
 
 
 class ShortPlayer: public Player {
@@ -11,7 +12,7 @@ class ShortPlayer: public Player {
     const int PLAYER_HEIGHT = 31;
 
     public:
-        ShortPlayer(SDL_Renderer* gRenderer, const char* head_path);
+        ShortPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id);
 
     private:
         void load_clothes(SDL_Renderer* gRenderer);

@@ -1,9 +1,10 @@
 
 #include "server_acceptor_thread.h"
+#include "server_processor_thread.h"
 
-#include "common_mapinfo.h"
-#include "common_sockets.h"
-#include "common_queue.h"
+#include "../common_mapinfo.h"
+#include "../common_sockets.h"
+#include "../common_queue.h"
 
 
 
@@ -17,8 +18,7 @@ AcceptorThread::AcceptorThread(
 
 
 
-
-
+#include <iostream>
 
 
 void AcceptorThread::run() {
@@ -32,16 +32,17 @@ void AcceptorThread::run() {
 
 
     // PROCCESSOR THREAD
-    Thread* processorThread = new ServerProcessorThread();
-    processorThread->start(receiversQueue, clients, collisionInfo, config);
-
+    Thread* processorThread = new ServerProcessorThread(receiversQueue, clients, collisionInfo, config);
+    processorThread->start(); 
 
 
     while (this->running) {
         client_skt = this->acceptor_skt.accept_client();
         // IF NOT VALID ....
 
-        SrvClient client(client_id, client_skt, receiversQueue, mapInfo);
+        std::cout << "Cliente ACEPTADO" << std::endl;
+        SrvClient* client = new SrvClient(client_id, client_skt, receiversQueue, mapInfo);
+        std::cout << "ES EL CLIENT: " << std::endl;
 
         // PUSH
         this->clients.push_back(client);
