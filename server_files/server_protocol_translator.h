@@ -8,6 +8,7 @@
 #include "server_character.h"
 #include "server_helmet.h"
 #include "server_armor.h"
+#include "server_character_factory.h"
 #include "server_helmet_factory.h"
 #include "server_armor_factory.h"
 
@@ -24,6 +25,8 @@
 #define PROTOCOL_ATTACK 2
 #define PROTOCOL_EQUIP_HELMET 3
 #define PROTOCOL_EQUIP_ARMOR 4
+
+#define PROTOCOL_CREATE_CHARACTER 65
 
 // Sending to the client
 #define PROTOCOL_MOVE_CONFIRM 20

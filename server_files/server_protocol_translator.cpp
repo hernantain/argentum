@@ -16,7 +16,7 @@ ProtocolTranslator::ProtocolTranslator(
 void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
     switch (code) {
-        case 65: return create_character(msg, world);
+        case PROTOCOL_CREATE_CHARACTER: return create_character(msg, world);
         case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
@@ -82,9 +82,11 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
 
 
 void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &world) {
-    
-    Elf race(config);
-    Cleric c(config);       /* LOGICA PARA MANEJAR LAS RAZAS Y CLASES ACA */
+    int id_class = msg.characters[0].id_class;
+    int id_race = msg.characters[0].id_race;
+    CharacterFactory factory;
+    CharacterClass c = factory.make_class(id_class, config);
+    Race race = factory.make_race(id_race, config);
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
 
