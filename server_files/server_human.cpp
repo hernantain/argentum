@@ -1,7 +1,10 @@
 #include "server_human.h"
 
+#define HUMAN_ID 1
+
 Human::Human(Json::Value &config) : 
     Race(config["initialAttributes"].asInt()) {
+        this->id = HUMAN_ID;
         this->strength += config["human"]["strength_modifier"].asInt();
         this->agility += config["human"]["agility_modifier"].asInt();
         this->constitution += config["human"]["constitution_modifier"].asInt();

@@ -10,10 +10,12 @@
 
 #include <vector>
 #include <mutex>
+#include <stdint.h>
 
 
-class Player : public Drawable {
+class Player: public Drawable {
     std::mutex m;
+    int headOffsetX, headOffsetY;
     protected:
         int bodyPosX, bodyPosY;
         int headPosX, headPosY;
@@ -24,10 +26,10 @@ class Player : public Drawable {
         PlayerPicture* playerPicture;
         EquippedPlayer* equippedPlayer;
 
-    void load_helmets(SDL_Renderer* gRenderer);
-    void load_weapons(SDL_Renderer* gRenderer);
+    void load_helmets();
+    void load_weapons();
     public:
-        Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY);
+        Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY, int16_t id, SDL_Renderer* gRenderer);
 
 		ProtocolMessage handleEvent( SDL_Event& e );
 
@@ -35,7 +37,7 @@ class Player : public Drawable {
 
 		void update_frames();
 
-		void set_position(int newBodyPosX, int newBodyPosY, int newHeadPosX, int newHeadPosY);
+		void set_position(int newBodyPosX, int newBodyPosY);
         void set_camera(SDL_Rect &camera);
 
         void set_helmet(int helmetId);
@@ -43,6 +45,8 @@ class Player : public Drawable {
 
         int getPosX() const;
         int getPosY() const;
+
+        int16_t getId() const;
 
 };
 

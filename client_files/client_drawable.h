@@ -1,19 +1,20 @@
 #ifndef _DRAWABLE
 #define _DRAWABLE
 
+#include <SDL2/SDL.h>
+#include <stdint.h>
 
 
 class Drawable {
 
     protected:
-        int velX, velY;
+        int16_t id;
         int frame;
         int orientation;
-        int drawable_speed;
+        SDL_Renderer* gRenderer;
 
     public:
-        Drawable(int drawable_speed);
-
+        Drawable(int16_t id, SDL_Renderer* gRenderer);
 
 };
 

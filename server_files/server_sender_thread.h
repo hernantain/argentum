@@ -1,22 +1,29 @@
-#ifndef _SERVER_SENDER_THREAD
-#define _SERVER_SENDER_THREAD
+#ifndef _SERVER_C_SENDER_THREAD
+#define _SERVER_C_SENDER_THREAD
 
+#include <stdint.h>
 #include <atomic>
+#include <msgpack.hpp>
 
-#include "../common_sockets.h"
 #include "../common_thread.h"
+#include "../common_sockets.h"
 #include "../common_queue.h"
-#include "../common_protocol_message.h"
+#include "../common_mapinfo.h"
 
-class ServerSenderThread : public Thread {
+
+class SrvClientSenderThread: public Thread {
+
+    uint16_t client_id;
     Socket &skt;
-    Queue &queue;
+    Queue &messageQueue;
     std::atomic<bool> running;
 
     public:
-        ServerSenderThread(Socket &skt, Queue &queue);
+        SrvClientSenderThread(uint16_t client_id, Socket &skt, Queue &messageQueue);
 
         virtual void run() override;
+
 };
+
 
 #endif

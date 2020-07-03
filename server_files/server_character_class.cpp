@@ -2,6 +2,10 @@
 
 CharacterClass::CharacterClass() {}
 
+int16_t CharacterClass::get_id() {
+    return this->id;
+}
+
 float CharacterClass::get_life_multiplier() {
     return life_multiplier;
 }

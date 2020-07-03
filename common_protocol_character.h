@@ -4,25 +4,22 @@
 #include <msgpack.hpp>
 #include <stdint.h>
 
+
 struct ProtocolCharacter {
-    int16_t id;
+    uint16_t id;
+    int16_t id_race;
+    int16_t id_class;
     int16_t bodyPosX; 
     int16_t bodyPosY;
-    int16_t headPosX;
-    int16_t headPosY;
-    int16_t velX;
-    int16_t velY;
     int16_t helmetId;
     int16_t armorId;
 
     ProtocolCharacter(
-        int16_t id,
+        uint16_t id,
+        int16_t id_race,
+        int16_t id_class,
         int16_t bodyPosX, 
         int16_t bodyPosY,
-        int16_t headPosX,
-        int16_t headPosY,
-        int16_t velX, 
-        int16_t velY,
         int16_t helmetId,
         int16_t armorId);
 
@@ -34,7 +31,7 @@ struct ProtocolCharacter {
     ProtocolCharacter(const ProtocolCharacter&) = delete;
     ProtocolCharacter& operator=(const ProtocolCharacter&) = delete;
 
-    MSGPACK_DEFINE(id, bodyPosX, bodyPosY, headPosX, headPosY, velX, velY, helmetId, armorId)
+    MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, helmetId, armorId)
 };
 
 #endif

@@ -1,22 +1,33 @@
-#include <stdint.h>
-#include <msgpack.hpp>
 
-#include "../common_protocol_message.h"
+
+#include <msgpack.hpp>
 #include "server_sender_thread.h"
 
-ServerSenderThread::ServerSenderThread(
+
+
+
+SrvClientSenderThread::SrvClientSenderThread(
+    uint16_t client_id, 
     Socket &skt, 
-    Queue &queue) : skt(skt), queue(queue), running(true) {}
+    Queue &messageQueue) : client_id(client_id),
+                            skt(skt),
+                            messageQueue(messageQueue),
+                            running(true) {}
 
 
-void ServerSenderThread::run() {
 
-    while (this->running) {
-        // Send the updated data
-        ProtocolMessage msg = this->queue.pop();
-        msgpack::sbuffer buffer;
-        msgpack::packer<msgpack::sbuffer> pk(&buffer);
+void SrvClientSenderThread::run() {
+
+    while (running) {
+        ProtocolMessage msg = this->messageQueue.pop();
+        msgpack::sbuffer message;
+        msgpack::packer<msgpack::sbuffer> pk(&message);
         pk.pack(msg);
-        this->skt(buffer);
+        skt(message);
     }
 }
+
+
+
+
+

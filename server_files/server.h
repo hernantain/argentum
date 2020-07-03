@@ -12,7 +12,7 @@
 #include "../common_mapinfo.h"
 #include "../common_collision_info.h"
 
-#include "server_sender_thread.h"
+
 #include "server_npc_thread.h"
 #include "server_protocol_translator.h"
 #include "server_character.h"

@@ -4,7 +4,7 @@
     "newbieLimit": 12,
     "maxAttackLvlDiff": 10,
     "graphics": {
-        "velocity": 3,
+        "velocity": 10,
         "screen_width": 640,
         "screen_height": 480,
         "character_width": 21,

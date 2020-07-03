@@ -1,11 +1,13 @@
 #ifndef _SERVER_RACE
 #define _SERVER_RACE
 
+#include <stdint.h>
 #include <jsoncpp/json/json.h>
 
 /* Clase que representa a una raza del juego. Posee algunos stats. */
 class Race {
 protected:
+    int16_t id;
     // Stats
     int strength;
     int agility;
@@ -40,6 +42,9 @@ public:
     
     // getter recovery multiplier
     float get_recovery_multiplier();
+
+    // getter race id
+    int16_t get_id() const;
 };
 
 

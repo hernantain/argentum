@@ -19,7 +19,7 @@ void MapInfo::loadCollisionInfo(CollisionInfo &collisionInfo, Json::Value &tileJ
         collisionTile.y = tiles[i]["objectgroup"]["objects"][0]["y"].asInt() ;
         collisionTile.w = tiles[i]["objectgroup"]["objects"][0]["width"].asInt();
         collisionTile.h = tiles[i]["objectgroup"]["objects"][0]["height"].asInt();
-        std::cout << "X: " << collisionTile.x << " Y: " <<  collisionTile.y << " WIDTH: " << collisionTile.w << " HEIGHT:  " << collisionTile.h << std::endl;
+        // std::cout << "X: " << collisionTile.x << " Y: " <<  collisionTile.y << " WIDTH: " << collisionTile.w << " HEIGHT:  " << collisionTile.h << std::endl;
         id = tiles[i]["id"].asInt();
         collisionInfo.tiles.insert(std::pair<int, CollisionTile> (id+first_tile_gid, collisionTile));
     }
@@ -44,7 +44,7 @@ CollisionInfo MapInfo::load() {
     for (unsigned int i = 0; i < tilesets.size(); ++i) {
         
         source = tilesets[i]["source"].asString();
-        std::cout << "Procesando... " << source << std::endl;
+        // std::cout << "Procesando... " << source << std::endl;
         std::ifstream tileInfo(source);
         reader.parse(tileInfo, tileJson);
 

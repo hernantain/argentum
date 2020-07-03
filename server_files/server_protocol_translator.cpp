@@ -1,73 +1,106 @@
 #include <stdint.h>
 #include <iostream>
+
+#include "server_world.h"
 #include "server_protocol_translator.h"
 
-ProtocolTranslator::ProtocolTranslator(Json::Value &config) : config(config) {}
+#include "server_elf.h"
+#include "server_cleric.h"
 
-ProtocolMessage ProtocolTranslator::translate(ProtocolMessage& msg, Character& character) {
-    int code = msg.id;
+ProtocolTranslator::ProtocolTranslator(
+    Json::Value &config, 
+    CollisionInfo &collisionInfo) : config(config),
+                                    collisionInfo(collisionInfo) {}
+
+
+void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
+    int code = msg.id_message;
     switch (code) {
-        case PROTOCOL_MOVE: return move_event(msg, character);
-        case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, character);
-        case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, character);
+        case 65: return create_character(msg, world);
+        case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
+        case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
+        case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
+        case PROTOCOL_MOVE_DOWN: return move_down_event(msg, world);
+        case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
+        case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
     }
-    return std::move(msg);
 }
 
-ProtocolMessage ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, Character& character) {
-    int armor_id = msg.character.armorId;
+void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &world) {
+
+    int armor_id = msg.characters[0].armorId;
     ArmorFactory factory;
     Armor armor = factory.make_armor(armor_id, config);
-    character.equip_armor(armor);
-    msg.id = PROTOCOL_ARMOR_CONFIRM;
-
-    std::cout << "ID: " << msg.id << std::endl;
-    std::cout << "Updated Armor ID: " << msg.character.armorId << std::endl;
-
-    return std::move(msg);
+    world.characters[msg.id_player]->equip_armor(armor);
+    msg.id_message = PROTOCOL_ARMOR_CONFIRM;
 }
 
-ProtocolMessage ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, Character& character) {
-    int helmet_id = msg.character.helmetId;
+
+void ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, ServerWorld &world) {
+    int helmet_id = msg.characters[0].helmetId;
     HelmetFactory factory;
     Helmet helmet = factory.make_helmet(helmet_id, config);
-    character.equip_helmet(helmet);
-    msg.id = PROTOCOL_HELMET_CONFIRM;
-
-    std::cout << "ID: " << msg.id << std::endl;
-    std::cout << "Updated Helmet ID: " << msg.character.helmetId << std::endl;
-
-    return std::move(msg);
+    world.characters[msg.id_player]->equip_helmet(helmet);
+    msg.id_message = PROTOCOL_HELMET_CONFIRM;
 }
 
-ProtocolMessage ProtocolTranslator::move_event(ProtocolMessage &msg, Character& character) {
-    int velX = msg.character.velX;
-    int velY = msg.character.velY;
 
-    if (velX > 0) {
-        character.move_right(velX);
-    }
-    if (velX < 0) {
-        character.move_left(velX);;
-    }
-    if (velY > 0) {
-        character.move_top(velY);
-    }
-    if (velY < 0) {
-        character.move_down(velY);
-    }
-    msg.character.bodyPosX = character.get_body_pos_X();
-    msg.character.headPosX = character.get_head_pos_X();
-    msg.character.bodyPosY = character.get_body_pos_Y();
-    msg.character.headPosY = character.get_head_pos_Y();
-    msg.id = PROTOCOL_MOVE_CONFIRM;
+void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    std::cout << "ID: " << msg.id << std::endl;
-    std::cout << "Updated BODY pos X: " << msg.character.bodyPosX << std::endl;
-    std::cout << "Updated BODY pos Y: " << msg.character.bodyPosY << std::endl;
-    std::cout << "Updated HEAD pos X: " << msg.character.headPosX << std::endl;
-    std::cout << "Updated HEAD pos Y: " << msg.character.headPosY << std::endl;
+    world.characters[msg.id_player]->move_right();
+    this->get_all_characters(msg, world);
 
-    return std::move(msg);
+    msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
+
+void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &world) {
+
+    world.characters[msg.id_player]->move_left();
+    this->get_all_characters(msg, world);
+
+    msg.id_message = PROTOCOL_MOVE_CONFIRM;
+}
+
+
+void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world) {
+
+    world.characters[msg.id_player]->move_top();
+    this->get_all_characters(msg, world);
+
+    msg.id_message = PROTOCOL_MOVE_CONFIRM;
+}
+
+
+void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &world) {
+
+    world.characters[msg.id_player]->move_down();
+    this->get_all_characters(msg, world);
+    msg.id_message = PROTOCOL_MOVE_CONFIRM;
+}
+
+
+
+void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &world) {
+    
+    Elf race(config);
+    Cleric c(config);       /* LOGICA PARA MANEJAR LAS RAZAS Y CLASES ACA */
+    Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
+    world.add(msg.id_player, character);
+
+    msg.id_message = 66;
+    this->get_all_characters(msg, world);
+}
+
+
+void ProtocolTranslator::get_all_characters(ProtocolMessage& msg, ServerWorld &world) {
+    std::map<int16_t, Character*>::iterator itr;
+    std::vector<ProtocolCharacter> tmp;
+
+    for (itr = world.characters.begin(); itr != world.characters.end(); ++itr) { 
+        ProtocolCharacter protocolCharacter;
+        itr->second->populate_protocol_character(protocolCharacter);
+        tmp.push_back(std::move(protocolCharacter));
+        msg.characters = std::move(tmp);
+    }
+}

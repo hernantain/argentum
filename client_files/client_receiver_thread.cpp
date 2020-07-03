@@ -6,10 +6,12 @@
 
 ClientReceiverThread::ClientReceiverThread(
     Socket &skt, 
-    Player &player,
-    SDL_Rect &camera) : skt(skt), 
-                        player(player),
+    ClientWorld &world,
+    SDL_Rect &camera,
+    uint16_t player_id) : skt(skt), 
+                        world(world),
                         camera(camera),
+                        player_id(player_id),
                         running(true) {}
 
 
@@ -31,25 +33,36 @@ void ClientReceiverThread::run() {
 
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
-    if (msg.id == 20)
+    if (msg.id_message == 20)
         this->process_move(msg);
-    if (msg.id == 30)
+    if (msg.id_message == 30)
         this->process_equip_helmet(msg);
-    if (msg.id == 31)
+    if (msg.id_message == 31)
         this->process_equip_armor(msg);
+    if (msg.id_message == 66)
+        this->process_create_player(msg);
 
-    this->player.set_camera(camera);
+    world.players[this->player_id]->set_camera(camera);
 }
 
 
 void ClientReceiverThread::process_move(ProtocolMessage &msg) {
-    this->player.set_position((int) msg.character.bodyPosX, (int) msg.character.bodyPosY, (int) msg.character.headPosX, (int) msg.character.headPosY);
+    Player* player = world.players[msg.id_player];
+    player->set_position((int) msg.characters[0].bodyPosX, (int) msg.characters[0].bodyPosY);
 }
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
-    this->player.set_helmet(msg.character.helmetId);
+    Player* player = world.players[msg.id_player];
+    player->set_helmet(msg.characters[0].helmetId);
 }
 
 void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
-    this->player.set_armor(msg.character.armorId);
+    Player* player = world.players[msg.id_player];
+    player->set_armor(msg.characters[0].armorId);
+}
+
+void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
+    int i = msg.find(msg.id_player);
+    if (i != -1)
+        world.add_player(msg.characters[i]);
 }

@@ -23,7 +23,7 @@
 
 #include <msgpack.hpp>
 
-
+#include <vector>
 
 Game::Game() :  gRenderer(NULL), running(true) {
 	if( !this->init() ) {
@@ -55,26 +55,56 @@ Map Game::loadMap() {
 }
 
 
+ClientWorld Game::loadWorld() {
+	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0);
+	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
+	
+	msgpack::sbuffer buffer;
+	msgpack::packer<msgpack::sbuffer> pk(&buffer);
+	pk.pack(msg);
+	skt(buffer);
+
+    ProtocolMessage rec_msg;
+    msgpack::unpacker pac;
+    skt >> pac;
+    msgpack::object_handle oh;
+    pac.next(oh);
+    msgpack::object obj = oh.get();
+    obj.convert(rec_msg);
+    
+	ClientWorld clientWorld(gRenderer);
+
+	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
+		clientWorld.add_player(rec_msg.characters[i]);
+ 	}
+
+	return clientWorld;
+}
+
+
+
 void Game::run() {
 		
 	skt.connect_to("localhost", "8080");
+	skt >> this->player_id;
 	Map map = this->loadMap();
 
+	ClientWorld world = this->loadWorld();
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
-	Elf player(gRenderer);	
-
+	Player* player = world.players[this->player_id];
 
 	// Recibe la respuesta del server y modifica o no en el modelo
-	Thread* receiver = new ClientReceiverThread(skt, player, camera);
+	Thread* receiver = new ClientReceiverThread(skt, world, camera, player_id);
 	receiver->start();
 
 
 	//Event handler
 	SDL_Event e;
 	while(this->running) {
+		
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
@@ -85,7 +115,7 @@ void Game::run() {
 
 			} else {
 				
-				ProtocolMessage msg = player.handleEvent( e );
+				ProtocolMessage msg = player->handleEvent(e);
 				queue.push(msg);	
 			}
 		}
@@ -95,11 +125,11 @@ void Game::run() {
 		SDL_RenderClear( gRenderer );
 
 		map.renderFirstLayer(camera);
-		player.render(this->gRenderer, camera.x, camera.y);
+		player->render(this->gRenderer, camera.x, camera.y);
 		map.renderSecondLayer(camera);
 		
 		SDL_RenderPresent( this->gRenderer ); //Update screen
-		player.update_frames();
+		player->update_frames();
 		
 		// sleep
 	}
