@@ -30,6 +30,12 @@ void Server::run() {
     while (true) {
         
     }
+
+    /**
+     * 
+     * LOGICA PARA CERRAR SERVEr
+     */
+
 }
 
 

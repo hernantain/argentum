@@ -53,8 +53,9 @@ void AcceptorThread::run() {
         // PUSH
         this->clients.push_back(client);
 
-        // CLEAN
+        // CLEAN --> TP 3
         client_id++;
+        
     }
 }
 

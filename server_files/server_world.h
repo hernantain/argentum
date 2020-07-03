@@ -9,6 +9,8 @@
 struct ServerWorld {
 
     std::map<int16_t, Character*> characters;
+    // NPCs
+    // Items
 
     ServerWorld();
 
