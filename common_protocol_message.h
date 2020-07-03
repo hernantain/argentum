@@ -18,6 +18,8 @@ struct ProtocolMessage {
 
     ProtocolMessage();
 
+    int find(uint16_t id);
+
     ProtocolMessage(ProtocolMessage&& other);
     ProtocolMessage& operator=(ProtocolMessage&& other);
 

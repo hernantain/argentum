@@ -27,3 +27,13 @@ ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
     this->characters = std::move(other.characters);
     return *this;
 }
+
+
+
+int ProtocolMessage::find(uint16_t id) {
+    for (unsigned int i = 0; i < characters.size(); ++i) {
+        if (characters[i].id == id)
+            return i;
+    }
+    return -1;
+}

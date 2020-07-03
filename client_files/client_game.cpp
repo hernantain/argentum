@@ -72,26 +72,10 @@ ClientWorld Game::loadWorld() {
     msgpack::object obj = oh.get();
     obj.convert(rec_msg);
     
-	ClientWorld clientWorld;
+	ClientWorld clientWorld(gRenderer);
 
-	Player* player;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
-		if (rec_msg.characters[i].id_race == 1) {
-			player = new Human(gRenderer, this->player_id, rec_msg.characters[i].bodyPosX, rec_msg.characters[i].bodyPosY);
-			clientWorld.add_player(rec_msg.id_player, player);
-		
-		} else if (rec_msg.characters[i].id_race == 2) {
-			player = new Elf(gRenderer, this->player_id, rec_msg.characters[i].bodyPosX, rec_msg.characters[i].bodyPosY);
-			clientWorld.add_player(rec_msg.id_player, player);
-		
-		} else if (rec_msg.characters[i].id_race == 3) {
-			player = new Dwarf(gRenderer, this->player_id, rec_msg.characters[i].bodyPosX, rec_msg.characters[i].bodyPosY);
-			clientWorld.add_player(rec_msg.id_player, player);
-
-		} else {
-			player = new Gnome(gRenderer, this->player_id, rec_msg.characters[i].bodyPosX, rec_msg.characters[i].bodyPosY);
-			clientWorld.add_player(rec_msg.id_player, player);
-		}
+		clientWorld.add_player(rec_msg.characters[i]);
  	}
 
 	return clientWorld;
@@ -113,7 +97,7 @@ void Game::run() {
 	Player* player = world.players[this->player_id];
 
 	// Recibe la respuesta del server y modifica o no en el modelo
-	Thread* receiver = new ClientReceiverThread(skt, player, camera);
+	Thread* receiver = new ClientReceiverThread(skt, world, camera, player_id);
 	receiver->start();
 
 

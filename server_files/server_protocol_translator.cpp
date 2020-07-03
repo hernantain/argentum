@@ -84,7 +84,7 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
 void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &world) {
     
     Elf race(config);
-    Cleric c(config);
+    Cleric c(config);       /* LOGICA PARA MANEJAR LAS RAZAS Y CLASES ACA */
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
 
@@ -96,18 +96,8 @@ void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &wor
 void ProtocolTranslator::get_all_characters(ProtocolMessage& msg, ServerWorld &world) {
     std::map<int16_t, Character*>::iterator itr;
     std::vector<ProtocolCharacter> tmp;
+
     for (itr = world.characters.begin(); itr != world.characters.end(); ++itr) { 
-        // std::cout << "PROCESANDO: " << itr->first << std::endl;
-        // // std::cout << "PLAYER ID: " << itr->first << std::endl;
-        // ProtocolCharacter protocolCharacter(
-        //     world.characters[itr->first]->get_id(),
-        //     world.characters[itr->first]->get_race_id(),
-        //     world.characters[itr->first]->get_class_id(),
-        //     world.characters[itr->first]->get_body_pos_X(),
-        //     world.characters[itr->first]->get_body_pos_Y(),
-        //     0, // helmet id
-        //     0  // armor id
-        // );
         ProtocolCharacter protocolCharacter;
         itr->second->populate_protocol_character(protocolCharacter);
         tmp.push_back(std::move(protocolCharacter));
