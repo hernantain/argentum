@@ -6,6 +6,7 @@
 #include <jsoncpp/json/json.h>
 #include "server_life_points.h"
 #include "server_mana_points.h"
+#include "server_experience_points.h"
 #include "server_character_class.h"
 #include "server_race.h"
 #include "server_inventory.h"
@@ -15,7 +16,9 @@
 #include "server_weapon.h"
 #include "server_helmet.h"
 #include "server_shield.h"
+#include "server_potion.h"
 #include "server_movement.h"
+
 #include "../common_collision_info.h"
 
 /* Clase que representa a un personaje del juego.
@@ -30,6 +33,7 @@ private:
     Race& race;
     LifePoints life;
     ManaPoints mana;
+    ExperiencePoints experience;
     Inventory inventory;
     Equipment equipment;
     CollisionInfo &collisionInfo;
@@ -49,6 +53,11 @@ private:
     const int max_gold();
     bool is_critical();
     bool evade_attack();
+    int experience_formula(Character& other);
+    int get_extra_experience(Character& other);
+    void get_experience(Character& other, int damage);
+    void update_level();
+    void update_newbie();
 
 public:
   // Contructor, recibe el id, la vida inicial
@@ -63,6 +72,18 @@ public:
 
   // Devuelve la vida actual del personaje
   int get_life();
+
+  // Devuelve la vida maxima del personaje en el nivel actual
+  int get_max_life();
+
+  // Devuelve el nivel del personaje
+  int get_level();
+
+  // Devuelve un booleano que indica si el jugador es newbie o no
+  bool is_newbie();
+
+  // Devuelve un booleano que indica si hay fairplay o no.
+  bool fairplay(Character& other);
 
   // Le quita vida al personaje
   void take_off_life(int life_points);
@@ -91,7 +112,13 @@ public:
   // Toma un item del suelo
   void take_item(Item& item);
 
-   // Equipa un arma
+  // Equipa una pocion de vida
+  void equip_life_potion(Potion& item);
+
+  // Equipa una pocion de mana
+  void equip_mana_potion(Potion& item);
+
+  // Equipa un arma
   void equip_weapon(Weapon& item);
 
   // Equipa una armadura
@@ -107,7 +134,8 @@ public:
   void attack(Character& other);
 
   // Defiende al personaje de un ataque
-  void defense(int damage);
+  // Devuelve el daño final realizado
+  int defense(int damage);
 
   // Mueve el personaje hacia la derecha
   void move_right(int velocity);

@@ -4,6 +4,7 @@
 #include "server_npc.h"
 
 #define NO_LIFE 0
+#define NO_DAMAGE 0
 #define MIN_GOLD_MULTIPLIER 0.01
 #define MAX_GOLD_MULTIPLIER 0.2
 
@@ -72,17 +73,22 @@ int NPC::get_damage() {
 }
 
 void NPC::attack(Character& other) {
+    if(!alive || !other.is_alive()) {
+        std::cout << "O vos o el esta muerto" << std::endl;
+        return;
+    } 
     int damage = get_damage();
     std::cout << "AtaqueNPC::Dano:: " << damage << std::endl;
     other.defense(damage);
 }
 
-void NPC::defense(int damage) {
+int NPC::defense(int damage) {
     int defense = get_defense();
-    if (damage <= defense) return;
+    if (damage <= defense) return NO_DAMAGE;
     int final_damage = damage - defense;
     take_off_life(final_damage);
     std::cout << "Defensa:: " << defense << std::endl;
+    return final_damage;
 }
 
 void NPC::take_off_life(int life_points) {

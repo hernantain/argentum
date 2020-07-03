@@ -4,10 +4,10 @@
 /* Clase que representa a los ptos de vida de un personaje */
 class LifePoints {
 private:
-    int current_life;
-    int max_life;
+    int constitution;
+    float class_multiplier, race_multiplier;
+    int current_life, max_life;
 
-    int initial_life(int constitution, float class_multiplier, float race_multiplier);
 public:
     // Contructor, recibe la constitucion del personaje
     LifePoints(int constitution, float class_multiplier, float race_multiplier);
@@ -20,6 +20,12 @@ public:
 
     // Devuelve la vida actual
     int current();
+
+    // Devuelve el maximo de vida
+    int max();
+
+    // Setter de la max vida para el nivel recibido
+    void set_new_max(int level);
 };
 
 

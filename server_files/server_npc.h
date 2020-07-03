@@ -51,7 +51,8 @@ public:
     void attack(Character& other);
 
     // Defiende al NPC de un ataque
-    void defense(int damage);
+    // Devuelve el daño final que fue realizado
+    int defense(int damage);
 
     // Mueve el NPC hacia la derecha
     void move_right(int velocity);
