@@ -17,6 +17,7 @@ SrvClientReceiverThread::SrvClientReceiverThread(
 
 void SrvClientReceiverThread::run() {
 
+    std::cout << "SOCKET FD: " << skt.fd << std::endl;
     std::cout << "RECEIVER RUNNING" << std::endl;
     while (running) {
         ProtocolMessage msg = this->receive_msg();
@@ -26,19 +27,6 @@ void SrvClientReceiverThread::run() {
     }
 }
 
-
-// void SrvClientReceiverThread::receiveFirstMessage() {
-//     std::cout << "Corriendo" << std::endl;
-//     ProtocolMessage msg;
-//     msgpack::unpacker pac;
-//     skt >> pac;
-//     msgpack::object_handle oh;
-//     pac.next(oh);
-//     msgpack::object obj = oh.get();
-//     obj.convert(msg);
-//     return msg;
-
-// }
 
 
 ProtocolMessage SrvClientReceiverThread::receive_msg() {
@@ -54,6 +42,18 @@ ProtocolMessage SrvClientReceiverThread::receive_msg() {
 }
 
 
+// void SrvClientReceiverThread::receiveFirstMessage() {
+//     std::cout << "Corriendo" << std::endl;
+//     ProtocolMessage msg;
+//     msgpack::unpacker pac;
+//     skt >> pac;
+//     msgpack::object_handle oh;
+//     pac.next(oh);
+//     msgpack::object obj = oh.get();
+//     obj.convert(msg);
+//     return msg;
+
+// }
 
 
 

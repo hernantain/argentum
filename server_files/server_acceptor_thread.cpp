@@ -30,8 +30,12 @@ void AcceptorThread::run() {
     MapInfo mapInfo;
     CollisionInfo collisionInfo = mapInfo.load();
 
+    msgpack::sbuffer mapBuffer;
+    msgpack::packer<msgpack::sbuffer> pk(&mapBuffer);
+    pk.pack(mapInfo);
 
-    // PROCCESSOR THREAD
+
+    // // PROCCESSOR THREAD
     Thread* processorThread = new ServerProcessorThread(receiversQueue, clients, collisionInfo, config);
     processorThread->start(); 
 
@@ -40,9 +44,11 @@ void AcceptorThread::run() {
         client_skt = this->acceptor_skt.accept_client();
         // IF NOT VALID ....
 
+        client_skt(this->client_id);
+        client_skt(mapBuffer);
+
         std::cout << "Cliente ACEPTADO" << std::endl;
-        SrvClient* client = new SrvClient(client_id, client_skt, receiversQueue, mapInfo);
-        std::cout << "ES EL CLIENT: " << std::endl;
+        SrvClient* client = new SrvClient(client_id, client_skt, receiversQueue);
 
         // PUSH
         this->clients.push_back(client);

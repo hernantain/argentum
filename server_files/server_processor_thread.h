@@ -20,11 +20,11 @@ class ServerProcessorThread: public Thread {
     std::atomic<bool> running;
 
     void broadcastMessage(ProtocolMessage &updated_msg);
+
     public:
         ServerProcessorThread(Queue &receiversQueue, std::vector<SrvClient*> &clients, CollisionInfo &collisionInfo, Json::Value &config);
 
         virtual void run() override;
-
 
 };
 

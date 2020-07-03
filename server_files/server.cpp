@@ -32,6 +32,7 @@ void Server::run() {
     }
 }
 
+
 void Server::initialize_config(const char* config_file) {
     std::ifstream file(config_file);
 	if (!file.is_open()) throw OSError(FILE_ERROR_MSG);

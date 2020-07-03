@@ -132,10 +132,10 @@ ProtocolMessage ProtocolTranslator::create_character(ProtocolMessage& msg, Serve
 
     msg.id_message = 66;
 
-    msg.characters[0].bodyPosX += 20;
-    msg.characters[0].bodyPosY += 20;
-    msg.characters[0].headPosX += 20;
-    msg.characters[0].headPosX += 20;
+    msg.characters[0].bodyPosX += 200;
+    msg.characters[0].bodyPosY += 200;
+    msg.characters[0].headPosX += 200;
+    msg.characters[0].headPosX += 200;
 
 
     return std::move(msg);

@@ -1,7 +1,6 @@
 #ifndef _SERVER_CLIENT
 #define _SERVER_CLIENT
 
-
 #include <stdint.h>
 
 #include "server_client_receiver_thread.h"
@@ -16,16 +15,15 @@
 class SrvClient {
 
     uint16_t client_id;
-    SrvClientReceiverThread* cReceiverThread;
-    SrvClientSenderThread* cSenderThread;
     Socket skt;
     Queue &receiversQueue;
-    MapInfo &mapInfo;
+    SrvClientReceiverThread* cReceiverThread;
+    SrvClientSenderThread* cSenderThread;
     Queue messageQueue;
 
     public:
 
-        SrvClient(uint16_t client_id, Socket skt, Queue &receiversQueue, MapInfo &mapInfo);
+        SrvClient(uint16_t client_id, Socket skt, Queue &receiversQueue);
 
         void send_message(ProtocolMessage &updated_msg);
 };

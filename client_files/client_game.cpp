@@ -53,6 +53,7 @@ Map Game::loadMap() {
 	Map map(gRenderer);
     map.load(mapInfo);
 
+	std::cout << "MAPA CARGADO" << std::endl;
 	return std::move(map);
 }
 
@@ -81,13 +82,14 @@ ClientWorld Game::createPlayer() {
 
 	Player* player;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
+		std::cout << "i: " << i << " - REC MESSAGE RACE: " << rec_msg.characters[i].id_race << std::endl;
 		if (rec_msg.characters[i].id_race == 1) {
 			player = new Human(gRenderer, this->player_id);
 			clientWorld.players.insert(std::pair<int16_t, Player*> (rec_msg.id_player, player));
-		} else if (rec_msg.characters[i].id_class == 2) {
+		} else if (rec_msg.characters[i].id_race == 2) {
 			player = new Elf(gRenderer, this->player_id);
 			clientWorld.players.insert(std::pair<int16_t, Player*> (rec_msg.id_player, player));
-		} else if (rec_msg.characters[i].id_class == 3) {
+		} else if (rec_msg.characters[i].id_race == 3) {
 			player = new Dwarf(gRenderer, this->player_id);
 			clientWorld.players.insert(std::pair<int16_t, Player*> (rec_msg.id_player, player));
 		} else {
@@ -110,6 +112,7 @@ void Game::run() {
 
 	Map map = this->loadMap();
 	ClientWorld world = this->createPlayer();
+
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();

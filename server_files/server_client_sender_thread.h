@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <atomic>
+#include <msgpack.hpp>
 
 #include "../common_thread.h"
 #include "../common_sockets.h"
@@ -15,11 +16,10 @@ class SrvClientSenderThread: public Thread {
     uint16_t client_id;
     Socket &skt;
     Queue &messageQueue;
-    MapInfo &mapInfo;
     std::atomic<bool> running;
 
     public:
-        SrvClientSenderThread(uint16_t client_id, Socket &skt, Queue &messageQueue, MapInfo &mapInfo);
+        SrvClientSenderThread(uint16_t client_id, Socket &skt, Queue &messageQueue);
 
         virtual void run() override;
 
