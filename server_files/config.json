@@ -1,6 +1,8 @@
 {
     "service": "8080",
     "initialAttributes": 18,
+    "newbieLimit": 12,
+    "maxAttackLvlDiff": 10,
     "graphics": {
         "velocity": 3,
         "screen_width": 640,

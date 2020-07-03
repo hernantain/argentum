@@ -1,6 +1,7 @@
 #include <math.h>
 #include <iostream>
 #include <stdio.h>
+#include <cstdlib>
 #include "server_character.h"
 
 #define NO_LIFE 0
@@ -55,6 +56,10 @@ bool Character::is_alive() {
     return alive;
 }
 
+bool Character::is_newbie() {
+    return newbie;
+}
+
 void Character::take_off_life(int life_points) {
     life.subtract(life_points);
 }
@@ -87,6 +92,7 @@ const int Character::max_gold() {
 
 void Character::take_gold(int amount) {
     // TODO: We should drop the excess in this case
+    if(!alive) return;
     std::cout << "Current max gold is: "<< max_gold() << std::endl;
     if (gold + amount >= max_gold()) {
         gold = max_gold();
@@ -97,8 +103,8 @@ void Character::take_gold(int amount) {
 }
 
 int Character::drop_gold() {
-  // TODO: heres just the logic, we should send some message to the client, possibly
-  // We are not going to return anything
+    // TODO: heres just the logic, we should send some message to the client, possibly
+    // We are not going to return anything
     if (gold > max_secure_gold()) {
         const int dropped_gold = gold - max_secure_gold();
         gold -= dropped_gold;
@@ -110,6 +116,7 @@ int Character::drop_gold() {
 
 void Character::take_item(Item& item) {
     // TODO: heres just the logic, we should send some message to the client
+    if(!alive) return;
     inventory.add_item(item);
 }
 
@@ -155,6 +162,15 @@ void Character::equip_helmet(Helmet& item) {
     }
 }
 
+bool Character::fairplay(Character& other) {
+    int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
+    if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) {
+        std::cout << "Fairplay::You are newbie or the other is newbie or big diff lvl" << std::endl;
+        return false;
+    }
+    return true;
+}
+
 bool Character::is_critical() {
     int critical_percentage = config["attack"]["critical_probability"].asFloat() * 100;
     srand (time(NULL));
@@ -165,7 +181,11 @@ bool Character::is_critical() {
 
 void Character::attack(Character& other) {
     // TODO: si !es a distancia el arma, chequear que este al lado
-    // TODO: Check fairplay
+    if(!alive || !other.is_alive()) {
+        std::cout << "O vos o el esta muerto" << std::endl;
+        return;
+    } 
+    if(!fairplay(other)) return;
     int damage = equipment.get_weapon_damage();
     if (is_critical()) damage *= CRITICAL_MULTIPLIER;
     if (equipment.is_weapon_magical()) {
@@ -207,7 +227,6 @@ int Character::get_extra_experience(Character& other) {
     float max = config["experience"]["max_extra_probability"].asFloat();
     float random = ((float) rand()) / (float) RAND_MAX;
     float ponderation = min + (random * (max - min));
-    std::cout << "ExtraPonderation:: " << ponderation << std::endl;
     int extra_exp = ponderation * other.get_max_life() * experience_formula(other);
     std::cout << "ExtraExperienceWon:: " << extra_exp << std::endl;
     return extra_exp;
@@ -225,11 +244,19 @@ void Character::get_experience(Character& other, int damage) {
 void Character::update_level() {
     while (experience.current() >= experience.max()) {
         level++;
-        // Update mana & life
-        // Update Newbie
+        std::cout << "LevelUp:: " << level << std::endl;
+        life.set_new_max(level);
+        mana.set_new_max(level);
+        update_newbie();
         experience.subtract(experience.max());
         experience.set_new_max(level);
-        std::cout << "NewMaxExp:: " << experience.max() << std::endl;
+    }
+}
+
+void Character::update_newbie() {
+    int newbie_limit = config["newbieLimit"].asInt();
+    if (level > newbie_limit) {
+        newbie = false;
     }
 }
 

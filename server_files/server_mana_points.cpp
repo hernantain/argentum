@@ -2,11 +2,13 @@
 #include "server_os_error.h"
 
 #define FULL_MANA_ERROR "Error: Su mana ya se encuentra llena!"
+#define INITIAL_LEVEL 1
 
 ManaPoints::ManaPoints(int intelligence, float class_multiplier, float race_multiplier) {
-    int initial_mana = this->initial_mana(intelligence, class_multiplier, race_multiplier);
-    this->current_mana = initial_mana;
-    this->max_mana = initial_mana;
+    this->intelligence = intelligence;
+    this->class_multiplier = class_multiplier;
+    this->race_multiplier = race_multiplier;
+    set_new_max(INITIAL_LEVEL);
 }
 
 void ManaPoints::subtract(int mana_points) {
@@ -26,7 +28,8 @@ int ManaPoints::current() {
     return current_mana;
 }
 
-int ManaPoints::initial_mana(int intelligence, float class_multiplier, float race_multiplier) {
-    return intelligence * class_multiplier * race_multiplier;
+void ManaPoints::set_new_max(int level) {
+    int new_max_mana = intelligence * class_multiplier * race_multiplier * level;
+    this->current_mana = new_max_mana;
+    this->max_mana = new_max_mana;
 }
-

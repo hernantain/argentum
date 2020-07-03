@@ -57,6 +57,7 @@ private:
     int get_extra_experience(Character& other);
     void get_experience(Character& other, int damage);
     void update_level();
+    void update_newbie();
 
 public:
   // Contructor, recibe el id, la vida inicial
@@ -77,6 +78,12 @@ public:
 
   // Devuelve el nivel del personaje
   int get_level();
+
+  // Devuelve un booleano que indica si el jugador es newbie o no
+  bool is_newbie();
+
+  // Devuelve un booleano que indica si hay fairplay o no.
+  bool fairplay(Character& other);
 
   // Le quita vida al personaje
   void take_off_life(int life_points);

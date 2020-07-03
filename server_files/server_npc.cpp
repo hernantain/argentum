@@ -73,6 +73,10 @@ int NPC::get_damage() {
 }
 
 void NPC::attack(Character& other) {
+    if(!alive || !other.is_alive()) {
+        std::cout << "O vos o el esta muerto" << std::endl;
+        return;
+    } 
     int damage = get_damage();
     std::cout << "AtaqueNPC::Dano:: " << damage << std::endl;
     other.defense(damage);
