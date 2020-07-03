@@ -3,11 +3,13 @@
 #include <iostream>
 
 #define FULL_LIFE_ERROR "Error: Su vida ya se encuentra llena!"
+#define INITIAL_LEVEL 1
 
 LifePoints::LifePoints(int constitution, float class_multiplier, float race_multiplier) {
-    int initial_life = this->initial_life(constitution, class_multiplier, race_multiplier);
-    this->current_life = initial_life;
-    this->max_life = initial_life;
+    this->constitution = constitution;
+    this->class_multiplier = class_multiplier;
+    this->race_multiplier = race_multiplier;
+    set_new_max(INITIAL_LEVEL);
 }
 
 void LifePoints::subtract(int life_points){
@@ -27,7 +29,12 @@ int LifePoints::current(){
     return current_life;
 }
 
-int LifePoints::initial_life(int constitution, float class_multiplier, float race_multiplier) {
-    return constitution * class_multiplier * race_multiplier;
+int LifePoints::max(){
+    return max_life;
 }
 
+void LifePoints::set_new_max(int level) {
+    int new_max_life = constitution * class_multiplier * race_multiplier * level;
+    this->current_life = new_max_life;
+    this->max_life = new_max_life;
+}

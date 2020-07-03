@@ -4,11 +4,10 @@
 /* Clase que representa a los puntos de mana de un personaje */
 class ManaPoints {
 private:
-    int current_mana;
-    int max_mana;
+    int intelligence;
+    float class_multiplier, race_multiplier;
+    int current_mana, max_mana;
 
-    int initial_mana(int intelligence, float class_multiplier, 
-    float race_multiplier);
 public:
     // Contructor, recibe la inteligencia de la raza
     ManaPoints(int intelligence, float class_multiplier, float race_multiplier);
@@ -21,6 +20,9 @@ public:
     
     // Devuelve la mana actual
     int current();
+
+    // Setter de la max mana para el nivel recibido
+    void set_new_max(int level);
 };
 
 
