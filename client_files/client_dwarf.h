@@ -9,7 +9,7 @@
 class Dwarf: public ShortPlayer {
 
     public: 
-        Dwarf(SDL_Renderer* gRenderer, int16_t id);
+        Dwarf(SDL_Renderer* gRenderer, int16_t id, int bodyPosX, int bodyPosY);
 
 };
 

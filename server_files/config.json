@@ -2,7 +2,7 @@
     "service": "8080",
     "initialAttributes": 18,
     "graphics": {
-        "velocity": 3,
+        "velocity": 10,
         "screen_width": 640,
         "screen_height": 480,
         "character_width": 21,

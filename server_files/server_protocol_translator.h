@@ -16,7 +16,11 @@
 #define _PROTOCOL_TRANSLATOR
 
 // Received from the client
-#define PROTOCOL_MOVE 1
+#define PROTOCOL_MOVE_TOP 10
+#define PROTOCOL_MOVE_RIGHT 11
+#define PROTOCOL_MOVE_LEFT 12
+#define PROTOCOL_MOVE_DOWN 13
+
 #define PROTOCOL_ATTACK 2
 #define PROTOCOL_EQUIP_HELMET 3
 #define PROTOCOL_EQUIP_ARMOR 4
@@ -36,16 +40,20 @@ private:
     Json::Value &config;
     CollisionInfo &collisionInfo;
 
-    ProtocolMessage move_event(ProtocolMessage& msg, ServerWorld &world);
-    ProtocolMessage equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
-    ProtocolMessage equip_armor_event(ProtocolMessage& msg, ServerWorld &world);
-    ProtocolMessage create_character(ProtocolMessage& msg, ServerWorld &world);
+    void move_right_event(ProtocolMessage& msg, ServerWorld &world);
+    void move_left_event(ProtocolMessage& msg, ServerWorld &world);
+    void move_top_event(ProtocolMessage& msg, ServerWorld &world);
+    void move_down_event(ProtocolMessage& msg, ServerWorld &world);
+    void equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
+    void equip_armor_event(ProtocolMessage& msg, ServerWorld &world);
+    void create_character(ProtocolMessage& msg, ServerWorld &world);
+    void get_all_characters(ProtocolMessage& msg, ServerWorld &world);
 
 public:
     ProtocolTranslator(Json::Value &config, CollisionInfo &collisionInfo);
 
     // Transforma el codigo recibido un mensaje del protocolo
-    ProtocolMessage translate(ProtocolMessage& msg, ServerWorld &world);
+    void translate(ProtocolMessage& msg, ServerWorld &world);
 };
 
 #endif //_PROTOCOL_TRANSLATOR

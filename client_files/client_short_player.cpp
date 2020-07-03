@@ -5,17 +5,22 @@
 #include "client_short_player.h"
 
 
-ShortPlayer::ShortPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id) : Player(25, 25, 28, 13, id) {
-	this->load_clothes(gRenderer);
-	this->load_helmets(gRenderer);
-	this->load_weapons(gRenderer);
+ShortPlayer::ShortPlayer(
+		SDL_Renderer* gRenderer, 
+		const char* head_path, 
+		int16_t id, 
+		int bodyPosX, 
+		int bodyPosY) : Player(bodyPosX, bodyPosY, bodyPosX+3, bodyPosY-12, id, gRenderer) {
+	this->load_clothes();
+	this->load_helmets();
+	this->load_weapons();
 	this->playerPicture = new PlayerPicture(gRenderer, head_path);
 	this->playerPicture->set_clothes(this->clothes[0]);
 	this->equippedPlayer = new EquippedPlayer(playerPicture);
 }
 
 
-void ShortPlayer::load_clothes(SDL_Renderer* gRenderer) {
+void ShortPlayer::load_clothes() {
 	Clothes* common = new CommonShortClothes(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
 	Clothes* leatherArmor = new LeatherShortArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
 	Clothes* plateArmor = new PlateShortArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);

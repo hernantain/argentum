@@ -36,3 +36,7 @@ float Race::get_mana_multiplier() {
 float Race::get_recovery_multiplier() {
     return recovery_multiplier;
 }
+
+int16_t Race::get_id() const {
+    return id;
+}

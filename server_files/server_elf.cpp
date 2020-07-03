@@ -1,7 +1,10 @@
 #include "server_elf.h"
 
+#define ELF_ID 2
+
 Elf::Elf(Json::Value &config) : 
     Race(config["initialAttributes"].asInt()) {
+        this->id = ELF_ID;
         this->strength -= config["elf"]["strength_modifier"].asInt();
         this->agility += config["elf"]["agility_modifier"].asInt();
         this->intelligence += config["elf"]["intelligence_modifier"].asInt();

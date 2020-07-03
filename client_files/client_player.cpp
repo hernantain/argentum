@@ -15,11 +15,15 @@ Player::Player(
     int bodyPosY, 
     int headPosX, 
     int headPosY,
-	int16_t id) : Drawable(10, id),
+	int16_t id,
+	SDL_Renderer* gRenderer) : Drawable(id, gRenderer),
                     bodyPosX(bodyPosX), 
                     bodyPosY(bodyPosY),
                     headPosX(headPosX),
-                    headPosY(headPosY) {}
+                    headPosY(headPosY) {
+	this->headOffsetX = headPosX - bodyPosX;
+	this->headOffsetY = headPosY - bodyPosY;
+}
 
 
 int Player::getPosX() const {
@@ -49,12 +53,12 @@ void Player::set_camera(SDL_Rect &camera) {
 		camera.y = 3200 - camera.h; 
 }
 
-void Player::set_position(int newBodyPosX, int newBodyPosY, int newHeadPosX, int newHeadPosY) {
+void Player::set_position(int newBodyPosX, int newBodyPosY) {
 	std::unique_lock<std::mutex> lock(this->m);
 	this->bodyPosX = newBodyPosX;
 	this->bodyPosY = newBodyPosY;
-	this->headPosX = newHeadPosX;
-	this->headPosY = newHeadPosY;
+	this->headPosX = newBodyPosX+this->headOffsetX;
+	this->headPosY = newBodyPosY+this->headOffsetY;
 }
 
 
@@ -85,7 +89,7 @@ void Player::render(SDL_Renderer* gRenderer, int camPosX, int camPosY) {
 }
 
 
-void Player::load_helmets(SDL_Renderer* gRenderer) {
+void Player::load_helmets() {
 	Helmet* hood = new Hood(gRenderer);
 	Helmet* ironHelmet = new IronHelmet(gRenderer);
 	Helmet* magicHat = new MagicHat(gRenderer);
@@ -95,7 +99,7 @@ void Player::load_helmets(SDL_Renderer* gRenderer) {
 }
 
 
-void Player::load_weapons(SDL_Renderer* gRenderer) {
+void Player::load_weapons() {
 	Weapon* sword = new Sword(gRenderer);
 	Axe* axe = new Axe(gRenderer);
 	Hammer* hammer = new Hammer(gRenderer);
@@ -134,33 +138,28 @@ void Player::set_armor(int armorId) {
 ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 	//If a key was pressed
 	int event_id = 1;
-	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ) {
+	if( e.type == SDL_KEYDOWN ) {
 		switch( e.key.keysym.sym ) { 						//Adjust velocity
             
             case SDLK_UP: 
-				event_id = 1;
-				velY -= drawable_speed; 
+				event_id = 10;
 				orientation = UP;
 				break;
 
             case SDLK_DOWN:
-				event_id = 1;
-				velY += drawable_speed;
+				event_id = 13;
 				orientation = DOWN;
 				break;
 
             case SDLK_LEFT:
-				event_id = 1;
-				velX -= drawable_speed;
+				event_id = 12;
 				orientation = LEFT; 
 				break;
 
             case SDLK_RIGHT:
-				event_id = 1;
-				velX += drawable_speed; 
+				event_id = 11;
 				orientation = RIGHT;
 				break;
-
 
 			/* A CAMBIAR */
 			case SDLK_m:
@@ -227,19 +226,19 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 	} else if( e.type == SDL_KEYUP && e.key.repeat == 0 ) {
 		switch( e.key.keysym.sym ) { 						//Adjust velocity
 			case SDLK_UP: 
-				velY += drawable_speed; 
+				// velY += drawable_speed; 
 				break;
 
             case SDLK_DOWN: 
-				velY -= drawable_speed; 
+				// velY -= drawable_speed; 
 				break;
 
             case SDLK_LEFT: 
-				velX += drawable_speed; 
+				// velX += drawable_speed; 
 				break;
 
             case SDLK_RIGHT: 
-				velX -= drawable_speed; 
+				// velX -= drawable_speed; 
 				break;
 
         }
@@ -259,13 +258,14 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 		(int16_t) 1,
 		(int16_t) this->bodyPosX, 
 		(int16_t) this->bodyPosY,
-		(int16_t) this->headPosX, 
-		(int16_t) this->headPosY, 
-		(int16_t) this->velX, 
-		(int16_t) this->velY,
 		(int16_t) this->helmetId,
 		(int16_t) this->armorId
 	);
 	ProtocolMessage msg(event_id, this->id, std::move(character));
 	return std::move(msg);
+}
+
+
+int16_t Player::getId() const {
+	return this->id;
 }

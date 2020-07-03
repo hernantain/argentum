@@ -12,6 +12,7 @@ struct ClientWorld {
 
     ClientWorld();
 
+    void add_player(int16_t id, Player* player);
 
 };
 

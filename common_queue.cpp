@@ -10,7 +10,6 @@ Queue::Queue() : operating(true) {}
 
 
 void Queue::push(ProtocolMessage &message) {
-    std::cout << "PASA POR ACA" << std::endl;
     std::unique_lock<std::mutex> lock(this->m);
 	this->messages.push(std::move(message));
     this->cond_var.notify_all();

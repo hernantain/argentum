@@ -43,7 +43,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_move(ProtocolMessage &msg) {
-    this->player->set_position((int) msg.characters[0].bodyPosX, (int) msg.characters[0].bodyPosY, (int) msg.characters[0].headPosX, (int) msg.characters[0].headPosY);
+    this->player->set_position((int) msg.characters[0].bodyPosX, (int) msg.characters[0].bodyPosY);
 }
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {

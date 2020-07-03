@@ -3,14 +3,11 @@
 #include "client_drawable.h"
 
 
-Drawable::Drawable( 
-    int drawable_speed, 
-    int16_t id) : id(id),
-                velX(0),
-                velY(0),
-                frame(0),
-                orientation(STANDING),
-                drawable_speed(drawable_speed) {}
+Drawable::Drawable(int16_t id, SDL_Renderer* gRenderer) : id(id),
+                                frame(0),
+                                orientation(STANDING){
+    this->gRenderer = gRenderer;
+}
 
 
 

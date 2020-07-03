@@ -9,7 +9,7 @@
 class Human: public TallPlayer {
 
     public:
-        Human(SDL_Renderer* gRenderer, int16_t id);
+        Human(SDL_Renderer* gRenderer, int16_t id, int bodyPosX, int bodyPosY);
 
 };
 

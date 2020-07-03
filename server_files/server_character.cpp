@@ -167,35 +167,52 @@ void Character::defense(int damage) {
     std::cout << "Defensa:: " << defense << std::endl;
 }
 
-void Character::move_right(int velocity) {
-    movement.move_right(velocity, collisionInfo);
+void Character::move_right() {
+    movement.move_right(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
-void Character::move_left(int velocity) {
-    movement.move_left(velocity, collisionInfo);
+void Character::move_left() {
+    movement.move_left(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
-void Character::move_top(int velocity) {
-    movement.move_top(velocity, collisionInfo);
+void Character::move_top() {
+    movement.move_top(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
-void Character::move_down(int velocity) {
-    movement.move_down(velocity, collisionInfo);
+void Character::move_down() {
+    movement.move_down(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
-int Character::get_body_pos_X() {
+int Character::get_body_pos_X() const {
     return movement.get_horizontal_body_position();
 }
 
-int Character::get_head_pos_X() {
-    return movement.get_horizontal_head_position();
-}
 
-int Character::get_body_pos_Y() {
+int Character::get_body_pos_Y() const {
     return movement.get_vertical_body_position();
 }
 
-int Character::get_head_pos_Y() {
-    return movement.get_vertical_head_position();
+
+
+void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter) {
+    protocolCharacter.id = this->id;
+    protocolCharacter.bodyPosX = this->get_body_pos_X();
+    protocolCharacter.bodyPosY = this->get_body_pos_Y();
+    protocolCharacter.id_race = this->get_race_id();
+    protocolCharacter.id_class = this->get_class_id();
 }
 
+
+size_t Character::get_id() {
+    return id;
+}
+
+
+int16_t Character::get_race_id() const {
+    return race.get_id();
+}
+
+
+int16_t Character::get_class_id() const {
+    return character_class.get_id();
+}

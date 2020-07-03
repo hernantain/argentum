@@ -32,7 +32,7 @@ class Game {
 	void adjust_camera(int width, int height);
 
 	Map loadMap(); 
-	ClientWorld createPlayer();
+	ClientWorld loadWorld();
 
 
 	public:

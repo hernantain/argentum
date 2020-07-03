@@ -12,10 +12,10 @@ class TallPlayer: public Player {
     const int PLAYER_HEIGHT = 42;
 
     public:
-        TallPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id);
+        TallPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id, int bodyPosX, int bodyPosY);
 
     private:
-        void load_clothes(SDL_Renderer* gRenderer);
+        void load_clothes();
 
 };
 

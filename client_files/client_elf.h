@@ -9,7 +9,7 @@
 class Elf: public TallPlayer {
 
     public:
-        Elf(SDL_Renderer* gRenderer, int16_t id);
+        Elf(SDL_Renderer* gRenderer, int16_t id, int bodyPosX, int bodyPosY);
 
 };
 

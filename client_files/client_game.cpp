@@ -39,8 +39,6 @@ Game::Game() :  gRenderer(NULL), running(true) {
 
 
 Map Game::loadMap() {
-	std::cout << "POR CARGAR MAPA" << std::endl;
-
 	MapInfo mapInfo;
 
 	msgpack::unpacker pac;
@@ -53,23 +51,19 @@ Map Game::loadMap() {
 	Map map(gRenderer);
     map.load(mapInfo);
 
-	std::cout << "MAPA CARGADO" << std::endl;
 	return std::move(map);
 }
 
 
-ClientWorld Game::createPlayer() {
-	ProtocolCharacter character(this->player_id, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+ClientWorld Game::loadWorld() {
+	ProtocolCharacter character(this->player_id, 2, 1, 0, 0, 0, 0);
 	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
 	
-
-	std::cout << "POR MANDAR CHARACTER" << std::endl;
 	msgpack::sbuffer buffer;
 	msgpack::packer<msgpack::sbuffer> pk(&buffer);
 	pk.pack(msg);
 	skt(buffer);
 
-	std::cout << "Corriendo" << std::endl;
     ProtocolMessage rec_msg;
     msgpack::unpacker pac;
     skt >> pac;
@@ -82,19 +76,21 @@ ClientWorld Game::createPlayer() {
 
 	Player* player;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
-		std::cout << "i: " << i << " - REC MESSAGE RACE: " << rec_msg.characters[i].id_race << std::endl;
 		if (rec_msg.characters[i].id_race == 1) {
-			player = new Human(gRenderer, this->player_id);
-			clientWorld.players.insert(std::pair<int16_t, Player*> (rec_msg.id_player, player));
+			player = new Human(gRenderer, this->player_id, rec_msg.characters[i].bodyPosX, rec_msg.characters[i].bodyPosY);
+			clientWorld.add_player(rec_msg.id_player, player);
+		
 		} else if (rec_msg.characters[i].id_race == 2) {
-			player = new Elf(gRenderer, this->player_id);
-			clientWorld.players.insert(std::pair<int16_t, Player*> (rec_msg.id_player, player));
+			player = new Elf(gRenderer, this->player_id, rec_msg.characters[i].bodyPosX, rec_msg.characters[i].bodyPosY);
+			clientWorld.add_player(rec_msg.id_player, player);
+		
 		} else if (rec_msg.characters[i].id_race == 3) {
-			player = new Dwarf(gRenderer, this->player_id);
-			clientWorld.players.insert(std::pair<int16_t, Player*> (rec_msg.id_player, player));
+			player = new Dwarf(gRenderer, this->player_id, rec_msg.characters[i].bodyPosX, rec_msg.characters[i].bodyPosY);
+			clientWorld.add_player(rec_msg.id_player, player);
+
 		} else {
-			player = new Gnome(gRenderer, this->player_id);
-			clientWorld.players.insert(std::pair<int16_t, Player*> (rec_msg.id_player, player));
+			player = new Gnome(gRenderer, this->player_id, rec_msg.characters[i].bodyPosX, rec_msg.characters[i].bodyPosY);
+			clientWorld.add_player(rec_msg.id_player, player);
 		}
  	}
 
@@ -106,20 +102,15 @@ ClientWorld Game::createPlayer() {
 void Game::run() {
 		
 	skt.connect_to("localhost", "8080");
-
 	skt >> this->player_id;
-	std::cout << "PLAYER ID: " << this->player_id << std::endl;
-
 	Map map = this->loadMap();
-	ClientWorld world = this->createPlayer();
 
+	ClientWorld world = this->loadWorld();
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
-	// Elf player(gRenderer);	
 	Player* player = world.players[this->player_id];
-
 
 	// Recibe la respuesta del server y modifica o no en el modelo
 	Thread* receiver = new ClientReceiverThread(skt, player, camera);
@@ -140,7 +131,7 @@ void Game::run() {
 
 			} else {
 				
-				ProtocolMessage msg = player->handleEvent( e );
+				ProtocolMessage msg = player->handleEvent(e);
 				queue.push(msg);	
 			}
 		}

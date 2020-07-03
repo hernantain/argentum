@@ -12,10 +12,10 @@ class ShortPlayer: public Player {
     const int PLAYER_HEIGHT = 31;
 
     public:
-        ShortPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id);
+        ShortPlayer(SDL_Renderer* gRenderer, const char* head_path, int16_t id, int bodyPosX, int bodyPosY);
 
     private:
-        void load_clothes(SDL_Renderer* gRenderer);
+        void load_clothes();
 
 };
 

@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-#include "server_client_receiver_thread.h"
-#include "server_client_sender_thread.h"
+#include "server_receiver_thread.h"
+#include "server_sender_thread.h"
 
 #include "../common_protocol_message.h"
 #include "../common_queue.h"

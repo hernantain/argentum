@@ -9,7 +9,7 @@
 class Gnome: public ShortPlayer {
 
     public: 
-        Gnome(SDL_Renderer* gRenderer, int16_t id);
+        Gnome(SDL_Renderer* gRenderer, int16_t id, int bodyPosX, int bodyPosY);
 
 };
 

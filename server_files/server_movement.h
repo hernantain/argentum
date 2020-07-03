@@ -15,7 +15,7 @@ enum _lastMovement {
 class Movement {
 private:
     int bodyPosX, bodyPosY;
-    int headPosX, headPosY;
+    // int headPosX, headPosY;
     _lastMovement last_movement;
   
     // No copiable
@@ -27,16 +27,10 @@ public:
     explicit Movement();
 
     // Devuelve un int indicando la posicion en X del cuerpo.
-    int get_horizontal_body_position();
-
-    // Devuelve un int indicando la posicion en X de la cabeza.
-    int get_horizontal_head_position();
+    int get_horizontal_body_position() const;
 
     // Devuelve un int indicando la posicion en Y del cuerpo.
-    int get_vertical_body_position();
-
-    // Devuelve un int indicando la posicion en Y de la cabeza
-    int get_vertical_head_position();
+    int get_vertical_body_position() const;
 
     // Setea el movimiento del personaje hacia la derecha
     void move_right(int velocity, CollisionInfo &collisionInfo);
