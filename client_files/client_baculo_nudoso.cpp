@@ -5,7 +5,8 @@
 BaculoNudoso::~BaculoNudoso() {}
 
 BaculoNudoso::BaculoNudoso(SDL_Renderer* gRenderer) : Weapon(0) {
-    this->load_pictures(gRenderer); 
+    this->load_pictures(gRenderer);
+    this->id = 14;
 }
 
 bool BaculoNudoso::load_pictures(SDL_Renderer* gRenderer) {
