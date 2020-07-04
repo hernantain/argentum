@@ -4,9 +4,6 @@
 #include "server_world.h"
 #include "server_protocol_translator.h"
 
-#include "server_elf.h"
-#include "server_cleric.h"
-
 ProtocolTranslator::ProtocolTranslator(
     Json::Value &config, 
     CollisionInfo &collisionInfo) : config(config),
@@ -23,7 +20,26 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_MOVE_DOWN: return move_down_event(msg, world);
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
+        case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
     }
+}
+
+// void ProtocolTranslator::equip_shield_event(ProtocolMessage &msg, ServerWorld &world) {
+
+//     int shield_id = msg.characters[0].shieldId;
+//     ShieldFactory factory;
+//     Weapon shield = factory.make_shield(shield_id, config);
+//     world.characters[msg.id_player]->equip_shield(shield);
+//     msg.id_message = PROTOCOL_SHIELD_CONFIRM;
+// }
+
+void ProtocolTranslator::equip_weapon_event(ProtocolMessage &msg, ServerWorld &world) {
+
+    int weapon_id = msg.characters[0].weaponId;
+    WeaponFactory factory;
+    Weapon weapon = factory.make_weapon(weapon_id, config);
+    world.characters[msg.id_player]->equip_weapon(weapon);
+    msg.id_message = PROTOCOL_WEAPON_CONFIRM;
 }
 
 void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &world) {

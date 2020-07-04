@@ -11,7 +11,7 @@
 #include "server_character_factory.h"
 #include "server_helmet_factory.h"
 #include "server_armor_factory.h"
-
+#include "server_weapon_factory.h"
 
 #ifndef _PROTOCOL_TRANSLATOR
 #define _PROTOCOL_TRANSLATOR
@@ -25,6 +25,8 @@
 #define PROTOCOL_ATTACK 2
 #define PROTOCOL_EQUIP_HELMET 3
 #define PROTOCOL_EQUIP_ARMOR 4
+#define PROTOCOL_EQUIP_WEAPON 5
+#define PROTOCOL_EQUIP_SHIELD 6
 
 #define PROTOCOL_CREATE_CHARACTER 65
 
@@ -47,6 +49,8 @@ private:
     void move_left_event(ProtocolMessage& msg, ServerWorld &world);
     void move_top_event(ProtocolMessage& msg, ServerWorld &world);
     void move_down_event(ProtocolMessage& msg, ServerWorld &world);
+    void equip_shield_event(ProtocolMessage& msg, ServerWorld &world);
+    void equip_weapon_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_armor_event(ProtocolMessage& msg, ServerWorld &world);
     void create_character(ProtocolMessage& msg, ServerWorld &world);

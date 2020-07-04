@@ -33,4 +33,6 @@ void Weapon::render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &
     }
 }
 
-
+int Weapon::get_id() {
+	return id;
+}

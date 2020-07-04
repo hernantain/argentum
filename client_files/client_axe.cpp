@@ -15,7 +15,8 @@ void Axe::set_sprites() {
 
 
 Axe::Axe(SDL_Renderer* gRenderer) : Weapon(0) {
-    this->load_pictures(gRenderer); 
+    this->load_pictures(gRenderer);
+    this->id = 10;
 }
 
 

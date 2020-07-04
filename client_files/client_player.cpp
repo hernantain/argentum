@@ -112,6 +112,15 @@ void Player::load_weapons() {
 	this->weapons.push_back(baculoNudoso);
 }
 
+void Player::set_weapon(int weaponId) {
+	if (weaponId == 9) {
+		this->equippedPlayer->setWeapon(this->weapons[0]);
+	} else if (weaponId == 10) {
+		this->equippedPlayer->setWeapon(this->weapons[1]);
+	} else {
+		this->equippedPlayer->setWeapon(this->weapons[2]);
+	}
+}
 
 void Player::set_helmet(int helmetId) {
 	if (helmetId == 4) {
@@ -202,15 +211,18 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 				break;
 
 			case SDLK_u:
-				this->equippedPlayer->setWeapon(this->weapons[0]);
+				event_id = 5;
+				weaponId = this->weapons[0]->get_id();
 				break;
 
 			case SDLK_y:
-				this->equippedPlayer->setWeapon(this->weapons[1]);
+				event_id = 5;
+				weaponId = this->weapons[1]->get_id();
 				break;
 
 			case SDLK_i:
-				this->equippedPlayer->setWeapon(this->weapons[2]);
+				event_id = 5;
+				weaponId = this->weapons[2]->get_id();
 				break;
 
 			case SDLK_o:
@@ -259,7 +271,8 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 		(int16_t) this->bodyPosX, 
 		(int16_t) this->bodyPosY,
 		(int16_t) this->helmetId,
-		(int16_t) this->armorId
+		(int16_t) this->armorId,
+		(int16_t) this->weaponId
 	);
 	ProtocolMessage msg(event_id, this->id, std::move(character));
 	return std::move(msg);

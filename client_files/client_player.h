@@ -40,6 +40,7 @@ class Player: public Drawable {
 		void set_position(int newBodyPosX, int newBodyPosY);
         void set_camera(SDL_Rect &camera);
 
+        void set_weapon(int weaponId);
         void set_helmet(int helmetId);
         void set_armor(int armorId);
 
