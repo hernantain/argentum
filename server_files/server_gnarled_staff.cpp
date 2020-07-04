@@ -7,4 +7,5 @@ GnarledStaff::GnarledStaff(Json::Value &config) :
         this->name = "Báculo Nudoso";
         this->ranged = true;
         this->magical = true;
+        this->mana_consumption = config["gnarledStaff"]["mana"].asInt();
     }

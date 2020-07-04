@@ -32,10 +32,12 @@
 
 // Sending to the client
 #define PROTOCOL_MOVE_CONFIRM 20
+#define PROTOCOL_ATTACK_CONFIRM 25
 #define PROTOCOL_HELMET_CONFIRM 30
 #define PROTOCOL_ARMOR_CONFIRM 31
 #define PROTOCOL_WEAPON_CONFIRM 32
 #define PROTOCOL_SHIELD_CONFIRM 33
+#define PROTOCOL_CREATION_CONFIRM 66
 
 /* Clase que se encarga de ejecutar los codigos recibidos y matchearlos a una
  * función del personaje.
@@ -53,7 +55,8 @@ private:
     void equip_weapon_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_armor_event(ProtocolMessage& msg, ServerWorld &world);
-    void create_character(ProtocolMessage& msg, ServerWorld &world);
+    void attack_event(ProtocolMessage& msg, ServerWorld &world);
+    void create_character_event(ProtocolMessage& msg, ServerWorld &world);
     void get_all_characters(ProtocolMessage& msg, ServerWorld &world);
 
 public:

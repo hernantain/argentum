@@ -171,6 +171,13 @@ bool Character::fairplay(Character& other) {
     return true;
 }
 
+void Character::consume_mana() {
+    if(!equipment.is_weapon_magical()) return;
+    int mana_consumption = equipment.get_weapon_consumption();
+    std::cout << "Consumiendo mana: " << mana_consumption << std::endl;
+    take_off_mana(mana_consumption);
+}
+
 bool Character::is_critical() {
     int critical_percentage = config["attack"]["critical_probability"].asFloat() * 100;
     srand (time(NULL));
@@ -179,19 +186,31 @@ bool Character::is_critical() {
     return false;
 }
 
-void Character::attack(Character& other) {
-    // TODO: si !es a distancia el arma, chequear que este al lado
+bool Character::can_attack(Character& other) {
     if(!alive || !other.is_alive()) {
-        std::cout << "O vos o el esta muerto" << std::endl;
-        return;
-    } 
-    if(!fairplay(other)) return;
+        std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
+        return false;
+    }
+    if(!fairplay(other)) return false;
+    if (!equipment.is_weapon_ranged()) {
+        int posX = other.get_body_pos_X();
+        int posY = other.get_body_pos_Y();
+        std::cout << "other posX: " << posX << std::endl;
+        std::cout << "other posY: " << posY << std::endl;
+        return movement.is_near(posX, posY);
+    }
+    if (equipment.is_weapon_magical() && equipment.get_weapon_consumption() > get_mana()) {
+        std::cout << "CantAttack::No te da la mana" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+void Character::attack(Character& other) {
+    if(!can_attack(other)) return;
+    consume_mana();
     int damage = equipment.get_weapon_damage();
     if (is_critical()) damage *= CRITICAL_MULTIPLIER;
-    if (equipment.is_weapon_magical()) {
-        int mana_consumption = equipment.get_weapon_consumption();
-        take_off_mana(mana_consumption);
-    }
     std::cout << "Ataque::Dano:: " << damage << std::endl;
     int final_damage = other.defense(damage);
     get_experience(other, final_damage);
