@@ -34,8 +34,8 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
 // }
 
 void ProtocolTranslator::equip_weapon_event(ProtocolMessage &msg, ServerWorld &world) {
-
     int weapon_id = msg.characters[0].weaponId;
+    std::cout << "Veamos que llega: " << weapon_id << std::endl;
     WeaponFactory factory;
     Weapon weapon = factory.make_weapon(weapon_id, config);
     world.characters[msg.id_player]->equip_weapon(weapon);
