@@ -1,5 +1,4 @@
 #include "server_ash_staff.h"
-#include <iostream>
 
 AshStaff::AshStaff(Json::Value &config) : 
     Weapon(config["ashStaff"]["min_damage"].asInt(),
