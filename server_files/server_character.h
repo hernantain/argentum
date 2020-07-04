@@ -60,6 +60,8 @@ private:
     void get_experience(Character& other, int damage);
     void update_level();
     void update_newbie();
+    bool can_attack(Character& other);
+    void consume_mana();
 
 public:
   // Contructor, recibe el id, la vida inicial

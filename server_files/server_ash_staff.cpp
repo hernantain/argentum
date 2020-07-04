@@ -1,4 +1,5 @@
 #include "server_ash_staff.h"
+#include <iostream>
 
 AshStaff::AshStaff(Json::Value &config) : 
     Weapon(config["ashStaff"]["min_damage"].asInt(),
@@ -7,4 +8,5 @@ AshStaff::AshStaff(Json::Value &config) :
         this->name = "Báculo de Fresno";
         this->ranged = true;
         this->magical = true;
+        this->mana_consumption = config["ashStaff"]["mana"].asInt();
     }

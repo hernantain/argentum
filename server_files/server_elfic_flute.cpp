@@ -7,4 +7,5 @@ ElficFlute::ElficFlute(Json::Value &config) :
         this->name = "Flauta Elfica";
         this->ranged = true;
         this->magical = true;
+        this->mana_consumption = config["elficFlute"]["mana"].asInt();
     }

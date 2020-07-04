@@ -7,4 +7,5 @@ CrimpStaff::CrimpStaff(Json::Value &config) :
         this->name = "Báculo Engarzado";
         this->ranged = true;
         this->magical = true;
+        this->mana_consumption = config["gnarledStaff"]["mana"].asInt();
     }

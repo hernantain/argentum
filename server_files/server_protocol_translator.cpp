@@ -13,7 +13,7 @@ ProtocolTranslator::ProtocolTranslator(
 void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
     switch (code) {
-        case PROTOCOL_CREATE_CHARACTER: return create_character(msg, world);
+        case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, world);
         case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
@@ -21,6 +21,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
+        // case PROTOCOL_ATTACK: return attack_event(msg, world);
     }
 }
 
@@ -93,9 +94,17 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
+// void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) {
+    // int other_posX = msg.characters[0].otherBodyPosX;
+    // int other_posY = msg.characters[0].otherBodyPosY;
+    // check if there is another on that pos on the world array with an offset of +-30px
+    // in case it is, return that character
+    // Character other = world.fetch_possible_oponent(other_posX, other_posY);
+    // world.characters[msg.id_player]->attack(other);
+    // msg.id_message = PROTOCOL_ATTACK_CONFIRM;
+// }
 
-
-void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &world) {
+void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorld &world) {
     int id_class = msg.characters[0].id_class;
     int id_race = msg.characters[0].id_race;
     CharacterFactory factory;
@@ -104,7 +113,7 @@ void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &wor
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
 
-    msg.id_message = 66;
+    msg.id_message = PROTOCOL_CREATION_CONFIRM;
     this->get_all_characters(msg, world);
 }
 
