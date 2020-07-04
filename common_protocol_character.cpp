@@ -10,13 +10,15 @@ ProtocolCharacter::ProtocolCharacter(
         int16_t bodyPosX, 
         int16_t bodyPosY,
         int16_t helmetId,
-        int16_t armorId) : id(id), 
+        int16_t armorId,
+        int16_t weaponId) : id(id), 
                         id_race(id_race),
                         id_class(id_class),
                         bodyPosX(bodyPosX), 
                         bodyPosY(bodyPosY), 
                         helmetId(helmetId),
-                        armorId(armorId) {}
+                        armorId(armorId),
+                        weaponId(weaponId) {}
 
 
 ProtocolCharacter::ProtocolCharacter() {}

@@ -3,7 +3,8 @@
 
 
 Sword::Sword(SDL_Renderer* gRenderer) : Weapon(0) {
-    this->load_pictures(gRenderer); 
+    this->load_pictures(gRenderer);
+    this->id = 9;
 }
 
 

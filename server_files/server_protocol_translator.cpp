@@ -4,9 +4,6 @@
 #include "server_world.h"
 #include "server_protocol_translator.h"
 
-#include "server_elf.h"
-#include "server_cleric.h"
-
 ProtocolTranslator::ProtocolTranslator(
     Json::Value &config, 
     CollisionInfo &collisionInfo) : config(config),
@@ -16,18 +13,35 @@ ProtocolTranslator::ProtocolTranslator(
 void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
     switch (code) {
-        case 65: return create_character(msg, world);
+        case PROTOCOL_CREATE_CHARACTER: return create_character(msg, world);
         case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
         case PROTOCOL_MOVE_DOWN: return move_down_event(msg, world);
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
+        case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
     }
 }
 
-void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &world) {
+// void ProtocolTranslator::equip_shield_event(ProtocolMessage &msg, ServerWorld &world) {
 
+//     int shield_id = msg.characters[0].shieldId;
+//     ShieldFactory factory;
+//     Weapon shield = factory.make_shield(shield_id, config);
+//     world.characters[msg.id_player]->equip_shield(shield);
+//     msg.id_message = PROTOCOL_SHIELD_CONFIRM;
+// }
+
+void ProtocolTranslator::equip_weapon_event(ProtocolMessage &msg, ServerWorld &world) {
+    int weapon_id = msg.characters[0].weaponId;
+    WeaponFactory factory;
+    Weapon weapon = factory.make_weapon(weapon_id, config);
+    world.characters[msg.id_player]->equip_weapon(weapon);
+    msg.id_message = PROTOCOL_WEAPON_CONFIRM;
+}
+
+void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &world) {
     int armor_id = msg.characters[0].armorId;
     ArmorFactory factory;
     Armor armor = factory.make_armor(armor_id, config);
@@ -82,9 +96,11 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
 
 
 void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &world) {
-    
-    Elf race(config);
-    Cleric c(config);       /* LOGICA PARA MANEJAR LAS RAZAS Y CLASES ACA */
+    int id_class = msg.characters[0].id_class;
+    int id_race = msg.characters[0].id_race;
+    CharacterFactory factory;
+    CharacterClass c = factory.make_class(id_class, config);
+    Race race = factory.make_race(id_race, config);
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
 

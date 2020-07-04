@@ -16,6 +16,7 @@ class Weapon {
     int offset;
     
     protected:
+        int id;
         Weapon(int offset);
         LTexture weaponTexture;
         SDL_Rect walkingFrontPlayer[ WALKING_FRONT_ANIMATION_FRAMES ];
@@ -34,6 +35,8 @@ class Weapon {
 
     public:
         virtual void render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame);
+
+        int get_id();
 
         virtual ~Weapon();
 

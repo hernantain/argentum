@@ -56,7 +56,7 @@ Map Game::loadMap() {
 
 
 ClientWorld Game::loadWorld() {
-	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0);
+	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0, 0);
 	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
 
 	std::cout << "POR ACA NO PASA?" << std::endl;
