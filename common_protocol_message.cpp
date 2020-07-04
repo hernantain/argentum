@@ -17,14 +17,14 @@ ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
     // std::cout << "Constructor por movimiento" << std::endl;
     this->id_message = std::move(other.id_message);
     this->id_player = std::move(other.id_player);
-    this->characters = std::move(other.characters);
+    this->characters = other.characters;
 }
 
 ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
     // std::cout << "Asignando por movimiento" << std::endl;
     this->id_message = std::move(other.id_message);
     this->id_player = std::move(other.id_player);
-    this->characters = std::move(other.characters);
+    this->characters = other.characters;
     return *this;
 }
 

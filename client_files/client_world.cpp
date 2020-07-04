@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 #include "client_player.h"
 #include "client_elf.h"
 #include "client_human.h"
@@ -14,12 +16,14 @@ ClientWorld::ClientWorld(SDL_Renderer *gRenderer) {
     
 
 void ClientWorld::add_player(int16_t id, Player* player) {
+    std::cout << "Insertando " << id << std::endl;
     this->players.insert(std::pair<int16_t, Player*> (id, player));
 }
 
 
 void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
     Player* player;
+    std::cout << "RAZA ES: " << protocolCharacter.id_race << std::endl;
     if (protocolCharacter.id_race == 1) {
         player = new Human(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);
@@ -36,4 +40,13 @@ void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
         player = new Gnome(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);
     }
+}
+
+
+void ClientWorld::render(int16_t id, int &camPosX, int &camPosY) {
+    
+    std::map<int16_t, Player*>::iterator itr;
+    for (itr = players.begin(); itr != players.end(); ++itr)  
+        itr->second->render(camPosX, camPosY);
+
 }

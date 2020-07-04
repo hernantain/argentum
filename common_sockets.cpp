@@ -150,7 +150,7 @@ void Socket::operator()(uint8_t &com) const {
 
 
 void Socket::operator()(uint16_t &number) const {
-	number = htons(number);
+	// number = htons(number);
 	this->send_message((char*) &number, TWO_BYTES);	
 }
 
@@ -180,7 +180,7 @@ void Socket::operator>>(uint8_t &com) const {
 
 void Socket::operator>>(uint16_t &buf) const {
 	this->receive((char*) &buf, TWO_BYTES);
-	buf = ntohs(buf);
+	// buf = ntohs(buf);
 }
 
 

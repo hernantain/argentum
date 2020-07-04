@@ -33,7 +33,7 @@ class Player: public Drawable {
 
 		ProtocolMessage handleEvent( SDL_Event& e );
 
-		void render(SDL_Renderer *gRenderer, int camPosX, int camPosY); 
+		void render(int camPosX, int camPosY);
 
 		void update_frames();
 

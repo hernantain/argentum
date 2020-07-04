@@ -27,7 +27,6 @@ void ServerProcessorThread::run() {
     ProtocolTranslator protocol_translator(config, collisionInfo);
     ServerWorld serverWorld;
     while (running) {
-
         ProtocolMessage received_msg = this->receiversQueue.pop();
         protocol_translator.translate(received_msg, serverWorld);
         this->broadcastMessage(received_msg);
@@ -39,6 +38,10 @@ void ServerProcessorThread::run() {
 
 void ServerProcessorThread::broadcastMessage(ProtocolMessage &updated_msg) {
     for (unsigned int i = 0; i < clients.size(); ++i) {
+        std::cout << "Player " 
+        << updated_msg.characters[i].id << " POS EN X: " 
+        << updated_msg.characters[i].bodyPosX << " y EN Y: "
+        << updated_msg.characters[i].bodyPosY << std::endl;  
         this->clients[i]->send_message(updated_msg);
     }
 }

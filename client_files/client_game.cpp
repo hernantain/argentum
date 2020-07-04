@@ -58,11 +58,13 @@ Map Game::loadMap() {
 ClientWorld Game::loadWorld() {
 	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0);
 	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
-	
+
+	std::cout << "POR ACA NO PASA?" << std::endl;
+
 	msgpack::sbuffer buffer;
 	msgpack::packer<msgpack::sbuffer> pk(&buffer);
 	pk.pack(msg);
-	skt(buffer);
+	skt(buffer);	
 
     ProtocolMessage rec_msg;
     msgpack::unpacker pac;
@@ -72,9 +74,13 @@ ClientWorld Game::loadWorld() {
     msgpack::object obj = oh.get();
     obj.convert(rec_msg);
     
+	std::cout << "ACA YA ROMPIO" << std::endl;
 	ClientWorld clientWorld(gRenderer);
 
+	std::cout << "LEN CHARACTERS RECEIVED: " << rec_msg.characters.size() << std::endl;
+
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
+		std::cout << "Player " << i << std::endl;
 		clientWorld.add_player(rec_msg.characters[i]);
  	}
 
@@ -90,6 +96,10 @@ void Game::run() {
 	Map map = this->loadMap();
 
 	ClientWorld world = this->loadWorld();
+
+	std::cout << "RECIBIENDO TODAS LAS COSAS" << std::endl;
+	std::cout << "player ID: " << this->player_id << std::endl;
+	std::cout << "WORLD SIZE: " << world.players.size() << std::endl;
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
@@ -114,7 +124,6 @@ void Game::run() {
 				this->adjust_camera(this->window.getWidth(), this->window.getHeight());
 
 			} else {
-				
 				ProtocolMessage msg = player->handleEvent(e);
 				queue.push(msg);	
 			}
@@ -125,7 +134,8 @@ void Game::run() {
 		SDL_RenderClear( gRenderer );
 
 		map.renderFirstLayer(camera);
-		player->render(this->gRenderer, camera.x, camera.y);
+		// player->render(camera.x, camera.y);
+		world.render(this->player_id, camera.x, camera.y);
 		map.renderSecondLayer(camera);
 		
 		SDL_RenderPresent( this->gRenderer ); //Update screen

@@ -69,7 +69,7 @@ void Player::update_frames() {
 
 
 
-void Player::render(SDL_Renderer* gRenderer, int camPosX, int camPosY) {
+void Player::render(int camPosX, int camPosY) {
 	std::unique_lock<std::mutex> lock(this->m);
 	int bodyCenteredX = this->bodyPosX - camPosX;
 	int bodyCenteredY = this->bodyPosY - camPosY;
@@ -87,6 +87,7 @@ void Player::render(SDL_Renderer* gRenderer, int camPosX, int camPosY) {
 
 	this->frame++;
 }
+
 
 
 void Player::load_helmets() {

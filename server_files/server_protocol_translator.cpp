@@ -101,6 +101,7 @@ void ProtocolTranslator::get_all_characters(ProtocolMessage& msg, ServerWorld &w
         ProtocolCharacter protocolCharacter;
         itr->second->populate_protocol_character(protocolCharacter);
         tmp.push_back(std::move(protocolCharacter));
-        msg.characters = std::move(tmp);
     }
+    msg.characters = tmp;
+
 }

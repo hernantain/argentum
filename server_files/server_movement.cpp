@@ -80,7 +80,7 @@ bool Movement::is_facing_down(){
 
 void Movement::check_out_of_bounds_X(int velocity){
     if(bodyPosX < 0 || bodyPosX + CHARACTER_WIDTH > WINDOW_SIZE) {
-        bodyPosX += velocity;
+        bodyPosX -= velocity;
     }
 }
 

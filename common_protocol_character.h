@@ -25,11 +25,11 @@ struct ProtocolCharacter {
 
     ProtocolCharacter();
 
-    ProtocolCharacter(ProtocolCharacter&& other);
-    ProtocolCharacter& operator=(ProtocolCharacter&& other);
+    // ProtocolCharacter(ProtocolCharacter&& other);
+    // ProtocolCharacter& operator=(ProtocolCharacter&& other);
 
-    ProtocolCharacter(const ProtocolCharacter&) = delete;
-    ProtocolCharacter& operator=(const ProtocolCharacter&) = delete;
+    // ProtocolCharacter(const ProtocolCharacter&) = delete;
+    // ProtocolCharacter& operator=(const ProtocolCharacter&) = delete;
 
     MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, helmetId, armorId)
 };
