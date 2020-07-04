@@ -11,6 +11,8 @@ struct ProtocolCharacter {
     int16_t id_class;
     int16_t bodyPosX; 
     int16_t bodyPosY;
+    int16_t otherPosX; 
+    int16_t otherPosY;
     int16_t helmetId;
     int16_t armorId;
     int16_t weaponId;
@@ -21,6 +23,8 @@ struct ProtocolCharacter {
         int16_t id_class,
         int16_t bodyPosX, 
         int16_t bodyPosY,
+        int16_t otherPosX,
+        int16_t otherPosY,
         int16_t helmetId,
         int16_t armorId,
         int16_t weaponId);

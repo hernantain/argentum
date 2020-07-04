@@ -31,7 +31,7 @@ class Player: public Drawable {
     public:
         Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY, int16_t id, SDL_Renderer* gRenderer);
 
-		ProtocolMessage handleEvent( SDL_Event& e );
+		ProtocolMessage handleEvent( SDL_Event& e, SDL_Rect &camera );
 
 		void render(int camPosX, int camPosY);
 
