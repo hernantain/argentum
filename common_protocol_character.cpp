@@ -3,19 +3,24 @@
 #include <utility>
 #include "common_protocol_character.h"
 
+
 ProtocolCharacter::ProtocolCharacter(
         uint16_t id,
         int16_t id_race,
         int16_t id_class,
         int16_t bodyPosX, 
         int16_t bodyPosY,
+        int16_t otherPosX,
+        int16_t otherPosY,
         int16_t helmetId,
         int16_t armorId,
         int16_t weaponId) : id(id), 
                         id_race(id_race),
                         id_class(id_class),
                         bodyPosX(bodyPosX), 
-                        bodyPosY(bodyPosY), 
+                        bodyPosY(bodyPosY),
+                        otherPosX(otherPosX),
+                        otherPosY(otherPosY), 
                         helmetId(helmetId),
                         armorId(armorId),
                         weaponId(weaponId) {}

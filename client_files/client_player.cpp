@@ -149,9 +149,10 @@ void Player::set_armor(int armorId) {
 	// }
 }
 
-ProtocolMessage Player::handleEvent( SDL_Event& e ) {
+ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 	//If a key was pressed
 	int event_id = 1;
+	int x, y;
 	if( e.type == SDL_KEYDOWN ) {
 		switch( e.key.keysym.sym ) { 						//Adjust velocity
             
@@ -265,21 +266,22 @@ ProtocolMessage Player::handleEvent( SDL_Event& e ) {
 
 	} else if ( e.type == SDL_MOUSEBUTTONDOWN) {
 		
-		// CODIGO PARA CUANDO QUERRAMOS MANEJAR EL CLICK DEL PERSONAJE
-		// int x, y; 
-		// SDL_GetMouseState( &x, &y ); 
-		// std::cout << "CLICK EN: " << x << " Y EN: " << y << std::endl; 
+		// CODIGO PARA CUANDO QUERRAMOS MANEJAR EL CLICK DEL PERSONAJE 
+		SDL_GetMouseState( &x, &y ); 
+		std::cout << "CLICK EN: " << x + camera.x << " Y EN: " << y + camera.y << std::endl; 
 	}
 
 	ProtocolCharacter character(
 		this->id,
-		(int16_t) 1,
-		(int16_t) 1,
-		(int16_t) this->bodyPosX, 
-		(int16_t) this->bodyPosY,
-		(int16_t) this->helmetId,
-		(int16_t) this->armorId,
-		(int16_t) this->weaponId
+		1,
+		1,
+		this->bodyPosX, 
+		this->bodyPosY,
+		x + camera.x, 
+		y + camera.y,
+		this->helmetId,
+		this->armorId,
+		this->weaponId
 	);
 	ProtocolMessage msg(event_id, this->id, std::move(character));
 	return std::move(msg);

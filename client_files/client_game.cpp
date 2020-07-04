@@ -56,7 +56,7 @@ Map Game::loadMap() {
 
 
 ClientWorld Game::loadWorld() {
-	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0, 0);
+	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0, 0, 0, 0);
 	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
 
 	std::cout << "POR ACA NO PASA?" << std::endl;
@@ -124,7 +124,7 @@ void Game::run() {
 				this->adjust_camera(this->window.getWidth(), this->window.getHeight());
 
 			} else {
-				ProtocolMessage msg = player->handleEvent(e);
+				ProtocolMessage msg = player->handleEvent(e, camera);
 				queue.push(msg);	
 			}
 		}
@@ -137,10 +137,9 @@ void Game::run() {
 		// player->render(camera.x, camera.y);
 		world.render(this->player_id, camera.x, camera.y);
 		map.renderSecondLayer(camera);
-		
+				
 		SDL_RenderPresent( this->gRenderer ); //Update screen
 		player->update_frames();
-		
 		// sleep
 	}
 }
