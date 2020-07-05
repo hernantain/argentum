@@ -40,16 +40,12 @@ int Character::get_mana() {
     return mana.current();
 }
 
+int Character::get_max_mana() {
+    return mana.max();
+}
+
 int Character::get_level() {
     return level;
-}
-
-void Character::recover_life(int life_points) {
-    life.add(life_points);
-}
-
-void Character::recover_mana(int mana_points) {
-    mana.add(mana_points);
 }
 
 bool Character::is_alive() {
@@ -60,12 +56,49 @@ bool Character::is_newbie() {
     return newbie;
 }
 
+void Character::resurrect() {
+    if (!alive) {
+        alive = true;
+        restore_life_and_mana();
+    }
+}
+
+void Character::restore_life_and_mana() {
+    mana.add(get_max_mana());
+    life.add(get_max_life());
+}
+
+void Character::recover_life(int life_points) {
+    life.add(life_points);
+}
+
+void Character::recover_mana(int mana_points) {
+    mana.add(mana_points);
+}
+
 void Character::take_off_life(int life_points) {
     life.subtract(life_points);
 }
 
 void Character::take_off_mana(int mana_points) {
     mana.subtract(mana_points);
+}
+
+void Character::meditate() {
+    recover_mana(character_class.get_meditation_multiplier() * race.get_intelligence());
+}
+
+int Character::deposit_gold() {
+    int amount = config["gold"]["gold_amount_constant"].asInt();
+    if (gold < amount) amount = gold;
+    gold -= amount;
+    return amount;
+}
+
+void Character::withdraw_gold() {
+    // TODO: think about it
+    int amount = config["gold"]["gold_amount_constant"].asInt();
+    gold += amount;
 }
 
 void Character::drop() {

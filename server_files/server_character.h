@@ -77,6 +77,9 @@ public:
     // Devuelve la vida actual del personaje
     int get_life();
 
+    // Devuelve la mana maxima del personaje en el nivel actual
+    int get_max_mana();
+
     // Devuelve la vida maxima del personaje en el nivel actual
     int get_max_life();
 
@@ -85,6 +88,21 @@ public:
 
     // Devuelve un booleano que indica si el jugador es newbie o no
     bool is_newbie();
+
+    // Resucita al personaje en cuestion
+    void resurrect();
+
+    // Restablece el nivel maximo de mana y vida del personaje
+    void restore_life_and_mana();
+
+    // Pone al jugador en estado de meditacion
+    void meditate();
+
+    // Emula el deposito de oro, devuelve una suma fija de dinero a depsitar
+    int deposit_gold();
+
+    // Emula el retiro de oro, devuelve una suma fija de dinero a depsitar
+    void withdraw_gold();
 
     // Devuelve un booleano que indica si hay fairplay o no.
     bool fairplay(Character& other);

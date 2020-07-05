@@ -234,6 +234,10 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				event_id = 5;
 				weaponId = this->weapons[4]->get_id();
 				break;
+
+			case SDLK_z:
+				event_id = 7;
+				break;
 			
         }
 

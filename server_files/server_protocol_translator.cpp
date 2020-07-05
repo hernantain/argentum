@@ -22,6 +22,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
         case PROTOCOL_ATTACK: return attack_event(msg, world);
+        case PROTOCOL_MEDITATION: return meditation_event(msg, world);
     }
 }
 
@@ -92,6 +93,14 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
     world.characters[msg.id_player]->move_down();
     this->get_all_characters(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
+}
+
+void ProtocolTranslator::meditation_event(ProtocolMessage &msg, ServerWorld &world) {
+    world.characters[msg.id_player]->meditate();
+    // Here we might use the following and add a "meditating" boolean on the prot
+    // this->get_all_characters(msg, world);
+    std::cout << "Meditando" << std::endl;
+    msg.id_message = PROTOCOL_MEDITATE_CONFIRM;
 }
 
 void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) {

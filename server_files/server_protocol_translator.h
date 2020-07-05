@@ -27,6 +27,7 @@
 #define PROTOCOL_EQUIP_ARMOR 4
 #define PROTOCOL_EQUIP_WEAPON 5
 #define PROTOCOL_EQUIP_SHIELD 6
+#define PROTOCOL_MEDITATION 7
 
 #define PROTOCOL_CREATE_CHARACTER 65
 
@@ -37,6 +38,7 @@
 #define PROTOCOL_ARMOR_CONFIRM 31
 #define PROTOCOL_WEAPON_CONFIRM 32
 #define PROTOCOL_SHIELD_CONFIRM 33
+#define PROTOCOL_MEDITATE_CONFIRM 34
 #define PROTOCOL_CREATION_CONFIRM 66
 
 /* Clase que se encarga de ejecutar los codigos recibidos y matchearlos a una
@@ -56,6 +58,7 @@ private:
     void equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_armor_event(ProtocolMessage& msg, ServerWorld &world);
     void attack_event(ProtocolMessage& msg, ServerWorld &world);
+    void meditation_event(ProtocolMessage& msg, ServerWorld &world);
     void create_character_event(ProtocolMessage& msg, ServerWorld &world);
     void get_all_characters(ProtocolMessage& msg, ServerWorld &world);
 
