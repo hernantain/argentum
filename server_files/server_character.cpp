@@ -191,7 +191,7 @@ bool Character::can_attack(Character& other) {
         std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
         return false;
     }
-    if(!fairplay(other)) return false;
+    // if(!fairplay(other)) return false;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
         int posY = other.get_body_pos_Y();
@@ -277,6 +277,10 @@ void Character::update_newbie() {
     if (level > newbie_limit) {
         newbie = false;
     }
+}
+
+bool Character::is_near(int posX, int posY) {
+    return movement.is_near(posX, posY);
 }
 
 void Character::move_right() {

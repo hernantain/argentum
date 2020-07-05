@@ -16,6 +16,8 @@ struct ServerWorld {
 
     Character* get(int16_t message_id);
 
+    Character* get_from_position(int player_id, int posX, int posY);
+
     bool empty();
 
     void add(int16_t id, Character* character);

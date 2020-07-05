@@ -21,7 +21,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
-        // case PROTOCOL_ATTACK: return attack_event(msg, world);
+        case PROTOCOL_ATTACK: return attack_event(msg, world);
     }
 }
 
@@ -94,15 +94,18 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
-// void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) {
-    // int other_posX = msg.characters[0].otherBodyPosX;
-    // int other_posY = msg.characters[0].otherBodyPosY;
-    // check if there is another on that pos on the world array with an offset of +-30px
-    // in case it is, return that character
-    // Character other = world.fetch_possible_oponent(other_posX, other_posY);
-    // world.characters[msg.id_player]->attack(other);
-    // msg.id_message = PROTOCOL_ATTACK_CONFIRM;
-// }
+void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) {
+    int other_posX = msg.characters[0].otherPosX;
+    int other_posY = msg.characters[0].otherPosY;
+    int player_id = msg.id_player;
+    std::cout << "OtherposX:::: " << other_posX << " OtherposY:::: " << other_posY << std::endl;
+    Character* other = world.get_from_position(player_id, other_posX, other_posY);
+    if(other) {
+        world.characters[msg.id_player]->attack(*other);
+        std::cout << "LCDTM ALL BOYS" << std::endl;
+    }
+    msg.id_message = PROTOCOL_ATTACK_CONFIRM;
+}
 
 void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorld &world) {
     int id_class = msg.characters[0].id_class;

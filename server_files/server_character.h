@@ -141,6 +141,9 @@ public:
     // Devuelve el daño final realizado
     int defense(int damage);
 
+    // Booleano que devuelve si el personaje esta cerca de la posicion
+    bool is_near(int posX, int posY);
+
     // Mueve el personaje hacia la derecha
     void move_right();
 

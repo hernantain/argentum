@@ -268,17 +268,19 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		
 		// CODIGO PARA CUANDO QUERRAMOS MANEJAR EL CLICK DEL PERSONAJE 
 		SDL_GetMouseState( &x, &y ); 
+		event_id = 2;
+		otherPosX = x + camera.x; 
+		otherPosY = y + camera.y;
 		std::cout << "CLICK EN: " << x + camera.x << " Y EN: " << y + camera.y << std::endl; 
 	}
-
 	ProtocolCharacter character(
 		this->id,
 		1,
 		1,
 		this->bodyPosX, 
 		this->bodyPosY,
-		x + camera.x, 
-		y + camera.y,
+		this->otherPosX,
+		this->otherPosY,
 		this->helmetId,
 		this->armorId,
 		this->weaponId

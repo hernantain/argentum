@@ -19,6 +19,7 @@ class Player: public Drawable {
     protected:
         int bodyPosX, bodyPosY;
         int headPosX, headPosY;
+        int16_t otherPosX, otherPosY;
         int helmetId, armorId, shieldId, weaponId;
         std::vector<Clothes*> clothes;
         std::vector<Helmet*> helmets;

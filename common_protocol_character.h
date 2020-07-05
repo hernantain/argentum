@@ -37,7 +37,7 @@ struct ProtocolCharacter {
     // ProtocolCharacter(const ProtocolCharacter&) = delete;
     // ProtocolCharacter& operator=(const ProtocolCharacter&) = delete;
 
-    MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, helmetId, armorId, weaponId)
+    MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, otherPosX, otherPosY, helmetId, armorId, weaponId)
 };
 
 #endif
