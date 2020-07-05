@@ -250,6 +250,7 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		1,
 		this->bodyPosX, 
 		this->bodyPosY,
+		this->orientation,
 		this->otherPosX,
 		this->otherPosY,
 		this->helmetId,
