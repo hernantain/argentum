@@ -36,7 +36,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
     if (msg.id_message == 20)
         this->process_move(msg);
-    if (msg.id_message == 25)
+    // if (msg.id_message == 25)
         // here we might put a sound on attacks 
         // this->process_attack(msg);
     if (msg.id_message == 30)

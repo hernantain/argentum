@@ -179,36 +179,30 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 			/* A CAMBIAR */
 			case SDLK_m:
 				event_id = 4;
-				// this->playerPicture->set_clothes(this->clothes[1]);
 				armorId = this->clothes[1]->get_id();
 				break;
 
 			case SDLK_n:
 				event_id = 4;
-				// this->playerPicture->set_clothes(this->clothes[2]);
 				armorId = this->clothes[2]->get_id();
 				break;
 
 			case SDLK_b:
 				this->playerPicture->set_clothes(this->clothes[0]);
-				// armorId = this->clothes[0]->get_id();
 				break;
 
 			case SDLK_h:
 				event_id = 3;
-				// This line will be setted on the "onClick" event
 				helmetId = this->helmets[0]->get_id();
 				break;
 
 			case SDLK_j:
 				event_id = 3;
-				// This line will be setted on the "onClick" event
 				helmetId = this->helmets[1]->get_id();
 				break;
 
 			case SDLK_k:
 				event_id = 3;
-				// This line will be setted on the "onClick" event
 				helmetId = this->helmets[2]->get_id();
 				break;
 
