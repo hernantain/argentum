@@ -6,8 +6,7 @@
 /* Clase que representa a un casco del juego */
 class Helmet : public Item {
 private:
-    int min_defense;
-    int max_defense;
+    int min_defense, max_defense;
 
 public:
     // Contructor

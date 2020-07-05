@@ -6,10 +6,6 @@
 #include "server.h"
 #include "server_os_error.h"
 
-#include "server_elf.h"
-#include "server_cleric.h"
-
-
 #include "server_acceptor_thread.h"
 
 

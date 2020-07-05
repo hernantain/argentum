@@ -3,7 +3,6 @@
 
 #define NO_DAMAGE 0
 #define NO_DEFENSE 0
-#define NO_MANA_CONSUMPTION 0
 
 Equipment::Equipment() : 
     weapon(NO_DAMAGE, NO_DAMAGE), 
@@ -39,11 +38,12 @@ bool Equipment::is_weapon_magical() {
     return weapon.is_magical();
 }
 
+bool Equipment::is_weapon_ranged() {
+    return weapon.is_ranged();
+}
+
 int Equipment::get_weapon_consumption() {
-    // TODO: add magical weapons
-    // if (!weapon.get_mana_consumption()) return no_mana_consumption;
-    // return weapon.get_mana_consumption();
-    return NO_MANA_CONSUMPTION;
+    return weapon.get_mana_consumption();
 }
 
 int Equipment::get_equipment_defense() {

@@ -6,8 +6,7 @@
 /* Clase que representa a un escudo del juego */
 class Shield : public Item {
 private:
-    int min_defense;
-    int max_defense;
+    int min_defense, max_defense;
 
 public:
     // Contructor

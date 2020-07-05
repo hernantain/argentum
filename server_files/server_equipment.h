@@ -37,8 +37,11 @@ public:
     // Obtiene el consumo de mana del arma si lo hubiere
     int get_weapon_consumption();
 
-    // Devuelve verdadero si el arma equipada es magica, falso i no
+    // Devuelve verdadero si el arma equipada es magica, falso si no
     bool is_weapon_magical();
+
+    // Devuelve verdadero si el arma equipada es de rango, falso si no
+    bool is_weapon_ranged();
 
     // Obtiene el daño del arma equipada si la hubiere
     int get_equipment_defense();

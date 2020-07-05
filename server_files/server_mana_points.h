@@ -21,6 +21,9 @@ public:
     // Devuelve la mana actual
     int current();
 
+    // Devuelve la mana maxima
+    int max();
+
     // Setter de la max mana para el nivel recibido
     void set_new_max(int level);
 };

@@ -29,6 +29,8 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
         case PROTOCOL_MOVE_STOP: return stop_moving(msg, world);
+        case PROTOCOL_ATTACK: return attack_event(msg, world);
+        case PROTOCOL_MEDITATION: return meditation_event(msg, world);
     }
 }
 
@@ -108,9 +110,25 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
+void ProtocolTranslator::meditation_event(ProtocolMessage &msg, ServerWorld &world) {
+    world.characters[msg.id_player]->meditate();
+    // Here we might use the following and add a "meditating" boolean on the prot
+    // this->get_all_characters(msg, world);
+    std::cout << "Meditando" << std::endl;
+    msg.id_message = PROTOCOL_MEDITATE_CONFIRM;
+}
 
+void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) {
+    int other_posX = msg.characters[0].otherPosX;
+    int other_posY = msg.characters[0].otherPosY;
+    int player_id = msg.id_player;
+    std::cout << "OtherposX:::: " << other_posX << " OtherposY:::: " << other_posY << std::endl;
+    Character* other = world.get_from_position(player_id, other_posX, other_posY);
+    if(other) world.characters[msg.id_player]->attack(*other);
+    msg.id_message = PROTOCOL_ATTACK_CONFIRM;
+}
 
-void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &world) {
+void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorld &world) {
     int id_class = msg.characters[0].id_class;
     int id_race = msg.characters[0].id_race;
     CharacterFactory factory;

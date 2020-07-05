@@ -26,6 +26,7 @@ class ClientReceiverThread : public Thread {
     void process_equip_armor(ProtocolMessage &msg);
     void process_create_player(ProtocolMessage &msg);
     void process_create_npc(ProtocolMessage &msg);
+    void process_meditation(ProtocolMessage &msg);
     public:
         ClientReceiverThread(Socket &skt, ClientWorld &world, SDL_Rect &camera, uint16_t player_id);
     

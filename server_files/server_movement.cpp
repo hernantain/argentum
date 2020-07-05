@@ -1,13 +1,13 @@
 #include "server_movement.h"
 #include "server_os_error.h"
 #include <iostream>
+#include <cstdlib>
 
-#define INITIAL_POSITION 0
 #define HEAD_SIZE 20
 #define CHARACTER_WIDTH 21
 #define CHARACTER_HEIGHT 31
 #define WINDOW_SIZE 3200
-
+#define MAX_OFFSET_TOLERANCE 30
 
 Movement::Movement() :
     bodyPosX(100), 
@@ -88,6 +88,22 @@ bool Movement::is_facing_top(){
 
 bool Movement::is_facing_down(){
     return last_movement == DOWN;
+}
+
+bool Movement::is_near_X(int posX){
+    int diff = std::abs(bodyPosX - posX);
+    std::cout << "Diff in X " << diff << std::endl;
+    return diff <= MAX_OFFSET_TOLERANCE;
+}
+
+bool Movement::is_near_Y(int posY){
+    int diff = std::abs(bodyPosY - posY);
+    std::cout << "Diff in Y " << diff << std::endl;
+    return diff <= MAX_OFFSET_TOLERANCE;
+}
+
+bool Movement::is_near(int posX, int posY) {
+    return is_near_X(posX) && is_near_Y(posY);
 }
 
 void Movement::check_out_of_bounds_X(int velocity){

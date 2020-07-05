@@ -6,10 +6,8 @@
 /* Clase que representa a un arma del juego */
 class Weapon : public Item {
 protected:
-    int min_damage;
-    int max_damage;
-    bool ranged;
-    bool magical;
+    int min_damage, max_damage, mana_consumption;
+    bool ranged, magical;
 
 public:
     // Contructor
@@ -26,6 +24,9 @@ public:
 
     // Devuelve verdadero si el arma es magica, falso si no
     int is_magical();
+
+    // Devuelve el consumo de mana del arma en cuestion
+    int get_mana_consumption();
 
 };
 

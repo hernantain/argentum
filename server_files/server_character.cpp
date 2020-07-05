@@ -40,16 +40,12 @@ int Character::get_mana() {
     return mana.current();
 }
 
+int Character::get_max_mana() {
+    return mana.max();
+}
+
 int Character::get_level() {
     return level;
-}
-
-void Character::recover_life(int life_points) {
-    life.add(life_points);
-}
-
-void Character::recover_mana(int mana_points) {
-    mana.add(mana_points);
 }
 
 bool Character::is_alive() {
@@ -60,12 +56,49 @@ bool Character::is_newbie() {
     return newbie;
 }
 
+void Character::resurrect() {
+    if (!alive) {
+        alive = true;
+        restore_life_and_mana();
+    }
+}
+
+void Character::restore_life_and_mana() {
+    mana.add(get_max_mana());
+    life.add(get_max_life());
+}
+
+void Character::recover_life(int life_points) {
+    life.add(life_points);
+}
+
+void Character::recover_mana(int mana_points) {
+    mana.add(mana_points);
+}
+
 void Character::take_off_life(int life_points) {
     life.subtract(life_points);
 }
 
 void Character::take_off_mana(int mana_points) {
     mana.subtract(mana_points);
+}
+
+void Character::meditate() {
+    recover_mana(character_class.get_meditation_multiplier() * race.get_intelligence());
+}
+
+int Character::deposit_gold() {
+    int amount = config["gold"]["gold_amount_constant"].asInt();
+    if (gold < amount) amount = gold;
+    gold -= amount;
+    return amount;
+}
+
+void Character::withdraw_gold() {
+    // TODO: think about it
+    int amount = config["gold"]["gold_amount_constant"].asInt();
+    gold += amount;
 }
 
 void Character::drop() {
@@ -171,6 +204,13 @@ bool Character::fairplay(Character& other) {
     return true;
 }
 
+void Character::consume_mana() {
+    if(!equipment.is_weapon_magical()) return;
+    int mana_consumption = equipment.get_weapon_consumption();
+    std::cout << "Consumiendo mana: " << mana_consumption << std::endl;
+    take_off_mana(mana_consumption);
+}
+
 bool Character::is_critical() {
     int critical_percentage = config["attack"]["critical_probability"].asFloat() * 100;
     srand (time(NULL));
@@ -179,19 +219,31 @@ bool Character::is_critical() {
     return false;
 }
 
-void Character::attack(Character& other) {
-    // TODO: si !es a distancia el arma, chequear que este al lado
+bool Character::can_attack(Character& other) {
     if(!alive || !other.is_alive()) {
-        std::cout << "O vos o el esta muerto" << std::endl;
-        return;
-    } 
-    if(!fairplay(other)) return;
+        std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
+        return false;
+    }
+    // if(!fairplay(other)) return false;
+    if (!equipment.is_weapon_ranged()) {
+        int posX = other.get_body_pos_X();
+        int posY = other.get_body_pos_Y();
+        std::cout << "other posX: " << posX << std::endl;
+        std::cout << "other posY: " << posY << std::endl;
+        return movement.is_near(posX, posY);
+    }
+    if (equipment.is_weapon_magical() && equipment.get_weapon_consumption() > get_mana()) {
+        std::cout << "CantAttack::No te da la mana" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+void Character::attack(Character& other) {
+    if(!can_attack(other)) return;
+    consume_mana();
     int damage = equipment.get_weapon_damage();
     if (is_critical()) damage *= CRITICAL_MULTIPLIER;
-    if (equipment.is_weapon_magical()) {
-        int mana_consumption = equipment.get_weapon_consumption();
-        take_off_mana(mana_consumption);
-    }
     std::cout << "Ataque::Dano:: " << damage << std::endl;
     int final_damage = other.defense(damage);
     get_experience(other, final_damage);
@@ -258,6 +310,10 @@ void Character::update_newbie() {
     if (level > newbie_limit) {
         newbie = false;
     }
+}
+
+bool Character::is_near(int posX, int posY) {
+    return movement.is_near(posX, posY);
 }
 
 void Character::move_right() {

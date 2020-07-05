@@ -49,6 +49,16 @@ public:
     void stop_moving();
 
     _lastMovement get_facing_direction();
+  
+    // Booleano que devuelve verdadero si posX y posY estan cerca del personaje
+    bool is_near(int posX, int posY);
+
+    // Booleano que devuelve verdadero si posX esta cerca del personaje bodyPosX
+    bool is_near_X(int posX);
+
+    // Booleano que devuelve verdadero si posY esta cerca del personaje bodyPosY
+    bool is_near_Y(int posY);
+
 
     // Devuelve true si el personaje está mirando hacia la derecha, false en caso contrario.
     bool is_facing_right();

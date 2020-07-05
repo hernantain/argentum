@@ -60,6 +60,8 @@ private:
     void get_experience(Character& other, int damage);
     void update_level();
     void update_newbie();
+    bool can_attack(Character& other);
+    void consume_mana();
 
 public:
   // Contructor, recibe el id, la vida inicial
@@ -75,6 +77,9 @@ public:
     // Devuelve la vida actual del personaje
     int get_life();
 
+    // Devuelve la mana maxima del personaje en el nivel actual
+    int get_max_mana();
+
     // Devuelve la vida maxima del personaje en el nivel actual
     int get_max_life();
 
@@ -83,6 +88,21 @@ public:
 
     // Devuelve un booleano que indica si el jugador es newbie o no
     bool is_newbie();
+
+    // Resucita al personaje en cuestion
+    void resurrect();
+
+    // Restablece el nivel maximo de mana y vida del personaje
+    void restore_life_and_mana();
+
+    // Pone al jugador en estado de meditacion
+    void meditate();
+
+    // Emula el deposito de oro, devuelve una suma fija de dinero a depsitar
+    int deposit_gold();
+
+    // Emula el retiro de oro, devuelve una suma fija de dinero a depsitar
+    void withdraw_gold();
 
     // Devuelve un booleano que indica si hay fairplay o no.
     bool fairplay(Character& other);
@@ -138,6 +158,9 @@ public:
     // Defiende al personaje de un ataque
     // Devuelve el daño final realizado
     int defense(int damage);
+
+    // Booleano que devuelve si el personaje esta cerca de la posicion
+    bool is_near(int posX, int posY);
 
     // Mueve el personaje hacia la derecha
     void move_right();

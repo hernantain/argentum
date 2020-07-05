@@ -36,12 +36,17 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
     if (msg.id_message == 20)
         this->process_move(msg);
+    // if (msg.id_message == 25)
+        // here we might put a sound on attacks 
+        // this->process_attack(msg);
     if (msg.id_message == 30)
         this->process_equip_helmet(msg);
     if (msg.id_message == 31)
         this->process_equip_armor(msg);
     if (msg.id_message == 32)
         this->process_equip_weapon(msg);
+    if (msg.id_message == 34)
+        this->process_meditation(msg);
     if (msg.id_message == 66)
         this->process_create_player(msg);
     if (msg.id_message == 71)
@@ -74,6 +79,13 @@ void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
 void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
     Player* player = world.players[msg.id_player];
     player->set_weapon(msg.characters[0].weaponId);
+}
+
+
+void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
+    // Player* player = world.players[msg.id_player];
+    std::cout << "Estoy meditando" << std::endl;
+    // player->set_meditation();
 }
 
 

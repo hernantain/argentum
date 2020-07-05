@@ -19,13 +19,17 @@ void ManaPoints::subtract(int mana_points) {
 }
 
 void ManaPoints::add(int mana_points) {
-    if (current_mana == max_mana) throw OSError(FULL_MANA_ERROR);
+    if (current_mana == max_mana) return;
     current_mana += mana_points;
     if (current_mana >= max_mana) current_mana = max_mana;
 }
 
 int ManaPoints::current() {
     return current_mana;
+}
+
+int ManaPoints::max(){
+    return max_mana;
 }
 
 void ManaPoints::set_new_max(int level) {
