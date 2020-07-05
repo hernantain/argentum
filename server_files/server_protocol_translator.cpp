@@ -100,10 +100,7 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     int player_id = msg.id_player;
     std::cout << "OtherposX:::: " << other_posX << " OtherposY:::: " << other_posY << std::endl;
     Character* other = world.get_from_position(player_id, other_posX, other_posY);
-    if(other) {
-        world.characters[msg.id_player]->attack(*other);
-        std::cout << "LCDTM ALL BOYS" << std::endl;
-    }
+    if(other) world.characters[msg.id_player]->attack(*other);
     msg.id_message = PROTOCOL_ATTACK_CONFIRM;
 }
 
