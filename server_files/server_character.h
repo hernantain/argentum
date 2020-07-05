@@ -174,11 +174,18 @@ public:
     // Mueve el personaje hacia abajo
     void move_down();
 
+    // Detiene el movimmient del personaje
+    void stop_moving();
+
     // Getter de la posicion del cuerpo en X
     int get_body_pos_X() const;
 
     // Getter de la posicion del cuerpo en Y
     int get_body_pos_Y() const;
+
+    // Getter de para donde el character apunta
+    int get_body_facing();
+
 
     int16_t get_race_id() const;
 

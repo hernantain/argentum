@@ -17,10 +17,10 @@ Player::Player(
     int headPosY,
 	int16_t id,
 	SDL_Renderer* gRenderer) : Drawable(id, gRenderer),
-                    bodyPosX(bodyPosX), 
-                    bodyPosY(bodyPosY),
-                    headPosX(headPosX),
-                    headPosY(headPosY) {
+								bodyPosX(bodyPosX), 
+								bodyPosY(bodyPosY),
+								headPosX(headPosX),
+								headPosY(headPosY) {
 	this->headOffsetX = headPosX - bodyPosX;
 	this->headOffsetY = headPosY - bodyPosY;
 }
@@ -53,8 +53,9 @@ void Player::set_camera(SDL_Rect &camera) {
 		camera.y = 3200 - camera.h; 
 }
 
-void Player::set_position(int newBodyPosX, int newBodyPosY) {
+void Player::set_position(int newBodyPosX, int newBodyPosY, int orientation) {
 	std::unique_lock<std::mutex> lock(this->m);
+	this->orientation = orientation;
 	this->bodyPosX = newBodyPosX;
 	this->bodyPosY = newBodyPosY;
 	this->headPosX = newBodyPosX+this->headOffsetX;
@@ -69,21 +70,17 @@ void Player::update_frames() {
 
 
 
-void Player::render(int camPosX, int camPosY) {
+void Player::render(SDL_Rect &camera) {
 	std::unique_lock<std::mutex> lock(this->m);
-	int bodyCenteredX = this->bodyPosX - camPosX;
-	int bodyCenteredY = this->bodyPosY - camPosY;
-	int headCenteredX = this->headPosX - camPosX;
-	int headCenteredY = this->headPosY - camPosY;
-	
 	equippedPlayer->render(
-		bodyCenteredX, 
-		bodyCenteredY, 
-		headCenteredX, 
-		headCenteredY, 
+		bodyPosX - camera.x, 
+		bodyPosY - camera.y, 
+		headPosX - camera.x, 
+		headPosY - camera.y, 
 		gRenderer, 
 		this->orientation, 
-		this->frame);
+		this->frame
+	);
 
 	this->frame++;
 }
@@ -158,22 +155,18 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
             
             case SDLK_UP: 
 				event_id = 10;
-				orientation = UP;
 				break;
 
             case SDLK_DOWN:
 				event_id = 13;
-				orientation = DOWN;
 				break;
 
             case SDLK_LEFT:
-				event_id = 12;
-				orientation = LEFT; 
+				event_id = 12; 
 				break;
 
             case SDLK_RIGHT:
 				event_id = 11;
-				orientation = RIGHT;
 				break;
 
 			/* A CAMBIAR */
@@ -242,29 +235,9 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
         }
 
 	} else if( e.type == SDL_KEYUP && e.key.repeat == 0 ) {
-		switch( e.key.keysym.sym ) { 						//Adjust velocity
-			case SDLK_UP: 
-				// velY += drawable_speed; 
-				break;
-
-            case SDLK_DOWN: 
-				// velY -= drawable_speed; 
-				break;
-
-            case SDLK_LEFT: 
-				// velX += drawable_speed; 
-				break;
-
-            case SDLK_RIGHT: 
-				// velX -= drawable_speed; 
-				break;
-
-        }
-		orientation = STANDING;
+		event_id = 9;
 
 	} else if ( e.type == SDL_MOUSEBUTTONDOWN) {
-		
-		// CODIGO PARA CUANDO QUERRAMOS MANEJAR EL CLICK DEL PERSONAJE 
 		SDL_GetMouseState( &x, &y ); 
 		event_id = 2;
 		otherPosX = x + camera.x; 

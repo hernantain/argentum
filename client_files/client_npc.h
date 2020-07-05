@@ -6,22 +6,19 @@
 
 #include "client_drawable.h"
 #include "client_texture.h"
-
+#include "client_npc_picture.h"
 
 class NPC: public Drawable {
 
-    protected:
+    public:
         uint16_t npc_id;
-        LTexture npcTexture;
+        int16_t posX, posY;
+        NpcPicture* npcPicture;
 
-        NPC(int16_t id, SDL_Renderer* gRenderer);
+        NPC(int16_t id, int16_t npc_id, SDL_Renderer* gRenderer, int16_t posX, int16_t posY);
 
-        virtual bool load_pictures(const char* picture_path);
-        virtual void set_sprites() = 0;
-        virtual void load_front_walking_sprite() = 0;  
-        virtual void load_back_walking_sprite() = 0;
-        virtual void load_left_walking_sprite() = 0;
-        virtual void load_right_walking_sprite() = 0;
+        void render(SDL_Rect &camera);
+
 
 };
 

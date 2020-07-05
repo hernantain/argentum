@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "server_npc_thread.h"
 #include "server_processor_thread.h"
 #include "../common_mapinfo.h"
 
@@ -20,16 +21,17 @@ ServerProcessorThread::ServerProcessorThread(
 
 void ServerProcessorThread::run() {
 
-    // int npc_limit = config["npc"]["max_limit"].asInt();
-    // Thread* npc_thread = new ServerNPCThread(exchange_skt, queue, npc_limit);
-    // npc_thread->start();  NPC THREAD
+    int npc_limit = config["npc"]["max_limit"].asInt();
+    Thread* npc_thread = new ServerNPCThread(receiversQueue, npc_limit);
+    npc_thread->start();  // NPC THREAD
 
     ProtocolTranslator protocol_translator(config, collisionInfo);
     ServerWorld serverWorld;
     while (running) {
         ProtocolMessage received_msg = this->receiversQueue.pop();
         protocol_translator.translate(received_msg, serverWorld);
-        this->broadcastMessage(received_msg);
+        if (received_msg.id_message != NOTHING)
+           this->broadcastMessage(received_msg);
 
     }
 }

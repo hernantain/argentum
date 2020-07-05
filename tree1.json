@@ -1,4 +1,12 @@
 { "columns":2,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"",
+         "target":"."
+        }
+    },
  "image":"images\/6092.png",
  "imageheight":256,
  "imagewidth":256,
@@ -18,14 +26,14 @@
              "name":"",
              "objects":[
                     {
-                     "height":56,
+                     "height":78,
                      "id":1,
                      "name":"",
                      "rotation":0,
                      "type":"",
                      "visible":true,
-                     "width":52,
-                     "x":76,
+                     "width":73,
+                     "x":55,
                      "y":50
                     }],
              "opacity":1,
@@ -44,13 +52,13 @@
              "name":"",
              "objects":[
                     {
-                     "height":56,
+                     "height":78,
                      "id":1,
                      "name":"",
                      "rotation":0,
                      "type":"",
                      "visible":true,
-                     "width":20,
+                     "width":60,
                      "x":0,
                      "y":50
                     }],

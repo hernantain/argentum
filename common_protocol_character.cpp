@@ -10,6 +10,7 @@ ProtocolCharacter::ProtocolCharacter(
         int8_t id_class,
         int16_t bodyPosX, 
         int16_t bodyPosY,
+        int16_t orientation,
         int16_t otherPosX,
         int16_t otherPosY,
         int8_t helmetId,
@@ -28,6 +29,7 @@ ProtocolCharacter::ProtocolCharacter(
                         id_class(id_class),
                         bodyPosX(bodyPosX), 
                         bodyPosY(bodyPosY),
+                        orientation(orientation),
                         otherPosX(otherPosX),
                         otherPosY(otherPosY), 
                         helmetId(helmetId),
@@ -66,6 +68,11 @@ ProtocolCharacter::ProtocolCharacter(
                         weaponId(weaponId) {}
 
 ProtocolCharacter::ProtocolCharacter() {}
+
+ProtocolCharacter::ProtocolCharacter(
+    uint16_t id, 
+    int16_t id_race, 
+    int16_t id_class) : id(id), id_race(id_race), id_class(id_class) {}
 
 
 // ProtocolCharacter::ProtocolCharacter(ProtocolCharacter&& other) {

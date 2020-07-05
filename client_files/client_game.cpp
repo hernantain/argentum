@@ -21,6 +21,7 @@
 #include "../common_sockets.h"
 #include "../common_mapinfo.h"
 
+#include "client_npc.h"
 #include <msgpack.hpp>
 
 #include <vector>
@@ -31,10 +32,21 @@ Game::Game() :  gRenderer(NULL), running(true) {
 		exit(1); // LANZAR EXCEPCION?
 	}
 
-	camera.x = 0;
-	camera.y = 0;
-	camera.w = this->window.getWidth();
-	camera.h = this->window.getHeight();
+	inventory.x =  3 * (this->window.getWidth() / 4);
+	inventory.y = 0;
+	inventory.w = this->window.getWidth() / 4;
+	inventory.h = this->window.getHeight();
+
+	main.x = 0;
+	main.y = 0;
+	main.w = 3 * (this->window.getWidth() / 4);
+	main.h = this->window.getHeight();
+	// SDL_RenderSetViewport( gRenderer, &main );
+
+	camera.x = main.x;
+	camera.y = main.y;
+	camera.w = main.w;
+	camera.h = camera.h;
 }
 
 
@@ -59,8 +71,6 @@ ClientWorld Game::loadWorld() {
 	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0, 0, 0, true);
 	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
 
-	std::cout << "POR ACA NO PASA?" << std::endl;
-
 	msgpack::sbuffer buffer;
 	msgpack::packer<msgpack::sbuffer> pk(&buffer);
 	pk.pack(msg);
@@ -74,54 +84,54 @@ ClientWorld Game::loadWorld() {
     msgpack::object obj = oh.get();
     obj.convert(rec_msg);
     
-	std::cout << "ACA YA ROMPIO" << std::endl;
 	ClientWorld clientWorld(gRenderer);
 
-	std::cout << "LEN CHARACTERS RECEIVED: " << rec_msg.characters.size() << std::endl;
-
-	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
-		std::cout << "Player " << i << std::endl;
+	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) 
 		clientWorld.add_player(rec_msg.characters[i]);
- 	}
 
-	return clientWorld;
+	for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
+		clientWorld.add_npc(rec_msg.npcs[i]);
+
+	return std::move(clientWorld);
 }
 
 
 
 void Game::run() {
-		
+	
 	skt.connect_to("localhost", "8080");
 	skt >> this->player_id;
 	Map map = this->loadMap();
 
 	ClientWorld world = this->loadWorld();
 
-	std::cout << "RECIBIENDO TODAS LAS COSAS" << std::endl;
-	std::cout << "player ID: " << this->player_id << std::endl;
-	std::cout << "WORLD SIZE: " << world.players.size() << std::endl;
-
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
 	Player* player = world.players[this->player_id];
 
-	// Recibe la respuesta del server y modifica o no en el modelo
 	Thread* receiver = new ClientReceiverThread(skt, world, camera, player_id);
 	receiver->start();
 
-
+	// float rate = float( 1000 * float( 1.0 ) / float( 60.0) ) ;
 	//Event handler
+
 	SDL_Event e;
-	while(this->running) {
-		
+	// auto rate = std::chrono::duration<double>(float(1.0/60));
+	// auto t_start = std::chrono::high_resolution_clock::now();
+	// SDL_RenderSetViewport(this->gRenderer, NULL);
+	while(this->running) {	
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
 				skt.close_socket();
+
 			} else if (e.type == SDL_WINDOWEVENT) {
 				this->window.handleEvent(e);
-				this->adjust_camera(this->window.getWidth(), this->window.getHeight());
+				this->adjust_camera();
+
+			} else if (e.type == SDL_MOUSEMOTION) {
+				continue;
 
 			} else {
 				ProtocolMessage msg = player->handleEvent(e, camera);
@@ -129,16 +139,39 @@ void Game::run() {
 			}
 		}
 
-
-		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		// SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderClear( gRenderer );
 
+		SDL_RenderSetViewport( gRenderer, &inventory );
+		SDL_SetRenderDrawColor(gRenderer, 225, 150, 100, 1);
+
+		SDL_RenderSetViewport( gRenderer, &main );
+
 		map.renderFirstLayer(camera);
-		// player->render(camera.x, camera.y);
-		world.render(this->player_id, camera.x, camera.y);
+		world.render(this->player_id, camera);
 		map.renderSecondLayer(camera);
+		
+		// SDL_RenderSetViewport( gRenderer, &inventory );
+		// SDL_SetRenderDrawColor(gRenderer, 225, 150, 100, 1);
+
+		// SDL_RenderCopy(this->gRenderer, NULL, NULL, NULL);
 				
 		SDL_RenderPresent( this->gRenderer ); //Update screen
+		
+		
+		
+		// auto t_end = std::chrono::high_resolution_clock::now();
+		// auto rest = rate - (t_end - t_start);
+		// std::cout << std::chrono::duration<double>(t_end - t_start).count() << " ms - " << rate.count() << std::endl;
+		
+		// if (rest.count() < 0) {
+		// 	std::cout << "Es negativo" << std::endl;
+		// 	auto behind = std::chrono::duration<double>(-rest);
+		// 	std::cout << std::chrono::duration<double>(behind - (behind % rate)).count()  << std::endl;
+		// }
+	
+		// t_start = std::chrono::high_resolution_clock::now();
+		
 		player->update_frames();
 		// sleep
 	}
@@ -183,9 +216,19 @@ bool Game::init() {
 }
 
 
-void Game::adjust_camera(int width, int height) {
-	this->camera.w = width;
-	this->camera.h = height;
+void Game::adjust_camera() {
+
+	inventory.x =  3 * (this->window.getWidth() / 4);
+	inventory.w = 1 * (this->window.getWidth() / 4);
+	inventory.h = this->window.getHeight();
+	SDL_RenderSetViewport( gRenderer, &inventory );
+	
+	this->main.w = 3 * (this->window.getWidth() / 4);
+	this->main.h = this->window.getHeight();
+	SDL_RenderSetViewport( gRenderer, &main );
+	
+	camera.w = main.w;
+	camera.h = main.h;
 }
 
 

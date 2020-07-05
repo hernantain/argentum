@@ -11,13 +11,24 @@ ProtocolMessage::ProtocolMessage(
     this->characters.push_back(std::move(character));
 }
 
+ProtocolMessage::ProtocolMessage(
+    int16_t id_message,
+    uint16_t id_player, 
+    ProtocolNpc npc) : id_message(id_message),
+                        id_player(id_player) {
+    this->npcs.push_back(std::move(npc));
+}
+
+
 ProtocolMessage::ProtocolMessage() {}
+
 
 ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
     // std::cout << "Constructor por movimiento" << std::endl;
     this->id_message = std::move(other.id_message);
     this->id_player = std::move(other.id_player);
     this->characters = other.characters;
+    this->npcs = other.npcs;
 }
 
 ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
@@ -25,6 +36,7 @@ ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
     this->id_message = std::move(other.id_message);
     this->id_player = std::move(other.id_player);
     this->characters = other.characters;
+    this->npcs = other.npcs;
     return *this;
 }
 
@@ -33,6 +45,14 @@ ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
 int ProtocolMessage::find(uint16_t id) {
     for (unsigned int i = 0; i < characters.size(); ++i) {
         if (characters[i].id == id)
+            return i;
+    }
+    return -1;
+}
+
+int ProtocolMessage::find_npc(uint16_t id) {
+    for (unsigned int i = 0; i < npcs.size(); ++i) {
+        if (npcs[i].id == id)
             return i;
     }
     return -1;

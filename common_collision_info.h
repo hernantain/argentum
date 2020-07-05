@@ -10,7 +10,6 @@ struct CollisionTile {
 
     CollisionTile();
 
-
 };
 
 

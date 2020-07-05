@@ -24,12 +24,14 @@ class Game {
 	LWindow window;
 	Queue queue;
 	Socket skt;
+	SDL_Rect main;
+	SDL_Rect inventory;
 	SDL_Rect camera;
 	uint16_t player_id;
 
 
 	bool init();
-	void adjust_camera(int width, int height);
+	void adjust_camera();
 
 	Map loadMap(); 
 	ClientWorld loadWorld();

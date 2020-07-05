@@ -6,19 +6,29 @@
 
 #define SECONDS_TO_UPDATE 2
 
-ServerNPCThread::ServerNPCThread(Socket &skt, Queue &queue, int max_npcs) : 
-    skt(skt), queue(queue), running(true), max_npcs(max_npcs) {}
+ServerNPCThread::ServerNPCThread(
+    Queue &queue, 
+    int max_npcs) : queue(queue), running(true), max_npcs(max_npcs) {}
+
+
 
 void ServerNPCThread::run() {
 
+    std::cout << "NPC THREAD CORRIENDO" << std::endl;
+    int npc_id = 100;
+    int npc_type = 1;
     while (this->running) {
-        std::cout << "Sleeping" << std::endl;
-        sleep(SECONDS_TO_UPDATE);
-        std::cout << "Updating" << std::endl;
-        // ProtocolMessage updated_npc_msg = update_npcs();
-        // queue.push(updated_npc_msg);
+        if (npc_id <= 104) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            ProtocolNpc npc(npc_id, npc_type);
+            ProtocolMessage npc_msg(70, npc_id, std::move(npc));
+            queue.push(npc_msg);
+            npc_id++;
+            npc_type++;
+        }
     }
 }
+
 
 // ProtocolMessage ServerNPCThread::update_npcs() {
     // I should have the world as an attribute of this class

@@ -4,6 +4,12 @@
 #include "server_world.h"
 #include "server_protocol_translator.h"
 
+#include "server_zombie.h"
+#include "server_spider.h"
+#include "server_skeleton.h"
+#include "server_goblin.h"
+
+
 ProtocolTranslator::ProtocolTranslator(
     Json::Value &config, 
     CollisionInfo &collisionInfo) : config(config),
@@ -13,7 +19,8 @@ ProtocolTranslator::ProtocolTranslator(
 void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
     switch (code) {
-        case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, world);
+        case PROTOCOL_CREATE_CHARACTER: return create_character(msg, world);
+        case PROTOCOL_CREATE_NPC: return create_npc(msg, world);
         case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
@@ -21,6 +28,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
+        case PROTOCOL_MOVE_STOP: return stop_moving(msg, world);
         case PROTOCOL_ATTACK: return attack_event(msg, world);
         case PROTOCOL_MEDITATION: return meditation_event(msg, world);
     }
@@ -60,11 +68,18 @@ void ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, ServerWorld &w
     msg.id_message = PROTOCOL_HELMET_CONFIRM;
 }
 
+void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
+
+    world.characters[msg.id_player]->stop_moving();
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_MOVE_CONFIRM;
+}
+
 
 void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &world) {
 
     world.characters[msg.id_player]->move_right();
-    this->get_all_characters(msg, world);
+    this->get_world(msg, world);
 
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
@@ -73,7 +88,7 @@ void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &wor
 void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &world) {
 
     world.characters[msg.id_player]->move_left();
-    this->get_all_characters(msg, world);
+    this->get_world(msg, world);
 
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
@@ -82,7 +97,7 @@ void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &worl
 void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world) {
 
     world.characters[msg.id_player]->move_top();
-    this->get_all_characters(msg, world);
+    this->get_world(msg, world);
 
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
@@ -91,7 +106,7 @@ void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world
 void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &world) {
 
     world.characters[msg.id_player]->move_down();
-    this->get_all_characters(msg, world);
+    this->get_world(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
@@ -122,8 +137,38 @@ void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorl
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
 
-    msg.id_message = PROTOCOL_CREATION_CONFIRM;
+    msg.id_message = PROTOCOL_CREATE_CHARACTER_CONFIRM;
+    this->get_world(msg, world);
+}
+
+
+
+void ProtocolTranslator::create_npc(ProtocolMessage& msg, ServerWorld &world) {
+    if (world.empty()) {
+        msg.id_message = NOTHING;
+        return; 
+    }
+
+    NPC* npc;
+    if (msg.npcs[0].npc_type == 1) 
+        npc = new Goblin(config, collisionInfo);
+    else if (msg.npcs[0].npc_type == 2)
+        npc = new Skeleton(config, collisionInfo);
+    else if (msg.npcs[0].npc_type == 3)
+        npc = new Zombie(config, collisionInfo);
+    else 
+        npc = new Spider(config, collisionInfo);
+
+    world.add(msg.id_player, npc);
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_CREATE_NPC_CONFIRM;
+
+}
+
+
+void ProtocolTranslator::get_world(ProtocolMessage& msg, ServerWorld &world) {
     this->get_all_characters(msg, world);
+    this->get_all_npcs(msg, world);
 }
 
 
@@ -139,3 +184,25 @@ void ProtocolTranslator::get_all_characters(ProtocolMessage& msg, ServerWorld &w
     msg.characters = tmp;
 
 }
+
+
+void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) {
+    std::map<int16_t, NPC*>::iterator itr;
+    std::vector<ProtocolNpc> tmp;
+    
+    int offset = 10; // A CAMBIAR 
+    for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
+
+        ProtocolNpc protocolNpc(
+            itr->first,
+            itr->second->get_id(),
+            itr->second->get_body_pos_X(),
+            itr->second->get_body_pos_Y() + offset,
+            0 // CAMBIAR ORIENTATION PARA QUE NO ESTE HARDCODEADA 
+        );
+        tmp.push_back(std::move(protocolNpc));
+        offset +=50;
+    }
+    msg.npcs = tmp;
+}
+

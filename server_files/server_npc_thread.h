@@ -10,13 +10,12 @@
 #include "../common_protocol_message.h"
 
 class ServerNPCThread : public Thread {
-    Socket &skt;
     Queue &queue;
     std::atomic<bool> running;
     int max_npcs;
 
     public:
-        ServerNPCThread(Socket &skt, Queue &queue, int max_npcs);
+        ServerNPCThread(Queue &queue, int max_npcs);
 
         ProtocolMessage update_npcs();
 

@@ -34,11 +34,11 @@ class Player: public Drawable {
 
 		ProtocolMessage handleEvent( SDL_Event& e, SDL_Rect &camera );
 
-		void render(int camPosX, int camPosY);
+		void render(SDL_Rect &camera);
 
 		void update_frames();
 
-		void set_position(int newBodyPosX, int newBodyPosY);
+		void set_position(int newBodyPosX, int newBodyPosY, int orientation);
         void set_camera(SDL_Rect &camera);
 
         void set_weapon(int weaponId);
