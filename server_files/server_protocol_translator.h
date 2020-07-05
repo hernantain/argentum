@@ -17,6 +17,7 @@
 #define _PROTOCOL_TRANSLATOR
 
 // Received from the client
+#define PROTOCOL_MOVE_STOP 9
 #define PROTOCOL_MOVE_TOP 10
 #define PROTOCOL_MOVE_RIGHT 11
 #define PROTOCOL_MOVE_LEFT 12
@@ -29,6 +30,10 @@
 #define PROTOCOL_EQUIP_SHIELD 6
 
 #define PROTOCOL_CREATE_CHARACTER 65
+#define PROTOCOL_CREATE_CHARACTER_CONFIRM 66
+
+#define PROTOCOL_CREATE_NPC 70
+#define PROTOCOL_CREATE_NPC 71
 
 // Sending to the client
 #define PROTOCOL_MOVE_CONFIRM 20
@@ -45,6 +50,7 @@ private:
     Json::Value &config;
     CollisionInfo &collisionInfo;
 
+    void stop_moving(ProtocolMessage& msg, ServerWorld &world);
     void move_right_event(ProtocolMessage& msg, ServerWorld &world);
     void move_left_event(ProtocolMessage& msg, ServerWorld &world);
     void move_top_event(ProtocolMessage& msg, ServerWorld &world);
@@ -53,6 +59,7 @@ private:
     void equip_weapon_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_armor_event(ProtocolMessage& msg, ServerWorld &world);
+    void create_npc(ProtocolMessage& msg, ServerWorld &world);
     void create_character(ProtocolMessage& msg, ServerWorld &world);
     void get_all_characters(ProtocolMessage& msg, ServerWorld &world);
 

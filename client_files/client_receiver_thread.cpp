@@ -54,7 +54,7 @@ void ClientReceiverThread::process_move(ProtocolMessage &msg) {
     Player* player = world.players[msg.id_player];
     int i = msg.find(msg.id_player);
 
-    player->set_position((int) msg.characters[i].bodyPosX, (int) msg.characters[i].bodyPosY);
+    player->set_position((int) msg.characters[i].bodyPosX, (int) msg.characters[i].bodyPosY, (int) msg.characters[i].orientation);
 }
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {

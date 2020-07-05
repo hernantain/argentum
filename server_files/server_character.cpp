@@ -276,6 +276,10 @@ void Character::move_down() {
     movement.move_down(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
+void Character::stop_moving() {
+    movement.stop_moving();
+}
+
 int Character::get_body_pos_X() const {
     return movement.get_horizontal_body_position();
 }
@@ -286,11 +290,17 @@ int Character::get_body_pos_Y() const {
 }
 
 
+int Character::get_body_facing() { 
+    return (int) movement.get_facing_direction();
+}
+
 
 void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter) {
     protocolCharacter.id = this->id;
     protocolCharacter.bodyPosX = this->get_body_pos_X();
     protocolCharacter.bodyPosY = this->get_body_pos_Y();
+    protocolCharacter.orientation = this->get_body_facing();
+    std::cout << protocolCharacter.orientation << std::endl;
     protocolCharacter.id_race = this->get_race_id();
     protocolCharacter.id_class = this->get_class_id();
 }

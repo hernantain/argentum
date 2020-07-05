@@ -68,7 +68,7 @@ Map Game::loadMap() {
 
 
 ClientWorld Game::loadWorld() {
-	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0, 0, 0, 0);
+	ProtocolCharacter character(this->player_id, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0);
 	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
 
 	msgpack::sbuffer buffer;
@@ -113,7 +113,7 @@ void Game::run() {
 	// float rate = float( 1000 * float( 1.0 ) / float( 60.0) ) ;
 	//Event handler
 
-	NPC* spider = new NPC(1, 2, gRenderer, 100, 100);
+	NPC* spider = new NPC(1, 4, gRenderer, 100, 100);
 
 	SDL_Event e;
 	// auto rate = std::chrono::duration<double>(float(1.0/60));

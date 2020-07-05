@@ -14,6 +14,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
     switch (code) {
         case PROTOCOL_CREATE_CHARACTER: return create_character(msg, world);
+        case PROTOCOL_CREATE_NPC: return create_npc(msg, world);
         case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
@@ -21,6 +22,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
+        case PROTOCOL_MOVE_STOP: return stop_moving(msg, world);
     }
 }
 
@@ -56,6 +58,13 @@ void ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, ServerWorld &w
     Helmet helmet = factory.make_helmet(helmet_id, config);
     world.characters[msg.id_player]->equip_helmet(helmet);
     msg.id_message = PROTOCOL_HELMET_CONFIRM;
+}
+
+void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
+
+    world.characters[msg.id_player]->stop_moving();
+    this->get_all_characters(msg, world);
+    msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
 
@@ -104,7 +113,7 @@ void ProtocolTranslator::create_character(ProtocolMessage& msg, ServerWorld &wor
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
 
-    msg.id_message = 66;
+    msg.id_message = PROTOCOL_CREATE_CHARACTER_CONFIRM;
     this->get_all_characters(msg, world);
 }
 

@@ -27,6 +27,7 @@ int Movement::get_vertical_body_position() const {
 
 
 void Movement::move_right(int velocity, CollisionInfo &collisionInfo) {
+
     bodyPosX += velocity;
     last_movement = RIGHT;
     check_out_of_bounds_X(velocity);
@@ -38,7 +39,7 @@ void Movement::move_right(int velocity, CollisionInfo &collisionInfo) {
 void Movement::move_left(int velocity, CollisionInfo &collisionInfo) {
     bodyPosX -= velocity;
     last_movement = LEFT;
-    check_out_of_bounds_X(velocity);
+    check_out_of_bounds_X(-velocity);
     if (check_map_collision(collisionInfo)) {
         bodyPosY += velocity;
     }
@@ -47,7 +48,7 @@ void Movement::move_left(int velocity, CollisionInfo &collisionInfo) {
 void Movement::move_top(int velocity, CollisionInfo &collisionInfo) {
     bodyPosY -= velocity;
     last_movement = TOP;
-    check_out_of_bounds_Y(velocity);
+    check_out_of_bounds_Y(-velocity);
     if (check_map_collision(collisionInfo)) {
         bodyPosY += velocity;
     }
@@ -61,6 +62,17 @@ void Movement::move_down(int velocity, CollisionInfo &collisionInfo) {
         bodyPosY -= velocity;
     }
 }
+
+
+void Movement::stop_moving() {
+    last_movement = STAND;
+}
+
+
+_lastMovement Movement::get_facing_direction() {
+    return last_movement;
+}
+
 
 bool Movement::is_facing_right(){
     return last_movement == RIGHT;
@@ -86,7 +98,7 @@ void Movement::check_out_of_bounds_X(int velocity){
 
 void Movement::check_out_of_bounds_Y(int velocity){
     if((bodyPosY - HEAD_SIZE) < 0 || bodyPosY + CHARACTER_HEIGHT > WINDOW_SIZE) { 
-        bodyPosY += velocity;
+        bodyPosY -= velocity;
     }
 }
 
@@ -120,8 +132,11 @@ bool Movement::check_map_collision(CollisionInfo &collisionInfo) {
 }
 
 // TODO: this two methods
-// bool Movement::can_move(){
-//   return last_movement == DOWN;
+// bool Movement::can_move(int velocityX, int velocityY) {
+//     if (velocityX != 0) {
+        
+//     }
+
 // }
 
 // bool Movement::is_colliding(){

@@ -6,17 +6,22 @@
 
 #define SECONDS_TO_UPDATE 2
 
-ServerNPCThread::ServerNPCThread(Socket &skt, Queue &queue, int max_npcs) : 
-    skt(skt), queue(queue), running(true), max_npcs(max_npcs) {}
+ServerNPCThread::ServerNPCThread(
+    Queue &queue, 
+    int max_npcs) : queue(queue), running(true), max_npcs(max_npcs) {}
+
+
 
 void ServerNPCThread::run() {
 
+    int npc_id = 100;
+    int x = 50;
+    int y = 50;
     while (this->running) {
-        std::cout << "Sleeping" << std::endl;
-        sleep(SECONDS_TO_UPDATE);
-        std::cout << "Updating" << std::endl;
-        // ProtocolMessage updated_npc_msg = update_npcs();
-        // queue.push(updated_npc_msg);
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        ProtocolNpc npc(npc_id, 1, x, y, 0);
+        ProtocolMessage updated_npc_msg(70, npc_id, npc);
+        queue.push(updated_npc_msg);
     }
 }
 

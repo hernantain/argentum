@@ -5,6 +5,7 @@
 
 // Which was the last movement.
 enum _lastMovement {
+    STAND,
     LEFT,
     RIGHT,
     TOP,
@@ -44,6 +45,11 @@ public:
     // Setea el movimiento del personaje hacia la izquierda
     void move_down(int velocity, CollisionInfo &collisionInfo);
 
+    // Detiene el movimiento.
+    void stop_moving();
+
+    _lastMovement get_facing_direction();
+
     // Devuelve true si el personaje está mirando hacia la derecha, false en caso contrario.
     bool is_facing_right();
 
@@ -58,7 +64,7 @@ public:
 
     // Devuelve un booleano indicando si puede moverse o no.
     // TODO: aca deberia recibir una referencia al mapa o algo asi.
-    bool can_move();
+    // bool can_move(int velocityX=0, int velocityY=0);
 
     // Devuelve un booleano indicando si está colisionando
     // con algún objeto.
