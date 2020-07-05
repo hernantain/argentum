@@ -56,11 +56,11 @@ void ClientWorld::add_npc(ProtocolNpc &protocolNpc) {
 }
 
 
-void ClientWorld::render(int16_t id, SDL_Rect &camera) {
+void ClientWorld::render(int16_t id, SDL_Rect &camera, int &it) {
     std::unique_lock<std::mutex> lock(m);
     std::map<int16_t, Player*>::iterator itr;
     for (itr = players.begin(); itr != players.end(); ++itr)  
-        itr->second->render(camera);
+        itr->second->render(camera, it);
 
 
     std::map<int16_t, NPC*>::iterator npc_itr;

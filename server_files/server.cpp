@@ -23,8 +23,10 @@ void Server::run() {
     Thread* acceptor = new AcceptorThread(this->skt, this->config);
     acceptor->start();
 
+    char c;
     while (true) {
-        
+        std::cin >> c;
+        if (c == 'q') break;
     }
 
     /**
@@ -43,16 +45,3 @@ void Server::initialize_config(const char* config_file) {
     file.close();
 }
 
-
-
-// ProtocolMessage Server::receive_msg(Socket skt) {
-//     std::cout << "Corriendo" << std::endl;
-//     ProtocolMessage msg;
-//     msgpack::unpacker pac;
-//     skt >> pac;
-//     msgpack::object_handle oh;
-//     pac.next(oh);
-//     msgpack::object obj = oh.get();
-//     obj.convert(msg);
-//     return msg;
-// }

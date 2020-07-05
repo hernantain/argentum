@@ -11,19 +11,19 @@ void Clothes::render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int 
     // Show Character
 
     if (orientation == RIGHT) {
-		SDL_Rect* currentClip = &this->walkingRightPlayer[ frame / 5 ];
+		SDL_Rect* currentClip = &this->walkingRightPlayer[ frame % walkingRightPlayer.size() ];
 		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
         
 	} else if(orientation == LEFT)  {
-		SDL_Rect *currentClip = &this->walkingLeftPlayer[ frame / 5 ];
+		SDL_Rect *currentClip = &this->walkingLeftPlayer[ frame % walkingLeftPlayer.size()];
 		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
 	
     } else if(orientation == UP)  {
-		SDL_Rect *currentClip = &this->walkingBackPlayer[ frame / 5 ];
+		SDL_Rect *currentClip = &this->walkingBackPlayer[ frame % walkingBackPlayer.size() ];
 		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
 	
     } else if(orientation == DOWN)  {
-		SDL_Rect *currentClip = &this->walkingFrontPlayer[ frame / 5 ];
+		SDL_Rect *currentClip = &this->walkingFrontPlayer[ frame % walkingFrontPlayer.size() ];
 		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
 
 	} else {
@@ -45,7 +45,6 @@ void Clothes::set_short_sprites() {
 
 
 
-
 void Clothes::set_tall_sprites() {
     loadTallWalkingFrontSprite();
     loadTallWalkingBackSprite();
@@ -54,248 +53,159 @@ void Clothes::set_tall_sprites() {
 }
 
 
-
-
 void Clothes::load_front_walking_sprite() {
-	this->walkingFrontPlayer[0].x = 2;
-	this->walkingFrontPlayer[0].y = 13;
-	this->walkingFrontPlayer[0].w = width;
-	this->walkingFrontPlayer[0].h = height;
+	SDL_Rect first = {2, 13, width, height};
+	this->walkingFrontPlayer.push_back(first);
 
-	this->walkingFrontPlayer[1].x = 27;
-	this->walkingFrontPlayer[1].y = 13;
-	this->walkingFrontPlayer[1].w = width;
-	this->walkingFrontPlayer[1].h = height;
+	SDL_Rect second = {27, 13, width, height};
+	this->walkingFrontPlayer.push_back(second);
 
-	this->walkingFrontPlayer[2].x = 52;
-	this->walkingFrontPlayer[2].y = 13;
-	this->walkingFrontPlayer[2].w = width;
-	this->walkingFrontPlayer[2].h = height;
+	SDL_Rect third = {52, 13, width, height};
+	this->walkingFrontPlayer.push_back(third);
 
-	this->walkingFrontPlayer[3].x = 77;
-	this->walkingFrontPlayer[3].y = 13;
-	this->walkingFrontPlayer[3].w = width;
-	this->walkingFrontPlayer[3].h = height;
+	SDL_Rect fourth = {77, 13, width, height};
+	this->walkingFrontPlayer.push_back(fourth);
 
-	this->walkingFrontPlayer[4].x = 102;
-	this->walkingFrontPlayer[4].y = 13;
-	this->walkingFrontPlayer[4].w = width;
-	this->walkingFrontPlayer[4].h = height;
+	SDL_Rect fifth = {102, 13, width, height};
+	this->walkingFrontPlayer.push_back(fifth);
 
-	this->walkingFrontPlayer[5].x = 127;
-	this->walkingFrontPlayer[5].y = 13;
-	this->walkingFrontPlayer[5].w = width;
-	this->walkingFrontPlayer[5].h = height;
+	SDL_Rect sixth = {127, 13, width, height};
+	this->walkingFrontPlayer.push_back(sixth);
 }
 
 
 void Clothes::load_back_walking_sprite() {
-	this->walkingBackPlayer[0].x = 2;
-	this->walkingBackPlayer[0].y = 58;
-	this->walkingBackPlayer[0].w = width;
-	this->walkingBackPlayer[0].h = height;
+	SDL_Rect first = {2, 58, width, height};
+	this->walkingBackPlayer.push_back(first);
 
-	this->walkingBackPlayer[1].x = 27;
-	this->walkingBackPlayer[1].y = 58;
-	this->walkingBackPlayer[1].w = width;
-	this->walkingBackPlayer[1].h = height;
+	SDL_Rect second = {27, 58, width, height};
+	this->walkingBackPlayer.push_back(second);
 
-	this->walkingBackPlayer[2].x = 52;
-	this->walkingBackPlayer[2].y = 58;
-	this->walkingBackPlayer[2].w = width;
-	this->walkingBackPlayer[2].h = height;
+	SDL_Rect third = {52, 58, width, height};
+	this->walkingBackPlayer.push_back(third);
 
-	this->walkingBackPlayer[3].x = 77;
-	this->walkingBackPlayer[3].y = 58;
-	this->walkingBackPlayer[3].w = width;
-	this->walkingBackPlayer[3].h = height;
+	SDL_Rect fourth = {77, 58, width, height};
+	this->walkingBackPlayer.push_back(fourth);
 
-	this->walkingBackPlayer[4].x = 102;
-	this->walkingBackPlayer[4].y = 58;
-	this->walkingBackPlayer[4].w = width;
-	this->walkingBackPlayer[4].h = height;
+	SDL_Rect fifth = {102, 58, width, height};
+	this->walkingBackPlayer.push_back(fifth);
 
-	this->walkingBackPlayer[5].x = 127;
-	this->walkingBackPlayer[5].y = 58;
-	this->walkingBackPlayer[5].w = width;
-	this->walkingBackPlayer[5].h = height;
+	SDL_Rect sixth = {127, 58, width, height};
+	this->walkingBackPlayer.push_back(sixth);
 }
 
 
 void Clothes::load_left_walking_sprite() {
-	this->walkingLeftPlayer[0].x = 2;
-	this->walkingLeftPlayer[0].y = 103;
-	this->walkingLeftPlayer[0].w = width;
-	this->walkingLeftPlayer[0].h = height;
+	SDL_Rect first = {2, 103, width, height};
+	this->walkingLeftPlayer.push_back(first);
 
-	this->walkingLeftPlayer[1].x = 27;
-	this->walkingLeftPlayer[1].y = 103;
-	this->walkingLeftPlayer[1].w = width;
-	this->walkingLeftPlayer[1].h = height;
+	SDL_Rect second = {27, 103, width, height};
+	this->walkingLeftPlayer.push_back(second);
 
-	this->walkingLeftPlayer[2].x = 52;
-	this->walkingLeftPlayer[2].y = 103;
-	this->walkingLeftPlayer[2].w = width;
-	this->walkingLeftPlayer[2].h = height;
+	SDL_Rect third = {52, 103, width, height};
+	this->walkingLeftPlayer.push_back(third);
 
-	this->walkingLeftPlayer[3].x = 77;
-	this->walkingLeftPlayer[3].y = 103;
-	this->walkingLeftPlayer[3].w = width;
-	this->walkingLeftPlayer[3].h = height;
+	SDL_Rect fourth = {77, 103, width, height};
+	this->walkingLeftPlayer.push_back(fourth);
 
-	this->walkingLeftPlayer[4].x = 102;
-	this->walkingLeftPlayer[4].y = 103;
-	this->walkingLeftPlayer[4].w = width;
-	this->walkingLeftPlayer[4].h = height;
+	SDL_Rect fifth = {102, 103, width, height};
+	this->walkingLeftPlayer.push_back(fifth);
 }
 
 
 void Clothes::load_right_walking_sprite() {
-	this->walkingRightPlayer[0].x = 2;
-	this->walkingRightPlayer[0].y = 148;
-	this->walkingRightPlayer[0].w = width;
-	this->walkingRightPlayer[0].h = height;
+	SDL_Rect first = {2, 148, width, height};
+	this->walkingRightPlayer.push_back(first);
 
-	this->walkingRightPlayer[1].x = 27;
-	this->walkingRightPlayer[1].y = 148;
-	this->walkingRightPlayer[1].w = width;
-	this->walkingRightPlayer[1].h = height;
+	SDL_Rect second = {27, 148, width, height};
+	this->walkingRightPlayer.push_back(second);
 
-	this->walkingRightPlayer[2].x = 52;
-	this->walkingRightPlayer[2].y = 148;
-	this->walkingRightPlayer[2].w = width;
-	this->walkingRightPlayer[2].h = height;
+	SDL_Rect third = {52, 148, width, height};
+	this->walkingRightPlayer.push_back(third);
 
-	this->walkingRightPlayer[3].x = 77;
-	this->walkingRightPlayer[3].y = 148;
-	this->walkingRightPlayer[3].w = width;
-	this->walkingRightPlayer[3].h = height;
+	SDL_Rect fourth = {77, 148, width, height};
+	this->walkingRightPlayer.push_back(fourth);
 
-	this->walkingRightPlayer[4].x = 102;
-	this->walkingRightPlayer[4].y = 148;
-	this->walkingRightPlayer[4].w = width;
-	this->walkingRightPlayer[4].h = height;
+	SDL_Rect fifth = {102, 148, width, height};
+	this->walkingRightPlayer.push_back(fifth);
 }
 
 
 void Clothes::loadTallWalkingFrontSprite() {
-	this->walkingFrontPlayer[0].x = 1;
-	this->walkingFrontPlayer[0].y = 2;
-	this->walkingFrontPlayer[0].w  = width;
-	this->walkingFrontPlayer[0].h  = height;
+	SDL_Rect first = {1, 2, width, height};
+	this->walkingFrontPlayer.push_back(first);
 
-	this->walkingFrontPlayer[1].x = 26;
-	this->walkingFrontPlayer[1].y = 2;
-	this->walkingFrontPlayer[1].w  = width;
-	this->walkingFrontPlayer[1].h  = height;
+	SDL_Rect second = {26, 2, width, height};
+	this->walkingFrontPlayer.push_back(second);
 
-	this->walkingFrontPlayer[2].x = 51;
-	this->walkingFrontPlayer[2].y = 2;
-	this->walkingFrontPlayer[2].w  = width;
-	this->walkingFrontPlayer[2].h  = height;
+	SDL_Rect third = {51, 2, width, height};
+	this->walkingFrontPlayer.push_back(third);
 
-	this->walkingFrontPlayer[3].x = 76;
-	this->walkingFrontPlayer[3].y = 2;
-	this->walkingFrontPlayer[3].w  = width;
-	this->walkingFrontPlayer[3].h  = height;
+	SDL_Rect fourth = {76, 2, width, height};
+	this->walkingFrontPlayer.push_back(fourth);
 
-	this->walkingFrontPlayer[4].x = 101;
-	this->walkingFrontPlayer[4].y = 2;
-	this->walkingFrontPlayer[4].w  = width;
-	this->walkingFrontPlayer[4].h  = height;
+	SDL_Rect fifth = {101, 2, width, height};
+	this->walkingFrontPlayer.push_back(fifth);
 
-	this->walkingFrontPlayer[5].x = 126;
-	this->walkingFrontPlayer[5].y = 2;
-	this->walkingFrontPlayer[5].w  = width;
-	this->walkingFrontPlayer[5].h  = height;
+	SDL_Rect sixth = {126, 2, width, height};
+	this->walkingFrontPlayer.push_back(sixth);
 }
 
 
 
 void Clothes::loadTallWalkingBackSprite() {
-	this->walkingBackPlayer[0].x = 1;
-	this->walkingBackPlayer[0].y = 48;
-	this->walkingBackPlayer[0].w  = width;
-	this->walkingBackPlayer[0].h  = height;
+	SDL_Rect first = {1, 48, width, height};
+	this->walkingBackPlayer.push_back(first);
 
-	this->walkingBackPlayer[1].x = 26;
-	this->walkingBackPlayer[1].y = 48;
-	this->walkingBackPlayer[1].w  = width;
-	this->walkingBackPlayer[1].h  = height;
+	SDL_Rect second = {26, 48, width, height};
+	this->walkingBackPlayer.push_back(second);
 
-	this->walkingBackPlayer[2].x = 51;
-	this->walkingBackPlayer[2].y = 48;
-	this->walkingBackPlayer[2].w  = width;
-	this->walkingBackPlayer[2].h  = height;
+	SDL_Rect third = {51, 48, width, height};
+	this->walkingBackPlayer.push_back(third);
 
-	this->walkingBackPlayer[3].x = 76;
-	this->walkingBackPlayer[3].y = 48;
-	this->walkingBackPlayer[3].w  = width;
-	this->walkingBackPlayer[3].h  = height;
+	SDL_Rect fourth = {76, 48, width, height};
+	this->walkingBackPlayer.push_back(fourth);
 
-	this->walkingBackPlayer[4].x = 101;
-	this->walkingBackPlayer[4].y = 48;
-	this->walkingBackPlayer[4].w  = width;
-	this->walkingBackPlayer[4].h  = height;
+	SDL_Rect fifth = {101, 48, width, height};
+	this->walkingBackPlayer.push_back(fifth);
 
-	this->walkingBackPlayer[5].x = 126;
-	this->walkingBackPlayer[5].y = 48;
-	this->walkingBackPlayer[5].w  = width;
-	this->walkingBackPlayer[5].h  = height;
+	SDL_Rect sixth = {126, 48, width, height};
+	this->walkingBackPlayer.push_back(sixth);
 }
 
 
 void Clothes::loadTallWalkingLeftSprite() {
-	this->walkingLeftPlayer[0].x = 1;
-	this->walkingLeftPlayer[0].y = 93;
-	this->walkingLeftPlayer[0].w  = width;
-	this->walkingLeftPlayer[0].h  = height;
 
-	this->walkingLeftPlayer[1].x = 23;
-	this->walkingLeftPlayer[1].y = 93;
-	this->walkingLeftPlayer[1].w  = width;
-	this->walkingLeftPlayer[1].h  = height;
+	SDL_Rect first = {1, 93, width, height};
+	this->walkingLeftPlayer.push_back(first);
 
-	this->walkingLeftPlayer[2].x = 49;
-	this->walkingLeftPlayer[2].y = 93;
-	this->walkingLeftPlayer[2].w  = width;
-	this->walkingLeftPlayer[2].h  = height;
+	SDL_Rect second = {23, 93, width, height};
+	this->walkingLeftPlayer.push_back(second);
 
-	this->walkingLeftPlayer[3].x = 74;
-	this->walkingLeftPlayer[3].y = 93;
-	this->walkingLeftPlayer[3].w  = width;
-	this->walkingLeftPlayer[3].h  = height;
+	SDL_Rect third = {49, 93, width, height};
+	this->walkingLeftPlayer.push_back(third);
 
-	this->walkingLeftPlayer[4].x = 99;
-	this->walkingLeftPlayer[4].y = 93;
-	this->walkingLeftPlayer[4].w  = width;
-	this->walkingLeftPlayer[4].h  = height;
+	SDL_Rect fourth = {74, 93, width, height};
+	this->walkingLeftPlayer.push_back(fourth);
+
+	SDL_Rect fifth = {99, 93, width, height};
+	this->walkingLeftPlayer.push_back(fifth);
 }
 
 
 void Clothes::loadTallWalkingRightSprite() {
-	this->walkingRightPlayer[0].x = 1;
-	this->walkingRightPlayer[0].y = 138;
-	this->walkingRightPlayer[0].w  = width;
-	this->walkingRightPlayer[0].h  = height;
+	SDL_Rect first = {1, 138, width, height};
+	this->walkingRightPlayer.push_back(first);
 
-	this->walkingRightPlayer[1].x = 29;
-	this->walkingRightPlayer[1].y = 138;
-	this->walkingRightPlayer[1].w  = width;
-	this->walkingRightPlayer[1].h  = height;
+	SDL_Rect second = {29, 138, width, height};
+	this->walkingRightPlayer.push_back(second);
 
-	this->walkingRightPlayer[2].x = 54;
-	this->walkingRightPlayer[2].y = 138;
-	this->walkingRightPlayer[2].w  = width;
-	this->walkingRightPlayer[2].h  = height;
+	SDL_Rect third = {54, 138, width, height};
+	this->walkingRightPlayer.push_back(third);
 
-	this->walkingRightPlayer[3].x = 78;
-	this->walkingRightPlayer[3].y = 138;
-	this->walkingRightPlayer[3].w  = width;
-	this->walkingRightPlayer[3].h  = height;
+	SDL_Rect fourth = {78, 138, width, height};
+	this->walkingRightPlayer.push_back(fourth);
 
-	this->walkingRightPlayer[4].x = 103;
-	this->walkingRightPlayer[4].y = 138;
-	this->walkingRightPlayer[4].w  = width;
-	this->walkingRightPlayer[4].h  = height;
+	SDL_Rect fifth = {103, 138, width, height};
+	this->walkingRightPlayer.push_back(fifth);
 }

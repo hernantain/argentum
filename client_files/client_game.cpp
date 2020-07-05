@@ -7,24 +7,17 @@
 #include "client_game.h"
 #include "client_sender_thread.h"
 #include "client_receiver_thread.h"
-
 #include "client_player.h"
-#include "client_elf.h"
-#include "client_human.h"
-#include "client_dwarf.h"
-#include "client_gnome.h"
-
 #include "client_map.h"
+#include "client_npc.h"
 
 #include "../common_protocol_message.h"
 #include "../common_queue.h"
 #include "../common_sockets.h"
 #include "../common_mapinfo.h"
 
-#include "client_npc.h"
 #include <msgpack.hpp>
 
-#include <vector>
 
 Game::Game() :  gRenderer(NULL), running(true) {
 	if( !this->init() ) {
@@ -68,7 +61,7 @@ Map Game::loadMap() {
 
 
 ClientWorld Game::loadWorld() {
-	ProtocolCharacter character(this->player_id, 3, 1);
+	ProtocolCharacter character(this->player_id, 2, 1);
 	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
 
 	msgpack::sbuffer buffer;
@@ -114,12 +107,14 @@ void Game::run() {
 	receiver->start();
 
 	// float rate = float( 1000 * float( 1.0 ) / float( 60.0) ) ;
-	//Event handler
 
+	int it = 0;
 	SDL_Event e;
 	// auto rate = std::chrono::duration<double>(float(1.0/60));
 	// auto t_start = std::chrono::high_resolution_clock::now();
 	// SDL_RenderSetViewport(this->gRenderer, NULL);
+	
+	// Event handler
 	while(this->running) {	
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
@@ -143,12 +138,12 @@ void Game::run() {
 		SDL_RenderClear( gRenderer );
 
 		SDL_RenderSetViewport( gRenderer, &inventory );
-		SDL_SetRenderDrawColor(gRenderer, 225, 150, 100, 1);
+		SDL_SetRenderDrawColor(gRenderer, 17, 5, 92, 1);
 
 		SDL_RenderSetViewport( gRenderer, &main );
 
 		map.renderFirstLayer(camera);
-		world.render(this->player_id, camera);
+		world.render(this->player_id, camera, it);
 		map.renderSecondLayer(camera);
 		
 		// SDL_RenderSetViewport( gRenderer, &inventory );
@@ -172,7 +167,8 @@ void Game::run() {
 	
 		// t_start = std::chrono::high_resolution_clock::now();
 		
-		player->update_frames();
+		it++;
+		// player->update_frames();
 		// sleep
 	}
 }
