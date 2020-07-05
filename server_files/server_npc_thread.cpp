@@ -14,16 +14,21 @@ ServerNPCThread::ServerNPCThread(
 
 void ServerNPCThread::run() {
 
+    std::cout << "NPC THREAD CORRIENDO" << std::endl;
     int npc_id = 100;
-    int x = 50;
-    int y = 50;
+    int npc_type = 1;
     while (this->running) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-        ProtocolNpc npc(npc_id, 1, x, y, 0);
-        ProtocolMessage updated_npc_msg(70, npc_id, npc);
-        queue.push(updated_npc_msg);
+        if (npc_id <= 104) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            ProtocolNpc npc(npc_id, npc_type);
+            ProtocolMessage npc_msg(70, npc_id, std::move(npc));
+            queue.push(npc_msg);
+            npc_id++;
+            npc_type++;
+        }
     }
 }
+
 
 // ProtocolMessage ServerNPCThread::update_npcs() {
     // I should have the world as an attribute of this class

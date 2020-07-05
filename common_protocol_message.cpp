@@ -28,7 +28,7 @@ ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
     this->id_message = std::move(other.id_message);
     this->id_player = std::move(other.id_player);
     this->characters = other.characters;
-    this->npcs = npcs;
+    this->npcs = other.npcs;
 }
 
 ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
@@ -36,7 +36,7 @@ ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
     this->id_message = std::move(other.id_message);
     this->id_player = std::move(other.id_player);
     this->characters = other.characters;
-    this->npcs = npcs;
+    this->npcs = other.npcs;
     return *this;
 }
 
@@ -45,6 +45,14 @@ ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
 int ProtocolMessage::find(uint16_t id) {
     for (unsigned int i = 0; i < characters.size(); ++i) {
         if (characters[i].id == id)
+            return i;
+    }
+    return -1;
+}
+
+int ProtocolMessage::find_npc(uint16_t id) {
+    for (unsigned int i = 0; i < npcs.size(); ++i) {
+        if (npcs[i].id == id)
             return i;
     }
     return -1;

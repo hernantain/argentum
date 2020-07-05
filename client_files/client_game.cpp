@@ -89,7 +89,10 @@ ClientWorld Game::loadWorld() {
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) 
 		clientWorld.add_player(rec_msg.characters[i]);
 
-	return clientWorld;
+	for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
+		clientWorld.add_npc(rec_msg.npcs[i]);
+
+	return std::move(clientWorld);
 }
 
 
@@ -112,8 +115,6 @@ void Game::run() {
 
 	// float rate = float( 1000 * float( 1.0 ) / float( 60.0) ) ;
 	//Event handler
-
-	NPC* spider = new NPC(1, 4, gRenderer, 100, 100);
 
 	SDL_Event e;
 	// auto rate = std::chrono::duration<double>(float(1.0/60));
@@ -147,7 +148,6 @@ void Game::run() {
 		SDL_RenderSetViewport( gRenderer, &main );
 
 		map.renderFirstLayer(camera);
-		spider->render(camera);
 		world.render(this->player_id, camera);
 		map.renderSecondLayer(camera);
 		

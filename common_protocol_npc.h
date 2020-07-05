@@ -14,6 +14,8 @@ struct ProtocolNpc {
 
     ProtocolNpc();
 
+    ProtocolNpc(int16_t id, int16_t npc_type);
+
     ProtocolNpc(
         int16_t id,
         int16_t npc_type,
@@ -22,7 +24,7 @@ struct ProtocolNpc {
         int16_t orientation
     );
 
-    MSGPACK_DEFINE(id, npc_type, posX, posY, orientation);
+    MSGPACK_DEFINE(id, npc_type, posX, posY, orientation)
 };
 
 

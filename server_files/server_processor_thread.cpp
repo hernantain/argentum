@@ -30,7 +30,8 @@ void ServerProcessorThread::run() {
     while (running) {
         ProtocolMessage received_msg = this->receiversQueue.pop();
         protocol_translator.translate(received_msg, serverWorld);
-        this->broadcastMessage(received_msg);
+        if (received_msg.id_message != NOTHING)
+           this->broadcastMessage(received_msg);
 
     }
 }

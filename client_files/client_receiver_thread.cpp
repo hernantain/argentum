@@ -44,6 +44,8 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
         this->process_equip_weapon(msg);
     if (msg.id_message == 66)
         this->process_create_player(msg);
+    if (msg.id_message == 71)
+        this->process_create_npc(msg);
     
     if (msg.id_player == this->player_id)
         world.players[this->player_id]->set_camera(camera);
@@ -74,14 +76,26 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
     player->set_weapon(msg.characters[0].weaponId);
 }
 
+
 void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
 
-    std::cout << "ARRAY SIZE: " << msg.characters.size() << std::endl;
     for (unsigned int i = 0; i < msg.characters.size(); ++i)
         std::cout << msg.characters[i].id << std::endl;
 
     int i = msg.find(msg.id_player);
-    std::cout << "EL i del jugador es: " << i << std::endl;
     if (i != -1)
         world.add_player(msg.characters[i]);
+}
+
+
+void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
+
+    std::cout << "INTENTANDO AGREGAR NPC" << std::endl;
+    for (unsigned int i = 0; i < msg.npcs.size(); ++i)
+        std::cout << msg.npcs[i].id << std::endl;
+
+    int i = msg.find_npc(msg.id_player);
+    std::cout << "i es : " << i << std::endl;
+    if (i != -1)
+        world.add_npc(msg.npcs[i]);
 }

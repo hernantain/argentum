@@ -11,6 +11,7 @@
 
 struct ClientWorld {
     SDL_Renderer *gRenderer;
+    std::mutex m;
 
     std::map<int16_t, Player*> players;
     std::map<int16_t, NPC*> npcs;
@@ -23,7 +24,17 @@ struct ClientWorld {
 
     void add_player(ProtocolCharacter &protocolCharacter);
 
+    void add_npc(ProtocolNpc &protocolNpc);
+
     void render(int16_t id, SDL_Rect &camera);
+
+
+    ClientWorld(ClientWorld&& other);
+    ClientWorld& operator=(ClientWorld&& other);
+
+    ClientWorld(const ClientWorld&) = delete;
+    ClientWorld& operator=(const ClientWorld&) = delete;
+
 };
 
 
