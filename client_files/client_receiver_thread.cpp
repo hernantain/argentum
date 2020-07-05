@@ -33,7 +33,7 @@ void ClientReceiverThread::run() {
 
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
-    std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
+    // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
     if (msg.id_message == 20)
         this->process_move(msg);
     if (msg.id_message == 30)

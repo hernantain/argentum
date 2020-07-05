@@ -43,10 +43,10 @@ void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
 }
 
 
-void ClientWorld::render(int16_t id, int &camPosX, int &camPosY) {
+void ClientWorld::render(int16_t id, SDL_Rect &camera) {
     
     std::map<int16_t, Player*>::iterator itr;
     for (itr = players.begin(); itr != players.end(); ++itr)  
-        itr->second->render(camPosX, camPosY);
+        itr->second->render(camera);
 
 }

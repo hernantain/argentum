@@ -69,18 +69,13 @@ void Player::update_frames() {
 
 
 
-void Player::render(int camPosX, int camPosY) {
+void Player::render(SDL_Rect &camera) {
 	std::unique_lock<std::mutex> lock(this->m);
-	int bodyCenteredX = this->bodyPosX - camPosX;
-	int bodyCenteredY = this->bodyPosY - camPosY;
-	int headCenteredX = this->headPosX - camPosX;
-	int headCenteredY = this->headPosY - camPosY;
-	
 	equippedPlayer->render(
-		bodyCenteredX, 
-		bodyCenteredY, 
-		headCenteredX, 
-		headCenteredY, 
+		bodyPosX - camera.x, 
+		bodyPosY - camera.y, 
+		headPosX - camera.x, 
+		headPosY - camera.y, 
 		gRenderer, 
 		this->orientation, 
 		this->frame);

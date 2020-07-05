@@ -12,10 +12,10 @@ class Picture {
 
     protected:
         virtual void render(
-            int &bodyPosX, 
-            int &bodyPosY,
-            int &headPosX, 
-            int &headPosY, 
+            int bodyPosX, 
+            int bodyPosY,
+            int headPosX, 
+            int headPosY, 
             SDL_Renderer* gRenderer, 
             int &orientation, 
             int &frame) = 0;
@@ -37,10 +37,10 @@ class PlayerPicture: public Picture {
         void set_clothes(Clothes* clothes);
 
         virtual void render(
-            int &bodyPosX, 
-            int &bodyPosY,
-            int &headPosX, 
-            int &headPosY, 
+            int bodyPosX, 
+            int bodyPosY,
+            int headPosX, 
+            int headPosY, 
             SDL_Renderer* gRenderer, 
             int &orientation, 
             int &frame) override;
@@ -60,10 +60,10 @@ class EquippedPlayer: public Picture {
         void setWeapon(Weapon* weapon);
         
         virtual void render(
-            int &bodyPosX, 
-            int &bodyPosY,
-            int &headPosX, 
-            int &headPosY, 
+            int bodyPosX, 
+            int bodyPosY,
+            int headPosX, 
+            int headPosY, 
             SDL_Renderer* gRenderer, 
             int &orientation, 
             int &frame) override;

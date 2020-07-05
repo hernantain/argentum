@@ -18,7 +18,7 @@ struct ClientWorld {
 
     void add_player(ProtocolCharacter &protocolCharacter);
 
-    void render(int16_t id, int &camPosX, int &camPosY);
+    void render(int16_t id, SDL_Rect &camera);
 
 };
 

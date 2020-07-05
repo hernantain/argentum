@@ -56,7 +56,7 @@ void PlayerPicture::set_clothes(Clothes* clothes) {
 
 
 
-void PlayerPicture::render(int &bodyPosX, int &bodyPosY, int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
+void PlayerPicture::render(int bodyPosX, int bodyPosY, int headPosX, int headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
     
 	//Show Character
 	if (orientation == RIGHT) {
@@ -105,8 +105,8 @@ void EquippedPlayer::setWeapon(Weapon* weapon) {
 
 
 void EquippedPlayer::render(
-	int &bodyPosX, 
-	int &bodyPosY,int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
+	int bodyPosX, 
+	int bodyPosY, int headPosX, int headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
 
 	player->render(bodyPosX, bodyPosY, headPosX, headPosY, gRenderer, orientation, frame);
 	

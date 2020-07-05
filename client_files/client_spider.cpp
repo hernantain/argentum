@@ -3,7 +3,7 @@
 #include "client_spider.h"
 
 
-Spider::Spider(int16_t id, SDL_Renderer* gRenderer) : NPC(id, gRenderer) {
+Spider::Spider(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
     if (this->load_pictures("images/arana3.png"))
         this->set_sprites();
 }
@@ -15,6 +15,35 @@ void Spider::set_sprites() {
     this->load_back_walking_sprite();
     this->load_left_walking_sprite();
     this->load_right_walking_sprite();
+}
+
+
+void Spider::render(int posX, int posY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
+    // Show Character
+
+    // if (orientation == RIGHT) {
+	// 	SDL_Rect* currentClip = &this->walkingRightPlayer[ frame / 5 ];
+	// 	this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+        
+	// } else if(orientation == LEFT)  {
+	// 	SDL_Rect *currentClip = &this->walkingLeftPlayer[ frame / 5 ];
+	// 	this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+	
+    // } else if(orientation == UP)  {
+	// 	SDL_Rect *currentClip = &this->walkingBackPlayer[ frame / 5 ];
+	// 	this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+	
+    // } else if(orientation == DOWN)  {
+	// 	SDL_Rect *currentClip = &this->walkingFrontPlayer[ frame / 5 ];
+	// 	this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+
+	// } else {
+	// 	SDL_Rect* currentClip = &this->walkingFrontPlayer[0];
+	// 	this->bodyTexture.render( bodyPosX, bodyPosY, gRenderer, currentClip);
+    // }
+
+    SDL_Rect* currentClip = &this->frontOrientation[0];
+    this->npcTexture.render( posX, posY, gRenderer, currentClip);
 }
 
 
