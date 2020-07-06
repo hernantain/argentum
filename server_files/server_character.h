@@ -10,7 +10,6 @@
 #include "server_experience_points.h"
 #include "server_character_class.h"
 #include "server_race.h"
-#include "server_npc.h"
 #include "server_inventory.h"
 #include "server_item.h"
 #include "server_equipment.h"
@@ -23,6 +22,8 @@
 
 #include "../common_collision_info.h"
 #include "../common_protocol_character.h"
+
+class NPC;
 
 /* Clase que representa a un personaje del juego.
  * Es no copiable.
@@ -56,16 +57,18 @@ private:
     const int max_gold();
     bool is_critical();
     bool evade_attack();
-    int experience_formula(Character& other);
-    int get_extra_experience(Character& other);
+    int experience_formula(int enemy_level);
+    int get_extra_experience(int enemy_life, int enemy_level);
     void get_experience(Character& other, int damage);
+    void get_experience(NPC& other, int damage);
     void update_level();
     void update_newbie();
     bool can_attack(Character& other);
+    bool can_attack(NPC& other);
     void consume_mana();
 
 public:
-  // Contructor, recibe el id, la vida inicial
+    // Contructor, recibe el id, la vida inicial
     Character(size_t id, Json::Value& config, CharacterClass& character_class,
     Race& race, CollisionInfo &collisionInfo);
 
@@ -153,14 +156,13 @@ public:
     // Equipa un casco
     void equip_helmet(Helmet& item);
 
-    // Ataca a otro personaje o a un NPC
+    // Ataca a otro personaje
     void attack(Character& other);
 
-    // Ataca a otro personaje o a un NPC
+    // Ataca a un NPC
     void attack(NPC& other);
 
-    // Defiende al personaje de un ataque
-    // Devuelve el daño final realizado
+    // Defiende al personaje de un ataque. Devuelve el daño final realizado
     int defense(int damage);
 
     // Booleano que devuelve si el personaje esta cerca de la posicion

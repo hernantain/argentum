@@ -6,6 +6,7 @@ Skeleton::Skeleton(Json::Value &config, CollisionInfo &collisionInfo) : NPC(conf
     this->id = config["skeleton"]["id"].asInt();
     this->level = config["skeleton"]["level"].asInt();
     this->life = config["skeleton"]["life"].asInt();
+    this->max_life = config["skeleton"]["life"].asInt();
     this->min_damage = config["skeleton"]["min_damage"].asInt();
     this->max_damage = config["skeleton"]["max_damage"].asInt();
     this->defense_points = config["skeleton"]["defense"].asInt();    

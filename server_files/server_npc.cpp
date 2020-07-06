@@ -27,6 +27,14 @@ int NPC::get_life() {
     return life;
 }
 
+int NPC::get_max_life() {
+    return max_life;
+}
+
+bool NPC::is_alive() {
+    return alive;
+}
+
 void NPC::drop() {
     int nothing_percentage = config["npc"]["nothing_drop_probability"].asFloat() * 100;
     int gold_percentage = config["npc"]["gold_drop_probability"].asFloat() * 100;
@@ -73,11 +81,20 @@ int NPC::get_damage() {
     return damage;
 }
 
-void NPC::attack(Character& other) {
+bool NPC::can_attack(Character& other) {
     if(!alive || !other.is_alive()) {
-        std::cout << "O vos o el esta muerto" << std::endl;
-        return;
-    } 
+        std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
+        return false;
+    }
+    int posX = other.get_body_pos_X();
+    int posY = other.get_body_pos_Y();
+    std::cout << "NPC::other posX: " << posX << std::endl;
+    std::cout << "NPC::other posY: " << posY << std::endl;
+    return movement.is_near(posX, posY);
+}
+
+void NPC::attack(Character& other) {
+    if(!can_attack(other)) return;
     int damage = get_damage();
     std::cout << "AtaqueNPC::Dano:: " << damage << std::endl;
     other.defense(damage);
