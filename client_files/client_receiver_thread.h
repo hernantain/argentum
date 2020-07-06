@@ -6,6 +6,7 @@
 
 #include "client_player.h"
 #include "client_world.h"
+#include "client_info_view.h"
 #include "../common_sockets.h"
 #include "../common_thread.h"
 #include "../common_protocol_message.h"
@@ -16,6 +17,7 @@ class ClientReceiverThread : public Thread {
     Socket &skt;
     ClientWorld &world;
     SDL_Rect &camera;
+    InfoView &infoView;
     uint16_t player_id;
     std::atomic<bool> running;
 
@@ -27,8 +29,9 @@ class ClientReceiverThread : public Thread {
     void process_create_player(ProtocolMessage &msg);
     void process_create_npc(ProtocolMessage &msg);
     void process_meditation(ProtocolMessage &msg);
+    void process_attack(ProtocolMessage &msg);
     public:
-        ClientReceiverThread(Socket &skt, ClientWorld &world, SDL_Rect &camera, uint16_t player_id);
+        ClientReceiverThread(Socket &skt, ClientWorld &world, SDL_Rect &camera, InfoView &infoView, uint16_t player_id);
     
         virtual void run() override;
         

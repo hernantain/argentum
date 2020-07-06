@@ -1,8 +1,8 @@
 
 #include "client_window.h"
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 980
+#define SCREEN_HEIGHT 720
 
 
 LWindow::LWindow() {

@@ -27,25 +27,17 @@ bool PlayerPicture::load_pictures(SDL_Renderer* gRenderer, const char* head_path
 
 
 void PlayerPicture::set_head_sprite() {
-    this->headOrientations[0].x = 1;
-	this->headOrientations[0].y = 0;
-	this->headOrientations[0].w= 15;
-	this->headOrientations[0].h= 20;
+	SDL_Rect first = {1, 0, 15, 20};
+	this->headOrientations.push_back(first);
 
-	this->headOrientations[1].x = 18;
-	this->headOrientations[1].y = 0;
-	this->headOrientations[1].w= 15;
-	this->headOrientations[1].h= 20;
+	SDL_Rect second = {18, 0, 15, 20};
+	this->headOrientations.push_back(second);
 
-	this->headOrientations[2].x = 36;
-	this->headOrientations[2].y = 0;
-	this->headOrientations[2].w= 15;
-	this->headOrientations[2].h= 20;
+	SDL_Rect third = {36, 0, 15, 20};
+	this->headOrientations.push_back(third);
 
-	this->headOrientations[3].x = 52;
-	this->headOrientations[3].y = 0;
-	this->headOrientations[3].w= 15;
-	this->headOrientations[3].h= 20;
+	SDL_Rect fourth = {52, 0, 15, 20};
+	this->headOrientations.push_back(fourth);
 }
 
 

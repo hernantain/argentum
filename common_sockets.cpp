@@ -144,30 +144,30 @@ void Socket::close_socket()  {
 }
 
 
-void Socket::operator()(uint8_t &com) const {
+void Socket::operator<<(uint8_t &com) const {
 	this->send_message((char*) &com, ONE_BYTE);	
 }
 
 
-void Socket::operator()(uint16_t &number) const {
+void Socket::operator<<(uint16_t &number) const {
 	// number = htons(number);
 	this->send_message((char*) &number, TWO_BYTES);	
 }
 
 
-void Socket::operator()(uint32_t &len) const {
+void Socket::operator<<(uint32_t &len) const {
 	this->send_message((char*) &len, FOUR_BYTES);	
 }
 
-void Socket::operator()(const std::string &message) const {
+void Socket::operator<<(const std::string &message) const {
 	uint32_t len = htonl(message.length());
 	this->send_message((char*) &len, FOUR_BYTES);
 	this->send_message((char*) message.c_str(), (int) message.length());	
 }
 
-void Socket::operator()(msgpack::sbuffer &sbuf) const {
+void Socket::operator<<(msgpack::sbuffer &sbuf) const {
 	uint16_t size = sbuf.size();
-	this->operator()(size);
+	this->operator<<(size);
 	this->send_message((char*) sbuf.data(), (int) sbuf.size());
 }
 

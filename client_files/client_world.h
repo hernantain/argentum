@@ -26,7 +26,7 @@ struct ClientWorld {
 
     void add_npc(ProtocolNpc &protocolNpc);
 
-    void render(int16_t id, SDL_Rect &camera);
+    void render(int16_t id, SDL_Rect &camera, int &it);
 
 
     ClientWorld(ClientWorld&& other);

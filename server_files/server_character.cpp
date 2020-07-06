@@ -14,6 +14,7 @@
 
 Character::Character(size_t id, Json::Value &config, CharacterClass& character_class, Race& race, CollisionInfo &collisionInfo) : 
     config(config),
+    movement(collisionInfo),
     character_class(character_class),
     race(race), 
     life(race.get_constitution(), character_class.get_life_multiplier(), race.get_life_multiplier()), 
@@ -356,7 +357,10 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.bodyPosX = this->get_body_pos_X();
     protocolCharacter.bodyPosY = this->get_body_pos_Y();
     protocolCharacter.orientation = this->get_body_facing();
-    std::cout << protocolCharacter.orientation << std::endl;
+    protocolCharacter.mana = this->get_mana();
+    protocolCharacter.max_mana = this->get_max_mana();
+    protocolCharacter.life = this->get_life();
+    protocolCharacter.max_life = this->get_max_life();
     protocolCharacter.id_race = this->get_race_id();
     protocolCharacter.id_class = this->get_class_id();
 }

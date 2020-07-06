@@ -63,14 +63,14 @@ void Player::set_position(int newBodyPosX, int newBodyPosY, int orientation) {
 }
 
 
-void Player::update_frames() {
-	if (this->frame / 5 >= 5)
-		this->frame = 0;
-}
+// void Player::update_frames() {
+// 	if (this->frame / 5 >= 5)
+// 		this->frame = 0;
+// }
 
 
 
-void Player::render(SDL_Rect &camera) {
+void Player::render(SDL_Rect &camera, int &it) {
 	std::unique_lock<std::mutex> lock(this->m);
 	equippedPlayer->render(
 		bodyPosX - camera.x, 
@@ -79,10 +79,8 @@ void Player::render(SDL_Rect &camera) {
 		headPosY - camera.y, 
 		gRenderer, 
 		this->orientation, 
-		this->frame
+		it
 	);
-
-	this->frame++;
 }
 
 

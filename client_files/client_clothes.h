@@ -7,6 +7,7 @@
 #define WALKING_RIGHT_ANIMATION_FRAMES 5
 
 #include <SDL2/SDL.h>
+#include <vector>
 #include "client_texture.h"
 
 class Clothes {
@@ -26,10 +27,10 @@ class Clothes {
     protected:
         int id;
         LTexture bodyTexture;
-        SDL_Rect walkingFrontPlayer[ WALKING_FRONT_ANIMATION_FRAMES ];
-        SDL_Rect walkingBackPlayer[ WALKING_BACK_ANIMATION_FRAMES ];
-        SDL_Rect walkingLeftPlayer[ WALKING_LEFT_ANIMATION_FRAMES ];
-        SDL_Rect walkingRightPlayer[ WALKING_RIGHT_ANIMATION_FRAMES ];
+        std::vector<SDL_Rect> walkingFrontPlayer;
+        std::vector<SDL_Rect> walkingBackPlayer;
+        std::vector<SDL_Rect> walkingLeftPlayer;
+        std::vector<SDL_Rect> walkingRightPlayer;
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) = 0;
         void set_tall_sprites();
