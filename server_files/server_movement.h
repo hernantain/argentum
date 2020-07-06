@@ -15,6 +15,7 @@ enum _lastMovement {
 /* Clase encargada de la movilidad de un personaje. */
 class Movement {
 private:
+    CollisionInfo &collisionInfo;
     int bodyPosX, bodyPosY;
     // int headPosX, headPosY;
     _lastMovement last_movement;
@@ -25,7 +26,9 @@ private:
 
 public:
     // Constructor.
-    explicit Movement();
+    // explicit Movement();
+
+    Movement(CollisionInfo &collisionInfo);
 
     // Devuelve un int indicando la posicion en X del cuerpo.
     int get_horizontal_body_position() const;

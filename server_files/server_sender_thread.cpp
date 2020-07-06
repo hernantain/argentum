@@ -23,7 +23,7 @@ void SrvClientSenderThread::run() {
         msgpack::sbuffer message;
         msgpack::packer<msgpack::sbuffer> pk(&message);
         pk.pack(msg);
-        skt(message);
+        skt << message;
     }
 }
 

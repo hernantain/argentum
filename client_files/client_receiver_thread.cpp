@@ -8,20 +8,20 @@ ClientReceiverThread::ClientReceiverThread(
     Socket &skt, 
     ClientWorld &world,
     SDL_Rect &camera,
+    InfoView &infoView,
     uint16_t player_id) : skt(skt), 
                         world(world),
                         camera(camera),
+                        infoView(infoView),
                         player_id(player_id),
                         running(true) {}
 
 
 
 void ClientReceiverThread::run() {
-
     while (this->running) {
         ProtocolMessage msg;
         msgpack::unpacker pac;
-        std::cout << "Corriendo" << std::endl;
         this->skt >> pac;
         msgpack::object_handle oh;
         pac.next(oh);
@@ -36,9 +36,9 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
     if (msg.id_message == 20)
         this->process_move(msg);
-    // if (msg.id_message == 25)
+    if (msg.id_message == 25)
         // here we might put a sound on attacks 
-        // this->process_attack(msg);
+        this->process_attack(msg);
     if (msg.id_message == 30)
         this->process_equip_helmet(msg);
     if (msg.id_message == 31)
@@ -102,12 +102,21 @@ void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
 
-    std::cout << "INTENTANDO AGREGAR NPC" << std::endl;
     for (unsigned int i = 0; i < msg.npcs.size(); ++i)
         std::cout << msg.npcs[i].id << std::endl;
 
     int i = msg.find_npc(msg.id_player);
-    std::cout << "i es : " << i << std::endl;
     if (i != -1)
         world.add_npc(msg.npcs[i]);
+}
+
+
+
+void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
+    int i = msg.find(this->player_id);
+    if (i != -1) {
+        this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
+        this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
+    }
+
 }

@@ -32,122 +32,81 @@ void Sword::set_sprites() {
 
 
 void Sword::load_front_walking_sprite() {
-    this->walkingFrontPlayer[0].x = 0;
-    this->walkingFrontPlayer[0].y = 0;
-    this->walkingFrontPlayer[0].w = 24;
-    this->walkingFrontPlayer[0].h = 45;
 
-    this->walkingFrontPlayer[1].x = 24;
-    this->walkingFrontPlayer[1].y = 0;
-    this->walkingFrontPlayer[1].w = 24;
-    this->walkingFrontPlayer[1].h = 45;
+    SDL_Rect first = {0, 0, 24, 45};
+    this->walkingFrontPlayer.push_back(first);
 
-    this->walkingFrontPlayer[2].x = 48;
-    this->walkingFrontPlayer[2].y = 0;
-    this->walkingFrontPlayer[2].w = 24;
-    this->walkingFrontPlayer[2].h = 45;
+    SDL_Rect second = {24, 0, 24, 45};
+    this->walkingFrontPlayer.push_back(second);
 
-    this->walkingFrontPlayer[3].x = 72;
-    this->walkingFrontPlayer[3].y = 0;
-    this->walkingFrontPlayer[3].w = 24;
-    this->walkingFrontPlayer[3].h = 45;
+    SDL_Rect third = {48, 0, 24, 45};
+    this->walkingFrontPlayer.push_back(third);
 
-    this->walkingFrontPlayer[4].x = 96;
-    this->walkingFrontPlayer[4].y = 0;
-    this->walkingFrontPlayer[4].w = 24;
-    this->walkingFrontPlayer[4].h = 45;
+    SDL_Rect fourth = {72, 0, 24, 45};
+    this->walkingFrontPlayer.push_back(fourth);
 
-    this->walkingFrontPlayer[5].x = 120;
-    this->walkingFrontPlayer[5].y = 0;
-    this->walkingFrontPlayer[5].w = 24;
-    this->walkingFrontPlayer[5].h = 45;
+    SDL_Rect fifth = {96, 0, 24, 45};
+    this->walkingFrontPlayer.push_back(fifth);
+
+    SDL_Rect sixth = {120, 0, 24, 45};
+    this->walkingFrontPlayer.push_back(sixth);
 }
 
 
 void Sword::load_back_walking_sprite() {
-    this->walkingBackPlayer[0].x = 0;
-    this->walkingBackPlayer[0].y = 45;
-    this->walkingBackPlayer[0].w = 24;
-    this->walkingBackPlayer[0].h = 45;
 
-    this->walkingBackPlayer[1].x = 24;
-    this->walkingBackPlayer[1].y = 45;
-    this->walkingBackPlayer[1].w = 24;
-    this->walkingBackPlayer[1].h = 45;
+    SDL_Rect first = {0, 45, 24, 45};
+    this->walkingBackPlayer.push_back(first);
 
-    this->walkingBackPlayer[2].x = 48;
-    this->walkingBackPlayer[2].y = 45;
-    this->walkingBackPlayer[2].w = 24;
-    this->walkingBackPlayer[2].h = 45;
+    SDL_Rect second = {24, 45, 24, 45};
+    this->walkingBackPlayer.push_back(second);
 
-    this->walkingBackPlayer[3].x = 72;
-    this->walkingBackPlayer[3].y = 45;
-    this->walkingBackPlayer[3].w = 24;
-    this->walkingBackPlayer[3].h = 45;
+    SDL_Rect third = {48, 45, 24, 45};
+    this->walkingBackPlayer.push_back(third);
 
-    this->walkingBackPlayer[4].x = 96;
-    this->walkingBackPlayer[4].y = 45;
-    this->walkingBackPlayer[4].w = 24;
-    this->walkingBackPlayer[4].h = 45;
+    SDL_Rect fourth = {72, 45, 24, 45};
+    this->walkingBackPlayer.push_back(fourth);
 
-    this->walkingBackPlayer[5].x = 120;
-    this->walkingBackPlayer[5].y = 45;
-    this->walkingBackPlayer[5].w = 24;
-    this->walkingBackPlayer[5].h = 45;
+    SDL_Rect fifth = {96, 45, 24, 45};
+    this->walkingBackPlayer.push_back(fifth);
+
+    SDL_Rect sixth = {120, 45, 24, 45};
+    this->walkingBackPlayer.push_back(sixth);
 }
 
 
 void Sword::load_left_walking_sprite() {
-    this->walkingLeftPlayer[0].x = 0;
-    this->walkingLeftPlayer[0].y = 90;
-    this->walkingLeftPlayer[0].w = 24;
-    this->walkingLeftPlayer[0].h = 45;
 
-    this->walkingLeftPlayer[1].x = 24;
-    this->walkingLeftPlayer[1].y = 90;
-    this->walkingLeftPlayer[1].w = 24;
-    this->walkingLeftPlayer[1].h = 45;
+    SDL_Rect first = {0, 90, 24, 45};
+    this->walkingLeftPlayer.push_back(first);
 
-    this->walkingLeftPlayer[2].x = 48;
-    this->walkingLeftPlayer[2].y = 90;
-    this->walkingLeftPlayer[2].w = 24;
-    this->walkingLeftPlayer[2].h = 45;
+    SDL_Rect second = {24, 90, 24, 45};
+    this->walkingLeftPlayer.push_back(second);
 
-    this->walkingLeftPlayer[3].x = 72;
-    this->walkingLeftPlayer[3].y = 90;
-    this->walkingLeftPlayer[3].w = 24;
-    this->walkingLeftPlayer[3].h = 45;
+    SDL_Rect third = {48, 90, 24, 45};
+    this->walkingLeftPlayer.push_back(third);
 
-    this->walkingLeftPlayer[4].x = 96;
-    this->walkingLeftPlayer[4].y = 90;
-    this->walkingLeftPlayer[4].w = 24;
-    this->walkingLeftPlayer[4].h = 45;
+    SDL_Rect fourth = {72, 90, 24, 45};
+    this->walkingLeftPlayer.push_back(fourth);
+
+    SDL_Rect fifth = {96, 90, 24, 45};
+    this->walkingLeftPlayer.push_back(fifth);
 }
 
 
 void Sword::load_right_walking_sprite() {
-    this->walkingRightPlayer[0].x = 0;
-    this->walkingRightPlayer[0].y = 135;
-    this->walkingRightPlayer[0].w = 24;
-    this->walkingRightPlayer[0].h = 45;
+    SDL_Rect first = {0, 135, 24, 45};
+    this->walkingRightPlayer.push_back(first);
 
-    this->walkingRightPlayer[1].x = 24;
-    this->walkingRightPlayer[1].y = 135;
-    this->walkingRightPlayer[1].w = 24;
-    this->walkingRightPlayer[1].h = 45;
+    SDL_Rect second = {24, 91350, 24, 45};
+    this->walkingRightPlayer.push_back(second);
 
-    this->walkingRightPlayer[2].x = 48;
-    this->walkingRightPlayer[2].y = 135;
-    this->walkingRightPlayer[2].w = 24;
-    this->walkingRightPlayer[2].h = 45;
+    SDL_Rect third = {48, 135, 24, 45};
+    this->walkingRightPlayer.push_back(third);
 
-    this->walkingRightPlayer[3].x = 72;
-    this->walkingRightPlayer[3].y = 135;
-    this->walkingRightPlayer[3].w = 24;
-    this->walkingRightPlayer[3].h = 45;
+    SDL_Rect fourth = {72, 135, 24, 45};
+    this->walkingRightPlayer.push_back(fourth);
 
-    this->walkingRightPlayer[4].x = 96;
-    this->walkingRightPlayer[4].y = 135;
-    this->walkingRightPlayer[4].w = 24;
-    this->walkingRightPlayer[4].h = 45;
+    SDL_Rect fifth = {96, 135, 24, 45};
+    this->walkingRightPlayer.push_back(fifth);
 }

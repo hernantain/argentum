@@ -15,8 +15,8 @@
  * 
  * Tiene sobrecargados los operadores '()' y '>>'.
  * 
- * operator(): para hacer el envio de mensajes de distinto tipo 
- *              usando la notacion skt(MESSAGE).
+ * operator<<: para hacer el envio de mensajes de distinto tipo 
+ *              usando la notacion skt << MESSAGE.
  * 
  * operator>>: para hacer la recepcion de mensajes de distinto tipo
  *              usando la notacion skt >> var.
@@ -44,11 +44,11 @@ class Socket {
 
         void close_socket();
     
-        void operator()(uint8_t &com) const;
-        void operator()(uint16_t &number) const;
-        void operator()(uint32_t &len) const;
-        void operator()(const std::string &message) const;
-        void operator()(msgpack::sbuffer &sbuf) const;
+        void operator<<(uint8_t &com) const;
+        void operator<<(uint16_t &number) const;
+        void operator<<(uint32_t &len) const;
+        void operator<<(const std::string &message) const;
+        void operator<<(msgpack::sbuffer &sbuf) const;
 
         void operator>>(uint8_t &com) const;
         void operator>>(uint16_t &buf) const;

@@ -17,7 +17,7 @@ void SenderThread::run() {
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
         pk.pack(msg);
         
-        this->skt(buffer);
+        this->skt << buffer;
     }
 
 }

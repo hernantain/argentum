@@ -9,7 +9,6 @@ class Drawable {
 
     protected:
         int16_t id;
-        int frame;
         int orientation;
         SDL_Renderer* gRenderer;
 
