@@ -21,7 +21,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
     switch (code) {
         case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, world);
-        case PROTOCOL_CREATE_NPC: return create_npc(msg, world);
+        case PROTOCOL_CREATE_NPC: return create_npc_event(msg, world);
         case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
@@ -150,22 +150,15 @@ void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorl
 
 
 
-void ProtocolTranslator::create_npc(ProtocolMessage& msg, ServerWorld &world) {
+void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &world) {
     if (world.empty()) {
         msg.id_message = NOTHING;
         return; 
     }
-
-    NPC* npc;
-    if (msg.npcs[0].npc_type == 1) 
-        npc = new Goblin(config, collisionInfo);
-    else if (msg.npcs[0].npc_type == 2)
-        npc = new Skeleton(config, collisionInfo);
-    else if (msg.npcs[0].npc_type == 3)
-        npc = new Zombie(config, collisionInfo);
-    else 
-        npc = new Spider(config, collisionInfo);
-
+    
+    int npc_id = msg.npcs[0].npc_type;
+    NPCFactory factory;
+    NPC* npc = factory.make_npc(npc_id, config, collisionInfo);
     world.add(msg.id_player, npc);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_CREATE_NPC_CONFIRM;
