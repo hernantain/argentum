@@ -10,6 +10,7 @@
 #include "server_experience_points.h"
 #include "server_character_class.h"
 #include "server_race.h"
+#include "server_npc.h"
 #include "server_inventory.h"
 #include "server_item.h"
 #include "server_equipment.h"
@@ -154,6 +155,9 @@ public:
 
     // Ataca a otro personaje o a un NPC
     void attack(Character& other);
+
+    // Ataca a otro personaje o a un NPC
+    void attack(NPC& other);
 
     // Defiende al personaje de un ataque
     // Devuelve el daño final realizado

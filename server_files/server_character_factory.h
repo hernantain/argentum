@@ -1,7 +1,6 @@
 #ifndef _CHARACTER_FACTORY_H
 #define _CHARACTER_FACTORY_H
 
-#include "server_character_factory.h"
 #include "server_race.h"
 #include "server_elf.h"
 #include "server_gnome.h"

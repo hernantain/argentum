@@ -224,7 +224,7 @@ bool Character::can_attack(Character& other) {
         std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
         return false;
     }
-    // if(!fairplay(other)) return false;
+    if(!fairplay(other)) return false;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
         int posY = other.get_body_pos_Y();

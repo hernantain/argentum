@@ -4,7 +4,10 @@
 #include "../common_protocol_message.h"
 #include "server_npc_thread.h"
 
-#define SECONDS_TO_UPDATE 2
+#define MILISECONDS_TO_UPDATE 2000
+#define NPC_STARTING_ID 100
+#define NPC_CREATION_MSG_ID 70
+
 
 ServerNPCThread::ServerNPCThread(
     Queue &queue, 
@@ -15,16 +18,17 @@ ServerNPCThread::ServerNPCThread(
 void ServerNPCThread::run() {
 
     std::cout << "NPC THREAD CORRIENDO" << std::endl;
-    int npc_id = 100;
+    int npc_id = NPC_STARTING_ID;
     int npc_type = 1;
     while (this->running) {
-        if (npc_id <= 104) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        if (npc_id <= NPC_STARTING_ID + max_npcs) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(MILISECONDS_TO_UPDATE));
             ProtocolNpc npc(npc_id, npc_type);
-            ProtocolMessage npc_msg(70, npc_id, std::move(npc));
+            ProtocolMessage npc_msg(NPC_CREATION_MSG_ID, npc_id, std::move(npc));
             queue.push(npc_msg);
             npc_id++;
             npc_type++;
+            if(npc_type == 5) npc_type = 1; 
         }
     }
 }

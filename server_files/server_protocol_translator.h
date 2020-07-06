@@ -6,9 +6,11 @@
 
 #include "server_world.h"
 #include "server_character.h"
+#include "server_npc.h"
 #include "server_helmet.h"
 #include "server_armor.h"
 #include "server_character_factory.h"
+#include "server_npc_factory.h"
 #include "server_helmet_factory.h"
 #include "server_armor_factory.h"
 #include "server_weapon_factory.h"
@@ -65,7 +67,7 @@ private:
     void equip_weapon_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_armor_event(ProtocolMessage& msg, ServerWorld &world);
-    void create_npc(ProtocolMessage& msg, ServerWorld &world);
+    void create_npc_event(ProtocolMessage& msg, ServerWorld &world);
     void create_character(ProtocolMessage& msg, ServerWorld &world);
     void get_all_npcs(ProtocolMessage& msg, ServerWorld &world);
     void attack_event(ProtocolMessage& msg, ServerWorld &world);
