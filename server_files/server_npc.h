@@ -18,12 +18,13 @@ protected:
     CollisionInfo &collisionInfo;
     int id;
     bool alive;
-    int level, life, min_damage, max_damage, defense_points;
+    int level, life, max_life, min_damage, max_damage, defense_points;
 
     // No copiable.
     NPC(const NPC&) = delete;
     NPC& operator=(const NPC&) = delete;
 
+    bool can_attack(Character& other);
     int get_damage();
     int get_defense();
     int gold_drop();
@@ -40,6 +41,12 @@ public:
 
     // Devuelve la vida
     int get_life();
+
+    // Devuelve la vida maxima
+    int get_max_life();
+
+    // Booleano devuelve verdadero si esta vivo el NPC
+    bool is_alive();
 
     // Le quita vida al personaje
     void take_off_life(int life_points);

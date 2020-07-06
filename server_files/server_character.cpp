@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include "server_character.h"
+#include "server_npc.h"
 
 #define NO_LIFE 0
 #define NO_DAMAGE 0
@@ -224,7 +225,7 @@ bool Character::can_attack(Character& other) {
         std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
         return false;
     }
-    if(!fairplay(other)) return false;
+    // if(!fairplay(other)) return false;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
         int posY = other.get_body_pos_Y();
@@ -239,7 +240,38 @@ bool Character::can_attack(Character& other) {
     return true;
 }
 
+bool Character::can_attack(NPC& other) {
+    if(!alive || !other.is_alive()) {
+        std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
+        return false;
+    }
+    if (!equipment.is_weapon_ranged()) {
+        int posX = other.get_body_pos_X();
+        int posY = other.get_body_pos_Y();
+        std::cout << "other posX: " << posX << std::endl;
+        std::cout << "other posY: " << posY << std::endl;
+        return movement.is_near(posX, posY);
+    }
+    if (equipment.is_weapon_magical() && equipment.get_weapon_consumption() > get_mana()) {
+        std::cout << "CantAttack::No te da la mana" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+
 void Character::attack(Character& other) {
+    if(!can_attack(other)) return;
+    consume_mana();
+    int damage = equipment.get_weapon_damage();
+    if (is_critical()) damage *= CRITICAL_MULTIPLIER;
+    std::cout << "Ataque::Dano:: " << damage << std::endl;
+    int final_damage = other.defense(damage);
+    get_experience(other, final_damage);
+    update_level();
+}
+
+void Character::attack(NPC& other) {
     if(!can_attack(other)) return;
     consume_mana();
     int damage = equipment.get_weapon_damage();
@@ -269,26 +301,39 @@ int Character::defense(int damage) {
     return final_damage;
 }
 
-int Character::experience_formula(Character& other) {
-    return std::max(other.get_level() - level + HIGH_CONSTANT_EXP, LOW_CONSTANT_EXP);
+int Character::experience_formula(int enemy_level) {
+    return std::max(enemy_level - level + HIGH_CONSTANT_EXP, LOW_CONSTANT_EXP);
 }
 
-int Character::get_extra_experience(Character& other) {
+int Character::get_extra_experience(int enemy_life, int enemy_level) {
     srand (time(NULL));
     float min = config["experience"]["min_extra_probability"].asFloat();
     float max = config["experience"]["max_extra_probability"].asFloat();
     float random = ((float) rand()) / (float) RAND_MAX;
     float ponderation = min + (random * (max - min));
-    int extra_exp = ponderation * other.get_max_life() * experience_formula(other);
+    int extra_exp = ponderation * enemy_life * experience_formula(enemy_level);
     std::cout << "ExtraExperienceWon:: " << extra_exp << std::endl;
     return extra_exp;
 }
 
-void Character::get_experience(Character& other, int damage) {
-    int won_experience = damage * experience_formula(other);
+void Character::get_experience(NPC& other, int damage) {
+    int enemy_level = other.get_level();
+    int enemy_life = other.get_max_life();
+    int won_experience = damage * experience_formula(enemy_level);
     std::cout << "ExperienceWon:: " << won_experience << std::endl;
     if (!other.is_alive()) {
-        won_experience += get_extra_experience(other);
+        won_experience += get_extra_experience(enemy_life, enemy_level);
+    }
+    experience.add(won_experience);
+}
+
+void Character::get_experience(Character& other, int damage) {
+    int enemy_level = other.get_level();
+    int enemy_life = other.get_max_life();
+    int won_experience = damage * experience_formula(enemy_level);
+    std::cout << "ExperienceWon:: " << won_experience << std::endl;
+    if (!other.is_alive()) {
+        won_experience += get_extra_experience(enemy_life, enemy_level);
     }
     experience.add(won_experience);
 }
@@ -356,7 +401,6 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.bodyPosX = this->get_body_pos_X();
     protocolCharacter.bodyPosY = this->get_body_pos_Y();
     protocolCharacter.orientation = this->get_body_facing();
-    std::cout << protocolCharacter.orientation << std::endl;
     protocolCharacter.id_race = this->get_race_id();
     protocolCharacter.id_class = this->get_class_id();
 }
