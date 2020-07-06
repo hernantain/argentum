@@ -12,6 +12,7 @@
 #include "client_map.h"
 #include "client_player.h"
 #include "client_world.h"
+#include "client_info_view.h"
 
 #include "../common_sockets.h"
 #include "../common_queue.h"
@@ -31,10 +32,10 @@ class Game {
 
 
 	bool init();
-	void adjust_camera();
+	void adjust_camera(InfoView &infoView);
 
 	Map loadMap(); 
-	ClientWorld loadWorld();
+	ClientWorld loadWorld(InfoView &infoView);
 
 
 	public:

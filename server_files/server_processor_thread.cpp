@@ -21,9 +21,9 @@ ServerProcessorThread::ServerProcessorThread(
 
 void ServerProcessorThread::run() {
 
-    int npc_limit = config["npc"]["max_limit"].asInt();
-    Thread* npc_thread = new ServerNPCThread(receiversQueue, npc_limit);
-    npc_thread->start();  // NPC THREAD
+    // int npc_limit = config["npc"]["max_limit"].asInt();
+    // Thread* npc_thread = new ServerNPCThread(receiversQueue, npc_limit);
+    // npc_thread->start();  // NPC THREAD
 
     ProtocolTranslator protocol_translator(config, collisionInfo);
     ServerWorld serverWorld;

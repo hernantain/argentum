@@ -9,10 +9,18 @@
 #define WINDOW_SIZE 3200
 #define MAX_OFFSET_TOLERANCE 30
 
-Movement::Movement() :
-    bodyPosX(100), 
-    bodyPosY(100) {
+
+Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) {
     // ALGORITMO CON POS RANDOM Y CHEQUEO DE COLISIONES
+    srand(time(NULL));
+    bodyPosX = rand() % (3200 - 0 + 1) + 0;
+    bodyPosY = rand() % (3200 - 0 + 1) + 0;
+
+    while(check_map_collision(collisionInfo)) {
+        srand(time(NULL));
+        bodyPosX = rand() % (3200 - 0 + 1) + 0;
+        bodyPosY = rand() % (3200 - 0 + 1) + 0;
+    }
 }
 
 

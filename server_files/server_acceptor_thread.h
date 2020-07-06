@@ -19,6 +19,7 @@ class AcceptorThread: public Thread {
     uint16_t client_id;
     std::vector<SrvClient*> clients;
 
+    void cleanDeadClients();
     public:
         AcceptorThread(Socket &acceptor_skt, Json::Value &config);
 

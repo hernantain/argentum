@@ -18,7 +18,6 @@ Server::Server(const char* config_file) : running(true) {
 }
 
 void Server::run() {
-    
 
     Thread* acceptor = new AcceptorThread(this->skt, this->config);
     acceptor->start();
@@ -29,11 +28,9 @@ void Server::run() {
         if (c == 'q') break;
     }
 
-    /**
-     * 
-     * LOGICA PARA CERRAR SERVEr
-     */
-
+    skt.close_socket();
+    acceptor->join();
+    delete acceptor;
 }
 
 

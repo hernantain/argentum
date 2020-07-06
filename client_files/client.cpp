@@ -19,10 +19,9 @@ int main(int argc, char* argv[]) {
     //           << std::chrono::duration<double, std::milli>(t_end-t_start).count()
     //           << " ms\n";
 
-    // std::cout << 7 % 5 << std::endl;
-
     Game game;
     game.run();
+
 
 	return 0;
 }

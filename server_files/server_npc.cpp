@@ -10,6 +10,7 @@
 
 NPC::NPC(Json::Value &config, CollisionInfo &collisionInfo) : 
     config(config),
+    movement(collisionInfo),
     collisionInfo(collisionInfo) {
     this->alive = true;
 }

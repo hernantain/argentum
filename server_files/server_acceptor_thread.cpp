@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 #include "server_acceptor_thread.h"
 #include "server_processor_thread.h"
 
@@ -17,12 +19,7 @@ AcceptorThread::AcceptorThread(
 
 
 
-
-#include <iostream>
-
-
 void AcceptorThread::run() {
-
 
     Socket client_skt; 
     Queue receiversQueue;
@@ -44,10 +41,9 @@ void AcceptorThread::run() {
         client_skt = this->acceptor_skt.accept_client();
         // IF NOT VALID ....
 
-        client_skt(this->client_id);
-        client_skt(mapBuffer);
+        client_skt << this->client_id;
+        client_skt << mapBuffer;
 
-        std::cout << "Cliente ACEPTADO" << std::endl;
         SrvClient* client = new SrvClient(client_id, client_skt, receiversQueue);
 
         // PUSH
