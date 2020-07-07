@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
     }
 
     int player_class = get_class(argv[CLASS_ARG]);
-    if (race == WRONG_ARG) {
+    if (player_class == WRONG_ARG) {
         std::cout << "Clase invalida. Debe ser alguna de las siguientes:" << std::endl;
         std::cout << "\t* mago" << std::endl;
         std::cout << "\t* clerigo" << std::endl;

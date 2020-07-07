@@ -26,7 +26,7 @@ void SrvClientReceiverThread::run() {
 
 
 ProtocolMessage SrvClientReceiverThread::receive_msg() {
-    std::cout << "Recibiendo Mensaje" << std::endl;
+    // std::cout << "Recibiendo Mensaje" << std::endl;
     ProtocolMessage msg;
     msgpack::unpacker pac;
     skt >> pac;

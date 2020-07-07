@@ -9,12 +9,13 @@
 #include "../common_files/common_queue.h"
 #include "server_client.h"
 #include "server_world.h"
+#include "server_client_manager.h"
 
 
 class ServerProcessorThread: public Thread {
 
     Queue &receiversQueue;
-    std::vector<SrvClient*> &clients;
+    ClientManager &clientManager;
     CollisionInfo &collisionInfo;
     Json::Value &config;
     std::atomic<bool> running;
@@ -22,7 +23,7 @@ class ServerProcessorThread: public Thread {
     void broadcastMessage(ProtocolMessage &updated_msg);
 
     public:
-        ServerProcessorThread(Queue &receiversQueue, std::vector<SrvClient*> &clients, CollisionInfo &collisionInfo, Json::Value &config);
+        ServerProcessorThread(Queue &receiversQueue, ClientManager &clientManager, CollisionInfo &collisionInfo, Json::Value &config);
 
         virtual void run() override;
 

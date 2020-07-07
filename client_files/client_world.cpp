@@ -16,12 +16,12 @@ ClientWorld::ClientWorld(SDL_Renderer *gRenderer) {
     
 
 void ClientWorld::add_player(int16_t id, Player* player) {
-    std::cout << "Insertando " << id << std::endl;
+    // std::cout << "Insertando " << id << std::endl;
     this->players.insert(std::pair<int16_t, Player*> (id, player));
 }
 
 void ClientWorld::add_npc(int16_t id, NPC* npc) {
-    std::cout << "Insertando " << id << std::endl;
+    // std::cout << "Insertando " << id << std::endl;
     this->npcs.insert(std::pair<int16_t, NPC*> (id, npc));
 }
 
@@ -29,7 +29,7 @@ void ClientWorld::add_npc(int16_t id, NPC* npc) {
 void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
     std::unique_lock<std::mutex> lock(m);
     Player* player;
-    std::cout << "RAZA ES: " << protocolCharacter.id_race << std::endl;
+    
     if (protocolCharacter.id_race == 1) {
         player = new Human(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);

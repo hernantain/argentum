@@ -64,7 +64,9 @@ Para poder instalar JsonCPP debemos ejecutar el siguiente comando:
 
 ## Instrucciones de Uso
 
-Una vez realizada la instalación previa de dependencias que se menciona anteriormente, con el repositorio clonado, podremos ejecutar la aplicación de la siguiente forma:
+Una vez realizada la instalación de dependencias mencionadas anteriormente, con el repositorio clonado, podremos ejecutar la aplicación de la siguiente forma:
+
+Primero que todo, parados en la base del repositorio, hay que compilar los archivos con el comando `make`.
 
 ### Servidor
 

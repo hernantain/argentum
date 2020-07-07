@@ -116,7 +116,6 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     int other_posX = msg.characters[0].otherPosX;
     int other_posY = msg.characters[0].otherPosY;
     int player_id = msg.id_player;
-    std::cout << "OtherposX:::: " << other_posX << " OtherposY:::: " << other_posY << std::endl;
     Character* other = world.get_from_position(player_id, other_posX, other_posY);
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
@@ -157,7 +156,7 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
 
 void ProtocolTranslator::get_world(ProtocolMessage& msg, ServerWorld &world) {
     this->get_all_characters(msg, world);
-    // this->get_all_npcs(msg, world);
+    this->get_all_npcs(msg, world);
 }
 
 
@@ -178,18 +177,15 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
     std::map<int16_t, NPC*>::iterator itr;
     std::vector<ProtocolNpc> tmp;
     
-    int offset = 10; // A CAMBIAR 
     for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
-
         ProtocolNpc protocolNpc(
             itr->first,
             itr->second->get_id(),
             itr->second->get_body_pos_X(),
-            itr->second->get_body_pos_Y() + offset,
-            0 // CAMBIAR ORIENTATION PARA QUE NO ESTE HARDCODEADA 
+            itr->second->get_body_pos_Y(),
+            0 // ToDo: CAMBIAR ORIENTATION PARA QUE NO ESTE HARDCODEADA 
         );
         tmp.push_back(std::move(protocolNpc));
-        offset +=50;
     }
     msg.npcs = tmp;
 }
