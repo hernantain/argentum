@@ -124,4 +124,7 @@ Para esta primera versión se utilizarán las siguientes teclas:
 * Documentación técnica:
 * Manual de usuario:
 
+  https://docs.google.com/document/d/1_Pc4m-L8o1Re2u4rDfyTD-45QZyEbK-9hg-p50h0FEw/edit?usp=sharing
+
+
 
