@@ -1,5 +1,4 @@
 
-
 #include "client_map.h"
 
 #include <iostream>
@@ -22,7 +21,7 @@ void Map::load(MapInfo &mapInfo) {
     std::vector<TileSetInfo> tileset_info = mapInfo.get_tileset_info();
     for (unsigned int i = 0; i < tileset_info.size(); ++i) {
         int tilecount = tileset_info[i].get_tilecount();
-        std::cout << tileset_info[i].get_imagePath() << std::endl;
+
         if (tilecount == 1) {
             this->tileInfo.addTile();
 
@@ -54,10 +53,8 @@ void Map::load(MapInfo &mapInfo) {
     // } 
     // std::cout << std::endl; 
   
-
     std::vector<int> layer1 = mapInfo.get_layer1();
     std::vector<int> layer2 = mapInfo.get_layer2();
-
 
     int x = 0, y = 0;
     for (unsigned int i = 0; i < layer1.size(); ++i) {
@@ -71,10 +68,8 @@ void Map::load(MapInfo &mapInfo) {
             y += 128;
         }
     }
-
-
-
 }
+
 
 
 void Map::renderFirstLayer(SDL_Rect &camera) {
@@ -90,10 +85,8 @@ void Map::renderSecondLayer(SDL_Rect &camera) {
 
 
 Map::Map(Map&& other) {
-    // std::cout << "Constructor por movimiento" << std::endl;
     this->gRenderer = other.gRenderer;
     this->tilesFirstLayer = std::move(other.tilesFirstLayer);
     this->tilesSecondLayer = std::move(other.tilesSecondLayer);
     this->tileInfo = std::move(other.tileInfo);
 }
-

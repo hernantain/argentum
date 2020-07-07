@@ -33,7 +33,7 @@ void AcceptorThread::run() {
 
 
     // // PROCCESSOR THREAD
-    Thread* processorThread = new ServerProcessorThread(receiversQueue, clients, collisionInfo, config);
+    Thread* processorThread = new ServerProcessorThread(receiversQueue, clientManager, collisionInfo, config);
     processorThread->start(); 
 
 
@@ -44,14 +44,10 @@ void AcceptorThread::run() {
         client_skt << this->client_id;
         client_skt << mapBuffer;
 
-        SrvClient* client = new SrvClient(client_id, client_skt, receiversQueue);
-
-        // PUSH
-        this->clients.push_back(client);
-
         // CLEAN --> TP 3
+        clientManager.add_client(client_id, client_skt, receiversQueue);
+
         client_id++;
-        
     }
 }
 

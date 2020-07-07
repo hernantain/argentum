@@ -20,9 +20,7 @@ class Queue {
 
         void push(ProtocolMessage &message);
 
-        
         ProtocolMessage pop();
-
 
         void stop();
 

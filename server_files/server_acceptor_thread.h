@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "server_client.h"
+#include "server_client_manager.h"
 
 
 class AcceptorThread: public Thread {
@@ -17,7 +18,7 @@ class AcceptorThread: public Thread {
     Json::Value &config;
     std::atomic<bool> running;
     uint16_t client_id;
-    std::vector<SrvClient*> clients;
+    ClientManager clientManager;
 
     void cleanDeadClients();
     public:

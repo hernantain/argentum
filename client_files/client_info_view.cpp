@@ -36,11 +36,6 @@ InfoView::InfoView(
     this->manaColor =  {255, 175, 36, 0xFF};
     this->bgdColor = {20, 11, 11, 0xFF};
 
-    // this->currentLife = 100;
-    // this->maxLife = 100;
-    // this->currentMana = 100;
-    // this->maxMana = 100;
-
     this->adjust();
 
     this->gRenderer = gRenderer;
@@ -48,14 +43,14 @@ InfoView::InfoView(
 
 
 void InfoView::set_mana(int currentMana, int maxMana) {
-    std::cout << "SETTING LIFE: " << currentMana << " AND MAX: " << maxMana << std::endl;
+    // std::cout << "SETTING MANA: " << currentMana << " AND MAX: " << maxMana << std::endl;
     this->currentMana = currentMana;
     this->maxMana = maxMana;
 }
 
 
 void InfoView::set_life(int currentLife, int maxLife) {
-    std::cout << "SETTING LIFE: " << currentLife << " AND MAX: " << maxLife << std::endl;
+    // std::cout << "SETTING LIFE: " << currentLife << " AND MAX: " << maxLife << std::endl;
     this->currentLife = currentLife;
     this->maxLife = maxLife;
 }

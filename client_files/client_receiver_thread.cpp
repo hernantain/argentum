@@ -84,15 +84,15 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
     // Player* player = world.players[msg.id_player];
-    std::cout << "Estoy meditando" << std::endl;
+    // std::cout << "Estoy meditando" << std::endl;
     // player->set_meditation();
 }
 
 
 void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
 
-    for (unsigned int i = 0; i < msg.characters.size(); ++i)
-        std::cout << msg.characters[i].id << std::endl;
+    // for (unsigned int i = 0; i < msg.characters.size(); ++i)
+    //     std::cout << msg.characters[i].id << std::endl;
 
     int i = msg.find(msg.id_player);
     if (i != -1)

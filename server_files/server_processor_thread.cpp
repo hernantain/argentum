@@ -8,10 +8,12 @@
 
 ServerProcessorThread::ServerProcessorThread(
     Queue &receiversQueue,
-    std::vector<SrvClient*> &clients,
+    ClientManager &clientManager,
+    // std::vector<SrvClient*> &clients,
     CollisionInfo &collisionInfo,
     Json::Value &config) : receiversQueue(receiversQueue),
-                            clients(clients),
+                            // clients(clients),
+                            clientManager(clientManager),
                             collisionInfo(collisionInfo),
                             config(config),
                             running(true) {}
@@ -27,24 +29,19 @@ void ServerProcessorThread::run() {
 
     ProtocolTranslator protocol_translator(config, collisionInfo);
     ServerWorld serverWorld;
+
+    NPC* npc = new Spider(config, collisionInfo); // HARDCODEADO
+    serverWorld.add(100, npc); 
+
+    std::cout << "NPC CREADO EN: " << std::endl;
+    std::cout << "POS X: " << npc->get_body_pos_X() << std::endl;
+    std::cout << "POS Y: " << npc->get_body_pos_Y() << std::endl;
+    
     while (running) {
         ProtocolMessage received_msg = this->receiversQueue.pop();
         protocol_translator.translate(received_msg, serverWorld);
         if (received_msg.id_message != NOTHING)
-           this->broadcastMessage(received_msg);
+           this->clientManager.broadcastMessage(received_msg);
 
     }
 }
-
-
-
-void ServerProcessorThread::broadcastMessage(ProtocolMessage &updated_msg) {
-    for (unsigned int i = 0; i < clients.size(); ++i) {
-        std::cout << "Player " 
-        << updated_msg.characters[i].id << " POS EN X: " 
-        << updated_msg.characters[i].bodyPosX << " y EN Y: "
-        << updated_msg.characters[i].bodyPosY << std::endl;  
-        this->clients[i]->send_message(updated_msg);
-    }
-}
-
