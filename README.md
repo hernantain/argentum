@@ -117,3 +117,11 @@ Para esta primera versión se utilizarán las siguientes teclas:
 * n-> equipa una armadura Armadura de Placas.
 * m-> equipa una armadura Armadura de Cuero.
 * click-> ataca a otro personaje o npc ubicado en la posición clickeada (en caso de que pueda)
+
+## Links de interés
+
+* Manual del proyecto:
+* Documentación técnica:
+* Manual de usuario:
+
+
