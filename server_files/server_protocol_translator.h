@@ -1,8 +1,8 @@
 #include <msgpack.hpp>
 #include <jsoncpp/json/json.h>
 
-#include "../common_protocol_message.h"
-#include "../common_collision_info.h"
+#include "../common_files/common_protocol_message.h"
+#include "../common_files/common_collision_info.h"
 
 #include "server_world.h"
 #include "server_character.h"

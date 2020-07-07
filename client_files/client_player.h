@@ -5,8 +5,8 @@
 #include "client_player_picture.h"
 #include "client_drawable.h"
 
-#include "../common_protocol_message.h"
-#include "../common_protocol_character.h"
+#include "../common_files/common_protocol_message.h"
+#include "../common_files/common_protocol_character.h"
 
 #include <vector>
 #include <mutex>

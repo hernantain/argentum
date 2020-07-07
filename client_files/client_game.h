@@ -14,14 +14,15 @@
 #include "client_world.h"
 #include "client_info_view.h"
 
-#include "../common_sockets.h"
-#include "../common_queue.h"
+#include "../common_files/common_sockets.h"
+#include "../common_files/common_queue.h"
 
 
 class Game {
 	
 	SDL_Renderer *gRenderer;
 	bool running;
+	int16_t player_race, player_class;
 	LWindow window;
 	Queue queue;
 	Socket skt;
@@ -39,7 +40,7 @@ class Game {
 
 
 	public:
-		explicit Game();
+		Game(int16_t player_race, int16_t player_class);
 
 		void run();
 

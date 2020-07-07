@@ -43,43 +43,43 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"grass.json"
+         "source":"maps/grass.json"
         }, 
         {
          "firstgid":2,
-         "source":"path1.json"
+         "source":"maps/path1.json"
         }, 
         {
          "firstgid":18,
-         "source":"path2.json"
+         "source":"maps/path2.json"
         }, 
         {
          "firstgid":34,
-         "source":"path3.json"
+         "source":"maps/path3.json"
         }, 
         {
          "firstgid":50,
-         "source":"path4.json"
+         "source":"maps/path4.json"
         }, 
         {
          "firstgid":66,
-         "source":"path5.json"
+         "source":"maps/path5.json"
         }, 
         {
          "firstgid":67,
-         "source":"tree2.json"
+         "source":"maps/tree2.json"
         }, 
         {
          "firstgid":71,
-         "source":"tree1.json"
+         "source":"maps/tree1.json"
         }, 
         {
          "firstgid":75,
-         "source":"stonefloor.json"
+         "source":"maps/stonefloor.json"
         }, 
         {
          "firstgid":76,
-         "source":"desert.json"
+         "source":"maps/desert.json"
         }],
  "tilewidth":128,
  "type":"map",

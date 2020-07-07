@@ -7,9 +7,9 @@
 #include "client_player.h"
 #include "client_world.h"
 #include "client_info_view.h"
-#include "../common_sockets.h"
-#include "../common_thread.h"
-#include "../common_protocol_message.h"
+#include "../common_files/common_sockets.h"
+#include "../common_files/common_thread.h"
+#include "../common_files/common_protocol_message.h"
 
 
 class ClientReceiverThread : public Thread {

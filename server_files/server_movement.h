@@ -1,7 +1,7 @@
 #ifndef _SERVER_MOVEMENT
 #define _SERVER_MOVEMENT
 
-#include "../common_collision_info.h"
+#include "../common_files/common_collision_info.h"
 
 // Which was the last movement.
 enum _lastMovement {

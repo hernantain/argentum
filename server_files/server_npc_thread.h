@@ -4,10 +4,10 @@
 #include <atomic>
 #include <unistd.h>
 
-#include "../common_sockets.h"
-#include "../common_thread.h"
-#include "../common_queue.h"
-#include "../common_protocol_message.h"
+#include "../common_files/common_sockets.h"
+#include "../common_files/common_thread.h"
+#include "../common_files/common_queue.h"
+#include "../common_files/common_protocol_message.h"
 
 class ServerNPCThread : public Thread {
     Queue &queue;

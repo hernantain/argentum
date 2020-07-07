@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <msgpack.hpp>
 
-#include "../common_protocol_message.h"
+#include "../common_files/common_protocol_message.h"
 #include "server_npc_thread.h"
 
 #define MILISECONDS_TO_UPDATE 2000

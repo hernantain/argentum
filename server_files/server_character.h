@@ -20,8 +20,8 @@
 #include "server_potion.h"
 #include "server_movement.h"
 
-#include "../common_collision_info.h"
-#include "../common_protocol_character.h"
+#include "../common_files/common_collision_info.h"
+#include "../common_files/common_protocol_character.h"
 
 class NPC;
 

@@ -1,8 +1,8 @@
 #ifndef _SERVER_ACCEPTOR_THREAD
 #define _SERVER_ACCEPTOR_THREAD
 
-#include "../common_thread.h"
-#include "../common_sockets.h"
+#include "../common_files/common_thread.h"
+#include "../common_files/common_sockets.h"
 #include <jsoncpp/json/json.h>
 #include <atomic>
 #include <stdint.h>

@@ -5,12 +5,12 @@
 #include <atomic>
 #include <jsoncpp/json/json.h>
 
-#include "../common_sockets.h"
-#include "../common_sockets.h"
-#include "../common_protocol_message.h"
-#include "../common_queue.h"
-#include "../common_mapinfo.h"
-#include "../common_collision_info.h"
+#include "../common_files/common_sockets.h"
+#include "../common_files/common_sockets.h"
+#include "../common_files/common_protocol_message.h"
+#include "../common_files/common_queue.h"
+#include "../common_files/common_mapinfo.h"
+#include "../common_files/common_collision_info.h"
 
 
 #include "server_npc_thread.h"

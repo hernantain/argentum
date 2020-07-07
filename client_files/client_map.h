@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "../common_mapinfo.h"
+#include "../common_files/common_mapinfo.h"
 
 
 class Map {

@@ -1,7 +1,7 @@
 #include <msgpack.hpp>
 
 #include "client_sender_thread.h"
-#include "../common_protocol_message.h"
+#include "../common_files/common_protocol_message.h"
 
 
 SenderThread::SenderThread(

@@ -30,7 +30,7 @@ CollisionInfo MapInfo::load() {
 
     CollisionInfo collisionInfo;
 
-    std::ifstream map("argentum.json");
+    std::ifstream map("maps/argentum.json");
     Json::Reader reader;
     Json::Value obj, tileJson;
     reader.parse(map, obj); 

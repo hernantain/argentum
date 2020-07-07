@@ -4,9 +4,9 @@
 #include "server_acceptor_thread.h"
 #include "server_processor_thread.h"
 
-#include "../common_mapinfo.h"
-#include "../common_sockets.h"
-#include "../common_queue.h"
+#include "../common_files/common_mapinfo.h"
+#include "../common_files/common_sockets.h"
+#include "../common_files/common_queue.h"
 
 
 

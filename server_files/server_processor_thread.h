@@ -5,8 +5,8 @@
 #include <vector>
 
 #include "server_protocol_translator.h"
-#include "../common_thread.h"
-#include "../common_queue.h"
+#include "../common_files/common_thread.h"
+#include "../common_files/common_queue.h"
 #include "server_client.h"
 #include "server_world.h"
 

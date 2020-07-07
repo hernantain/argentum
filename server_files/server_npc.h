@@ -8,7 +8,7 @@
 #include "server_movement.h"
 #include "server_character.h"
 
-#include "../common_collision_info.h"
+#include "../common_files/common_collision_info.h"
 
 /* Clase que representa a un NPC del juego.  Es no copiable. */
 class NPC {

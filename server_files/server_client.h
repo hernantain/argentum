@@ -6,10 +6,10 @@
 #include "server_receiver_thread.h"
 #include "server_sender_thread.h"
 
-#include "../common_protocol_message.h"
-#include "../common_queue.h"
-#include "../common_sockets.h"
-#include "../common_mapinfo.h"
+#include "../common_files/common_protocol_message.h"
+#include "../common_files/common_queue.h"
+#include "../common_files/common_sockets.h"
+#include "../common_files/common_mapinfo.h"
 
 
 class SrvClient {

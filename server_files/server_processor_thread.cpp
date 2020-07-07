@@ -2,7 +2,7 @@
 
 #include "server_npc_thread.h"
 #include "server_processor_thread.h"
-#include "../common_mapinfo.h"
+#include "../common_files/common_mapinfo.h"
 
 
 

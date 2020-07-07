@@ -13,15 +13,20 @@
 #include "client_npc.h"
 
 
-#include "../common_protocol_message.h"
-#include "../common_queue.h"
-#include "../common_sockets.h"
-#include "../common_mapinfo.h"
+#include "../common_files/common_protocol_message.h"
+#include "../common_files/common_queue.h"
+#include "../common_files/common_sockets.h"
+#include "../common_files/common_mapinfo.h"
 
 #include <msgpack.hpp>
 
 
-Game::Game() :  gRenderer(NULL), running(true) {
+Game::Game(
+	int16_t player_race, 
+	int16_t player_class) :  gRenderer(NULL), 
+							 running(true), 
+							 player_race(player_race),
+							 player_class(player_class) {
 	if( !this->init() ) {
 		printf( "Failed to initialize!\n" );
 		exit(1); // LANZAR EXCEPCION?
@@ -63,7 +68,7 @@ Map Game::loadMap() {
 
 
 ClientWorld Game::loadWorld(InfoView &infoView) {
-	ProtocolCharacter character(this->player_id, 2, 1);
+	ProtocolCharacter character(this->player_id, this->player_race, this->player_class);
 	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
 
 	msgpack::sbuffer buffer;
