@@ -4,15 +4,6 @@
 #include "server_world.h"
 #include "server_protocol_translator.h"
 
-#include "server_zombie.h"
-#include "server_spider.h"
-#include "server_skeleton.h"
-#include "server_goblin.h"
-
-#include "server_axe.h"
-#include "server_gnarled_staff.h"
-
-
 ProtocolTranslator::ProtocolTranslator(
     Json::Value &config, 
     CollisionInfo &collisionInfo) : config(config),
@@ -142,12 +133,6 @@ void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorl
     Race race = factory.make_race(id_race, config);
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
-    
-    Axe axe(config);
-    GnarledStaff staff(config);
-    character->take_item(axe);
-    character->take_item(staff);
-
     msg.id_message = PROTOCOL_CREATE_CHARACTER_CONFIRM;
     this->get_world(msg, world);
 }

@@ -33,8 +33,8 @@ private:
     size_t id;
     Json::Value& config;
     Movement movement;
-    CharacterClass& character_class;
-    Race& race;
+    CharacterClass character_class;
+    Race race;
     LifePoints life;
     ManaPoints mana;
     ExperiencePoints experience;
@@ -69,8 +69,8 @@ private:
 
 public:
     // Contructor, recibe el id, la vida inicial
-    Character(size_t id, Json::Value& config, CharacterClass& character_class,
-    Race& race, CollisionInfo &collisionInfo);
+    Character(size_t id, Json::Value& config, CharacterClass character_class,
+    Race race, CollisionInfo &collisionInfo);
 
     // Devuelve el id
     size_t get_id();
@@ -195,7 +195,7 @@ public:
 
     int16_t get_race_id() const;
 
-    int16_t get_class_id() const;
+    int16_t get_class_id();
 
     void populate_protocol_character(ProtocolCharacter &protocolCharacter);
 };

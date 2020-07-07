@@ -13,11 +13,11 @@
 #define LOW_CONSTANT_EXP 0
 #define HIGH_CONSTANT_EXP 10
 
-Character::Character(size_t id, Json::Value &config, CharacterClass& character_class, Race& race, CollisionInfo &collisionInfo) : 
+Character::Character(size_t id, Json::Value &config, CharacterClass character_class, Race race, CollisionInfo &collisionInfo) : 
     config(config),
     movement(collisionInfo),
     character_class(character_class),
-    race(race), 
+    race(race),
     life(race.get_constitution(), character_class.get_life_multiplier(), race.get_life_multiplier()), 
     mana(race.get_intelligence(), character_class.get_mana_multiplier(), race.get_mana_multiplier()),
     experience(config["experience"]["difficulty_constant"].asUInt(), config["experience"]["level_multiplier"].asFloat()),
@@ -174,27 +174,39 @@ void Character::equip_mana_potion(Potion& item) {
 }
 
 void Character::equip_weapon(Weapon& item) {
-    if (inventory.has(item)) {
-        equipment.equip_weapon(item);
-    } 
+    equipment.equip_weapon(item);
+    // As we dont have the inventory on the UI
+    // we assume we have the item
+    // if (inventory.has(item)) {
+    //     equipment.equip_weapon(item);
+    // } 
 }
 
 void Character::equip_armor(Armor& item) {
-    if (inventory.has(item)) {
-        equipment.equip_armor(item);
-    }
+    equipment.equip_armor(item);
+    // As we dont have the inventory on the UI
+    // we assume we have the item
+    // if (inventory.has(item)) {
+    //     equipment.equip_armor(item);
+    // }
 }
 
 void Character::equip_shield(Shield& item) {
-    if (inventory.has(item)) {
-        equipment.equip_shield(item);
-    }
+    equipment.equip_shield(item);
+    // As we dont have the inventory on the UI
+    // we assume we have the item
+    // if (inventory.has(item)) {
+    //     equipment.equip_shield(item);
+    // }
 }
 
 void Character::equip_helmet(Helmet& item) {
-    if (inventory.has(item)) {
-        equipment.equip_helmet(item);
-    }
+    equipment.equip_helmet(item);
+    // As we dont have the inventory on the UI
+    // we assume we have the item
+    // if (inventory.has(item)) {
+    //     equipment.equip_helmet(item);
+    // }
 }
 
 bool Character::fairplay(Character& other) {
@@ -226,6 +238,7 @@ bool Character::can_attack(Character& other) {
         std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
         return false;
     }
+    // This is commented in order to try the attack between players
     // if(!fairplay(other)) return false;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
@@ -288,17 +301,19 @@ bool Character::evade_attack() {
     double evasion_chances = ((double) rand() / (RAND_MAX));
     double evasion_power = pow(evasion_chances, race.get_agility());
     bool evade = evasion_power < config["defense"]["evasion_constant"].asDouble();
+    std::cout << "AtaqueEvadido::" << evade << std::endl;
     return evade;
 }
 
 int Character::defense(int damage) {
     if (evade_attack()) return NO_DAMAGE;
     int defense = equipment.get_equipment_defense();
+    std::cout << "Defensa:: " << defense << std::endl;
     if (damage <= defense) return NO_DAMAGE;
     int final_damage = damage - defense;
+    std::cout << "Defensa::FinalDamage " << final_damage << std::endl;
     take_off_life(final_damage);
     if (life.current() == NO_LIFE) alive = false;
-    std::cout << "Defensa:: " << defense << std::endl;
     return final_damage;
 }
 
@@ -421,6 +436,6 @@ int16_t Character::get_race_id() const {
 }
 
 
-int16_t Character::get_class_id() const {
+int16_t Character::get_class_id() {
     return character_class.get_id();
 }
