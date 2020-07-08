@@ -1,11 +1,11 @@
 #ifndef _CLIENT_IRON_SHIELD
 #define _CLIENT_IRON_SHIELD
 
-#include "client_weapon.h"
+#include "client_shield.h"
 #include <SDL2/SDL.h>
 
 
-class IronShield: public Weapon {
+class IronShield: public Shield {
 
     void set_sprites();
 

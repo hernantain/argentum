@@ -1,18 +1,18 @@
 
-#include "client_turtle_shield.h"
+#include "client_ash_staff.h"
 
 
-TurtleShield::TurtleShield(SDL_Renderer* gRenderer) : Shield(0) {
+AshStaff::AshStaff(SDL_Renderer* gRenderer) : Weapon(0) {
     this->load_pictures(gRenderer);
-    this->id = 7;
+    this->id = 13;
 }
 
 
-TurtleShield::~TurtleShield() {}
+AshStaff::~AshStaff() {}
 
 
-bool TurtleShield::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->shieldTexture.loadFromFile( "images/escudo_tortuga.png", gRenderer ) ) {
+bool AshStaff::load_pictures(SDL_Renderer* gRenderer) {
+    if( !this->weaponTexture.loadFromFile( "images/vara_fresno_1.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
@@ -22,7 +22,7 @@ bool TurtleShield::load_pictures(SDL_Renderer* gRenderer) {
 }
 
 
-void TurtleShield::set_sprites() {
+void AshStaff::set_sprites() {
     this->load_front_walking_sprite();  
     this->load_back_walking_sprite();
     this->load_left_walking_sprite();
@@ -31,7 +31,7 @@ void TurtleShield::set_sprites() {
 
 
 
-void TurtleShield::load_front_walking_sprite() {
+void AshStaff::load_front_walking_sprite() {
     SDL_Rect first = {0, 0, 24, 45};
     this->walkingFrontPlayer.push_back(first);
 
@@ -52,7 +52,7 @@ void TurtleShield::load_front_walking_sprite() {
 }
 
 
-void TurtleShield::load_back_walking_sprite() {
+void AshStaff::load_back_walking_sprite() {
     SDL_Rect first = {0, 45, 24, 45};
     this->walkingBackPlayer.push_back(first);
 
@@ -73,7 +73,7 @@ void TurtleShield::load_back_walking_sprite() {
 }
 
 
-void TurtleShield::load_left_walking_sprite() {
+void AshStaff::load_left_walking_sprite() {
     SDL_Rect first = {0, 90, 24, 45};
     this->walkingLeftPlayer.push_back(first);
 
@@ -91,7 +91,7 @@ void TurtleShield::load_left_walking_sprite() {
 }
 
 
-void TurtleShield::load_right_walking_sprite() {
+void AshStaff::load_right_walking_sprite() {
     SDL_Rect first = {0, 135, 24, 45};
     this->walkingRightPlayer.push_back(first);
 

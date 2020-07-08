@@ -8,8 +8,7 @@ BlueTallRobe::BlueTallRobe(
     int height) : Clothes(width, height) {
 
     this->load_pictures(gRenderer);
-    this->id = 2;
-
+    this->id = 3;
 }
 
 
@@ -30,8 +29,7 @@ BlueShortRobe::BlueShortRobe(
     int height) : Clothes(width, height) {
 
     this->load_pictures(gRenderer);
-    this->id = 2;
-
+    this->id = 3;
 }
 
 

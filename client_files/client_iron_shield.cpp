@@ -2,9 +2,9 @@
 #include "client_iron_shield.h"
 
 
-IronShield::IronShield(SDL_Renderer* gRenderer) : Weapon(0) {
+IronShield::IronShield(SDL_Renderer* gRenderer) : Shield(0) {
     this->load_pictures(gRenderer);
-    this->id = 9;
+    this->id = 8;
 }
 
 
@@ -12,7 +12,7 @@ IronShield::~IronShield() {}
 
 
 bool IronShield::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/escudo_hierro.png", gRenderer ) ) {
+    if( !this->shieldTexture.loadFromFile( "images/escudo_hierro.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

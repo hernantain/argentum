@@ -17,7 +17,7 @@ class Helmet {
         int id;
         Helmet(int offset);
         LTexture helmetTexture;
-        SDL_Rect helmetOrientation[ 4 ];
+        SDL_Rect helmetOrientation[4];
         virtual bool load_pictures(SDL_Renderer* gRenderer) = 0;
 
     public:

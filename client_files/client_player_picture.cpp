@@ -82,6 +82,7 @@ EquippedPlayer::EquippedPlayer(PlayerPicture* player) {
 	this->player = player;
 	this->helmet = NULL;
 	this->weapon = NULL;
+	this->shield = NULL;
 }
 
 
@@ -93,6 +94,10 @@ void EquippedPlayer::setHelmet(Helmet* helmet) {
 
 void EquippedPlayer::setWeapon(Weapon* weapon) {
 	this->weapon = weapon;
+}
+
+void EquippedPlayer::setShield(Shield* shield) {
+	this->shield = shield;
 }
 
 
@@ -107,5 +112,7 @@ void EquippedPlayer::render(
 		
 	if (weapon != NULL)
 		weapon->render(bodyPosX, bodyPosY, gRenderer, orientation, frame);
-			
+
+	if (shield != NULL)
+		shield->render(bodyPosX, bodyPosY, gRenderer, orientation, frame);			
 }

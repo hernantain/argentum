@@ -1,12 +1,11 @@
-#ifndef _CLIENT_TURTLE_SHIELD
-#define _CLIENT_TURTLE_SHIELD
+#ifndef _CLIENT_ASH_STAFF
+#define _CLIENT_ASH_STAFF
 
-
-#include "client_shield.h"
 #include <SDL2/SDL.h>
+#include "client_weapon.h"
 
 
-class TurtleShield: public Shield {
+class AshStaff: public Weapon {
 
     void set_sprites();
 
@@ -16,12 +15,15 @@ class TurtleShield: public Shield {
     void load_back_walking_sprite();
 
     public:
-        TurtleShield(SDL_Renderer* gRenderer);
+        AshStaff(SDL_Renderer* gRenderer);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
 
-        ~TurtleShield();
+        ~AshStaff();
+
+
 };
+
 
 
 #endif

@@ -9,7 +9,6 @@ PlateTallArmor::PlateTallArmor(
 
     this->load_pictures(gRenderer);
     this->id = 2;
-
 }
 
 
@@ -31,7 +30,6 @@ PlateShortArmor::PlateShortArmor(
 
     this->load_pictures(gRenderer);
     this->id = 2;
-
 }
 
 

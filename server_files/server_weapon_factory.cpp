@@ -16,6 +16,9 @@ Weapon WeaponFactory::make_weapon(const int weapon_id, Json::Value& config) {
         case AXE: return Axe(config);
         case HAMMER: return Hammer(config);
         case GNARLED_STAFF: return GnarledStaff(config);
+        case SIMPLE_BOW: return SimpleBow(config);
+        case COMPOUND_BOW: return CompoundBow(config);
+        case ASH_STAFF: return AshStaff(config);
     }
     return CrimpStaff(config);
 }

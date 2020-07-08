@@ -4,7 +4,7 @@
 
 SimpleBow::SimpleBow(SDL_Renderer* gRenderer) : Weapon(0) {
     this->load_pictures(gRenderer);
-    this->id = 9;
+    this->id = 16;
 }
 
 

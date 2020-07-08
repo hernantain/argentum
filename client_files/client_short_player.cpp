@@ -15,6 +15,7 @@ ShortPlayer::ShortPlayer(
 	this->load_clothes();
 	this->load_helmets();
 	this->load_weapons();
+	this->load_shields();
 	this->playerPicture = new PlayerPicture(gRenderer, head_path);
 	this->playerPicture->set_clothes(this->clothes[0]);
 	this->equippedPlayer = new EquippedPlayer(playerPicture);

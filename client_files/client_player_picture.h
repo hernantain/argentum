@@ -6,6 +6,7 @@
 #include "client_clothes.h"
 #include "client_helmet.h"
 #include "client_weapon.h"
+#include "client_shield.h"
 
 
 class Picture {
@@ -53,13 +54,15 @@ class EquippedPlayer: public Picture {
     PlayerPicture* player;
     Helmet* helmet;
     Weapon* weapon;
+    Shield* shield;
 
     public: 
         EquippedPlayer(PlayerPicture* player);
 
         void setHelmet(Helmet* helmet);
         void setWeapon(Weapon* weapon);
-        
+        void setShield(Shield* shield);
+
         virtual void render(
             int bodyPosX, 
             int bodyPosY,
