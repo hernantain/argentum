@@ -1,18 +1,18 @@
 
-#include "client_sword.h"
+#include "client_turtle_shield.h"
 
 
-Sword::Sword(SDL_Renderer* gRenderer) : Weapon(0) {
+TurtleShield::TurtleShield(SDL_Renderer* gRenderer) : Weapon(0) {
     this->load_pictures(gRenderer);
     this->id = 9;
 }
 
 
-Sword::~Sword() {}
+TurtleShield::~TurtleShield() {}
 
 
-bool Sword::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/espada2.png", gRenderer ) ) {
+bool TurtleShield::load_pictures(SDL_Renderer* gRenderer) {
+    if( !this->weaponTexture.loadFromFile( "images/escudo_tortuga.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
@@ -22,7 +22,7 @@ bool Sword::load_pictures(SDL_Renderer* gRenderer) {
 }
 
 
-void Sword::set_sprites() {
+void TurtleShield::set_sprites() {
     this->load_front_walking_sprite();  
     this->load_back_walking_sprite();
     this->load_left_walking_sprite();
@@ -31,8 +31,7 @@ void Sword::set_sprites() {
 
 
 
-void Sword::load_front_walking_sprite() {
-
+void TurtleShield::load_front_walking_sprite() {
     SDL_Rect first = {0, 0, 24, 45};
     this->walkingFrontPlayer.push_back(first);
 
@@ -53,8 +52,7 @@ void Sword::load_front_walking_sprite() {
 }
 
 
-void Sword::load_back_walking_sprite() {
-
+void TurtleShield::load_back_walking_sprite() {
     SDL_Rect first = {0, 45, 24, 45};
     this->walkingBackPlayer.push_back(first);
 
@@ -75,8 +73,7 @@ void Sword::load_back_walking_sprite() {
 }
 
 
-void Sword::load_left_walking_sprite() {
-
+void TurtleShield::load_left_walking_sprite() {
     SDL_Rect first = {0, 90, 24, 45};
     this->walkingLeftPlayer.push_back(first);
 
@@ -94,7 +91,7 @@ void Sword::load_left_walking_sprite() {
 }
 
 
-void Sword::load_right_walking_sprite() {
+void TurtleShield::load_right_walking_sprite() {
     SDL_Rect first = {0, 135, 24, 45};
     this->walkingRightPlayer.push_back(first);
 

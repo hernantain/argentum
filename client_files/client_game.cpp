@@ -234,7 +234,7 @@ void Game::adjust_camera(InfoView &infoView) {
 
 
 Game::~Game() {
-	SDL_DestroyRenderer( this->gRenderer );
+	SDL_DestroyRenderer(this->gRenderer);
 	this->gRenderer = NULL;
 
 	IMG_Quit(); //Quit SDL subsystems

@@ -1,18 +1,18 @@
 
-#include "client_sword.h"
+#include "client_simple_bow.h"
 
 
-Sword::Sword(SDL_Renderer* gRenderer) : Weapon(0) {
+SimpleBow::SimpleBow(SDL_Renderer* gRenderer) : Weapon(0) {
     this->load_pictures(gRenderer);
     this->id = 9;
 }
 
 
-Sword::~Sword() {}
+SimpleBow::~SimpleBow() {}
 
 
-bool Sword::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/espada2.png", gRenderer ) ) {
+bool SimpleBow::load_pictures(SDL_Renderer* gRenderer) {
+    if( !this->weaponTexture.loadFromFile( "images/arco_simple_1.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
@@ -22,7 +22,7 @@ bool Sword::load_pictures(SDL_Renderer* gRenderer) {
 }
 
 
-void Sword::set_sprites() {
+void SimpleBow::set_sprites() {
     this->load_front_walking_sprite();  
     this->load_back_walking_sprite();
     this->load_left_walking_sprite();
@@ -31,8 +31,7 @@ void Sword::set_sprites() {
 
 
 
-void Sword::load_front_walking_sprite() {
-
+void SimpleBow::load_front_walking_sprite() {
     SDL_Rect first = {0, 0, 24, 45};
     this->walkingFrontPlayer.push_back(first);
 
@@ -53,8 +52,7 @@ void Sword::load_front_walking_sprite() {
 }
 
 
-void Sword::load_back_walking_sprite() {
-
+void SimpleBow::load_back_walking_sprite() {
     SDL_Rect first = {0, 45, 24, 45};
     this->walkingBackPlayer.push_back(first);
 
@@ -75,8 +73,7 @@ void Sword::load_back_walking_sprite() {
 }
 
 
-void Sword::load_left_walking_sprite() {
-
+void SimpleBow::load_left_walking_sprite() {
     SDL_Rect first = {0, 90, 24, 45};
     this->walkingLeftPlayer.push_back(first);
 
@@ -94,7 +91,7 @@ void Sword::load_left_walking_sprite() {
 }
 
 
-void Sword::load_right_walking_sprite() {
+void SimpleBow::load_right_walking_sprite() {
     SDL_Rect first = {0, 135, 24, 45};
     this->walkingRightPlayer.push_back(first);
 

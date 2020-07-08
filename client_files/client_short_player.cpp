@@ -3,6 +3,7 @@
 #include "client_plate_armor.h"
 #include "client_leather_armor.h"
 #include "client_short_player.h"
+#include "client_blue_robe.h"
 
 
 ShortPlayer::ShortPlayer(
@@ -24,11 +25,11 @@ void ShortPlayer::load_clothes() {
 	Clothes* common = new CommonShortClothes(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
 	Clothes* leatherArmor = new LeatherShortArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
 	Clothes* plateArmor = new PlateShortArmor(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
-	// Clothes* blueRobe = new BlueShortRobe(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
+	Clothes* blueRobe = new BlueShortRobe(gRenderer, PLAYER_WIDTH, PLAYER_HEIGHT);
 
 	this->clothes.push_back(common);
 	this->clothes.push_back(leatherArmor);
 	this->clothes.push_back(plateArmor);
-	// this->clothes.push_back(blueRobe);
+	this->clothes.push_back(blueRobe);
 }
 

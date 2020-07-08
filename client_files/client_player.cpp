@@ -6,6 +6,10 @@
 #include "client_hammer.h"
 #include "client_baculo_nudoso.h"
 #include "client_baculo_engarzado.h"
+#include "client_compound_bow.h"
+#include "client_simple_bow.h"
+#include "client_iron_shield.h"
+#include "client_turtle_shield.h"
 #include "client_sword.h"
 #include "client_player.h"
 #include <iostream>
@@ -101,11 +105,19 @@ void Player::load_weapons() {
 	Hammer* hammer = new Hammer(gRenderer);
 	BaculoEngarzado* baculoEngarzado = new BaculoEngarzado(gRenderer);
 	BaculoNudoso* baculoNudoso = new BaculoNudoso(gRenderer);
+	CompoundBow* compoundBow = new CompoundBow(gRenderer);
+	SimpleBow* simpleBow = new SimpleBow(gRenderer);
+	IronShield* ironShield = new IronShield(gRenderer);
+	TurtleShield* turtleShield = new TurtleShield(gRenderer);
 	this->weapons.push_back(sword);
 	this->weapons.push_back(axe);
 	this->weapons.push_back(hammer);
 	this->weapons.push_back(baculoNudoso);
 	this->weapons.push_back(baculoEngarzado);
+	this->weapons.push_back(compoundBow);
+	this->weapons.push_back(simpleBow);
+	this->weapons.push_back(ironShield); // MOVER A SHIELDS
+	this->weapons.push_back(turtleShield);
 }
 
 void Player::set_weapon(int weaponId) {
@@ -178,6 +190,10 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				armorId = this->clothes[2]->get_id();
 				break;
 
+			case SDLK_v:
+				this->playerPicture->set_clothes(this->clothes[3]); // A CAMBIAR
+				break;
+
 			case SDLK_b:
 				this->playerPicture->set_clothes(this->clothes[0]);
 				break;
@@ -199,6 +215,26 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 
 			case SDLK_l:
 				this->equippedPlayer->setHelmet(NULL);
+				break;
+
+			case SDLK_q:
+				this->equippedPlayer->setWeapon(this->weapons[8]); // A CAMBIAR
+				break;
+
+			case SDLK_w:
+				this->equippedPlayer->setWeapon(this->weapons[7]); // A CAMBIAR
+				break;
+
+			case SDLK_r:
+				// event_id = 5;
+				// weaponId = this->weapons[5]->get_id();
+				this->equippedPlayer->setWeapon(this->weapons[6]); // A CAMBIAR
+				break;
+
+			case SDLK_t:
+				// event_id = 5;
+				// weaponId = this->weapons[5]->get_id();
+				this->equippedPlayer->setWeapon(this->weapons[5]); // A CAMBIAR
 				break;
 
 			case SDLK_u:
