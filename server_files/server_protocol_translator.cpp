@@ -22,20 +22,21 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
+        case PROTOCOL_EQUIP_SHIELD: return equip_shield_event(msg, world);
         case PROTOCOL_MOVE_STOP: return stop_moving(msg, world);
         case PROTOCOL_ATTACK: return attack_event(msg, world);
         case PROTOCOL_MEDITATION: return meditation_event(msg, world);
     }
 }
 
-// void ProtocolTranslator::equip_shield_event(ProtocolMessage &msg, ServerWorld &world) {
+void ProtocolTranslator::equip_shield_event(ProtocolMessage &msg, ServerWorld &world) {
 
-//     int shield_id = msg.characters[0].shieldId;
-//     ShieldFactory factory;
-//     Weapon shield = factory.make_shield(shield_id, config);
-//     world.characters[msg.id_player]->equip_shield(shield);
-//     msg.id_message = PROTOCOL_SHIELD_CONFIRM;
-// }
+    int shield_id = msg.characters[0].shieldId;
+    ShieldFactory factory;
+    Shield shield = factory.make_shield(shield_id, config);
+    world.characters[msg.id_player]->equip_shield(shield);
+    msg.id_message = PROTOCOL_SHIELD_CONFIRM;
+}
 
 void ProtocolTranslator::equip_weapon_event(ProtocolMessage &msg, ServerWorld &world) {
     int weapon_id = msg.characters[0].weaponId;
@@ -74,7 +75,6 @@ void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &wor
 
     world.characters[msg.id_player]->move_right();
     this->get_world(msg, world);
-
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 

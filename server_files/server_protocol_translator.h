@@ -14,6 +14,7 @@
 #include "server_helmet_factory.h"
 #include "server_armor_factory.h"
 #include "server_weapon_factory.h"
+#include "server_shield_factory.h"
 
 #ifndef _PROTOCOL_TRANSLATOR
 #define _PROTOCOL_TRANSLATOR

@@ -1,19 +1,19 @@
 
-#include "client_plate_armor.h"
+#include "client_blue_robe.h"
 
 
-PlateTallArmor::PlateTallArmor(
+BlueTallRobe::BlueTallRobe(
     SDL_Renderer* gRenderer, 
     int width, 
     int height) : Clothes(width, height) {
 
     this->load_pictures(gRenderer);
-    this->id = 2;
+    this->id = 3;
 }
 
 
-bool PlateTallArmor::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->bodyTexture.loadFromFile( "images/armadura_placas_he.png", gRenderer ) ) {
+bool BlueTallRobe::load_pictures(SDL_Renderer* gRenderer) {
+    if( !this->bodyTexture.loadFromFile( "images/tunica_azul_he.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
@@ -23,18 +23,18 @@ bool PlateTallArmor::load_pictures(SDL_Renderer* gRenderer) {
 }
 
 
-PlateShortArmor::PlateShortArmor(
+BlueShortRobe::BlueShortRobe(
     SDL_Renderer* gRenderer, 
     int width, 
     int height) : Clothes(width, height) {
 
     this->load_pictures(gRenderer);
-    this->id = 2;
+    this->id = 3;
 }
 
 
-bool PlateShortArmor::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->bodyTexture.loadFromFile( "images/armadura_placas_eg.png", gRenderer ) ) {
+bool BlueShortRobe::load_pictures(SDL_Renderer* gRenderer) {
+    if( !this->bodyTexture.loadFromFile( "images/tunica_azul_eg.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

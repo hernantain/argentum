@@ -16,6 +16,7 @@ ProtocolCharacter::ProtocolCharacter(
         int8_t helmetId,
         int8_t armorId,
         int8_t weaponId,
+        int8_t shieldId,
         int16_t life,
         int16_t max_life,
         int16_t mana,
@@ -35,6 +36,7 @@ ProtocolCharacter::ProtocolCharacter(
                         helmetId(helmetId),
                         armorId(armorId),
                         weaponId(weaponId),
+                        shieldId(shieldId),
                         life(life),
                         max_life(max_life),
                         mana(mana),
@@ -57,7 +59,8 @@ ProtocolCharacter::ProtocolCharacter(
         int16_t otherPosY,
         int8_t helmetId,
         int8_t armorId,
-        int8_t weaponId) : id(id), 
+        int8_t weaponId,
+        int8_t shieldId) : id(id), 
                         id_race(id_race),
                         id_class(id_class),
                         bodyPosX(bodyPosX), 
@@ -67,7 +70,8 @@ ProtocolCharacter::ProtocolCharacter(
                         otherPosY(otherPosY), 
                         helmetId(helmetId),
                         armorId(armorId),
-                        weaponId(weaponId) {}
+                        weaponId(weaponId),
+                        shieldId(shieldId) {}
 
 ProtocolCharacter::ProtocolCharacter() {}
 

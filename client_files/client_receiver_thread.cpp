@@ -45,6 +45,8 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
         this->process_equip_armor(msg);
     if (msg.id_message == 32)
         this->process_equip_weapon(msg);
+    if (msg.id_message == 33)
+        this->process_equip_shield(msg);
     if (msg.id_message == 34)
         this->process_meditation(msg);
     if (msg.id_message == 66)
@@ -74,6 +76,12 @@ void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
     Player* player = world.players[msg.id_player];
     int i = msg.find(msg.id_player);
     player->set_armor(msg.characters[i].armorId);
+}
+
+void ClientReceiverThread::process_equip_shield(ProtocolMessage &msg) {
+    Player* player = world.players[msg.id_player];
+    int i = msg.find(msg.id_player);
+    player->set_shield(msg.characters[i].shieldId);
 }
 
 void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {

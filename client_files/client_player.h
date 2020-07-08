@@ -4,6 +4,7 @@
 #include "client_texture.h"
 #include "client_player_picture.h"
 #include "client_drawable.h"
+#include "client_shield.h"
 
 #include "../common_files/common_protocol_message.h"
 #include "../common_files/common_protocol_character.h"
@@ -24,11 +25,13 @@ class Player: public Drawable {
         std::vector<Clothes*> clothes;
         std::vector<Helmet*> helmets;
         std::vector<Weapon*> weapons;
+        std::vector<Shield*> shields;
         PlayerPicture* playerPicture;
         EquippedPlayer* equippedPlayer;
 
     void load_helmets();
     void load_weapons();
+    void load_shields();
     public:
         Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY, int16_t id, SDL_Renderer* gRenderer);
 
@@ -44,6 +47,7 @@ class Player: public Drawable {
         void set_weapon(int weaponId);
         void set_helmet(int helmetId);
         void set_armor(int armorId);
+        void set_shield(int shieldId);
 
         int getPosX() const;
         int getPosY() const;

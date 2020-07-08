@@ -16,7 +16,7 @@ void SenderThread::run() {
         msgpack::sbuffer buffer;
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
         pk.pack(msg);
-        
+        std::cout << "Mandando: " << (int) msg.characters[0].shieldId << std::endl;
         this->skt << buffer;
     }
 
