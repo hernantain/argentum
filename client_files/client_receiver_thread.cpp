@@ -34,25 +34,19 @@ void ClientReceiverThread::run() {
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
-    if (msg.id_message == 20)
-        this->process_move(msg);
-    if (msg.id_message == 25)
-        // here we might put a sound on attacks 
-        this->process_attack(msg);
-    if (msg.id_message == 30)
-        this->process_equip_helmet(msg);
-    if (msg.id_message == 31)
-        this->process_equip_armor(msg);
-    if (msg.id_message == 32)
-        this->process_equip_weapon(msg);
-    if (msg.id_message == 33)
-        this->process_equip_shield(msg);
-    if (msg.id_message == 34)
-        this->process_meditation(msg);
-    if (msg.id_message == 66)
-        this->process_create_player(msg);
-    if (msg.id_message == 71)
-        this->process_create_npc(msg);
+    if (msg.id_message == 20) this->process_move(msg);
+    if (msg.id_message == 25) this->process_attack(msg);
+    if (msg.id_message == 30) this->process_equip_helmet(msg);
+    if (msg.id_message == 31) this->process_equip_armor(msg);
+    if (msg.id_message == 32) this->process_equip_weapon(msg);
+    if (msg.id_message == 33) this->process_equip_shield(msg);
+    if (msg.id_message == 34) this->process_meditation(msg);
+    if (msg.id_message == 66) this->process_create_player(msg);
+    if (msg.id_message == 68) { 
+        this->process_log_off(msg);
+    }
+    
+    if (msg.id_message == 71) this->process_create_npc(msg);
     
     if (msg.id_player == this->player_id)
         world.players[this->player_id]->set_camera(camera);
@@ -93,23 +87,20 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
 void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
     // Player* player = world.players[msg.id_player];
     // std::cout << "Estoy meditando" << std::endl;
-    // player->set_meditation();
+    // player->set_meditation();    
 }
 
 
 void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
-
-    // for (unsigned int i = 0; i < msg.characters.size(); ++i)
-    //     std::cout << msg.characters[i].id << std::endl;
-
     int i = msg.find(msg.id_player);
-    if (i != -1)
+    if (i != -1) {
+        // std::cout << "HAY QUE CREAR OTRO PLAYER" << std::endl;
         world.add_player(msg.characters[i]);
+    }
 }
 
 
 void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
-
     for (unsigned int i = 0; i < msg.npcs.size(); ++i)
         std::cout << msg.npcs[i].id << std::endl;
 
@@ -128,3 +119,16 @@ void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
     }
 
 }
+
+
+void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
+    if (msg.id_player == this->player_id) {
+        // TEAR DOWN LOGIC
+        std::cout << "CERRANDO RECEIVERS THREAD" << std::endl;
+        this->running = false;
+    } else {
+        world.remove_player(msg.id_player);
+        std::cout << "BORRANDO OTRO JUGADOR" << std::endl;
+    }
+}
+

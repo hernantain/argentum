@@ -37,10 +37,9 @@
 #define NOTHING 55
 
 #define PROTOCOL_CREATE_CHARACTER 65
-#define PROTOCOL_CREATE_CHARACTER_CONFIRM 66
+#define PROTOCOL_LOG_OFF 67
 
 #define PROTOCOL_CREATE_NPC 70
-#define PROTOCOL_CREATE_NPC_CONFIRM 71
 
 // Sending to the client
 #define PROTOCOL_MOVE_CONFIRM 20
@@ -50,9 +49,13 @@
 #define PROTOCOL_WEAPON_CONFIRM 32
 #define PROTOCOL_SHIELD_CONFIRM 33
 #define PROTOCOL_MEDITATE_CONFIRM 34
-#define PROTOCOL_CREATION_CONFIRM 66
+#define PROTOCOL_CREATE_CHARACTER_CONFIRM 66
+#define PROTOCOL_LOG_OFF_CONFIRM 68
+#define PROTOCOL_CREATE_NPC_CONFIRM 71
 
-/* Clase que se encarga de ejecutar los codigos recibidos y matchearlos a una
+
+/* 
+ * Clase que se encarga de ejecutar los codigos recibidos y matchearlos a una
  * función del personaje.
  */
 class ProtocolTranslator {
@@ -75,6 +78,7 @@ private:
     void attack_event(ProtocolMessage& msg, ServerWorld &world);
     void meditation_event(ProtocolMessage& msg, ServerWorld &world);
     void create_character_event(ProtocolMessage& msg, ServerWorld &world);
+    void log_off_event(ProtocolMessage&msg, ServerWorld &world);
     void get_all_characters(ProtocolMessage& msg, ServerWorld &world);
     void get_world(ProtocolMessage& msg, ServerWorld &world);
 

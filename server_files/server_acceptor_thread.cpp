@@ -44,7 +44,6 @@ void AcceptorThread::run() {
         client_skt << this->client_id;
         client_skt << mapBuffer;
 
-        // CLEAN --> TP 3
         clientManager.add_client(client_id, client_skt, receiversQueue);
 
         client_id++;

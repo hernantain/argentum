@@ -24,10 +24,13 @@ struct ClientWorld {
 
     void add_player(ProtocolCharacter &protocolCharacter);
 
+    void remove_player(int16_t id);
+
     void add_npc(ProtocolNpc &protocolNpc);
 
     void render(int16_t id, SDL_Rect &camera, int &it);
 
+    Player* get_player(int16_t id);
 
     ClientWorld(ClientWorld&& other);
     ClientWorld& operator=(ClientWorld&& other);

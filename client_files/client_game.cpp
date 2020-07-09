@@ -23,10 +23,10 @@
 
 Game::Game(
 	int16_t player_race, 
-	int16_t player_class) :  gRenderer(NULL), 
-							 running(true), 
-							 player_race(player_race),
-							 player_class(player_class) {
+	int16_t player_class) : gRenderer(NULL), 
+							running(true), 
+							player_race(player_race),
+							player_class(player_class) {
 	if( !this->init() ) {
 		printf( "Failed to initialize!\n" );
 		exit(1); // LANZAR EXCEPCION?
@@ -86,11 +86,16 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
     
 	ClientWorld clientWorld(gRenderer);
 
+	std::cout << "Recibiendo mundo tamanio: " << rec_msg.characters.size() << std::endl;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
 		if (rec_msg.characters[i].id == this->player_id) {
 			infoView.set_life(rec_msg.characters[i].life, rec_msg.characters[i].max_life);
 			infoView.set_mana(rec_msg.characters[i].mana, rec_msg.characters[i].max_mana);
+			std::cout << "POR ACA PASA UNA VEZ" << std::endl;
 		}
+		std::cout << "PLAYER ID: " << (int) rec_msg.characters[i].id << std::endl;
+		std::cout << "PLAYER RAZA: " << (int) rec_msg.characters[i].id_race << std::endl;
+		std::cout << "PLAYER Clase: " << (int) rec_msg.characters[i].id_class << std::endl;
 		clientWorld.add_player(rec_msg.characters[i]);
 	}
 
@@ -111,26 +116,36 @@ void Game::run() {
 	InfoView infoView(this->gRenderer, inventory);
 	ClientWorld world = this->loadWorld(infoView);
 
+
+	std::cout << "MUNDO CREADO" << std::endl;
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
-	Player* player = world.players[this->player_id];
+	std::cout << "SENDER CREADO" << std::endl;
+	Player* player = world.get_player(this->player_id);
 
 	Thread* receiver = new ClientReceiverThread(skt, world, camera, infoView, player_id);
 	receiver->start();
 
+	std::cout << "Receiver Creado" << std::endl;
 	int it = 0;
 	
 	// auto rate = std::chrono::duration<double, std::milli>(float(1000)/60);
 	// auto t_start = std::chrono::high_resolution_clock::now();
-	
+	std::cout << "LLEGA ACA" << std::endl;
 	SDL_Event e;
 	// Event handler
 	while(this->running) {	
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
-				skt.close_socket();
+				// skt.close_socket();
+				ProtocolMessage msg;
+				msg.id_message = 67;
+				msg.id_player = this->player_id;
+				std::cout << "POR MANDAR ULTIMO MSG EN GAME" << std::endl;
+				queue.push(msg);
+				break;
 
 			} else if (e.type == SDL_WINDOWEVENT) {
 				this->window.handleEvent(e);
@@ -172,6 +187,16 @@ void Game::run() {
 		// // t_start = std::chrono::high_resolution_clock::now();
 		it++;
 	}
+
+	std::cout << "AFUERA DEL WHILE?" << std::endl;
+	sender->join();
+	delete sender;
+
+	receiver->join();
+	delete receiver;
+
+	std::cout << "ACA SEGURO QUE NO" << std::endl;
+	skt.close_socket();
 }
 
 

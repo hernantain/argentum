@@ -39,3 +39,8 @@ void ServerWorld::add(int16_t id, NPC* npc) {
     this->npcs.insert(std::pair<int16_t, NPC*> (id, npc));
 }
 
+
+void ServerWorld::remove_character(int16_t id) {
+    delete this->characters[id];
+    this->characters.erase(id);
+}
