@@ -15,6 +15,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     switch (code) {
         case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, world);
         case PROTOCOL_CREATE_NPC: return create_npc_event(msg, world);
+        case PROTOCOL_UPDATE_NPCS: return update_npcs_event(msg, world);
         case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
@@ -136,8 +137,6 @@ void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorl
     this->get_world(msg, world);
 }
 
-
-
 void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &world) {
     if (world.empty()) {
         msg.id_message = NOTHING;
@@ -147,10 +146,26 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
     int npc_id = msg.npcs[0].npc_type;
     NPCFactory factory;
     NPC* npc = factory.make_npc(npc_id, config, collisionInfo);
+    std::cout << "NPC CREADO: " << std::endl;
     world.add(msg.id_player, npc);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_CREATE_NPC_CONFIRM;
 
+}
+
+void ProtocolTranslator::update_npcs_event(ProtocolMessage& msg, ServerWorld &world) {
+    if (world.empty()) {
+        msg.id_message = NOTHING;
+        return; 
+    }
+    std::map<int16_t, NPC*>::iterator itr;
+    for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
+        itr->second->move_random();
+    }
+    // forEach npc, Npc move, check if alive. if ! count ++ para dsp spawnear count npcs
+    // canAttack
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
 

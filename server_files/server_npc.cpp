@@ -126,20 +126,24 @@ bool NPC::is_near(int posX, int posY) {
     return movement.is_near(posX, posY);
 }
 
-void NPC::move_right(int velocity) {
-    movement.move_right(velocity, collisionInfo);
+void NPC::move_right() {
+    movement.move_right(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
-void NPC::move_left(int velocity) {
-    movement.move_left(velocity, collisionInfo);
+void NPC::move_left() {
+    movement.move_left(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
-void NPC::move_top(int velocity) {
-    movement.move_top(velocity, collisionInfo);
+void NPC::move_top() {
+    movement.move_top(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
-void NPC::move_down(int velocity) {
-    movement.move_down(velocity, collisionInfo);
+void NPC::move_down() {
+    movement.move_down(config["graphics"]["velocity"].asInt(), collisionInfo);
+}
+
+void NPC::move_random() {
+    movement.move_random(config["graphics"]["velocity"].asInt(), collisionInfo);
 }
 
 int NPC::get_body_pos_X() const{

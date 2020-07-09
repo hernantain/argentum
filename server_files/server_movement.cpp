@@ -71,6 +71,17 @@ void Movement::move_down(int velocity, CollisionInfo &collisionInfo) {
     }
 }
 
+void Movement::move_random(int velocity, CollisionInfo &collisionInfo) {
+    srand(time(NULL));
+    int randNum = (rand() % 4) + 1;
+    std::cout << "Im moving random to " << randNum << std::endl;
+    switch (randNum) {
+        case 1: return move_right(velocity, collisionInfo);
+        case 2: return move_left(velocity, collisionInfo);
+        case 3: return move_top(velocity, collisionInfo);
+        case 4: return move_down(velocity, collisionInfo);
+    }
+}
 
 void Movement::stop_moving() {
     last_movement = STAND;

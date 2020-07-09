@@ -48,6 +48,9 @@ public:
     // Setea el movimiento del personaje hacia la izquierda
     void move_down(int velocity, CollisionInfo &collisionInfo);
 
+    // Setea el movimiento del personaje hacia una direccion random
+    void move_random(int velocity, CollisionInfo &collisionInfo);
+
     // Detiene el movimiento.
     void stop_moving();
 

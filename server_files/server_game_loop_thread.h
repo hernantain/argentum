@@ -1,5 +1,5 @@
-#ifndef _SERVER_NPC_THREAD
-#define _SERVER_NPC_THREAD
+#ifndef _SERVER_GAME_LOOP_THREAD
+#define _SERVER_GAME_LOOP_THREAD
 
 #include <atomic>
 #include <unistd.h>
@@ -9,15 +9,13 @@
 #include "../common_files/common_queue.h"
 #include "../common_files/common_protocol_message.h"
 
-class ServerNPCThread : public Thread {
+class GameLoopThread : public Thread {
     Queue &queue;
     std::atomic<bool> running;
     int max_npcs;
 
     public:
-        ServerNPCThread(Queue &queue, int max_npcs);
-
-        ProtocolMessage update_npcs();
+        GameLoopThread(Queue &queue, int max_npcs);
 
         virtual void run() override;
 };

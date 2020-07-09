@@ -41,6 +41,8 @@
 
 #define PROTOCOL_CREATE_NPC 70
 #define PROTOCOL_CREATE_NPC_CONFIRM 71
+#define PROTOCOL_UPDATE_NPCS 72
+#define PROTOCOL_UPDATE_NPCS_CONFIRM 73
 
 // Sending to the client
 #define PROTOCOL_MOVE_CONFIRM 20
@@ -70,6 +72,7 @@ private:
     void equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_armor_event(ProtocolMessage& msg, ServerWorld &world);
     void create_npc_event(ProtocolMessage& msg, ServerWorld &world);
+    void update_npcs_event(ProtocolMessage& msg, ServerWorld &world);
     void create_character(ProtocolMessage& msg, ServerWorld &world);
     void get_all_npcs(ProtocolMessage& msg, ServerWorld &world);
     void attack_event(ProtocolMessage& msg, ServerWorld &world);

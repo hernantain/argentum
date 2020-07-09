@@ -11,7 +11,7 @@
         "character_height": 31
     },
     "npc": {
-        "max_limit": 10,
+        "max_limit": 5,
         "nothing_drop_probability": 0.9,
         "gold_drop_probability": 0.08,
         "potion_drop_probability": 0.01,

@@ -53,6 +53,8 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
         this->process_create_player(msg);
     if (msg.id_message == 71)
         this->process_create_npc(msg);
+    if (msg.id_message == 73)
+        this->process_move_npcs(msg);
     
     if (msg.id_player == this->player_id)
         world.players[this->player_id]->set_camera(camera);
@@ -118,6 +120,10 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
         world.add_npc(msg.npcs[i]);
 }
 
+void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
+    std::cout << "NPCs moving MSG: "<< std::endl;
+    // world.update_npcs(msg);
+}
 
 
 void ClientReceiverThread::process_attack(ProtocolMessage &msg) {

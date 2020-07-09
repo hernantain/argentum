@@ -8,7 +8,6 @@
 #include "client_player.h"
 #include "client_npc.h"
 
-
 struct ClientWorld {
     SDL_Renderer *gRenderer;
     std::mutex m;
@@ -25,6 +24,8 @@ struct ClientWorld {
     void add_player(ProtocolCharacter &protocolCharacter);
 
     void add_npc(ProtocolNpc &protocolNpc);
+
+    void update_npcs(ProtocolMessage &msg);
 
     void render(int16_t id, SDL_Rect &camera, int &it);
 

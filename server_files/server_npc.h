@@ -70,16 +70,19 @@ public:
     bool is_near(int posX, int posY);
 
     // Mueve el NPC hacia la derecha
-    void move_right(int velocity);
+    void move_right();
 
     // Mueve el NPC hacia la izquierda
-    void move_left(int velocity);
+    void move_left();
 
     // Mueve el NPC hacia arriba
-    void move_top(int velocity);
+    void move_top();
 
     // Mueve el NPC hacia abajo
-    void move_down(int velocity);
+    void move_down();
+
+    // Mueve el NPC hacia una direccion random
+    void move_random();
 
     // Getter de la posicion del cuerpo en X
     int get_body_pos_X() const;
