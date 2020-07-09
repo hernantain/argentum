@@ -17,15 +17,11 @@ class NPC: public Drawable {
 
         NPC(int16_t id, int16_t npc_id, SDL_Renderer* gRenderer, int16_t posX, int16_t posY);
 
-        // TODO: add orientation
-        // void set_position(int newBodyPosX, int newBodyPosY, int orientation);
-		void set_position(int newPosX, int newPosY);
-
+		void set_position(int newPosX, int newPosY, int orientation);
 
         void render(SDL_Rect &camera);
 
 
 };
-
 
 #endif

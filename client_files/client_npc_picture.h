@@ -3,6 +3,7 @@
 
 #include "SDL2/SDL.h"
 #include "client_texture.h"
+#include "client_drawable.h"
 
 
 class NpcPicture {

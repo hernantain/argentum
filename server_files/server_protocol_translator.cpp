@@ -154,10 +154,7 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
 }
 
 void ProtocolTranslator::update_npcs_event(ProtocolMessage& msg, ServerWorld &world) {
-    if (world.empty()) {
-        msg.id_message = NOTHING;
-        return; 
-    }
+    if (world.empty()) return;
     std::map<int16_t, NPC*>::iterator itr;
     for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
         itr->second->move_random();
@@ -165,7 +162,7 @@ void ProtocolTranslator::update_npcs_event(ProtocolMessage& msg, ServerWorld &wo
     // forEach npc, Npc move, check if alive. if ! count ++ para dsp spawnear count npcs
     // canAttack
     this->get_world(msg, world);
-    msg.id_message = PROTOCOL_MOVE_CONFIRM;
+    msg.id_message = PROTOCOL_UPDATE_NPCS_CONFIRM;
 }
 
 
@@ -198,7 +195,7 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
             itr->second->get_id(),
             itr->second->get_body_pos_X(),
             itr->second->get_body_pos_Y(),
-            0 // ToDo: CAMBIAR ORIENTATION PARA QUE NO ESTE HARDCODEADA 
+            itr->second->get_body_facing()
         );
         tmp.push_back(std::move(protocolNpc));
     }

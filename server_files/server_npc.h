@@ -47,6 +47,9 @@ public:
     // Devuelve la vida maxima
     int get_max_life();
 
+    // Booleano devuelve verdadero si el NPC se encuentra en una zona segura
+    bool is_safe();
+
     // Booleano devuelve verdadero si esta vivo el NPC
     bool is_alive();
 
@@ -83,6 +86,9 @@ public:
 
     // Mueve el NPC hacia una direccion random
     void move_random();
+
+    // Devuelve la direccion hacia donde se mueve el NPC
+    int get_body_facing();
 
     // Getter de la posicion del cuerpo en X
     int get_body_pos_X() const;

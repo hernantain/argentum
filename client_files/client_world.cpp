@@ -59,9 +59,9 @@ void ClientWorld::update_npcs(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);
     for (unsigned int i = 0; i < msg.npcs.size(); ++i) {
         int16_t npc_id = msg.npcs[i].id;
-        std::cout << "NPC ID: " << msg.npcs[i].id << std::endl;
+        std::cout << "NPC ID UPDATING POS: " << msg.npcs[i].id << std::endl;
         NPC* npc = npcs[npc_id];
-        npc->set_position((int) msg.npcs[i].posX, (int) msg.npcs[i].posY);
+        npc->set_position((int) msg.npcs[i].posX, (int) msg.npcs[i].posY, (int) msg.npcs[i].orientation);
     }
 }
 

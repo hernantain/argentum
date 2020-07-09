@@ -92,7 +92,6 @@ _lastMovement Movement::get_facing_direction() {
     return last_movement;
 }
 
-
 bool Movement::is_facing_right(){
     return last_movement == RIGHT;
 }
@@ -123,6 +122,10 @@ bool Movement::is_near_Y(int posY){
 
 bool Movement::is_near(int posX, int posY) {
     return is_near_X(posX) && is_near_Y(posY);
+}
+
+bool Movement::is_safe() {
+    return false;
 }
 
 void Movement::check_out_of_bounds_X(int velocity){
@@ -165,15 +168,3 @@ bool Movement::check_map_collision(CollisionInfo &collisionInfo) {
 
     return false;
 }
-
-// TODO: this two methods
-// bool Movement::can_move(int velocityX, int velocityY) {
-//     if (velocityX != 0) {
-        
-//     }
-
-// }
-
-// bool Movement::is_colliding(){
-//   return last_movement == DOWN;
-// }

@@ -209,10 +209,13 @@ void Character::equip_helmet(Helmet& item) {
     // }
 }
 
-bool Character::fairplay(Attackable& other) {
-    int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
-    if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) {
-        std::cout << "Fairplay::You are newbie or the other is newbie or big diff lvl" << std::endl;
+bool Character::is_safe() {
+    return movement.is_safe();
+}
+
+bool Character::attack_zone(Attackable& other) {
+    if (is_safe() || other.is_safe()) {
+        std::cout << "SafeZone::Your or your rival are on safe zone" << std::endl;
         return false;
     }
     return true;
@@ -239,7 +242,7 @@ bool Character::can_attack(Attackable& other) {
         return false;
     }
     // This is commented in order to try the attack between players
-    // if(!fairplay(other)) return false;
+    // if(!fairplay(other) || !attack_zone(other)) return false;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
         int posY = other.get_body_pos_Y();

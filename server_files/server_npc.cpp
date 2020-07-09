@@ -85,6 +85,11 @@ int NPC::get_damage() {
     return damage;
 }
 
+bool NPC::is_safe() {
+    return movement.is_safe();
+}
+
+
 bool NPC::can_attack(Attackable& other) {
     if(!alive || !other.is_alive()) {
         std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
@@ -144,6 +149,10 @@ void NPC::move_down() {
 
 void NPC::move_random() {
     movement.move_random(config["graphics"]["velocity"].asInt(), collisionInfo);
+}
+
+int NPC::get_body_facing() { 
+    return (int) movement.get_facing_direction();
 }
 
 int NPC::get_body_pos_X() const{

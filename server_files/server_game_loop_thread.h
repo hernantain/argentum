@@ -10,14 +10,17 @@
 #include "../common_files/common_protocol_message.h"
 
 class GameLoopThread : public Thread {
+private:
     Queue &queue;
     std::atomic<bool> running;
     int max_npcs;
 
-    public:
-        GameLoopThread(Queue &queue, int max_npcs);
+    void create_npcs();
 
-        virtual void run() override;
+public:
+    GameLoopThread(Queue &queue, int max_npcs);
+
+    virtual void run() override;
 };
 
 #endif
