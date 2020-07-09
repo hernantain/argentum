@@ -5,6 +5,7 @@
 #include "../common_files/common_collision_info.h"
 
 #include "server_world.h"
+#include "server_attackable.h"
 #include "server_character.h"
 #include "server_npc.h"
 #include "server_helmet.h"

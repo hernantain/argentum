@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include "server_character.h"
 #include "server_npc.h"
-
+#include "server_attackable.h"
 
 struct ServerWorld {
 
@@ -17,7 +17,7 @@ struct ServerWorld {
 
     Character* get(int16_t message_id);
 
-    Character* get_from_position(int player_id, int posX, int posY);
+    Attackable* get_from_position(int player_id, int posX, int posY);
 
     bool empty();
 

@@ -35,6 +35,10 @@ bool NPC::is_alive() {
     return alive;
 }
 
+bool NPC::is_newbie() {
+    return false;
+}
+
 void NPC::drop() {
     int nothing_percentage = config["npc"]["nothing_drop_probability"].asFloat() * 100;
     int gold_percentage = config["npc"]["gold_drop_probability"].asFloat() * 100;
@@ -81,7 +85,26 @@ int NPC::get_damage() {
     return damage;
 }
 
-bool NPC::can_attack(Character& other) {
+// bool NPC::can_attack(Character& other) {
+//     if(!alive || !other.is_alive()) {
+//         std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
+//         return false;
+//     }
+//     int posX = other.get_body_pos_X();
+//     int posY = other.get_body_pos_Y();
+//     std::cout << "NPC::other posX: " << posX << std::endl;
+//     std::cout << "NPC::other posY: " << posY << std::endl;
+//     return movement.is_near(posX, posY);
+// }
+
+// void NPC::attack(Character& other) {
+//     if(!can_attack(other)) return;
+//     int damage = get_damage();
+//     std::cout << "AtaqueNPC::Dano:: " << damage << std::endl;
+//     other.defense(damage);
+// }
+
+bool NPC::can_attack(Attackable& other) {
     if(!alive || !other.is_alive()) {
         std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
         return false;
@@ -93,7 +116,7 @@ bool NPC::can_attack(Character& other) {
     return movement.is_near(posX, posY);
 }
 
-void NPC::attack(Character& other) {
+void NPC::attack(Attackable& other) {
     if(!can_attack(other)) return;
     int damage = get_damage();
     std::cout << "AtaqueNPC::Dano:: " << damage << std::endl;
@@ -102,10 +125,10 @@ void NPC::attack(Character& other) {
 
 int NPC::defense(int damage) {
     int defense = get_defense();
+    std::cout << "Defensa:: " << defense << std::endl;
     if (damage <= defense) return NO_DAMAGE;
     int final_damage = damage - defense;
     take_off_life(final_damage);
-    std::cout << "Defensa:: " << defense << std::endl;
     return final_damage;
 }
 
@@ -116,6 +139,10 @@ void NPC::take_off_life(int life_points) {
         life = 0;
         alive = false;
     } 
+}
+
+bool NPC::is_near(int posX, int posY) {
+    return movement.is_near(posX, posY);
 }
 
 void NPC::move_right(int velocity) {
@@ -134,10 +161,10 @@ void NPC::move_down(int velocity) {
     movement.move_down(velocity, collisionInfo);
 }
 
-int NPC::get_body_pos_X() {
+int NPC::get_body_pos_X() const{
     return movement.get_horizontal_body_position();
 }
 
-int NPC::get_body_pos_Y() {
+int NPC::get_body_pos_Y() const {
     return movement.get_vertical_body_position();
 }
