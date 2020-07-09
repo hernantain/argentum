@@ -24,8 +24,7 @@ SrvClient::SrvClient(
 void SrvClient::send_message(ProtocolMessage &updated_msg) {
     if (updated_msg.id_message == 68 && updated_msg.id_player == this->client_id)
         this->active = false;
-
-    std::cout << "MANDANDO MENSAJE" << std::endl;
+        
     this->messageQueue.push(updated_msg);
 }
 

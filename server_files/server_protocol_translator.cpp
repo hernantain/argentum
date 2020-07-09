@@ -74,7 +74,8 @@ void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
 
 void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    world.characters[msg.id_player]->move_right();
+    // world.characters[msg.id_player]->move_right();
+    world.move_character_right(msg.id_player);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
@@ -82,7 +83,8 @@ void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &wor
 
 void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    world.characters[msg.id_player]->move_left();
+    // world.characters[msg.id_player]->move_left();
+    world.move_character_left(msg.id_player);
     this->get_world(msg, world);
 
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
@@ -91,7 +93,8 @@ void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &worl
 
 void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    world.characters[msg.id_player]->move_top();
+    world.move_character_top(msg.id_player);
+    // world.characters[msg.id_player]->move_top();
     this->get_world(msg, world);
 
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
@@ -100,7 +103,8 @@ void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world
 
 void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    world.characters[msg.id_player]->move_down();
+    world.move_character_down(msg.id_player);
+    // world.characters[msg.id_player]->move_down();
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }

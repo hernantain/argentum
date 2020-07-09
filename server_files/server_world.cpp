@@ -41,6 +41,105 @@ void ServerWorld::add(int16_t id, NPC* npc) {
 
 
 void ServerWorld::remove_character(int16_t id) {
-    delete this->characters[id];
+    // delete this->characters[id];
     this->characters.erase(id);
+}
+
+
+void ServerWorld::move_character_right(int16_t id) {
+    this->characters[id]->move_right();
+    std::map<int16_t, Character*>::iterator characters_itr;
+    // std::map<int16_t, NPC*>::iterator npc_itr;
+
+    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
+        if (characters_itr->first == id) 
+            continue;
+        
+        if (check_collision(id, characters_itr->first)) {
+            this->characters[id]->move_left();
+            break;
+        }
+    }
+}
+
+
+void ServerWorld::move_character_left(int16_t id) {
+    this->characters[id]->move_left();
+    std::map<int16_t, Character*>::iterator characters_itr;
+    // std::map<int16_t, NPC*>::iterator npc_itr;
+
+    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
+        if (characters_itr->first == id) 
+            continue;
+        
+        if (check_collision(id, characters_itr->first)) {
+            this->characters[id]->move_right();
+            break;
+        }
+    }
+}
+
+
+void ServerWorld::move_character_down(int16_t id) {
+    this->characters[id]->move_down();
+    std::map<int16_t, Character*>::iterator characters_itr;
+    // std::map<int16_t, NPC*>::iterator npc_itr;
+
+    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
+        if (characters_itr->first == id) 
+            continue;
+        
+        if (check_collision(id, characters_itr->first)) {
+            this->characters[id]->move_top();
+            break;
+        }
+    }
+}
+
+
+void ServerWorld::move_character_top(int16_t id) {
+    this->characters[id]->move_top();
+    std::map<int16_t, Character*>::iterator characters_itr;
+    // std::map<int16_t, NPC*>::iterator npc_itr;
+
+    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
+        if (characters_itr->first == id) 
+            continue;
+        
+        if (check_collision(id, characters_itr->first)) {
+            this->characters[id]->move_down();
+            break;
+        }
+    }
+}
+
+
+
+bool ServerWorld::check_collision(int16_t id, int16_t other_id) {
+    Character* me = this->characters[id];
+    Character* other = this->characters[other_id];
+
+    int leftMe = me->get_body_pos_X();
+    int rightMe = me->get_body_pos_X() + 21; // CAMBIAR POR UN GETTER A LA RAZA
+    int topMe = me->get_body_pos_Y();
+    int bottomMe = me->get_body_pos_Y() + 31; // CAMBIAR POR UN GETTER A LA RAZA
+
+    int leftOther = other->get_body_pos_X();
+    int rightOther = other->get_body_pos_X() + 21; // CAMBIAR POR UN GETTER A LA RAZA
+    int topOther = other->get_body_pos_Y();
+    int bottomOther = other->get_body_pos_Y() + 31; // CAMBIAR POR UN GETTER A LA RAZA
+
+    if( bottomMe <= topOther )
+        return false;
+
+    if( topMe >= bottomOther )
+        return false;
+
+    if( rightMe <= leftOther )
+        return false;
+
+    if( leftMe >= rightOther )
+        return false;
+
+    return true;
 }
