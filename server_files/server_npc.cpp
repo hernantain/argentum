@@ -85,25 +85,6 @@ int NPC::get_damage() {
     return damage;
 }
 
-// bool NPC::can_attack(Character& other) {
-//     if(!alive || !other.is_alive()) {
-//         std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
-//         return false;
-//     }
-//     int posX = other.get_body_pos_X();
-//     int posY = other.get_body_pos_Y();
-//     std::cout << "NPC::other posX: " << posX << std::endl;
-//     std::cout << "NPC::other posY: " << posY << std::endl;
-//     return movement.is_near(posX, posY);
-// }
-
-// void NPC::attack(Character& other) {
-//     if(!can_attack(other)) return;
-//     int damage = get_damage();
-//     std::cout << "AtaqueNPC::Dano:: " << damage << std::endl;
-//     other.defense(damage);
-// }
-
 bool NPC::can_attack(Attackable& other) {
     if(!alive || !other.is_alive()) {
         std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
