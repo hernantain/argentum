@@ -40,7 +40,7 @@ void Movement::move_right(int velocity, CollisionInfo &collisionInfo) {
     last_movement = RIGHT;
     check_out_of_bounds_X(velocity);
     if (check_map_collision(collisionInfo)) {
-        bodyPosY -= velocity; 
+        bodyPosX -= velocity; 
     }
 }
 
@@ -49,7 +49,7 @@ void Movement::move_left(int velocity, CollisionInfo &collisionInfo) {
     last_movement = LEFT;
     check_out_of_bounds_X(-velocity);
     if (check_map_collision(collisionInfo)) {
-        bodyPosY += velocity;
+        bodyPosX += velocity;
     }
 }
 
@@ -135,15 +135,22 @@ bool Movement::check_map_collision(CollisionInfo &collisionInfo) {
     if (tile == 0)
         return false;
 
+    std::cout << "BODY POS X: " << bodyPosX << std::endl;
+    std::cout << "BODY POS +21: " << bodyPosX + 21 << std::endl;
+
+
+    std::cout << "ESTAMOS EN UN COLLISION TILE: " << tile << std::endl;
     CollisionTile collisionTile = collisionInfo.tiles[tile];
     
     int collisionX = offsetX * 128 + collisionTile.x;
     int collisionY = offsetY * 128 + collisionTile.y;
+    std::cout << "Collision X: " << collisionX << std::endl;
+    std::cout << "Collision X + W: " << collisionX + collisionTile.w << std::endl;
     if ((bodyPosX + 21 > collisionX) && (bodyPosX + 21 < collisionX + collisionTile.w)) {
         return true;
     }
 
-    if ((bodyPosX > collisionX) && (bodyPosX + 21 < collisionX + collisionTile.w)) {
+    if ((bodyPosX > collisionX) && (bodyPosX < collisionX + collisionTile.w)) {
         return true;
     }
 
