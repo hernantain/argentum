@@ -116,7 +116,7 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     int other_posX = msg.characters[0].otherPosX;
     int other_posY = msg.characters[0].otherPosY;
     int player_id = msg.id_player;
-    Character* other = world.get_from_position(player_id, other_posX, other_posY);
+    Attackable* other = world.get_from_position(player_id, other_posX, other_posY);
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
         msg.id_message = PROTOCOL_ATTACK_CONFIRM;

@@ -19,6 +19,7 @@
 #include "server_shield.h"
 #include "server_potion.h"
 #include "server_movement.h"
+#include "server_attackable.h"
 
 #include "../common_files/common_collision_info.h"
 #include "../common_files/common_protocol_character.h"
@@ -28,7 +29,7 @@ class NPC;
 /* Clase que representa a un personaje del juego.
  * Es no copiable.
  */
-class Character {
+class Character : public Attackable {
 private:
     size_t id;
     Json::Value& config;
@@ -59,12 +60,10 @@ private:
     bool evade_attack();
     int experience_formula(int enemy_level);
     int get_extra_experience(int enemy_life, int enemy_level);
-    void get_experience(Character& other, int damage);
-    void get_experience(NPC& other, int damage);
+    void get_experience(Attackable& other, int damage);
     void update_level();
     void update_newbie();
-    bool can_attack(Character& other);
-    bool can_attack(NPC& other);
+    bool can_attack(Attackable& other);
     void consume_mana();
 
 public:
@@ -109,7 +108,7 @@ public:
     void withdraw_gold();
 
     // Devuelve un booleano que indica si hay fairplay o no.
-    bool fairplay(Character& other);
+    bool fairplay(Attackable& other);
 
     // Le quita vida al personaje
     void take_off_life(int life_points);
@@ -156,14 +155,11 @@ public:
     // Equipa un casco
     void equip_helmet(Helmet& item);
 
-    // Ataca a otro personaje
-    void attack(Character& other);
-
-    // Ataca a un NPC
-    void attack(NPC& other);
+    // Ataca a un NPC o a un personaje
+    void attack(Attackable& other) override;
 
     // Defiende al personaje de un ataque. Devuelve el daño final realizado
-    int defense(int damage);
+    int defense(int damage) override;
 
     // Booleano que devuelve si el personaje esta cerca de la posicion
     bool is_near(int posX, int posY);
