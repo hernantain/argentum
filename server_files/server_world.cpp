@@ -20,7 +20,6 @@ Attackable* ServerWorld::get_from_position(int player_id, int other_posX, int ot
     }
 
     for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr) {
-        if (npc_itr->first == player_id) continue;
         NPC* other_npc = npc_itr->second;
         if (other_npc->is_near(other_posX, other_posY)) return other_npc;
     }
