@@ -13,6 +13,7 @@ class ClientManager {
     std::mutex m;
     std::vector<SrvClient*>clients;
 
+    void cleanDeadClients();
     public:
         ClientManager();
 

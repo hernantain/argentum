@@ -26,6 +26,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_MOVE_STOP: return stop_moving(msg, world);
         case PROTOCOL_ATTACK: return attack_event(msg, world);
         case PROTOCOL_MEDITATION: return meditation_event(msg, world);
+        case PROTOCOL_LOG_OFF: return log_off_event(msg, world);
     }
 }
 
@@ -133,6 +134,15 @@ void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorl
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
     msg.id_message = PROTOCOL_CREATE_CHARACTER_CONFIRM;
+    this->get_world(msg, world);
+}
+
+
+void ProtocolTranslator::log_off_event(ProtocolMessage& msg, ServerWorld &world) {
+    std::cout << "ALGUIEN SE VA. MUNDO ANTES: " << world.characters.size() << std::endl;
+    world.remove_character(msg.id_player);
+    msg.id_message = PROTOCOL_LOG_OFF_CONFIRM;
+    std::cout << "ALGUIEN SE VA. MUNDO DESPUES: " << world.characters.size() << std::endl;
     this->get_world(msg, world);
 }
 

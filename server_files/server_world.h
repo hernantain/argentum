@@ -24,6 +24,8 @@ struct ServerWorld {
     void add(int16_t id, Character* character);
     void add(int16_t id, NPC* npc);
 
+    void remove_character(int16_t id);
+
 };
 
 

@@ -16,8 +16,13 @@ void SenderThread::run() {
         msgpack::sbuffer buffer;
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
         pk.pack(msg);
-        std::cout << "Mandando: " << (int) msg.characters[0].shieldId << std::endl;
+        if (msg.id_message == 67) {
+            running = false;
+            std::cout << "MANDANDO ULTIMO MENSAJE" << std::endl;
+        }
+
         this->skt << buffer;
     }
 
+    std::cout << "CERRANDO SENDERS QUEUE" << std::endl;
 }

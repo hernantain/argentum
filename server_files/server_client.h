@@ -2,6 +2,7 @@
 #define _SERVER_CLIENT
 
 #include <stdint.h>
+#include <atomic>
 
 #include "server_receiver_thread.h"
 #include "server_sender_thread.h"
@@ -17,6 +18,7 @@ class SrvClient {
     uint16_t client_id;
     Socket skt;
     Queue &receiversQueue;
+    std::atomic<bool> active;
     SrvClientReceiverThread* cReceiverThread;
     SrvClientSenderThread* cSenderThread;
     Queue messageQueue;
@@ -26,6 +28,10 @@ class SrvClient {
         SrvClient(uint16_t client_id, Socket skt, Queue &receiversQueue);
 
         void send_message(ProtocolMessage &updated_msg);
+
+        bool is_active();
+
+        ~SrvClient();
 };
 
 

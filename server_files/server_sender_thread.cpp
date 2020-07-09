@@ -20,14 +20,14 @@ void SrvClientSenderThread::run() {
 
     while (running) {
         ProtocolMessage msg = this->messageQueue.pop();
+        if (msg.id_message == 68 && msg.id_player == this->client_id)
+            running = false;
+            
         msgpack::sbuffer message;
         msgpack::packer<msgpack::sbuffer> pk(&message);
         pk.pack(msg);
         skt << message;
     }
+
+    std::cout << "Cerrando SENDER THREAD EN EL SERVER" << std::endl;
 }
-
-
-
-
-
