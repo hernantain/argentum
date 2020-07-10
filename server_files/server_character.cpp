@@ -381,6 +381,8 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.max_life = this->get_max_life();
     protocolCharacter.id_race = this->get_race_id();
     protocolCharacter.id_class = this->get_class_id();
+    protocolCharacter.experience = this->get_current_experience();
+    protocolCharacter.max_experience = this->get_max_experience();
 }
 
 
@@ -396,4 +398,14 @@ int16_t Character::get_race_id() const {
 
 int16_t Character::get_class_id() {
     return character_class.get_id();
+}
+
+
+int Character::get_current_experience() {
+    return experience.current();
+}
+
+
+int Character::get_max_experience() {
+    return experience.max();
 }

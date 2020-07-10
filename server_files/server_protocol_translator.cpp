@@ -170,7 +170,7 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
 
 void ProtocolTranslator::get_world(ProtocolMessage& msg, ServerWorld &world) {
     this->get_all_characters(msg, world);
-    this->get_all_npcs(msg, world);
+    // this->get_all_npcs(msg, world);
 }
 
 
