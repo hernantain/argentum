@@ -178,6 +178,7 @@ void Player::set_shield(int shieldId) {
 
 ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 	//If a key was pressed
+	std::unique_lock<std::mutex> lock(m);
 	int event_id = 1;
 	int x, y;
 	if( e.type == SDL_KEYDOWN ) {

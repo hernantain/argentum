@@ -19,8 +19,15 @@ void SrvClientReceiverThread::run() {
 
     while (running) {
         ProtocolMessage msg = this->receive_msg();
+        if (msg.id_message == 67) {
+            running = false;
+            std::cout << "LLEGO LOG OFF" << std::endl;
+        }
+            
         this->receiversQueue.push(msg);
     }
+
+    std::cout << "CERRANDO RECEIVERS QUEUE" << std::endl; 
 }
 
 

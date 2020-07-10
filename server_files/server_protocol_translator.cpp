@@ -28,6 +28,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_MOVE_STOP: return stop_moving(msg, world);
         case PROTOCOL_ATTACK: return attack_event(msg, world);
         case PROTOCOL_MEDITATION: return meditation_event(msg, world);
+        case PROTOCOL_LOG_OFF: return log_off_event(msg, world);
     }
 }
 
@@ -75,7 +76,8 @@ void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
 
 void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    world.characters[msg.id_player]->move_right();
+    // world.characters[msg.id_player]->move_right();
+    world.move_character_right(msg.id_player);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
@@ -83,7 +85,8 @@ void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &wor
 
 void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    world.characters[msg.id_player]->move_left();
+    // world.characters[msg.id_player]->move_left();
+    world.move_character_left(msg.id_player);
     this->get_world(msg, world);
 
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
@@ -92,7 +95,8 @@ void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &worl
 
 void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    world.characters[msg.id_player]->move_top();
+    world.move_character_top(msg.id_player);
+    // world.characters[msg.id_player]->move_top();
     this->get_world(msg, world);
 
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
@@ -101,7 +105,8 @@ void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world
 
 void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    world.characters[msg.id_player]->move_down();
+    world.move_character_down(msg.id_player);
+    // world.characters[msg.id_player]->move_down();
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
@@ -135,6 +140,14 @@ void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorl
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
     msg.id_message = PROTOCOL_CREATE_CHARACTER_CONFIRM;
+    this->get_world(msg, world);
+}
+
+void ProtocolTranslator::log_off_event(ProtocolMessage& msg, ServerWorld &world) {
+    std::cout << "ALGUIEN SE VA. MUNDO ANTES: " << world.characters.size() << std::endl;
+    world.remove_character(msg.id_player);
+    msg.id_message = PROTOCOL_LOG_OFF_CONFIRM;
+    std::cout << "ALGUIEN SE VA. MUNDO DESPUES: " << world.characters.size() << std::endl;
     this->get_world(msg, world);
 }
 

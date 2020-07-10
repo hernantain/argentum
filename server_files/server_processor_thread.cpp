@@ -9,10 +9,8 @@
 ServerProcessorThread::ServerProcessorThread(
     Queue &receiversQueue,
     ClientManager &clientManager,
-    // std::vector<SrvClient*> &clients,
     CollisionInfo &collisionInfo,
     Json::Value &config) : receiversQueue(receiversQueue),
-                            // clients(clients),
                             clientManager(clientManager),
                             collisionInfo(collisionInfo),
                             config(config),

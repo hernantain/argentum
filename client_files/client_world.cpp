@@ -16,13 +16,19 @@ ClientWorld::ClientWorld(SDL_Renderer *gRenderer) {
     
 
 void ClientWorld::add_player(int16_t id, Player* player) {
-    // std::cout << "Insertando " << id << std::endl;
+    std::cout << "Insertando " << id << std::endl;
     this->players.insert(std::pair<int16_t, Player*> (id, player));
 }
 
 void ClientWorld::add_npc(int16_t id, NPC* npc) {
     // std::cout << "Insertando " << id << std::endl;
     this->npcs.insert(std::pair<int16_t, NPC*> (id, npc));
+}
+
+
+Player* ClientWorld::get_player(int16_t id) {
+    std::unique_lock<std::mutex> lock(m);
+    return this->players[id];
 }
 
 
@@ -65,12 +71,18 @@ void ClientWorld::update_npcs(ProtocolMessage &msg) {
 }
 
 
+void ClientWorld::remove_player(int16_t id) {
+    std::unique_lock<std::mutex> lock(m);
+    delete this->players[id];
+    this->players.erase(id);
+}
+
+
 void ClientWorld::render(int16_t id, SDL_Rect &camera, int &it) {
     std::unique_lock<std::mutex> lock(m);
     std::map<int16_t, Player*>::iterator itr;
     for (itr = players.begin(); itr != players.end(); ++itr)  
         itr->second->render(camera, it);
-
 
     std::map<int16_t, NPC*>::iterator npc_itr;
     for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr)  
