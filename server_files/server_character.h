@@ -122,11 +122,11 @@ public:
     // Le quita mana al personaje
     void take_off_mana(int mana_points);
 
-    // Recupera la mana en mana points
-    void recover_mana(int mana_points);
+    // Recupera la mana en FRazaRecuperacion puntos
+    void recover_mana();
 
-    // Recupera la vida en life points
-    void recover_life(int life_points);
+    // Recupera la vida en FRazaRecuperacion puntos
+    void recover_life();
 
     // Devuelve verdadero si el jugador esta vivo, falso si no.
     bool is_alive();

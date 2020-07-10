@@ -16,6 +16,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, world);
         case PROTOCOL_CREATE_NPC: return create_npc_event(msg, world);
         case PROTOCOL_UPDATE_NPCS: return update_npcs_event(msg, world);
+        case PROTOCOL_UPDATE_CHARACTERS: return update_characters_event(msg, world);
         case PROTOCOL_MOVE_RIGHT: return move_right_event(msg, world);
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
@@ -154,15 +155,17 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
 }
 
 void ProtocolTranslator::update_npcs_event(ProtocolMessage& msg, ServerWorld &world) {
-    if (world.empty()) return;
-    std::map<int16_t, NPC*>::iterator itr;
-    for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
-        itr->second->move_random();
-    }
     // forEach npc, Npc move, check if alive. if ! count ++ para dsp spawnear count npcs
     // canAttack
+    world.move_npcs();
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_UPDATE_NPCS_CONFIRM;
+}
+
+void ProtocolTranslator::update_characters_event(ProtocolMessage& msg, ServerWorld &world) {
+    world.recover_characters();
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_UPDATE_CHARACTERS_CONFIRM;
 }
 
 

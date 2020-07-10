@@ -76,7 +76,7 @@
         "constitution_modifier": 2,
         "life_multiplier": 1,
         "mana_multiplier": 1,
-        "recovery_multiplier": 0.5
+        "recovery_factor": 1
     },
     "elf": {
         "strength_modifier": -1,
@@ -85,7 +85,7 @@
         "constitution_modifier": 1,
         "life_multiplier": 1,
         "mana_multiplier": 1,
-        "recovery_multiplier": 0.5
+        "recovery_factor": 1
     },
     "gnome": {
         "strength_modifier": -2,
@@ -93,7 +93,7 @@
         "intelligence_modifier": 4,
         "life_multiplier": 1,
         "mana_multiplier": 1,
-        "recovery_multiplier": 0.5
+        "recovery_factor": 1
     },
     "dwarf": {
         "strength_modifier": 3,
@@ -101,7 +101,7 @@
         "constitution_modifier": 3,
         "life_multiplier": 1,
         "mana_multiplier": 1,
-        "recovery_multiplier": 0.5
+        "recovery_factor": 1
     },
     "gold": {
         "extra_gold_rate": 0.5,

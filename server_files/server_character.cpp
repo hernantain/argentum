@@ -70,12 +70,16 @@ void Character::restore_life_and_mana() {
     life.add(get_max_life());
 }
 
-void Character::recover_life(int life_points) {
-    life.add(life_points);
+void Character::recover_life() {
+    int recovery_factor = race.get_recovery_factor();
+    std::cout << "RecoveringLife:: " << recovery_factor << std::endl;
+    life.add(recovery_factor);
 }
 
-void Character::recover_mana(int mana_points) {
-    mana.add(mana_points);
+void Character::recover_mana() {
+    int recovery_factor = race.get_recovery_factor();
+    std::cout << "RecoveringMana:: " << recovery_factor << std::endl;
+    mana.add(recovery_factor);
 }
 
 void Character::take_off_life(int life_points) {
@@ -87,7 +91,7 @@ void Character::take_off_mana(int mana_points) {
 }
 
 void Character::meditate() {
-    recover_mana(character_class.get_meditation_multiplier() * race.get_intelligence());
+    mana.add(character_class.get_meditation_multiplier() * race.get_intelligence());
 }
 
 int Character::deposit_gold() {
@@ -384,6 +388,7 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.max_life = this->get_max_life();
     protocolCharacter.id_race = this->get_race_id();
     protocolCharacter.id_class = this->get_class_id();
+    protocolCharacter.alive = this->is_alive();
 }
 
 

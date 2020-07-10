@@ -9,14 +9,10 @@ class Race {
 protected:
     int16_t id;
     // Stats
-    int strength;
-    int agility;
-    int intelligence;
-    int constitution;
+    int strength, agility, intelligence, constitution;
     // Multipliers
-    float life_multiplier;
-    float mana_multiplier;
-    float recovery_multiplier;
+    float life_multiplier, mana_multiplier;
+    int recovery_factor;
 
 public:
     // Contructor
@@ -40,8 +36,8 @@ public:
     // getter mana multiplier
     float get_mana_multiplier();
     
-    // getter recovery multiplier
-    float get_recovery_multiplier();
+    // getter recovery factor
+    int get_recovery_factor();
 
     // getter race id
     int16_t get_id() const;

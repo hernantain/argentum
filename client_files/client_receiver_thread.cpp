@@ -55,6 +55,8 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
         this->process_create_npc(msg);
     if (msg.id_message == 73)
         this->process_move_npcs(msg);
+    if (msg.id_message == 75)
+        this->process_recover_characters(msg);
     
     if (msg.id_player == this->player_id)
         world.players[this->player_id]->set_camera(camera);
@@ -125,6 +127,17 @@ void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
     world.update_npcs(msg);
 }
 
+void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
+    std::cout << "Recovering Character MSG: "<< std::endl;
+    int i = msg.find(this->player_id);
+    bool is_alive = msg.characters[i].alive;
+    std::cout << "is Alive??: " << is_alive << std::endl;
+    if (i != -1 && is_alive) {
+        this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
+        this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
+    }
+}
+
 
 void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
     int i = msg.find(this->player_id);
@@ -132,5 +145,4 @@ void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
         this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
         this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
     }
-
 }

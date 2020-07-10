@@ -19,6 +19,9 @@ struct ServerWorld {
 
     Attackable* get_from_position(int player_id, int posX, int posY);
 
+    void move_npcs();
+    void recover_characters();
+    
     bool empty();
 
     void add(int16_t id, Character* character);
