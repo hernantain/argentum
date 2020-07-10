@@ -71,15 +71,13 @@ void Character::restore_life_and_mana() {
 }
 
 void Character::recover_life() {
-    int recovery_factor = race.get_recovery_factor();
-    std::cout << "RecoveringLife:: " << recovery_factor << std::endl;
-    life.add(recovery_factor);
+    if(!alive) return;
+    life.add(race.get_recovery_factor());
 }
 
 void Character::recover_mana() {
-    int recovery_factor = race.get_recovery_factor();
-    std::cout << "RecoveringMana:: " << recovery_factor << std::endl;
-    mana.add(recovery_factor);
+    if(!alive) return;
+    mana.add(race.get_recovery_factor());
 }
 
 void Character::take_off_life(int life_points) {
