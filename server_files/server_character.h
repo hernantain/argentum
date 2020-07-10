@@ -194,6 +194,11 @@ public:
     // Getter de para donde el character apunta
     int get_body_facing();
 
+    // Getter de la experiencia actual
+    int get_current_experience();
+
+    // Getter de la experinecia max actual
+    int get_max_experience();
 
     int16_t get_race_id() const;
 

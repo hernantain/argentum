@@ -17,15 +17,21 @@ class InfoView {
     SDL_Rect currentManaRect;
     SDL_Rect maxManaRect;
 
+    SDL_Rect currentExpRect;
+    SDL_Rect maxExpRect;
+
     SDL_Color manaColor; 
     SDL_Color lifeColor;
+    SDL_Color expColor;
     SDL_Color bgdColor;
 
     int currentMana, maxMana;
     int currentLife, maxLife;
+    int currentExp, maxExp;
 
     void render_life();
     void render_mana();
+    void render_experience();
 
     public:
         InfoView(SDL_Renderer* gRenderer, SDL_Rect &infoPanel);
@@ -33,6 +39,8 @@ class InfoView {
         void set_mana(int currentMana, int maxMana);
 
         void set_life(int currentLife, int maxLife);
+
+        void set_experience(int currentExp, int maxExperience);
 
         void render();
 

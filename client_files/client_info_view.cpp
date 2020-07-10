@@ -27,14 +27,26 @@ void InfoView::render_mana() {
 }
 
 
+void InfoView::render_experience() {
+    SDL_SetRenderDrawColor(gRenderer, bgdColor.r, bgdColor.g, bgdColor.b, bgdColor.a);
+    SDL_RenderFillRect(gRenderer, &maxExpRect);
+
+    SDL_SetRenderDrawColor(gRenderer, expColor.r, expColor.g, expColor.b, expColor.a);
+    float pct = float(this->currentExp) / this->maxExp;
+    currentExpRect.w = maxExpRect.w * pct;
+    SDL_RenderFillRect(gRenderer, &currentExpRect);
+}
+
+
 
 InfoView::InfoView(
     SDL_Renderer* gRenderer, 
     SDL_Rect &infoPanel) : infoPanel(infoPanel) {
     
-    this->lifeColor =  {36, 255, 240, 0xFF};
-    this->manaColor =  {255, 175, 36, 0xFF};
+    this->manaColor =  {36, 255, 240, 0xFF};
+    this->lifeColor =  {255, 175, 36, 0xFF};
     this->bgdColor = {20, 11, 11, 0xFF};
+    this->expColor = {240, 255, 26, 0xFF};
 
     this->adjust();
 
@@ -55,11 +67,18 @@ void InfoView::set_life(int currentLife, int maxLife) {
     this->maxLife = maxLife;
 }
 
+void InfoView::set_experience(int currentExp, int maxExp) {
+    std::cout << "SETTING EXP: " << currentExp << " AND MAX: " << maxExp << std::endl;
+    this->currentExp = currentExp;
+    this->maxExp = maxExp;
+}
+
 
 
 void InfoView::render() {
     this->render_life();
     this->render_mana();
+    this->render_experience();
 }
 
 
@@ -89,4 +108,17 @@ void InfoView::adjust() {
     maxManaRect.y = (maxLifeRect.y + infoPanel.h) / 2;
     maxManaRect.w = paddedW;
     maxManaRect.h = BAR_HEIGHT;
+
+    // EXP
+    currentExpRect.x = paddedX;
+    currentExpRect.y = (currentManaRect.y + infoPanel.h) / 2;
+    currentExpRect.w = paddedW;
+    currentExpRect.h = BAR_HEIGHT;
+
+    maxExpRect.x = paddedX;
+    maxExpRect.y = (maxManaRect.y + infoPanel.h) / 2;
+    maxExpRect.w = paddedW;
+    maxExpRect.h = BAR_HEIGHT;
+
+    std::cout << "EXPERIENCE BAR Y: " << maxExpRect.y << std::endl;
 }

@@ -91,6 +91,7 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
 		if (rec_msg.characters[i].id == this->player_id) {
 			infoView.set_life(rec_msg.characters[i].life, rec_msg.characters[i].max_life);
 			infoView.set_mana(rec_msg.characters[i].mana, rec_msg.characters[i].max_mana);
+			infoView.set_experience(rec_msg.characters[i].experience, rec_msg.characters[i].max_experience);
 			std::cout << "POR ACA PASA UNA VEZ" << std::endl;
 		}
 		std::cout << "PLAYER ID: " << (int) rec_msg.characters[i].id << std::endl;
@@ -99,8 +100,8 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
 		clientWorld.add_player(rec_msg.characters[i]);
 	}
 
-	for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
-		clientWorld.add_npc(rec_msg.npcs[i]);
+	// for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
+	// 	clientWorld.add_npc(rec_msg.npcs[i]);
 
 	return std::move(clientWorld);
 }
