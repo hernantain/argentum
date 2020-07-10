@@ -61,6 +61,15 @@ void ClientWorld::add_npc(ProtocolNpc &protocolNpc) {
     this->add_npc(protocolNpc.id, npc);
 }
 
+void ClientWorld::update_npcs(ProtocolMessage &msg) {
+    std::unique_lock<std::mutex> lock(m);
+    for (unsigned int i = 0; i < msg.npcs.size(); ++i) {
+        int16_t npc_id = msg.npcs[i].id;
+        NPC* npc = npcs[npc_id];
+        npc->set_position((int) msg.npcs[i].posX, (int) msg.npcs[i].posY, (int) msg.npcs[i].orientation);
+    }
+}
+
 
 void ClientWorld::remove_player(int16_t id) {
     std::unique_lock<std::mutex> lock(m);

@@ -12,6 +12,7 @@ private:
     virtual bool can_attack(Attackable& other) = 0;
 
 public:
+    virtual bool is_safe() = 0;
     virtual bool is_newbie() = 0;
     virtual bool is_alive() = 0;
     virtual int get_max_life() = 0;

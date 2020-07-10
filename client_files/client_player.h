@@ -56,13 +56,4 @@ class Player: public Drawable {
 
 };
 
-
-enum PlayerMoving {
-	STANDING = 0,
-	LEFT = 1,
-	RIGHT = 2,
-	UP = 3,
-	DOWN = 4
-};
-
 #endif

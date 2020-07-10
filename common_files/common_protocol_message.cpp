@@ -19,6 +19,7 @@ ProtocolMessage::ProtocolMessage(
     this->npcs.push_back(std::move(npc));
 }
 
+ProtocolMessage::ProtocolMessage(int16_t id_message) : id_message(id_message) {}
 
 ProtocolMessage::ProtocolMessage() {}
 

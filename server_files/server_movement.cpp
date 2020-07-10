@@ -71,6 +71,17 @@ void Movement::move_down(int velocity, CollisionInfo &collisionInfo) {
     }
 }
 
+void Movement::move_random(int velocity, CollisionInfo &collisionInfo) {
+    srand(time(NULL));
+    int randNum = (rand() % 4) + 1;
+    std::cout << "Im moving random to " << randNum << std::endl;
+    switch (randNum) {
+        case 1: return move_right(velocity, collisionInfo);
+        case 2: return move_left(velocity, collisionInfo);
+        case 3: return move_top(velocity, collisionInfo);
+        case 4: return move_down(velocity, collisionInfo);
+    }
+}
 
 void Movement::stop_moving() {
     last_movement = STAND;
@@ -80,7 +91,6 @@ void Movement::stop_moving() {
 _lastMovement Movement::get_facing_direction() {
     return last_movement;
 }
-
 
 bool Movement::is_facing_right(){
     return last_movement == RIGHT;
@@ -112,6 +122,10 @@ bool Movement::is_near_Y(int posY){
 
 bool Movement::is_near(int posX, int posY) {
     return is_near_X(posX) && is_near_Y(posY);
+}
+
+bool Movement::is_safe() {
+    return false;
 }
 
 void Movement::check_out_of_bounds_X(int velocity){
@@ -161,15 +175,3 @@ bool Movement::check_map_collision(CollisionInfo &collisionInfo) {
 
     return false;
 }
-
-// TODO: this two methods
-// bool Movement::can_move(int velocityX, int velocityY) {
-//     if (velocityX != 0) {
-        
-//     }
-
-// }
-
-// bool Movement::is_colliding(){
-//   return last_movement == DOWN;
-// }

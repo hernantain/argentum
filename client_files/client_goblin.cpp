@@ -17,31 +17,27 @@ void Goblin::set_sprites() {
 }
 
 void Goblin::render(int posX, int posY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
-    // Show Character
-
-    // if (orientation == RIGHT) {
-	// 	SDL_Rect* currentClip = &this->walkingRightPlayer[ frame / 5 ];
-	// 	this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+    // Show Goblin
+    if (orientation == RIGHT) {
+		SDL_Rect* currentClip = &this->rightOrientation[ frame % 5 ];
+		this->npcTexture.render(posX, posY, gRenderer, currentClip);
         
-	// } else if(orientation == LEFT)  {
-	// 	SDL_Rect *currentClip = &this->walkingLeftPlayer[ frame / 5 ];
-	// 	this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+	} else if(orientation == LEFT)  {
+		SDL_Rect *currentClip = &this->leftOrientation[ frame % 5 ];
+		this->npcTexture.render(posX, posY, gRenderer, currentClip);
 	
-    // } else if(orientation == UP)  {
-	// 	SDL_Rect *currentClip = &this->walkingBackPlayer[ frame / 5 ];
-	// 	this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+    } else if(orientation == UP)  {
+		SDL_Rect *currentClip = &this->backOrientation[ frame % 5 ];
+		this->npcTexture.render(posX, posY, gRenderer, currentClip);
 	
-    // } else if(orientation == DOWN)  {
-	// 	SDL_Rect *currentClip = &this->walkingFrontPlayer[ frame / 5 ];
-	// 	this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
+    } else if(orientation == DOWN)  {
+		SDL_Rect *currentClip = &this->frontOrientation[ frame % 5 ];
+		this->npcTexture.render(posX, posY, gRenderer, currentClip);
 
-	// } else {
-	// 	SDL_Rect* currentClip = &this->walkingFrontPlayer[0];
-	// 	this->bodyTexture.render( bodyPosX, bodyPosY, gRenderer, currentClip);
-    // }
-
-    SDL_Rect* currentClip = &this->frontOrientation[0];
-    this->npcTexture.render( posX, posY, gRenderer, currentClip);
+	} else {
+		SDL_Rect* currentClip = &this->frontOrientation[0];
+		this->npcTexture.render( posX, posY, gRenderer, currentClip);
+    }
 }
 
 

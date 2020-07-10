@@ -70,12 +70,14 @@ void Character::restore_life_and_mana() {
     life.add(get_max_life());
 }
 
-void Character::recover_life(int life_points) {
-    life.add(life_points);
+void Character::recover_life() {
+    if(!alive) return;
+    life.add(race.get_recovery_factor());
 }
 
-void Character::recover_mana(int mana_points) {
-    mana.add(mana_points);
+void Character::recover_mana() {
+    if(!alive) return;
+    mana.add(race.get_recovery_factor());
 }
 
 void Character::take_off_life(int life_points) {
@@ -87,7 +89,7 @@ void Character::take_off_mana(int mana_points) {
 }
 
 void Character::meditate() {
-    recover_mana(character_class.get_meditation_multiplier() * race.get_intelligence());
+    mana.add(character_class.get_meditation_multiplier() * race.get_intelligence());
 }
 
 int Character::deposit_gold() {
@@ -143,7 +145,7 @@ int Character::drop_gold() {
     if (gold > max_secure_gold()) {
         const int dropped_gold = gold - max_secure_gold();
         gold -= dropped_gold;
-        std::cout << "We are dropping gold: "<< dropped_gold << std::endl;
+        std::cout << "DroppingGold:: "<< dropped_gold << std::endl;
         return dropped_gold;
     }
     return 0;
@@ -209,10 +211,22 @@ void Character::equip_helmet(Helmet& item) {
     // }
 }
 
+bool Character::is_safe() {
+    return movement.is_safe();
+}
+
 bool Character::fairplay(Attackable& other) {
     int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
     if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) {
         std::cout << "Fairplay::You are newbie or the other is newbie or big diff lvl" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+bool Character::attack_zone(Attackable& other) {
+    if (is_safe() || other.is_safe()) {
+        std::cout << "SafeZone::Your or your rival are on safe zone" << std::endl;
         return false;
     }
     return true;
@@ -239,7 +253,7 @@ bool Character::can_attack(Attackable& other) {
         return false;
     }
     // This is commented in order to try the attack between players
-    // if(!fairplay(other)) return false;
+    // if(!fairplay(other) || !attack_zone(other)) return false;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
         int posY = other.get_body_pos_Y();
@@ -383,6 +397,7 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.id_class = this->get_class_id();
     protocolCharacter.experience = this->get_current_experience();
     protocolCharacter.max_experience = this->get_max_experience();
+    protocolCharacter.alive = this->is_alive();
 }
 
 

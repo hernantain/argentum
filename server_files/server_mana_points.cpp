@@ -1,7 +1,5 @@
 #include "server_mana_points.h"
-#include "server_os_error.h"
 
-#define FULL_MANA_ERROR "Error: Su mana ya se encuentra llena!"
 #define INITIAL_LEVEL 1
 
 ManaPoints::ManaPoints(int intelligence, float class_multiplier, float race_multiplier) {
