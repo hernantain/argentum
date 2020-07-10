@@ -16,7 +16,6 @@ class NPC : public Attackable {
 protected:
     Json::Value& config;
     Movement movement;
-    CollisionInfo &collisionInfo;
     int id;
     bool alive;
     int level, life, max_life, min_damage, max_damage, defense_points;

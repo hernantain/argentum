@@ -109,7 +109,7 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
-    std::cout << "NPCs moving"<< std::endl;
+    // std::cout << "NPCs moving"<< std::endl;
     world.update_npcs(msg);
 }
 

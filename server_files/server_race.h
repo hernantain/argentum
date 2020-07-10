@@ -7,7 +7,7 @@
 /* Clase que representa a una raza del juego. Posee algunos stats. */
 class Race {
 protected:
-    int16_t id;
+    uint8_t id;
     // Stats
     int strength, agility, intelligence, constitution;
     // Multipliers
@@ -40,7 +40,7 @@ public:
     int get_recovery_factor();
 
     // getter race id
-    int16_t get_id() const;
+    uint8_t get_id() const;
 };
 
 

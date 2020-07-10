@@ -10,8 +10,7 @@
 
 NPC::NPC(Json::Value &config, CollisionInfo &collisionInfo) : 
     config(config),
-    movement(collisionInfo),
-    collisionInfo(collisionInfo) {
+    movement(collisionInfo) {
     this->alive = true;
 }
 
@@ -132,23 +131,23 @@ bool NPC::is_near(int posX, int posY) {
 }
 
 void NPC::move_right() {
-    movement.move_right(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_right(config["graphics"]["velocity"].asInt());
 }
 
 void NPC::move_left() {
-    movement.move_left(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_left(config["graphics"]["velocity"].asInt());
 }
 
 void NPC::move_top() {
-    movement.move_top(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_top(config["graphics"]["velocity"].asInt());
 }
 
 void NPC::move_down() {
-    movement.move_down(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_down(config["graphics"]["velocity"].asInt());
 }
 
 void NPC::move_random() {
-    movement.move_random(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_random(config["graphics"]["velocity"].asInt());
 }
 
 int NPC::get_body_facing() { 

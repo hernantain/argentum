@@ -37,6 +37,6 @@ int Race::get_recovery_factor() {
     return recovery_factor;
 }
 
-int16_t Race::get_id() const {
+uint8_t Race::get_id() const {
     return id;
 }

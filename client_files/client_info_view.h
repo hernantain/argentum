@@ -1,13 +1,15 @@
 #ifndef _CLIENT_INFO_VIEW
 #define _CLIENT_INFO_VIEW
 
-
+#include <mutex>
 #include <SDL2/SDL.h>
 
 #define BAR_HEIGHT 10 
 
 class InfoView {
 
+    std::mutex m;
+    
     SDL_Rect &infoPanel;    
     SDL_Renderer* gRenderer;
 

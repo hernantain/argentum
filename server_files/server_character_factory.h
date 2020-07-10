@@ -14,13 +14,11 @@
 /* Clase que funciona como factory para los distintos tipos de personaje de la aplicacion */
 class CharacterFactory {
 public:
-    CharacterFactory() {}
 
     /* Recibiendo un id crea la clase correspondiente */
-    CharacterClass make_class(const int class_id, Json::Value& config);
-    Race make_race(const int race_id, Json::Value& config);
+    static CharacterClass make_class(const int class_id, Json::Value& config);
+    static Race make_race(const int race_id, Json::Value& config);
 
-    ~CharacterFactory() {}
 };
 
 #endif // _CHARACTER_FACTORY_H

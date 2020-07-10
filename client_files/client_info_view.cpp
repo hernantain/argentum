@@ -55,6 +55,7 @@ InfoView::InfoView(
 
 
 void InfoView::set_mana(int currentMana, int maxMana) {
+    std::unique_lock<std::mutex> lock(this->m);
     // std::cout << "SETTING MANA: " << currentMana << " AND MAX: " << maxMana << std::endl;
     this->currentMana = currentMana;
     this->maxMana = maxMana;
@@ -62,13 +63,13 @@ void InfoView::set_mana(int currentMana, int maxMana) {
 
 
 void InfoView::set_life(int currentLife, int maxLife) {
-    // std::cout << "SETTING LIFE: " << currentLife << " AND MAX: " << maxLife << std::endl;
+    std::unique_lock<std::mutex> lock(this->m);
     this->currentLife = currentLife;
     this->maxLife = maxLife;
 }
 
 void InfoView::set_experience(int currentExp, int maxExp) {
-    std::cout << "SETTING EXP: " << currentExp << " AND MAX: " << maxExp << std::endl;
+    std::unique_lock<std::mutex> lock(this->m);
     this->currentExp = currentExp;
     this->maxExp = maxExp;
 }
@@ -76,6 +77,7 @@ void InfoView::set_experience(int currentExp, int maxExp) {
 
 
 void InfoView::render() {
+    std::unique_lock<std::mutex> lock(this->m);
     this->render_life();
     this->render_mana();
     this->render_experience();
@@ -83,7 +85,7 @@ void InfoView::render() {
 
 
 void InfoView::adjust() {
-    
+    std::unique_lock<std::mutex> lock(this->m);
     int paddedX = infoPanel.w / 8;
     int paddedW = infoPanel.w - (2*paddedX);
 
@@ -119,6 +121,4 @@ void InfoView::adjust() {
     maxExpRect.y = (maxManaRect.y + infoPanel.h) / 2;
     maxExpRect.w = paddedW;
     maxExpRect.h = BAR_HEIGHT;
-
-    std::cout << "EXPERIENCE BAR Y: " << maxExpRect.y << std::endl;
 }

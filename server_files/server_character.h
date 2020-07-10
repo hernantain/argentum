@@ -31,7 +31,7 @@ class NPC;
  */
 class Character : public Attackable {
 private:
-    size_t id;
+    uint16_t id;
     Json::Value& config;
     Movement movement;
     CharacterClass character_class;
@@ -41,7 +41,6 @@ private:
     ExperiencePoints experience;
     Inventory inventory;
     Equipment equipment;
-    CollisionInfo &collisionInfo;
 
     int gold;
     int level;
@@ -68,11 +67,11 @@ private:
 
 public:
     // Contructor, recibe el id, la vida inicial
-    Character(size_t id, Json::Value& config, CharacterClass character_class,
-    Race race, CollisionInfo &collisionInfo);
+    Character(uint16_t id, Json::Value& config, CharacterClass character_class,
+Race race, CollisionInfo &collisionInfo);
 
     // Devuelve el id
-    size_t get_id();
+    uint16_t get_id();
 
     // Devuelve la mana actual del personaje
     int get_mana();
@@ -200,9 +199,9 @@ public:
     // Getter de la experinecia max actual
     int get_max_experience();
 
-    int16_t get_race_id() const;
+    uint8_t get_race_id() const;
 
-    int16_t get_class_id();
+    uint8_t get_class_id();
 
     void populate_protocol_character(ProtocolCharacter &protocolCharacter);
 };

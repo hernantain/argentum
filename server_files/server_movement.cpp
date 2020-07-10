@@ -11,75 +11,74 @@
 
 
 Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) {
-    // ALGORITMO CON POS RANDOM Y CHEQUEO DE COLISIONES
     srand(time(NULL));
-    bodyPosX = rand() % (3200 - 0 + 1) + 0;
-    bodyPosY = rand() % (3200 - 0 + 1) + 0;
+    bodyPosX = rand() % (collisionInfo.get_map_width() - 0 + 1) + 0;
+    bodyPosY = rand() % (collisionInfo.get_map_height() - 0 + 1) + 0;
 
-    while(check_map_collision(collisionInfo)) {
+    while(check_map_collision()) {
         srand(time(NULL));
-        bodyPosX = rand() % (3200 - 0 + 1) + 0;
-        bodyPosY = rand() % (3200 - 0 + 1) + 0;
+        bodyPosX = rand() % (collisionInfo.get_map_width() - 0 + 1) + 0;
+        bodyPosY = rand() % (collisionInfo.get_map_height() - 0 + 1) + 0;
     }
 }
 
 
-int Movement::get_horizontal_body_position() const {
+int16_t Movement::get_horizontal_body_position() const {
     return bodyPosX;
 }
 
 
-int Movement::get_vertical_body_position() const {
+int16_t Movement::get_vertical_body_position() const {
     return bodyPosY;
 }
 
 
-void Movement::move_right(int velocity, CollisionInfo &collisionInfo) {
+void Movement::move_right(int velocity) {
 
     bodyPosX += velocity;
     last_movement = RIGHT;
     check_out_of_bounds_X(velocity);
-    if (check_map_collision(collisionInfo)) {
+    if (check_map_collision()) {
         bodyPosX -= velocity; 
     }
 }
 
-void Movement::move_left(int velocity, CollisionInfo &collisionInfo) {
+void Movement::move_left(int velocity) {
     bodyPosX -= velocity;
     last_movement = LEFT;
     check_out_of_bounds_X(-velocity);
-    if (check_map_collision(collisionInfo)) {
+    if (check_map_collision()) {
         bodyPosX += velocity;
     }
 }
 
-void Movement::move_top(int velocity, CollisionInfo &collisionInfo) {
+void Movement::move_top(int velocity) {
     bodyPosY -= velocity;
     last_movement = TOP;
     check_out_of_bounds_Y(-velocity);
-    if (check_map_collision(collisionInfo)) {
+    if (check_map_collision()) {
         bodyPosY += velocity;
     }
 }
 
-void Movement::move_down(int velocity, CollisionInfo &collisionInfo) {
+void Movement::move_down(int velocity) {
     bodyPosY += velocity;
     last_movement = DOWN;
     check_out_of_bounds_Y(velocity);
-    if (check_map_collision(collisionInfo)) {
+    if (check_map_collision()) {
         bodyPosY -= velocity;
     }
 }
 
-void Movement::move_random(int velocity, CollisionInfo &collisionInfo) {
+void Movement::move_random(int velocity) {
     srand(time(NULL));
     int randNum = (rand() % 4) + 1;
-    std::cout << "Im moving random to " << randNum << std::endl;
+    // std::cout << "Im moving random to " << randNum << std::endl;
     switch (randNum) {
-        case 1: return move_right(velocity, collisionInfo);
-        case 2: return move_left(velocity, collisionInfo);
-        case 3: return move_top(velocity, collisionInfo);
-        case 4: return move_down(velocity, collisionInfo);
+        case 1: return move_right(velocity);
+        case 2: return move_left(velocity);
+        case 3: return move_top(velocity);
+        case 4: return move_down(velocity);
     }
 }
 
@@ -125,7 +124,10 @@ bool Movement::is_near(int posX, int posY) {
 }
 
 bool Movement::is_safe() {
-    return false;
+    int offsetX = bodyPosX / collisionInfo.get_tile_width();
+    int offsetY = bodyPosY / collisionInfo.get_tile_height();
+    int tileNumber = (offsetY * 25) + offsetX;
+    return (collisionInfo.layer1[tileNumber] == 75);
 }
 
 void Movement::check_out_of_bounds_X(int velocity){
@@ -140,38 +142,25 @@ void Movement::check_out_of_bounds_Y(int velocity){
     }
 }
 
-bool Movement::check_map_collision(CollisionInfo &collisionInfo) {
-    int offsetX = bodyPosX / 128;
-    int offsetY = bodyPosY / 128;
+
+bool Movement::check_map_collision() {
+    int offsetX = bodyPosX / collisionInfo.get_tile_width();
+    int offsetY = bodyPosY / collisionInfo.get_tile_height();
     int tileNumber = (offsetY * 25) + offsetX; 
-    int tile = collisionInfo.layer[tileNumber];
+    int tile = collisionInfo.layer2[tileNumber];
 
     if (tile == 0)
         return false;
 
-    std::cout << "BODY POS X: " << bodyPosX << std::endl;
-    std::cout << "BODY POS +21: " << bodyPosX + 21 << std::endl;
-
-
-    std::cout << "ESTAMOS EN UN COLLISION TILE: " << tile << std::endl;
     CollisionTile collisionTile = collisionInfo.tiles[tile];
     
-    int collisionX = offsetX * 128 + collisionTile.x;
-    int collisionY = offsetY * 128 + collisionTile.y;
-    std::cout << "Collision X: " << collisionX << std::endl;
-    std::cout << "Collision X + W: " << collisionX + collisionTile.w << std::endl;
-    if ((bodyPosX + 21 > collisionX) && (bodyPosX + 21 < collisionX + collisionTile.w)) {
-        return true;
-    }
+    int collisionX = offsetX * collisionInfo.get_tile_width() + collisionTile.x;
+    int collisionY = offsetY * collisionInfo.get_tile_height() + collisionTile.y;
 
-    if ((bodyPosX > collisionX) && (bodyPosX < collisionX + collisionTile.w)) {
-        return true;
-    }
+    if( bodyPosY + 31 <= collisionY ) return false;
+    if( bodyPosY >= collisionY + collisionTile.h ) return false;
+    if( bodyPosX + 21 <= collisionX ) return false;
+    if( bodyPosX >= collisionX + collisionTile.w ) return false;
 
-    if ((bodyPosY + 31 > collisionY) && (bodyPosY + 31 < collisionY + collisionTile.h)
-        && ((bodyPosX > collisionX) && (bodyPosX + 21 < collisionX + collisionTile.w))) {
-        return true;
-    }
-
-    return false;
+    return true;
 }

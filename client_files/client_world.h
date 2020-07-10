@@ -31,6 +31,8 @@ struct ClientWorld {
 
     void render(int16_t id, SDL_Rect &camera, int &it);
 
+    ProtocolMessage player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera);
+
     Player* get_player(int16_t id);
 
     ClientWorld(ClientWorld&& other);

@@ -77,6 +77,11 @@ void ClientWorld::remove_player(int16_t id) {
     this->players.erase(id);
 }
 
+ProtocolMessage ClientWorld::player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera) {
+    std::unique_lock<std::mutex> lock(m);
+    return std::move(this->players[player_id]->handleEvent(e, camera));
+}
+
 
 void ClientWorld::render(int16_t id, SDL_Rect &camera, int &it) {
     std::unique_lock<std::mutex> lock(m);

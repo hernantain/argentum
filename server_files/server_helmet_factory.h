@@ -9,12 +9,9 @@
 /* Clase que funciona como factory para los distintos tipos de cascos de la aplicacion */
 class HelmetFactory {
 public:
-    HelmetFactory() {}
 
     /* Recibiendo un id crea el casco correspondiente */
-    Helmet make_helmet(const int helmet_id, Json::Value& config);
-
-    ~HelmetFactory() {}
+    static Helmet make_helmet(const int helmet_id, Json::Value& config);
 };
 
 #endif // _HELMET_FACTORY_H

@@ -16,11 +16,11 @@
 #include <iostream>
 
 Player::Player(
-    int bodyPosX, 
-    int bodyPosY, 
-    int headPosX, 
-    int headPosY,
-	int16_t id,
+    int16_t bodyPosX, 
+    int16_t bodyPosY, 
+    int16_t headPosX, 
+    int16_t headPosY,
+	uint16_t id,
 	SDL_Renderer* gRenderer) : Drawable(id, gRenderer),
 								bodyPosX(bodyPosX), 
 								bodyPosY(bodyPosY),
@@ -306,8 +306,6 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 
 	ProtocolCharacter character(
 		this->id,
-		1,
-		1,
 		this->bodyPosX, 
 		this->bodyPosY,
 		this->orientation,
@@ -323,6 +321,6 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 }
 
 
-int16_t Player::getId() const {
+uint16_t Player::getId() const {
 	return this->id;
 }

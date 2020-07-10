@@ -9,9 +9,9 @@ SrvClient::SrvClient(
     uint16_t client_id, 
     Socket skt, 
     Queue &receiversQueue) : client_id(client_id), 
-                        skt(skt),
-                        receiversQueue(receiversQueue),
-                        active(true) {
+                            skt(skt),
+                            receiversQueue(receiversQueue),
+                            active(true) {
 
     cReceiverThread = new SrvClientReceiverThread(client_id, this->skt, receiversQueue);
     cReceiverThread->start();
