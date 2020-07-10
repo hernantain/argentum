@@ -5,13 +5,14 @@
 #include <stdint.h>
 #include "server_character.h"
 #include "server_npc.h"
+#include "server_item.h"
 #include "server_attackable.h"
 
 struct ServerWorld {
 
     std::map<int16_t, Character*> characters;
     std::map<int16_t, NPC*> npcs;
-    // Items
+    std::vector<Item*> items;
 
     ServerWorld();
 
@@ -26,6 +27,7 @@ struct ServerWorld {
 
     void add(int16_t id, Character* character);
     void add(int16_t id, NPC* npc);
+    void add(Item* item);
 
     void move_character_right(int16_t id);
     void move_character_left(int16_t id);

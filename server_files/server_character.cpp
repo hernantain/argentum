@@ -152,7 +152,6 @@ int Character::drop_gold() {
 }
 
 void Character::take_item(Item& item) {
-    // TODO: heres just the logic, we should send some message to the client
     if(!alive) return;
     inventory.add_item(item);
 }

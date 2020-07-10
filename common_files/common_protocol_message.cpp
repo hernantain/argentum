@@ -19,6 +19,14 @@ ProtocolMessage::ProtocolMessage(
     this->npcs.push_back(std::move(npc));
 }
 
+ProtocolMessage::ProtocolMessage(
+    int16_t id_message,
+    uint16_t id_player, 
+    ProtocolItem item) : id_message(id_message),
+                        id_player(id_player) {
+    this->items.push_back(std::move(item));
+}
+
 ProtocolMessage::ProtocolMessage(int16_t id_message) : id_message(id_message) {}
 
 ProtocolMessage::ProtocolMessage() {}
@@ -30,6 +38,7 @@ ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
     this->id_player = std::move(other.id_player);
     this->characters = other.characters;
     this->npcs = other.npcs;
+    this->items = other.items;
 }
 
 ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
@@ -38,6 +47,7 @@ ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
     this->id_player = std::move(other.id_player);
     this->characters = other.characters;
     this->npcs = other.npcs;
+    this->items = other.items;
     return *this;
 }
 
@@ -54,6 +64,14 @@ int ProtocolMessage::find(uint16_t id) {
 int ProtocolMessage::find_npc(uint16_t id) {
     for (unsigned int i = 0; i < npcs.size(); ++i) {
         if (npcs[i].id == id)
+            return i;
+    }
+    return -1;
+}
+
+int ProtocolMessage::find_item(uint16_t id) {
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        if (items[i].id == id)
             return i;
     }
     return -1;
