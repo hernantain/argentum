@@ -19,13 +19,9 @@ public:
     void add_item(Item& item);
 
     // Remueve un item del inventario
-    // TODO: posiblemente envie mensajes al cliente
-    // Con lo cual recibiria un param mas
     void remove_item(Item& item);
 
     // Dropea todos los items del inventario
-    // TODO: posiblemente envie mensajes al cliente
-    // Con lo cual recibiria un param mas
     void drop_items();
 
     // Devuelve el tam del inventario

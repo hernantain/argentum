@@ -145,7 +145,7 @@ int Character::drop_gold() {
     if (gold > max_secure_gold()) {
         const int dropped_gold = gold - max_secure_gold();
         gold -= dropped_gold;
-        std::cout << "We are dropping gold: "<< dropped_gold << std::endl;
+        std::cout << "DroppingGold:: "<< dropped_gold << std::endl;
         return dropped_gold;
     }
     return 0;
