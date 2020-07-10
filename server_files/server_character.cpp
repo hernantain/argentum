@@ -217,6 +217,15 @@ bool Character::is_safe() {
     return movement.is_safe();
 }
 
+bool Character::fairplay(Attackable& other) {
+    int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
+    if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) {
+        std::cout << "Fairplay::You are newbie or the other is newbie or big diff lvl" << std::endl;
+        return false;
+    }
+    return true;
+}
+
 bool Character::attack_zone(Attackable& other) {
     if (is_safe() || other.is_safe()) {
         std::cout << "SafeZone::Your or your rival are on safe zone" << std::endl;
