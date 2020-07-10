@@ -48,6 +48,9 @@ public:
     // Setea el movimiento del personaje hacia la izquierda
     void move_down(int velocity, CollisionInfo &collisionInfo);
 
+    // Setea el movimiento del personaje hacia una direccion random
+    void move_random(int velocity, CollisionInfo &collisionInfo);
+
     // Detiene el movimiento.
     void stop_moving();
 
@@ -62,6 +65,8 @@ public:
     // Booleano que devuelve verdadero si posY esta cerca del personaje bodyPosY
     bool is_near_Y(int posY);
 
+    // Booleano que devuelve verdadero si la zona es segura o falso si no.
+    bool is_safe();
 
     // Devuelve true si el personaje está mirando hacia la derecha, false en caso contrario.
     bool is_facing_right();

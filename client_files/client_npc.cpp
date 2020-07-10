@@ -20,9 +20,14 @@ NPC::NPC(
 	else this->npcPicture = new Spider(gRenderer);
 }
 
+void NPC::set_position(int newPosX, int newPosY, int orientation) {
+	// std::unique_lock<std::mutex> lock(this->m);
+	this->posX = newPosX;
+	this->posY = newPosY;
+	this->orientation = orientation;
+}
 
 void NPC::render(SDL_Rect &camera) {
-	int orientation = 0;
 	int frame = 0;
 	this->npcPicture->render(
 		posX - camera.x,

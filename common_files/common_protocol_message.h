@@ -19,6 +19,8 @@ struct ProtocolMessage {
 
     ProtocolMessage(int16_t id_message, uint16_t id_player, ProtocolNpc npc);
 
+    ProtocolMessage(int16_t id_message);
+
     ProtocolMessage();
 
     int find(uint16_t id);

@@ -30,6 +30,23 @@ bool ServerWorld::empty() {
     return (this->characters.size() == 0);
 }
 
+void ServerWorld::move_npcs() {
+    if (empty()) return;
+    std::map<int16_t, NPC*>::iterator itr;
+    for (itr = npcs.begin(); itr != npcs.end(); ++itr) { 
+        itr->second->move_random();
+    }
+}
+
+void ServerWorld::recover_characters() {
+    if (empty()) return;
+    std::map<int16_t, Character*>::iterator itr;
+    for (itr = characters.begin(); itr != characters.end(); ++itr) { 
+        itr->second->recover_life();
+        itr->second->recover_mana();
+    }
+}
+
 void ServerWorld::add(int16_t id, Character* character) {
     this->characters.insert(std::pair<int16_t, Character*> (id, character));
 }
