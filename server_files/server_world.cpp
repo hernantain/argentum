@@ -30,10 +30,20 @@ bool ServerWorld::empty() {
     return (this->characters.size() == 0);
 }
 
+int ServerWorld::dead_npcs() {
+    if (empty()) return;
+    int deaths = 0;
+    std::map<int16_t, NPC*>::iterator itr;
+    for (itr = npcs.begin(); itr != npcs.end(); ++itr) {
+        if(!itr->second->is_alive()) deaths++;
+    }
+    return deaths;
+}
+
 void ServerWorld::move_npcs() {
     if (empty()) return;
     std::map<int16_t, NPC*>::iterator itr;
-    for (itr = npcs.begin(); itr != npcs.end(); ++itr) { 
+    for (itr = npcs.begin(); itr != npcs.end(); ++itr) {
         itr->second->move_random();
     }
 }
@@ -64,6 +74,9 @@ void ServerWorld::remove_character(int16_t id) {
     this->characters.erase(id);
 }
 
+void ServerWorld::remove_npc(int16_t id) {
+    this->npcs.erase(id);
+}
 
 void ServerWorld::move_character_right(int16_t id) {
     this->characters[id]->move_right();

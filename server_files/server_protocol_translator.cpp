@@ -181,8 +181,8 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
 }
 
 void ProtocolTranslator::update_npcs_event(ProtocolMessage& msg, ServerWorld &world) {
-    // forEach npc, Npc move, check if alive. if ! count ++ para dsp spawnear count npcs
-    // canAttack
+    // forEach npc, Npc move, check deaths in order to spawn that amount
+    int deaths = world.dead_npcs();
     world.move_npcs();
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_UPDATE_NPCS_CONFIRM;

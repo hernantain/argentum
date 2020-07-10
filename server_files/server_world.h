@@ -20,6 +20,7 @@ struct ServerWorld {
 
     Attackable* get_from_position(int player_id, int posX, int posY);
 
+    int dead_npcs();
     void move_npcs();
     void recover_characters();
     
@@ -37,6 +38,7 @@ struct ServerWorld {
     bool check_collision(int16_t id, int16_t other_id);
 
     void remove_character(int16_t id);
+    void remove_npc(int16_t id);
 
 };
 

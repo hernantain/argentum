@@ -126,11 +126,16 @@ void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
     int i = msg.find(this->player_id);
+    // int id_other = msg.find_npc(msg.id_other);
     if (i != -1) {
         this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
         this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
         this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
     }
+    // if (id_other == -1) {
+        // If it didnt found it, its because its dead
+        // world.remove_npc(msg.id_other);
+    // }
 }
 
 
