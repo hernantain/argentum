@@ -24,7 +24,6 @@ void GameLoopThread::run() {
     create_npcs();
     int iteration = 1;
     while (this->running) {
-        std::cout << "GameLoop::Iteration " << iteration << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(MILISECONDS_TO_UPDATE));
         if (iteration % 2 == 0) {
             // Every 4 seconds
