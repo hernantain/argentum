@@ -5,7 +5,7 @@
 #include "server_game_loop_thread.h"
 
 #define MILISECONDS_TO_CREATE 3000
-#define MILISECONDS_TO_UPDATE 2000
+#define MILISECONDS_TO_UPDATE 1000
 #define NPC_STARTING_ID 100
 #define NPC_CREATION_MSG_ID 70
 #define NPC_UPDATE_MSG 72

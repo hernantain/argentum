@@ -123,15 +123,14 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
-    std::cout << "NPCs moving MSG: "<< std::endl;
+    std::cout << "NPCs moving"<< std::endl;
     world.update_npcs(msg);
 }
 
 void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
-    std::cout << "Recovering Character MSG: "<< std::endl;
+    std::cout << "Recovering Character" << std::endl;
     int i = msg.find(this->player_id);
     bool is_alive = msg.characters[i].alive;
-    std::cout << "is Alive??: " << is_alive << std::endl;
     if (i != -1 && is_alive) {
         this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
         this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
