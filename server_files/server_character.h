@@ -169,6 +169,9 @@ Race race, CollisionInfo &collisionInfo);
     // Booleano que devuelve si el personaje esta cerca de la posicion
     bool is_near(int posX, int posY);
 
+    // Booleano que devuelve si el personaje se encuentra cerca para atacar
+    bool is_attackable(int16_t posX, int16_t posY);
+
     // Mueve el personaje hacia la derecha
     void move_right();
 

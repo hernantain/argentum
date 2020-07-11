@@ -25,6 +25,24 @@ Attackable* ServerWorld::get_from_position(uint16_t player_id, int16_t other_pos
     return NULL;
 }
 
+Character* ServerWorld::get_closest_from_position(int16_t npc_posX, int16_t npc_posY) {
+    std::map<uint16_t, Character*>::iterator characters_itr;
+    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
+        Character* other_character = characters_itr->second;
+        if (other_character->is_attackable(npc_posX, npc_posY)) return other_character;
+    }
+    return NULL;
+}
+
+bool ServerWorld::has_character_close(int16_t npc_posX, int16_t npc_posY) {
+    std::map<uint16_t, Character*>::iterator characters_itr;
+    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
+        Character* other_character = characters_itr->second;
+        if (other_character->is_attackable(npc_posX, npc_posY)) return true;
+    }
+    return false;
+}
+
 bool ServerWorld::empty() {
     return (this->characters.size() == 0);
 }
@@ -37,7 +55,17 @@ void ServerWorld::move_npcs() {
     if (empty()) return;
     std::map<uint16_t, NPC*>::iterator itr;
     for (itr = npcs.begin(); itr != npcs.end(); ++itr) {
-        itr->second->move_random();
+        NPC* current = itr->second;
+        int16_t posX = current->get_body_pos_X();
+        int16_t posY = current->get_body_pos_Y();
+        if (!has_character_close(posX, posY)) {
+            std::cout << "No hay characters cerca" << std::endl;
+            current->move_random();
+        } else{
+            std::cout << "Tengo a un character cerca" << std::endl;
+            Character* closest = get_closest_from_position(posX, posY);
+            current->move_to(closest->get_body_pos_X(), closest->get_body_pos_Y());
+        }
     }
 }
 
@@ -68,6 +96,7 @@ void ServerWorld::remove_character(uint16_t id) {
 }
 
 void ServerWorld::remove_npc(uint16_t id) {
+    // delete this->npc[id];
     this->npcs.erase(id);
 }
 
