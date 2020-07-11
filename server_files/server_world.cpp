@@ -25,7 +25,7 @@ Attackable* ServerWorld::get_from_position(uint16_t player_id, int16_t other_pos
     return NULL;
 }
 
-Character* ServerWorld::get_closest_from_position(int16_t npc_posX, int16_t npc_posY) {
+Attackable* ServerWorld::get_closest_from_position(int16_t npc_posX, int16_t npc_posY) {
     std::map<uint16_t, Character*>::iterator characters_itr;
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
         Character* other_character = characters_itr->second;
@@ -63,8 +63,9 @@ void ServerWorld::move_npcs() {
             current->move_random();
         } else{
             std::cout << "Tengo a un character cerca" << std::endl;
-            Character* closest = get_closest_from_position(posX, posY);
+            Attackable* closest = get_closest_from_position(posX, posY);
             current->move_to(closest->get_body_pos_X(), closest->get_body_pos_Y());
+            current->attack(*closest);
         }
     }
 }
