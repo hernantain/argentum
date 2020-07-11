@@ -177,7 +177,7 @@ void Character::equip_weapon(Weapon& item) {
     equipment.equip_weapon(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
-    // if (inventory.has(item)) {
+    // if (inventory.has(item) && alive) {
     //     equipment.equip_weapon(item);
     // } 
 }
@@ -186,7 +186,7 @@ void Character::equip_armor(Armor& item) {
     equipment.equip_armor(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
-    // if (inventory.has(item)) {
+    // if (inventory.has(item) && alive) {
     //     equipment.equip_armor(item);
     // }
 }
@@ -195,7 +195,7 @@ void Character::equip_shield(Shield& item) {
     equipment.equip_shield(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
-    // if (inventory.has(item)) {
+    // if (inventory.has(item) && alive) {
     //     equipment.equip_shield(item);
     // }
 }
@@ -204,7 +204,7 @@ void Character::equip_helmet(Helmet& item) {
     equipment.equip_helmet(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
-    // if (inventory.has(item)) {
+    // if (inventory.has(item) && alive) {
     //     equipment.equip_helmet(item);
     // }
 }
@@ -349,7 +349,7 @@ bool Character::is_near(int posX, int posY) {
 }
 
 bool Character::is_attackable(int16_t posX, int16_t posY) {
-    return movement.is_attackable(posX, posY);
+    return movement.is_attackable(posX, posY) && alive;
 }
 
 void Character::move_right() {

@@ -61,26 +61,30 @@ void ClientReceiverThread::process_move(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
-    if (i != -1)
+    bool is_alive = msg.characters[i].alive;
+    if (i != -1 && is_alive)
         world.player_set_helmet(msg.id_player, msg.characters[i].helmetId);
     
 }
 
 void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
-    if (i != -1)
+    bool is_alive = msg.characters[i].alive;
+    if (i != -1 && is_alive)
         world.player_set_armor(msg.id_player, msg.characters[i].armorId);
 }
 
 void ClientReceiverThread::process_equip_shield(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
-    if (i != -1)
+    bool is_alive = msg.characters[i].alive;
+    if (i != -1 && is_alive)
         world.player_set_shield(msg.id_player, msg.characters[i].shieldId);
 }
 
 void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
-    if (i != -1)
+    bool is_alive = msg.characters[i].alive;
+    if (i != -1 && is_alive)
         world.player_set_weapon(msg.id_player, msg.characters[i].weaponId);
 }
 
@@ -102,9 +106,6 @@ void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
-    // for (unsigned int i = 0; i < msg.npcs.size(); ++i)
-    //     std::cout << msg.npcs[i].id << std::endl;
-
     int i = msg.find_npc(msg.id_player);
     if (i != -1)
         world.add_npc(msg.npcs[i]);
@@ -112,6 +113,8 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
     world.update_npcs(msg);
+    world.update_player_alive_status(msg);
+    update_bars(msg);
 }
 
 void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
@@ -123,27 +126,24 @@ void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
     }
 }
 
-
 void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
-    int i = msg.find(this->player_id);
-    if (i != -1) {
-        this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
-        this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
-        this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
-    }
+    update_bars(msg);
 }
 
 void ClientReceiverThread::process_death(ProtocolMessage &msg) {
-    int i = msg.find(this->player_id);
-    if (i != -1) {
-        this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
-        this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
-        this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
-    }
+    update_bars(msg);
     world.update_dead_npcs(msg);
     world.update_player_alive_status(msg);
 }
 
+void ClientReceiverThread::update_bars(ProtocolMessage &msg) {
+    int i = msg.find(this->player_id);
+    if (i != -1) {
+        this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
+        this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
+        this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
+    }
+}
 
 void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
     if (msg.id_player == this->player_id) {
@@ -155,7 +155,6 @@ void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
         std::cout << "BORRANDO OTRO JUGADOR" << std::endl;
     }
 }
-
 
 void ClientReceiverThread::print_response_info(ProtocolMessage &msg) {
     std::cout << "TAMANIO MUNDO: " << world.players.size() << std::endl;
