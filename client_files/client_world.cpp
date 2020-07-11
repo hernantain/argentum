@@ -33,6 +33,7 @@ Player* ClientWorld::get_player(uint16_t id) {
     return this->players[id];
 }
 
+// ADD PLAYER
 
 void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
     std::unique_lock<std::mutex> lock(m);
@@ -57,12 +58,17 @@ void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
 
 }
 
+// ADD NPCs
+
 
 void ClientWorld::add_npc(ProtocolNpc &protocolNpc) {
     std::unique_lock<std::mutex> lock(m);
     NPC* npc = new NPC(protocolNpc.id, protocolNpc.npc_type, gRenderer, protocolNpc.posX, protocolNpc.posY);
     this->add_npc(protocolNpc.id, npc);
 }
+
+// UPDATE NPCs
+
 
 void ClientWorld::update_npcs(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);
@@ -74,12 +80,17 @@ void ClientWorld::update_npcs(ProtocolMessage &msg) {
 }
 
 
+// MOVE PLAYER
+
+
 void ClientWorld::move_player(uint16_t id, int16_t newPosX, int16_t newPosY, int16_t orientation) {
     std::unique_lock<std::mutex> lock(m);
     Player* player = players[id];
     player->set_position(newPosX, newPosY, orientation);
 }
 
+
+// SETTER OBJECTS
 
 void ClientWorld::player_set_helmet(uint16_t id, uint8_t helmet_id) {
     std::unique_lock<std::mutex> lock(m);
@@ -106,7 +117,7 @@ void ClientWorld::player_set_shield(uint16_t id, uint8_t shield_id) {
 }
 
 
-
+// REMOVE PLAYER
 
 void ClientWorld::remove_player(uint16_t id) {
     std::unique_lock<std::mutex> lock(m);
@@ -114,11 +125,14 @@ void ClientWorld::remove_player(uint16_t id) {
     this->players.erase(id);
 }
 
+// HANDLE EVENT PLAYER
+
 ProtocolMessage ClientWorld::player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera) {
     std::unique_lock<std::mutex> lock(m);
     return std::move(this->players[player_id]->handleEvent(e, camera));
 }
 
+// RENDER
 
 void ClientWorld::render(uint16_t id, SDL_Rect &camera, int &it) {
     std::unique_lock<std::mutex> lock(m);
@@ -131,6 +145,8 @@ void ClientWorld::render(uint16_t id, SDL_Rect &camera, int &it) {
         npc_itr->second->render(camera);
 }
 
+
+// Constructor y asignacion por movimiento.
 
 
 ClientWorld::ClientWorld(ClientWorld&& other) {
