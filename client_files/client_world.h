@@ -25,6 +25,7 @@ struct ClientWorld {
     void add_npc(ProtocolNpc &protocolNpc);
 
     void remove_player(uint16_t id);
+    void remove_npc(int16_t id);
 
     void move_player(uint16_t id, int16_t newPosX, int16_t newPosY, int16_t orientation);
 
@@ -35,6 +36,8 @@ struct ClientWorld {
 
     void update_npcs(ProtocolMessage &msg);
     void update_player_alive_status(ProtocolMessage &msg);
+    void update_dead_npcs(ProtocolMessage &msg);
+
 
     void render(uint16_t id, SDL_Rect &camera, int &it);
 

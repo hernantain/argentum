@@ -79,6 +79,21 @@ void ClientWorld::update_npcs(ProtocolMessage &msg) {
     }
 }
 
+void ClientWorld::update_dead_npcs(ProtocolMessage &msg) {
+    std::unique_lock<std::mutex> lock(m);
+    std::map<int16_t, NPC*>::iterator npc_itr;
+    for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr) {
+        int16_t npc_id = npc_itr->first;
+        if(msg.find_npc(npc_id) != -1) continue;
+        remove_npc(npc_id);
+    }
+}
+
+void ClientWorld::remove_npc(int16_t id) {
+    delete this->npcs[id];
+    this->npcs.erase(id);
+}
+
 
 void ClientWorld::update_player_alive_status(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);

@@ -29,6 +29,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_MOVE_STOP: return stop_moving(msg, world);
         case PROTOCOL_ATTACK: return attack_event(msg, world);
         case PROTOCOL_MEDITATION: return meditation_event(msg, world);
+        case PROTOCOL_TAKE_ITEM: return take_item_event(msg, world);
         case PROTOCOL_LOG_OFF: return log_off_event(msg, world);
     }
 }
@@ -101,6 +102,14 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
+void ProtocolTranslator::take_item_event(ProtocolMessage &msg, ServerWorld &world) {
+    // int item_id = msg.characters[0].itemId;
+    // ItemFactory factory;
+    // Item item = factory.make_itemt(item_id, config);
+    // world.characters[msg.id_player]->take_item(item);
+    // msg.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
+}
+
 void ProtocolTranslator::meditation_event(ProtocolMessage &msg, ServerWorld &world) {
     world.characters[msg.id_player]->meditate();
     // Here we might use the following and add a "meditating" boolean on the prot
@@ -116,7 +125,14 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     Attackable* other = world.get_from_position(player_id, other_posX, other_posY);
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
-        msg.id_message = PROTOCOL_ATTACK_CONFIRM;
+        if (!other->is_alive()) {
+            // std::vector<int> drop_items = other->drop_items();
+            // int gold = other->drop_gold();
+            msg.id_message = PROTOCOL_KILL_CONFIRM;
+        }
+        else {
+            msg.id_message = PROTOCOL_ATTACK_CONFIRM;
+        }
     } 
     this->get_world(msg, world);
 }
@@ -161,8 +177,8 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
 }
 
 void ProtocolTranslator::update_npcs_event(ProtocolMessage& msg, ServerWorld &world) {
-    // forEach npc, Npc move, check if alive. if ! count ++ para dsp spawnear count npcs
-    // canAttack
+    // forEach npc, Npc move, check deaths in order to spawn that amount
+    // int deaths = world.dead_npcs();
     world.move_npcs();
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_UPDATE_NPCS_CONFIRM;
@@ -178,6 +194,7 @@ void ProtocolTranslator::update_characters_event(ProtocolMessage& msg, ServerWor
 void ProtocolTranslator::get_world(ProtocolMessage& msg, ServerWorld &world) {
     this->get_all_characters(msg, world);
     this->get_all_npcs(msg, world);
+    this->get_all_items(msg, world);
 }
 
 
@@ -198,7 +215,12 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
     std::map<uint16_t, NPC*>::iterator itr;
     std::vector<ProtocolNpc> tmp;
     
-    for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
+    for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) {
+        if (!itr->second->is_alive()) {
+            world.remove_npc(itr->first);
+            std::cout << "ServerWorld::RemovingDeadNpc" << std::endl;
+            continue;
+        }
         ProtocolNpc protocolNpc(
             itr->first,
             itr->second->get_id(),
@@ -209,4 +231,19 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
         tmp.push_back(std::move(protocolNpc));
     }
     msg.npcs = tmp;
+}
+
+void ProtocolTranslator::get_all_items(ProtocolMessage& msg, ServerWorld &world) {
+    std::vector<ProtocolItem> tmp;
+
+    for (size_t i = 0; i < world.items.size(); ++i) {
+        ProtocolItem protocolItem(
+            world.items[i]->get_id(),
+            world.items[i]->get_posX(),
+            world.items[i]->get_posY(),
+            world.items[i]->get_amount()
+        );
+        tmp.push_back(std::move(protocolItem));
+    }
+    msg.items = tmp;
 }
