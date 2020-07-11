@@ -12,7 +12,7 @@ ProtocolTranslator::ProtocolTranslator(
 
 void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
-    std::cout << "PROCESANDO: " << code << std::endl;
+    // std::cout << "PROCESANDO: " << code << std::endl;
     switch (code) {
         case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, world);
         case PROTOCOL_CREATE_NPC: return create_npc_event(msg, world);

@@ -26,29 +26,6 @@ struct ProtocolCharacter {
     // int16_t gold;
     bool alive;
 
-    // ProtocolCharacter(
-    //     uint16_t id,
-    //     uint8_t id_race,
-    //     uint8_t id_class,
-    //     int16_t bodyPosX, 
-    //     int16_t bodyPosY,
-    //     int16_t orientation,
-    //     int16_t otherPosX,
-    //     int16_t otherPosY,
-    //     uint8_t helmetId,
-    //     uint8_t armorId,
-    //     uint8_t weaponId,
-    //     uint8_t shieldId,
-    //     int16_t life,
-    //     int16_t max_life,
-    //     int16_t mana,
-    //     int16_t max_mana,
-    //     int8_t level,
-    //     int16_t experience,
-    //     int16_t max_experience,
-    //     int16_t gold,
-    //     bool alive);
-
     ProtocolCharacter();
 
     ProtocolCharacter(uint16_t id, uint8_t id_race, uint8_t id_class);
@@ -63,7 +40,8 @@ struct ProtocolCharacter {
         uint8_t helmetId,
         uint8_t armorId,
         uint8_t weaponId,
-        uint8_t shieldId);
+        uint8_t shieldId,
+        bool alive);
 
 
     // ProtocolCharacter(ProtocolCharacter&& other);

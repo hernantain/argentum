@@ -79,7 +79,7 @@ void Player::update_alive_status(bool alive) {
 
 
 void Player::render(SDL_Rect &camera, int &it) {
-	if (alive) {
+	if (this->alive) {
 		equippedPlayer->render(
 			bodyPosX - camera.x, 
 			bodyPosY - camera.y, 
@@ -308,7 +308,8 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 	} else if( e.type == SDL_KEYUP && e.key.repeat == 0 ) {
 		event_id = 9;
 
-	} else if ( e.type == SDL_MOUSEBUTTONDOWN) {
+	} 
+	else if ( e.type == SDL_MOUSEBUTTONDOWN) {
 		SDL_GetMouseState( &x, &y ); 
 		event_id = 2;
 		otherPosX = x + camera.x; 
@@ -326,7 +327,8 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		this->helmetId,
 		this->armorId,
 		this->weaponId,
-		this->shieldId
+		this->shieldId,
+		this->alive
 	);
 	ProtocolMessage msg(event_id, this->id, character);
 	return std::move(msg);

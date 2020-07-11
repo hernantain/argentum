@@ -167,6 +167,7 @@ void Socket::operator<<(const std::string &message) const {
 
 void Socket::operator<<(msgpack::sbuffer &sbuf) const {
 	uint16_t size = sbuf.size();
+	// std::cout << "MANDANDO TAMANIO: " << size << std::endl;
 	this->operator<<(size);
 	this->send_message((char*) sbuf.data(), (int) sbuf.size());
 }
@@ -202,6 +203,7 @@ void Socket::operator>>(std::string &message) const {
 void Socket::operator>>(msgpack::unpacker &pack) const {
 	uint16_t size;
 	this->operator>>(size);
+	// std::cout << "Recibiendo TAMANIO: " << size << std::endl;
 	pack.reserve_buffer(size);
 	this->receive(pack.buffer(), size);
 	pack.buffer_consumed(size);
