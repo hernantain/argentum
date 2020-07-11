@@ -22,11 +22,11 @@ void ManaPoints::add(int mana_points) {
     if (current_mana >= max_mana) current_mana = max_mana;
 }
 
-int ManaPoints::current() {
+int16_t ManaPoints::current() {
     return current_mana;
 }
 
-int ManaPoints::max(){
+int16_t ManaPoints::max(){
     return max_mana;
 }
 

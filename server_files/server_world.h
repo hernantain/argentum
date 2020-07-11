@@ -10,31 +10,31 @@
 struct ServerWorld {
 
     std::map<uint16_t, Character*> characters;
-    std::map<int16_t, NPC*> npcs;
+    std::map<uint16_t, NPC*> npcs;
     // Items
 
     ServerWorld();
 
-    Character* get(int16_t message_id);
+    Character* get(uint16_t message_id);
 
-    Attackable* get_from_position(int player_id, int posX, int posY);
+    Attackable* get_from_position(uint16_t player_id, int16_t posX, int16_t posY);
 
     void move_npcs();
     void recover_characters();
     
     bool empty();
 
-    void add(int16_t id, Character* character);
-    void add(int16_t id, NPC* npc);
+    void add(uint16_t id, Character* character);
+    void add(uint16_t id, NPC* npc);
 
-    void move_character_right(int16_t id);
-    void move_character_left(int16_t id);
-    void move_character_down(int16_t id);
-    void move_character_top(int16_t id);
+    void move_character_right(uint16_t id);
+    void move_character_left(uint16_t id);
+    void move_character_down(uint16_t id);
+    void move_character_top(uint16_t id);
 
-    bool check_collision(int16_t id, int16_t other_id);
+    bool check_collision(uint16_t id, uint16_t other_id);
 
-    void remove_character(int16_t id);
+    void remove_character(uint16_t id);
 
 };
 

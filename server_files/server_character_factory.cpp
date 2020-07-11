@@ -10,7 +10,7 @@
 #define DWARF 3
 #define GNOME 4
 
-CharacterClass CharacterFactory::make_class(const int class_id, Json::Value& config) {
+CharacterClass CharacterFactory::make_class(const uint8_t class_id, Json::Value& config) {
     switch (class_id) {
         case MAGICIAN: return Magician(config);
         case CLERIC: return Cleric(config);
@@ -19,7 +19,7 @@ CharacterClass CharacterFactory::make_class(const int class_id, Json::Value& con
     return Warrior(config);
 }
 
-Race CharacterFactory::make_race(const int race_id, Json::Value& config) {
+Race CharacterFactory::make_race(const uint8_t race_id, Json::Value& config) {
     switch (race_id) {
         case HUMAN: return Human(config);
         case ELF: return Elf(config);

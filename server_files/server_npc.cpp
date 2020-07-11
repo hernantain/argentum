@@ -14,19 +14,19 @@ NPC::NPC(Json::Value &config, CollisionInfo &collisionInfo) :
     this->alive = true;
 }
 
-int NPC::get_id() {
+uint8_t NPC::get_id() {
     return id;
 }
 
-int NPC::get_level() {
+int16_t NPC::get_level() {
     return level;
 }
 
-int NPC::get_life() {
+int16_t NPC::get_life() {
     return life;
 }
 
-int NPC::get_max_life() {
+int16_t NPC::get_max_life() {
     return max_life;
 }
 
@@ -154,10 +154,10 @@ int NPC::get_body_facing() {
     return (int) movement.get_facing_direction();
 }
 
-int NPC::get_body_pos_X() const{
+int16_t NPC::get_body_pos_X() const{
     return movement.get_horizontal_body_position();
 }
 
-int NPC::get_body_pos_Y() const {
+int16_t NPC::get_body_pos_Y() const {
     return movement.get_vertical_body_position();
 }

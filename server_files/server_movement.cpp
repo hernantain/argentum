@@ -6,7 +6,6 @@
 #define HEAD_SIZE 20
 #define CHARACTER_WIDTH 21
 #define CHARACTER_HEIGHT 31
-#define WINDOW_SIZE 3200
 #define MAX_OFFSET_TOLERANCE 30
 
 
@@ -131,13 +130,13 @@ bool Movement::is_safe() {
 }
 
 void Movement::check_out_of_bounds_X(int velocity){
-    if(bodyPosX < 0 || bodyPosX + CHARACTER_WIDTH > WINDOW_SIZE) {
+    if(bodyPosX < 0 || bodyPosX + CHARACTER_WIDTH > collisionInfo.get_map_width()) {
         bodyPosX -= velocity;
     }
 }
 
 void Movement::check_out_of_bounds_Y(int velocity){
-    if((bodyPosY - HEAD_SIZE) < 0 || bodyPosY + CHARACTER_HEIGHT > WINDOW_SIZE) { 
+    if((bodyPosY - HEAD_SIZE) < 0 || bodyPosY + CHARACTER_HEIGHT > collisionInfo.get_map_height()) { 
         bodyPosY -= velocity;
     }
 }

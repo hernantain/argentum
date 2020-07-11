@@ -15,8 +15,8 @@
 
 
 class Player: public Drawable {
-    std::mutex m;
-    int headOffsetX, headOffsetY;
+    // std::mutex m;
+    int16_t headOffsetX, headOffsetY;
     protected:
         int16_t bodyPosX, bodyPosY;
         int16_t headPosX, headPosY;
@@ -41,16 +41,13 @@ class Player: public Drawable {
 
 		void update_frames();
 
-		void set_position(int newBodyPosX, int newBodyPosY, int orientation);
+		void set_position(int16_t newBodyPosX, int16_t newBodyPosY, int orientation);
         void set_camera(SDL_Rect &camera);
 
         void set_weapon(int weaponId);
         void set_helmet(int helmetId);
         void set_armor(int armorId);
         void set_shield(int shieldId);
-
-        int getPosX() const;
-        int getPosY() const;
 
         uint16_t getId() const;
 

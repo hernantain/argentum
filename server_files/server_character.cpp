@@ -29,23 +29,23 @@ Character::Character(uint16_t id, Json::Value &config, CharacterClass character_
     this->newbie = true;
 }
 
-int Character::get_life() {
+int16_t Character::get_life() {
     return life.current();
 }
 
-int Character::get_max_life() {
+int16_t Character::get_max_life() {
     return life.max();
 }
 
-int Character::get_mana() {
+int16_t Character::get_mana() {
     return mana.current();
 }
 
-int Character::get_max_mana() {
+int16_t Character::get_max_mana() {
     return mana.max();
 }
 
-int Character::get_level() {
+int16_t Character::get_level() {
     return level;
 }
 
@@ -369,12 +369,12 @@ void Character::stop_moving() {
     movement.stop_moving();
 }
 
-int Character::get_body_pos_X() const {
+int16_t Character::get_body_pos_X() const {
     return movement.get_horizontal_body_position();
 }
 
 
-int Character::get_body_pos_Y() const {
+int16_t Character::get_body_pos_Y() const {
     return movement.get_vertical_body_position();
 }
 
@@ -386,6 +386,8 @@ int Character::get_body_facing() {
 
 void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter) {
     protocolCharacter.id = this->get_id();
+    protocolCharacter.id_race = this->get_race_id();
+    protocolCharacter.id_class = this->get_class_id();
     protocolCharacter.bodyPosX = this->get_body_pos_X();
     protocolCharacter.bodyPosY = this->get_body_pos_Y();
     protocolCharacter.orientation = this->get_body_facing();
@@ -393,11 +395,31 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.max_mana = this->get_max_mana();
     protocolCharacter.life = this->get_life();
     protocolCharacter.max_life = this->get_max_life();
-    protocolCharacter.id_race = this->get_race_id();
-    protocolCharacter.id_class = this->get_class_id();
     protocolCharacter.experience = this->get_current_experience();
     protocolCharacter.max_experience = this->get_max_experience();
     protocolCharacter.alive = this->is_alive();
+    
+    protocolCharacter.otherPosX = 0;
+    protocolCharacter.otherPosY = 0;
+    protocolCharacter.shieldId = 0;
+    protocolCharacter.weaponId = 0;
+    protocolCharacter.helmetId = 0;
+    protocolCharacter.armorId = 0;
+
+    // std::cout << "PROT CHARACTER ID " << (int) protocolCharacter.id << std::endl;
+    // std::cout << "PROT CHARACTER ID RACE " << (int) protocolCharacter.id_race << std::endl;
+    // std::cout << "PROT CHARACTER ID CLASE " << (int) protocolCharacter.id_class << std::endl;
+    // std::cout << "PROT CHARACTER bodyposX " << (int) protocolCharacter.bodyPosX << std::endl;
+    // std::cout << "PROT CHARACTER bodyposY " << (int) protocolCharacter.bodyPosY << std::endl;
+    // std::cout << "PROT CHARACTER ORIENTAT " << (int) protocolCharacter.orientation << std::endl;
+    // std::cout << "PROT CHARACTER MANA " << (int) protocolCharacter.mana << std::endl;
+    // std::cout << "PROT CHARACTER MAX_MANA " << (int) protocolCharacter.max_mana << std::endl;
+    // std::cout << "PROT CHARACTER LIFE " << (int) protocolCharacter.life << std::endl;
+    // std::cout << "PROT CHARACTER MAX_LIFE " << (int) protocolCharacter.max_life << std::endl;
+    // std::cout << "PROT CHARACTER EXPERIEN " << (int) protocolCharacter.experience << std::endl;
+    // std::cout << "PROT CHARACTER MAX EXP " << (int) protocolCharacter.max_experience << std::endl;
+    // std::cout << "PROT CHARACTER ALIVE " << (int) protocolCharacter.alive << std::endl;
+    // std::cout << std::endl;
 }
 
 
@@ -416,11 +438,11 @@ uint8_t Character::get_class_id() {
 }
 
 
-int Character::get_current_experience() {
+int16_t Character::get_current_experience() {
     return experience.current();
 }
 
 
-int Character::get_max_experience() {
+int16_t Character::get_max_experience() {
     return experience.max();
 }

@@ -54,7 +54,7 @@ InfoView::InfoView(
 }
 
 
-void InfoView::set_mana(int currentMana, int maxMana) {
+void InfoView::set_mana(int16_t currentMana, int16_t maxMana) {
     std::unique_lock<std::mutex> lock(this->m);
     // std::cout << "SETTING MANA: " << currentMana << " AND MAX: " << maxMana << std::endl;
     this->currentMana = currentMana;
@@ -62,13 +62,13 @@ void InfoView::set_mana(int currentMana, int maxMana) {
 }
 
 
-void InfoView::set_life(int currentLife, int maxLife) {
+void InfoView::set_life(int16_t currentLife, int16_t maxLife) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentLife = currentLife;
     this->maxLife = maxLife;
 }
 
-void InfoView::set_experience(int currentExp, int maxExp) {
+void InfoView::set_experience(int16_t currentExp, int16_t maxExp) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentExp = currentExp;
     this->maxExp = maxExp;

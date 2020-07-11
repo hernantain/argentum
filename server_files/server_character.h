@@ -43,7 +43,7 @@ private:
     Equipment equipment;
 
     int gold;
-    int level;
+    int16_t level;
     bool alive;
     bool newbie;
 
@@ -74,19 +74,19 @@ Race race, CollisionInfo &collisionInfo);
     uint16_t get_id();
 
     // Devuelve la mana actual del personaje
-    int get_mana();
+    int16_t get_mana();
 
     // Devuelve la vida actual del personaje
-    int get_life();
+    int16_t get_life();
 
     // Devuelve la mana maxima del personaje en el nivel actual
-    int get_max_mana();
+    int16_t get_max_mana();
 
     // Devuelve la vida maxima del personaje en el nivel actual
-    int get_max_life();
+    int16_t get_max_life();
 
     // Devuelve el nivel del personaje
-    int get_level();
+    int16_t get_level();
 
     // Devuelve un booleano que indica si el jugador es newbie o no
     bool is_newbie();
@@ -185,19 +185,19 @@ Race race, CollisionInfo &collisionInfo);
     void stop_moving();
 
     // Getter de la posicion del cuerpo en X
-    int get_body_pos_X() const;
+    int16_t get_body_pos_X() const;
 
     // Getter de la posicion del cuerpo en Y
-    int get_body_pos_Y() const;
+    int16_t get_body_pos_Y() const;
 
     // Getter de para donde el character apunta
     int get_body_facing();
 
     // Getter de la experiencia actual
-    int get_current_experience();
+    int16_t get_current_experience();
 
     // Getter de la experinecia max actual
-    int get_max_experience();
+    int16_t get_max_experience();
 
     uint8_t get_race_id() const;
 

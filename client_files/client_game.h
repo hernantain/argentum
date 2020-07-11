@@ -22,7 +22,7 @@ class Game {
 	
 	SDL_Renderer *gRenderer;
 	bool running;
-	int16_t player_race, player_class;
+	uint8_t player_race, player_class;
 	LWindow window;
 	Queue queue;
 	Socket skt;
@@ -40,7 +40,7 @@ class Game {
 
 
 	public:
-		Game(int16_t player_race, int16_t player_class);
+		Game(uint8_t player_race, uint8_t player_class);
 
 		void run();
 

@@ -2,6 +2,7 @@
 #define _CLIENT_INFO_VIEW
 
 #include <mutex>
+#include <stdint.h>
 #include <SDL2/SDL.h>
 
 #define BAR_HEIGHT 10 
@@ -27,9 +28,9 @@ class InfoView {
     SDL_Color expColor;
     SDL_Color bgdColor;
 
-    int currentMana, maxMana;
-    int currentLife, maxLife;
-    int currentExp, maxExp;
+    int16_t currentMana, maxMana;
+    int16_t currentLife, maxLife;
+    int16_t currentExp, maxExp;
 
     void render_life();
     void render_mana();
@@ -38,11 +39,11 @@ class InfoView {
     public:
         InfoView(SDL_Renderer* gRenderer, SDL_Rect &infoPanel);
 
-        void set_mana(int currentMana, int maxMana);
+        void set_mana(int16_t currentMana, int16_t maxMana);
 
-        void set_life(int currentLife, int maxLife);
+        void set_life(int16_t currentLife, int16_t maxLife);
 
-        void set_experience(int currentExp, int maxExperience);
+        void set_experience(int16_t currentExp, int16_t maxExperience);
 
         void render();
 

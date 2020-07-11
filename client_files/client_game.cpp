@@ -22,8 +22,8 @@
 
 
 Game::Game(
-	int16_t player_race, 
-	int16_t player_class) : gRenderer(NULL), 
+	uint8_t player_race, 
+	uint8_t player_class) : gRenderer(NULL), 
 							running(true), 
 							player_race(player_race),
 							player_class(player_class) {
@@ -41,7 +41,6 @@ Game::Game(
 	main.y = 0;
 	main.w = 3 * (this->window.getWidth() / 4);
 	main.h = this->window.getHeight();
-	// SDL_RenderSetViewport( gRenderer, &main );
 
 	camera.x = main.x;
 	camera.y = main.y;
@@ -69,7 +68,7 @@ Map Game::loadMap() {
 
 ClientWorld Game::loadWorld(InfoView &infoView) {
 	ProtocolCharacter character(this->player_id, this->player_race, this->player_class);
-	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
+	ProtocolMessage msg(65, this->player_id, character); // 65 para crear
 
 	msgpack::sbuffer buffer;
 	msgpack::packer<msgpack::sbuffer> pk(&buffer);
@@ -86,7 +85,11 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
     
 	ClientWorld clientWorld(gRenderer);
 
+	std::cout << "Tamanio mundo: " << rec_msg.characters.size() << std::endl;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
+		std::cout << "ID PLAYER: " << (int) rec_msg.characters[i].id << std::endl;
+		std::cout << "ID RAZA PLAYER: " << (int) rec_msg.characters[i].id_race << std::endl;
+		std::cout << "ID  CLASE PLAYER: " << (int) rec_msg.characters[i].id_class << std::endl;
 		if (rec_msg.characters[i].id == this->player_id) {
 			infoView.set_life(rec_msg.characters[i].life, rec_msg.characters[i].max_life);
 			infoView.set_mana(rec_msg.characters[i].mana, rec_msg.characters[i].max_mana);
@@ -96,10 +99,10 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
 		clientWorld.add_player(rec_msg.characters[i]);
 	}
 
-	for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
-		clientWorld.add_npc(rec_msg.npcs[i]);
+	// for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
+	// 	clientWorld.add_npc(rec_msg.npcs[i]);
 
-	return std::move(clientWorld);
+	return clientWorld;
 }
 
 
@@ -113,10 +116,10 @@ void Game::run() {
 	InfoView infoView(this->gRenderer, inventory);
 	ClientWorld world = this->loadWorld(infoView);
 
+	std::cout << "TAMANIO MUNDO EN GAME RUN: " << world.players.size() << std::endl;
+
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
-
-	// Player* player = world.get_player(this->player_id);
 
 	Thread* receiver = new ClientReceiverThread(skt, world, camera, infoView, player_id);
 	receiver->start();
@@ -131,7 +134,6 @@ void Game::run() {
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
-				// skt.close_socket();
 				ProtocolMessage msg;
 				msg.id_message = 67;
 				msg.id_player = this->player_id;
@@ -147,7 +149,6 @@ void Game::run() {
 				continue;
 
 			} else {
-				// ProtocolMessage msg = player->handleEvent(e, camera);
 				ProtocolMessage msg = world.player_handle_event(player_id, e, camera);
 				queue.push(msg);	
 			}

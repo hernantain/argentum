@@ -8,8 +8,8 @@
 
 
 NPC::NPC(
-	int16_t id,
-	int16_t npc_id, 
+	uint16_t id,
+	uint8_t npc_id, 
 	SDL_Renderer* gRenderer, 
 	int16_t posX, 
 	int16_t posY) : Drawable(id, gRenderer), npc_id(npc_id), posX(posX), posY(posY) {

@@ -28,16 +28,13 @@ Player::Player(
 								headPosY(headPosY) {
 	this->headOffsetX = headPosX - bodyPosX;
 	this->headOffsetY = headPosY - bodyPosY;
+	this->armorId = 0;
+	this->weaponId = 0;
+	this->shieldId = 0;
+	this->helmetId = 0;
 }
 
 
-int Player::getPosX() const {
-	return this->bodyPosX;
-}
-    
-int Player::getPosY() const {
-	return this->bodyPosY;
-}
     
 void Player::set_camera(SDL_Rect &camera) {
 
@@ -58,8 +55,8 @@ void Player::set_camera(SDL_Rect &camera) {
 		camera.y = 3200 - camera.h; 
 }
 
-void Player::set_position(int newBodyPosX, int newBodyPosY, int orientation) {
-	std::unique_lock<std::mutex> lock(this->m);
+void Player::set_position(int16_t newBodyPosX, int16_t newBodyPosY, int orientation) {
+	// std::unique_lock<std::mutex> lock(this->m);
 	this->orientation = orientation;
 	this->bodyPosX = newBodyPosX;
 	this->bodyPosY = newBodyPosY;
@@ -76,7 +73,7 @@ void Player::set_position(int newBodyPosX, int newBodyPosY, int orientation) {
 
 
 void Player::render(SDL_Rect &camera, int &it) {
-	std::unique_lock<std::mutex> lock(this->m);
+	// std::unique_lock<std::mutex> lock(this->m);
 	equippedPlayer->render(
 		bodyPosX - camera.x, 
 		bodyPosY - camera.y, 
@@ -178,7 +175,7 @@ void Player::set_shield(int shieldId) {
 
 ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 	//If a key was pressed
-	std::unique_lock<std::mutex> lock(m);
+	// std::unique_lock<std::mutex> lock(m);
 	int event_id = 1;
 	int x, y;
 	if( e.type == SDL_KEYDOWN ) {
@@ -316,7 +313,7 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		this->weaponId,
 		this->shieldId
 	);
-	ProtocolMessage msg(event_id, this->id, std::move(character));
+	ProtocolMessage msg(event_id, this->id, character);
 	return std::move(msg);
 }
 

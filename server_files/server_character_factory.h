@@ -1,6 +1,7 @@
 #ifndef _CHARACTER_FACTORY_H
 #define _CHARACTER_FACTORY_H
 
+#include <stdint.h>
 #include "server_race.h"
 #include "server_elf.h"
 #include "server_gnome.h"
@@ -16,8 +17,8 @@ class CharacterFactory {
 public:
 
     /* Recibiendo un id crea la clase correspondiente */
-    static CharacterClass make_class(const int class_id, Json::Value& config);
-    static Race make_race(const int race_id, Json::Value& config);
+    static CharacterClass make_class(const uint8_t class_id, Json::Value& config);
+    static Race make_race(const uint8_t race_id, Json::Value& config);
 
 };
 

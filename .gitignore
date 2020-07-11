@@ -6,3 +6,4 @@ client
 *.o
 filter_options
 *.py
+minimal.*

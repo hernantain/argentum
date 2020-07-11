@@ -12,6 +12,7 @@ ProtocolTranslator::ProtocolTranslator(
 
 void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
+    std::cout << "PROCESANDO: " << code << std::endl;
     switch (code) {
         case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, world);
         case PROTOCOL_CREATE_NPC: return create_npc_event(msg, world);
@@ -121,8 +122,11 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
 }
 
 void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorld &world) {
-    int id_class = msg.characters[0].id_class;
-    int id_race = msg.characters[0].id_race;
+    uint8_t id_class = msg.characters[0].id_class;
+    uint8_t id_race = msg.characters[0].id_race;
+
+    std::cout << "HAY QUE CREAR UN CLASE: " << (int) id_class << std::endl;
+    std::cout << "HAY QUE CREAR UN RAZA: " << (int) id_race << std::endl;
 
     CharacterClass c = CharacterFactory::make_class(id_class, config);
     Race race = CharacterFactory::make_race(id_race, config);
@@ -173,25 +177,25 @@ void ProtocolTranslator::update_characters_event(ProtocolMessage& msg, ServerWor
 
 void ProtocolTranslator::get_world(ProtocolMessage& msg, ServerWorld &world) {
     this->get_all_characters(msg, world);
-    this->get_all_npcs(msg, world);
+    // this->get_all_npcs(msg, world);
 }
 
 
 void ProtocolTranslator::get_all_characters(ProtocolMessage& msg, ServerWorld &world) {
-    std::map<int16_t, Character*>::iterator itr;
+    std::map<uint16_t, Character*>::iterator itr;
     std::vector<ProtocolCharacter> tmp;
 
     for (itr = world.characters.begin(); itr != world.characters.end(); ++itr) { 
         ProtocolCharacter protocolCharacter;
         itr->second->populate_protocol_character(protocolCharacter);
-        tmp.push_back(std::move(protocolCharacter));
+        tmp.push_back(protocolCharacter);
     }
     msg.characters = tmp;
 }
 
 
 void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) {
-    std::map<int16_t, NPC*>::iterator itr;
+    std::map<uint16_t, NPC*>::iterator itr;
     std::vector<ProtocolNpc> tmp;
     
     for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
