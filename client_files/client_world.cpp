@@ -126,9 +126,9 @@ void ClientWorld::render(uint16_t id, SDL_Rect &camera, int &it) {
     for (itr = players.begin(); itr != players.end(); ++itr)  
         itr->second->render(camera, it);
 
-    // std::map<uint16_t, NPC*>::iterator npc_itr;
-    // for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr)  
-    //     npc_itr->second->render(camera);
+    std::map<uint16_t, NPC*>::iterator npc_itr;
+    for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr)  
+        npc_itr->second->render(camera);
 }
 
 

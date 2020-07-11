@@ -99,8 +99,8 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
 		clientWorld.add_player(rec_msg.characters[i]);
 	}
 
-	// for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
-	// 	clientWorld.add_npc(rec_msg.npcs[i]);
+	for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
+		clientWorld.add_npc(rec_msg.npcs[i]);
 
 	return clientWorld;
 }

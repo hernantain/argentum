@@ -47,54 +47,37 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == 71) this->process_create_npc(msg);
     if (msg.id_message == 73) this->process_move_npcs(msg);
     if (msg.id_message == 75) this->process_recover_characters(msg);
-    if (msg.id_message == 1) {
-        std::cout << "RETORNANDO" << std::endl;
-        return;
-    }
     if (msg.id_player == this->player_id)
         world.players[this->player_id]->set_camera(camera);
 }
 
 
 void ClientReceiverThread::process_move(ProtocolMessage &msg) {
-    // Player* player = world.players[msg.id_player];
-    // player->set_position(msg.characters[i].bodyPosX, msg.characters[i].bodyPosY, msg.characters[i].orientation);
     int i = msg.find(msg.id_player);
     if (i != -1)
         world.move_player(msg.id_player, msg.characters[i].bodyPosX, msg.characters[i].bodyPosY, msg.characters[i].orientation);
 }
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
-    // Player* player = world.players[msg.id_player];
-    // int i = msg.find(msg.id_player);
     int i = msg.find(msg.id_player);
     if (i != -1)
         world.player_set_helmet(msg.id_player, msg.characters[i].helmetId);
     
-    // player->set_helmet(msg.characters[i].helmetId);
 }
 
 void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
-    // Player* player = world.players[msg.id_player];
-    // int i = msg.find(msg.id_player);
-    // player->set_armor(msg.characters[i].armorId);
     int i = msg.find(msg.id_player);
     if (i != -1)
         world.player_set_armor(msg.id_player, msg.characters[i].armorId);
 }
 
 void ClientReceiverThread::process_equip_shield(ProtocolMessage &msg) {
-    // Player* player = world.players[msg.id_player];
-    // int i = msg.find(msg.id_player);
-    // player->set_shield(msg.characters[i].shieldId);
     int i = msg.find(msg.id_player);
     if (i != -1)
         world.player_set_shield(msg.id_player, msg.characters[i].shieldId);
 }
 
 void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
-    // Player* player = world.players[msg.id_player];
-    // player->set_weapon(msg.characters[0].weaponId);
     int i = msg.find(msg.id_player);
     if (i != -1)
         world.player_set_weapon(msg.id_player, msg.characters[i].weaponId);
