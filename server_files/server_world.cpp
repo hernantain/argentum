@@ -26,23 +26,6 @@ Attackable* ServerWorld::get_from_position(int player_id, int other_posX, int ot
     return NULL;
 }
 
-int ServerWorld::get_id_from_position(int player_id, int other_posX, int other_posY) {
-    std::map<int16_t, Character*>::iterator characters_itr;
-    std::map<int16_t, NPC*>::iterator npc_itr;
-
-    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
-        if (characters_itr->first == player_id) continue;
-        Character* other_character = characters_itr->second;
-        if (other_character->is_near(other_posX, other_posY)) return characters_itr->first;
-    }
-
-    for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr) {
-        NPC* other_npc = npc_itr->second;
-        if (other_npc->is_near(other_posX, other_posY)) return npc_itr->first;
-    }
-    return -1;
-}
-
 bool ServerWorld::empty() {
     return (this->characters.size() == 0);
 }

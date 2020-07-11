@@ -19,7 +19,6 @@ struct ServerWorld {
     Character* get(int16_t message_id);
 
     Attackable* get_from_position(int player_id, int posX, int posY);
-    int get_id_from_position(int player_id, int posX, int posY);
 
     int dead_npcs();
     void move_npcs();
