@@ -10,8 +10,8 @@
 
 struct ServerWorld {
 
-    std::map<int16_t, Character*> characters;
-    std::map<int16_t, NPC*> npcs;
+    std::map<uint16_t, Character*> characters;
+    std::map<uint16_t, NPC*> npcs;
     std::vector<Item*> items;
 
     ServerWorld();
@@ -26,8 +26,8 @@ struct ServerWorld {
     
     bool empty();
 
-    void add(int16_t id, Character* character);
-    void add(int16_t id, NPC* npc);
+    void add(uint16_t id, Character* character);
+    void add(uint16_t id, NPC* npc);
     void add(Item* item);
 
     void move_character_right(uint16_t id);
@@ -37,7 +37,7 @@ struct ServerWorld {
 
     bool check_collision(uint16_t id, uint16_t other_id);
 
-    void remove_npc(int16_t id);
+    void remove_npc(uint16_t id);
     void remove_character(uint16_t id);
 
 };

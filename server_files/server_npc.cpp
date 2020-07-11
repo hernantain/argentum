@@ -14,7 +14,7 @@ NPC::NPC(Json::Value &config, CollisionInfo &collisionInfo) :
     this->alive = true;
 }
 
-uint8_t NPC::get_id() {
+uint16_t NPC::get_id() {
     return id;
 }
 

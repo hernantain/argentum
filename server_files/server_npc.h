@@ -16,7 +16,7 @@ class NPC : public Attackable {
 protected:
     Json::Value& config;
     Movement movement;
-    uint8_t id;
+    uint16_t id;
     bool alive;
     int16_t level, life, max_life;
     int min_damage, max_damage, defense_points;
@@ -36,7 +36,7 @@ public:
     NPC(Json::Value& config, CollisionInfo &collisionInfo);
 
     // Devuelve el id
-    uint8_t get_id();
+    uint16_t get_id();
 
     // Devuelve el nivel
     int16_t get_level();
