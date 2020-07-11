@@ -12,6 +12,7 @@ ProtocolTranslator::ProtocolTranslator(
 
 void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
     int code = msg.id_message;
+    std::cout << "PROCESANDO: " << code << std::endl;
     switch (code) {
         case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, world);
         case PROTOCOL_CREATE_NPC: return create_npc_event(msg, world);
@@ -35,24 +36,21 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
 void ProtocolTranslator::equip_shield_event(ProtocolMessage &msg, ServerWorld &world) {
 
     int shield_id = msg.characters[0].shieldId;
-    ShieldFactory factory;
-    Shield shield = factory.make_shield(shield_id, config);
+    Shield shield = ShieldFactory::make_shield(shield_id, config);
     world.characters[msg.id_player]->equip_shield(shield);
     msg.id_message = PROTOCOL_SHIELD_CONFIRM;
 }
 
 void ProtocolTranslator::equip_weapon_event(ProtocolMessage &msg, ServerWorld &world) {
     int weapon_id = msg.characters[0].weaponId;
-    WeaponFactory factory;
-    Weapon weapon = factory.make_weapon(weapon_id, config);
+    Weapon weapon = WeaponFactory::make_weapon(weapon_id, config);
     world.characters[msg.id_player]->equip_weapon(weapon);
     msg.id_message = PROTOCOL_WEAPON_CONFIRM;
 }
 
 void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &world) {
     int armor_id = msg.characters[0].armorId;
-    ArmorFactory factory;
-    Armor armor = factory.make_armor(armor_id, config);
+    Armor armor = ArmorFactory::make_armor(armor_id, config);
     world.characters[msg.id_player]->equip_armor(armor);
     msg.id_message = PROTOCOL_ARMOR_CONFIRM;
 }
@@ -60,8 +58,7 @@ void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &wo
 
 void ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, ServerWorld &world) {
     int helmet_id = msg.characters[0].helmetId;
-    HelmetFactory factory;
-    Helmet helmet = factory.make_helmet(helmet_id, config);
+    Helmet helmet = HelmetFactory::make_helmet(helmet_id, config);
     world.characters[msg.id_player]->equip_helmet(helmet);
     msg.id_message = PROTOCOL_HELMET_CONFIRM;
 }
@@ -75,8 +72,6 @@ void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
 
 
 void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &world) {
-
-    // world.characters[msg.id_player]->move_right();
     world.move_character_right(msg.id_player);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
@@ -85,10 +80,8 @@ void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &wor
 
 void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    // world.characters[msg.id_player]->move_left();
     world.move_character_left(msg.id_player);
     this->get_world(msg, world);
-
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
@@ -96,9 +89,7 @@ void ProtocolTranslator::move_left_event(ProtocolMessage &msg, ServerWorld &worl
 void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world) {
 
     world.move_character_top(msg.id_player);
-    // world.characters[msg.id_player]->move_top();
     this->get_world(msg, world);
-
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
 
@@ -106,7 +97,6 @@ void ProtocolTranslator::move_top_event(ProtocolMessage &msg, ServerWorld &world
 void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &world) {
 
     world.move_character_down(msg.id_player);
-    // world.characters[msg.id_player]->move_down();
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
 }
@@ -132,11 +122,14 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
 }
 
 void ProtocolTranslator::create_character_event(ProtocolMessage& msg, ServerWorld &world) {
-    int id_class = msg.characters[0].id_class;
-    int id_race = msg.characters[0].id_race;
-    CharacterFactory factory;
-    CharacterClass c = factory.make_class(id_class, config);
-    Race race = factory.make_race(id_race, config);
+    uint8_t id_class = msg.characters[0].id_class;
+    uint8_t id_race = msg.characters[0].id_race;
+
+    std::cout << "HAY QUE CREAR UN CLASE: " << (int) id_class << std::endl;
+    std::cout << "HAY QUE CREAR UN RAZA: " << (int) id_race << std::endl;
+
+    CharacterClass c = CharacterFactory::make_class(id_class, config);
+    Race race = CharacterFactory::make_race(id_race, config);
     Character* character = new Character(msg.id_player, config, c, race, collisionInfo);
     world.add(msg.id_player, character);
     msg.id_message = PROTOCOL_CREATE_CHARACTER_CONFIRM;
@@ -158,8 +151,8 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
     }
     
     int npc_id = msg.npcs[0].npc_type;
-    NPCFactory factory;
-    NPC* npc = factory.make_npc(npc_id, config, collisionInfo);
+
+    NPC* npc = NPCFactory::make_npc(npc_id, config, collisionInfo);
     std::cout << "NPC CREADO: " << std::endl;
     world.add(msg.id_player, npc);
     this->get_world(msg, world);
@@ -189,20 +182,20 @@ void ProtocolTranslator::get_world(ProtocolMessage& msg, ServerWorld &world) {
 
 
 void ProtocolTranslator::get_all_characters(ProtocolMessage& msg, ServerWorld &world) {
-    std::map<int16_t, Character*>::iterator itr;
+    std::map<uint16_t, Character*>::iterator itr;
     std::vector<ProtocolCharacter> tmp;
 
     for (itr = world.characters.begin(); itr != world.characters.end(); ++itr) { 
         ProtocolCharacter protocolCharacter;
         itr->second->populate_protocol_character(protocolCharacter);
-        tmp.push_back(std::move(protocolCharacter));
+        tmp.push_back(protocolCharacter);
     }
     msg.characters = tmp;
 }
 
 
 void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) {
-    std::map<int16_t, NPC*>::iterator itr;
+    std::map<uint16_t, NPC*>::iterator itr;
     std::vector<ProtocolNpc> tmp;
     
     for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
@@ -217,4 +210,3 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
     }
     msg.npcs = tmp;
 }
-

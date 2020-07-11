@@ -40,6 +40,7 @@ void AcceptorThread::run() {
     while (this->running) {
         client_skt = this->acceptor_skt.accept_client();
         // IF NOT VALID ....
+        std::cout << "SOCKET FD: " << client_skt.fd << std::endl;
 
         client_skt << this->client_id;
         client_skt << mapBuffer;

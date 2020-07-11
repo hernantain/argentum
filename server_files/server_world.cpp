@@ -5,13 +5,13 @@
 ServerWorld::ServerWorld() {}
 
 
-Character* ServerWorld::get(int16_t message_id) {
+Character* ServerWorld::get(uint16_t message_id) {
     return this->characters[message_id];
 }
 
-Attackable* ServerWorld::get_from_position(int player_id, int other_posX, int other_posY) {
-    std::map<int16_t, Character*>::iterator characters_itr;
-    std::map<int16_t, NPC*>::iterator npc_itr;
+Attackable* ServerWorld::get_from_position(uint16_t player_id, int16_t other_posX, int16_t other_posY) {
+    std::map<uint16_t, Character*>::iterator characters_itr;
+    std::map<uint16_t, NPC*>::iterator npc_itr;
 
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
         if (characters_itr->first == player_id) continue;
@@ -32,7 +32,7 @@ bool ServerWorld::empty() {
 
 void ServerWorld::move_npcs() {
     if (empty()) return;
-    std::map<int16_t, NPC*>::iterator itr;
+    std::map<uint16_t, NPC*>::iterator itr;
     for (itr = npcs.begin(); itr != npcs.end(); ++itr) { 
         itr->second->move_random();
     }
@@ -40,31 +40,31 @@ void ServerWorld::move_npcs() {
 
 void ServerWorld::recover_characters() {
     if (empty()) return;
-    std::map<int16_t, Character*>::iterator itr;
+    std::map<uint16_t, Character*>::iterator itr;
     for (itr = characters.begin(); itr != characters.end(); ++itr) { 
         itr->second->recover_life();
         itr->second->recover_mana();
     }
 }
 
-void ServerWorld::add(int16_t id, Character* character) {
-    this->characters.insert(std::pair<int16_t, Character*> (id, character));
+void ServerWorld::add(uint16_t id, Character* character) {
+    this->characters.insert(std::pair<uint16_t, Character*> (id, character));
 }
 
-void ServerWorld::add(int16_t id, NPC* npc) {
-    this->npcs.insert(std::pair<int16_t, NPC*> (id, npc));
+void ServerWorld::add(uint16_t id, NPC* npc) {
+    this->npcs.insert(std::pair<uint16_t, NPC*> (id, npc));
 }
 
 
-void ServerWorld::remove_character(int16_t id) {
+void ServerWorld::remove_character(uint16_t id) {
     // delete this->characters[id];
     this->characters.erase(id);
 }
 
 
-void ServerWorld::move_character_right(int16_t id) {
+void ServerWorld::move_character_right(uint16_t id) {
     this->characters[id]->move_right();
-    std::map<int16_t, Character*>::iterator characters_itr;
+    std::map<uint16_t, Character*>::iterator characters_itr;
     // std::map<int16_t, NPC*>::iterator npc_itr;
 
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
@@ -79,9 +79,9 @@ void ServerWorld::move_character_right(int16_t id) {
 }
 
 
-void ServerWorld::move_character_left(int16_t id) {
+void ServerWorld::move_character_left(uint16_t id) {
     this->characters[id]->move_left();
-    std::map<int16_t, Character*>::iterator characters_itr;
+    std::map<uint16_t, Character*>::iterator characters_itr;
     // std::map<int16_t, NPC*>::iterator npc_itr;
 
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
@@ -96,9 +96,9 @@ void ServerWorld::move_character_left(int16_t id) {
 }
 
 
-void ServerWorld::move_character_down(int16_t id) {
+void ServerWorld::move_character_down(uint16_t id) {
     this->characters[id]->move_down();
-    std::map<int16_t, Character*>::iterator characters_itr;
+    std::map<uint16_t, Character*>::iterator characters_itr;
     // std::map<int16_t, NPC*>::iterator npc_itr;
 
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
@@ -113,9 +113,9 @@ void ServerWorld::move_character_down(int16_t id) {
 }
 
 
-void ServerWorld::move_character_top(int16_t id) {
+void ServerWorld::move_character_top(uint16_t id) {
     this->characters[id]->move_top();
-    std::map<int16_t, Character*>::iterator characters_itr;
+    std::map<uint16_t, Character*>::iterator characters_itr;
     // std::map<int16_t, NPC*>::iterator npc_itr;
 
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
@@ -131,7 +131,7 @@ void ServerWorld::move_character_top(int16_t id) {
 
 
 
-bool ServerWorld::check_collision(int16_t id, int16_t other_id) {
+bool ServerWorld::check_collision(uint16_t id, uint16_t other_id) {
     Character* me = this->characters[id];
     Character* other = this->characters[other_id];
 
@@ -145,17 +145,10 @@ bool ServerWorld::check_collision(int16_t id, int16_t other_id) {
     int topOther = other->get_body_pos_Y();
     int bottomOther = other->get_body_pos_Y() + 31; // CAMBIAR POR UN GETTER A LA RAZA
 
-    if( bottomMe <= topOther )
-        return false;
-
-    if( topMe >= bottomOther )
-        return false;
-
-    if( rightMe <= leftOther )
-        return false;
-
-    if( leftMe >= rightOther )
-        return false;
+    if( bottomMe <= topOther ) return false;
+    if( topMe >= bottomOther ) return false;
+    if( rightMe <= leftOther ) return false;
+    if( leftMe >= rightOther ) return false;
 
     return true;
 }

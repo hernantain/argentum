@@ -26,7 +26,6 @@ struct ProtocolMessage {
     int find(uint16_t id);
     int find_npc(uint16_t id);
     
-
     ProtocolMessage(ProtocolMessage&& other);
     ProtocolMessage& operator=(ProtocolMessage&& other);
 

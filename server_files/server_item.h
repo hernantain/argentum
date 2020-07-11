@@ -2,12 +2,13 @@
 #define _SERVER_ITEM
 
 #include <string>
+#include <stdint.h>
 #include <jsoncpp/json/json.h>
 
 /* Clase que representa a un item del juego */
 class Item {
 protected:
-    int id;
+    uint8_t id;
     std::string name;
 
 public:
@@ -16,7 +17,7 @@ public:
 
     std::string get_name();
 
-    int get_id();
+    uint8_t get_id();
 
     bool operator <(const Item& other) const {
         return id < other.id;

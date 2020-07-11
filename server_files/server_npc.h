@@ -16,10 +16,10 @@ class NPC : public Attackable {
 protected:
     Json::Value& config;
     Movement movement;
-    CollisionInfo &collisionInfo;
-    int id;
+    uint8_t id;
     bool alive;
-    int level, life, max_life, min_damage, max_damage, defense_points;
+    int16_t level, life, max_life;
+    int min_damage, max_damage, defense_points;
 
     // No copiable.
     NPC(const NPC&) = delete;
@@ -36,16 +36,16 @@ public:
     NPC(Json::Value& config, CollisionInfo &collisionInfo);
 
     // Devuelve el id
-    int get_id();
+    uint8_t get_id();
 
     // Devuelve el nivel
-    int get_level();
+    int16_t get_level();
 
     // Devuelve la vida
-    int get_life();
+    int16_t get_life();
 
     // Devuelve la vida maxima
-    int get_max_life();
+    int16_t get_max_life();
 
     // Booleano devuelve verdadero si el NPC se encuentra en una zona segura
     bool is_safe();
@@ -91,10 +91,10 @@ public:
     int get_body_facing();
 
     // Getter de la posicion del cuerpo en X
-    int get_body_pos_X() const;
+    int16_t get_body_pos_X() const;
 
     // Getter de la posicion de la cabeza en X
-    int get_body_pos_Y() const;
+    int16_t get_body_pos_Y() const;
 };
 
 

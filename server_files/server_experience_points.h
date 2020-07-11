@@ -1,13 +1,15 @@
 #ifndef _SERVER_EXPERIENCE_POINTS
 #define _SERVER_EXPERIENCE_POINTS
 
+#include <stdint.h>
+
 /* Clase que representa a los puntos de experiencia de un personaje */
 class ExperiencePoints {
 private:
     int difficulty_constant;
     float level_multiplier;
-    int current_exp;
-    int max_exp;
+    int16_t current_exp;
+    int16_t max_exp;
 
 public:
     // Contructor
@@ -20,10 +22,10 @@ public:
     void add(int points);
     
     // Devuelve la experiencia actual
-    int current();
+    int16_t current();
 
     // Devuelve la maxima del nivel
-    int max();
+    int16_t max();
 
     // Setter de la max experiencia para el nivel recibido
     void set_new_max(int level);

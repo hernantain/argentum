@@ -1,12 +1,14 @@
 #ifndef _SERVER_LIFE_POINTS
 #define _SERVER_LIFE_POINTS
 
+#include <stdint.h>
+
 /* Clase que representa a los ptos de vida de un personaje */
 class LifePoints {
 private:
     int constitution;
     float class_multiplier, race_multiplier;
-    int current_life, max_life;
+    int16_t current_life, max_life;
 
 public:
     // Contructor, recibe la constitucion del personaje
@@ -19,10 +21,10 @@ public:
     void add(int life_points);
 
     // Devuelve la vida actual
-    int current();
+    int16_t current();
 
     // Devuelve el maximo de vida
-    int max();
+    int16_t max();
 
     // Setter de la max vida para el nivel recibido
     void set_new_max(int level);

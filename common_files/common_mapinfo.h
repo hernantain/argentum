@@ -11,6 +11,8 @@
 
 class MapInfo {
 
+    int tile_width, tile_height;
+    int map_width, map_height;
     std::vector<int> layer1;
     std::vector<int> layer2;
     std::vector<TileSetInfo> tileSetInfo;

@@ -9,12 +9,9 @@
 /* Clase que funciona como factory para los distintos tipos de armaduras de la aplicacion */
 class ArmorFactory {
 public:
-    ArmorFactory() {}
 
     /* Recibiendo un id crea el casco correspondiente */
-    Armor make_armor(const int armor_id, Json::Value& config);
-
-    ~ArmorFactory() {}
+    static Armor make_armor(const int armor_id, Json::Value& config);
 };
 
 #endif // _ARMOR_FACTORY_H

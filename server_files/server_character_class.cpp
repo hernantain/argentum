@@ -2,7 +2,7 @@
 
 CharacterClass::CharacterClass() {}
 
-int16_t CharacterClass::get_id() {
+uint8_t CharacterClass::get_id() {
     return this->id;
 }
 

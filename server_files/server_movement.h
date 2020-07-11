@@ -1,6 +1,7 @@
 #ifndef _SERVER_MOVEMENT
 #define _SERVER_MOVEMENT
 
+#include <stdint.h>
 #include "../common_files/common_collision_info.h"
 
 // Which was the last movement.
@@ -16,7 +17,7 @@ enum _lastMovement {
 class Movement {
 private:
     CollisionInfo &collisionInfo;
-    int bodyPosX, bodyPosY;
+    int16_t bodyPosX, bodyPosY;
     // int headPosX, headPosY;
     _lastMovement last_movement;
   
@@ -31,25 +32,25 @@ public:
     Movement(CollisionInfo &collisionInfo);
 
     // Devuelve un int indicando la posicion en X del cuerpo.
-    int get_horizontal_body_position() const;
+    int16_t get_horizontal_body_position() const;
 
     // Devuelve un int indicando la posicion en Y del cuerpo.
-    int get_vertical_body_position() const;
+    int16_t get_vertical_body_position() const;
 
     // Setea el movimiento del personaje hacia la derecha
-    void move_right(int velocity, CollisionInfo &collisionInfo);
+    void move_right(int velocity);
 
     // Setea el movimiento del personaje hacia la izquierda
-    void move_left(int velocity, CollisionInfo &collisionInfo);
+    void move_left(int velocity);
 
     // Setea el movimiento del personaje hacia la derecha
-    void move_top(int velocity, CollisionInfo &collisionInfo);
+    void move_top(int velocity);
 
     // Setea el movimiento del personaje hacia la izquierda
-    void move_down(int velocity, CollisionInfo &collisionInfo);
+    void move_down(int velocity);
 
     // Setea el movimiento del personaje hacia una direccion random
-    void move_random(int velocity, CollisionInfo &collisionInfo);
+    void move_random(int velocity);
 
     // Detiene el movimiento.
     void stop_moving();
@@ -94,7 +95,7 @@ public:
     // Corrige la posicion en Y si el personaje se va de los limites del mapa
     void check_out_of_bounds_Y(int velocity);
 
-    bool check_map_collision(CollisionInfo &collisionInfo);
+    bool check_map_collision();
 
 };
 

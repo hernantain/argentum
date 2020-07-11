@@ -28,12 +28,18 @@ void MapInfo::loadCollisionInfo(CollisionInfo &collisionInfo, Json::Value &tileJ
 
 CollisionInfo MapInfo::load() {
 
-    CollisionInfo collisionInfo;
-
     std::ifstream map("maps/argentum.json");
     Json::Reader reader;
     Json::Value obj, tileJson;
     reader.parse(map, obj); 
+
+    this->tile_width = obj["tilewidth"].asInt();
+    this->tile_height = obj["tileheight"].asInt();
+    this->map_width = obj["width"].asInt();
+    this->map_height = obj["height"].asInt();
+
+    CollisionInfo collisionInfo(tile_width, tile_height, map_width, map_height);
+
     const Json::Value& tilesets = obj["tilesets"]; 
     const Json::Value& layers = obj["layers"];
     const Json::Value& grounds = layers[0]["data"];
@@ -61,12 +67,13 @@ CollisionInfo MapInfo::load() {
 
     for (unsigned int i = 0; i < grounds.size(); ++i) {
         this->layer1.push_back(grounds[i].asInt());
+        collisionInfo.layer1.push_back(grounds[i].asInt());
     }
 
 
     for (unsigned int i = 0; i < trees.size(); ++i) {
         this->layer2.push_back(trees[i].asInt());
-        collisionInfo.layer.push_back(trees[i].asInt());
+        collisionInfo.layer2.push_back(trees[i].asInt());
     }
 
     return std::move(collisionInfo);
@@ -76,6 +83,7 @@ CollisionInfo MapInfo::load() {
 std::vector<TileSetInfo> MapInfo::get_tileset_info() const {
     return this->tileSetInfo;
 }
+
 
 std::vector<int> MapInfo::get_layer1() const {
     return this->layer1;

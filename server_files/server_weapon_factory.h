@@ -14,12 +14,10 @@
 /* Clase que funciona como factory para los distintos tipos de armas de la aplicacion */
 class WeaponFactory {
 public:
-    WeaponFactory() {}
 
     /* Recibiendo un id crea el arma correspondiente */
-    Weapon make_weapon(const int weapon_id, Json::Value& config);
+    static Weapon make_weapon(const int weapon_id, Json::Value& config);
 
-    ~WeaponFactory() {}
 };
 
 #endif // WeaponFactory

@@ -1,6 +1,7 @@
 #ifndef _CHARACTER_FACTORY_H
 #define _CHARACTER_FACTORY_H
 
+#include <stdint.h>
 #include "server_race.h"
 #include "server_elf.h"
 #include "server_gnome.h"
@@ -14,13 +15,11 @@
 /* Clase que funciona como factory para los distintos tipos de personaje de la aplicacion */
 class CharacterFactory {
 public:
-    CharacterFactory() {}
 
     /* Recibiendo un id crea la clase correspondiente */
-    CharacterClass make_class(const int class_id, Json::Value& config);
-    Race make_race(const int race_id, Json::Value& config);
+    static CharacterClass make_class(const uint8_t class_id, Json::Value& config);
+    static Race make_race(const uint8_t race_id, Json::Value& config);
 
-    ~CharacterFactory() {}
 };
 
 #endif // _CHARACTER_FACTORY_H

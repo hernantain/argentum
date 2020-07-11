@@ -10,24 +10,23 @@
 
 NPC::NPC(Json::Value &config, CollisionInfo &collisionInfo) : 
     config(config),
-    movement(collisionInfo),
-    collisionInfo(collisionInfo) {
+    movement(collisionInfo) {
     this->alive = true;
 }
 
-int NPC::get_id() {
+uint8_t NPC::get_id() {
     return id;
 }
 
-int NPC::get_level() {
+int16_t NPC::get_level() {
     return level;
 }
 
-int NPC::get_life() {
+int16_t NPC::get_life() {
     return life;
 }
 
-int NPC::get_max_life() {
+int16_t NPC::get_max_life() {
     return max_life;
 }
 
@@ -132,33 +131,33 @@ bool NPC::is_near(int posX, int posY) {
 }
 
 void NPC::move_right() {
-    movement.move_right(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_right(config["graphics"]["velocity"].asInt());
 }
 
 void NPC::move_left() {
-    movement.move_left(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_left(config["graphics"]["velocity"].asInt());
 }
 
 void NPC::move_top() {
-    movement.move_top(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_top(config["graphics"]["velocity"].asInt());
 }
 
 void NPC::move_down() {
-    movement.move_down(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_down(config["graphics"]["velocity"].asInt());
 }
 
 void NPC::move_random() {
-    movement.move_random(config["graphics"]["velocity"].asInt(), collisionInfo);
+    movement.move_random(config["graphics"]["velocity"].asInt());
 }
 
 int NPC::get_body_facing() { 
     return (int) movement.get_facing_direction();
 }
 
-int NPC::get_body_pos_X() const{
+int16_t NPC::get_body_pos_X() const{
     return movement.get_horizontal_body_position();
 }
 
-int NPC::get_body_pos_Y() const {
+int16_t NPC::get_body_pos_Y() const {
     return movement.get_vertical_body_position();
 }
