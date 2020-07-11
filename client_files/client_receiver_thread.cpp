@@ -33,8 +33,8 @@ void ClientReceiverThread::run() {
 
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
-    std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
-    print_response_info(msg);
+    // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
+    // print_response_info(msg);
     if (msg.id_message == 20) this->process_move(msg);
     if (msg.id_message == 25) this->process_attack(msg);
     if (msg.id_message == 26) this->process_death(msg);
@@ -102,8 +102,8 @@ void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
-    for (unsigned int i = 0; i < msg.npcs.size(); ++i)
-        std::cout << msg.npcs[i].id << std::endl;
+    // for (unsigned int i = 0; i < msg.npcs.size(); ++i)
+    //     std::cout << msg.npcs[i].id << std::endl;
 
     int i = msg.find_npc(msg.id_player);
     if (i != -1)

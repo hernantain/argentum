@@ -23,7 +23,6 @@ struct ProtocolMessage {
 
     ProtocolMessage(int16_t id_message, uint16_t id_player, ProtocolItem item);
 
-
     ProtocolMessage(int16_t id_message);
 
     ProtocolMessage();
