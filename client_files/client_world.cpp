@@ -80,6 +80,15 @@ void ClientWorld::update_npcs(ProtocolMessage &msg) {
 }
 
 
+void ClientWorld::update_player_alive_status(ProtocolMessage &msg) {
+    std::unique_lock<std::mutex> lock(m);
+    for (unsigned int i = 0; i < msg.characters.size(); ++i) {
+        uint16_t id = msg.characters[i].id;
+        this->players[id]->update_alive_status(msg.characters[i].alive);
+    }
+}
+
+
 // MOVE PLAYER
 
 

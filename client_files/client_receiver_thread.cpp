@@ -132,6 +132,7 @@ void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
         this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
         this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
     }
+    world.update_player_alive_status(msg);
 }
 
 

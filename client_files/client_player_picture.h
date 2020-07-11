@@ -28,7 +28,6 @@ class PlayerPicture: public Picture {
     
     Clothes* clothes;
     LTexture headTexture;
-    // SDL_Rect headOrientations[4];
     std::vector<SDL_Rect> headOrientations;
 
     void set_head_sprite();
