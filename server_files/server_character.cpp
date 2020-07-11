@@ -400,7 +400,7 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
 }
 
 
-size_t Character::get_id() {
+int Character::get_id() {
     return id;
 }
 

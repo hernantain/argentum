@@ -72,7 +72,7 @@ public:
     Race race, CollisionInfo &collisionInfo);
 
     // Devuelve el id
-    size_t get_id();
+    int get_id();
 
     // Devuelve la mana actual del personaje
     int get_mana();

@@ -70,6 +70,12 @@ void ClientWorld::update_npcs(ProtocolMessage &msg) {
     }
 }
 
+void ClientWorld::remove_npc(int16_t id) {
+    std::unique_lock<std::mutex> lock(m);
+    delete this->npcs[id];
+    this->npcs.erase(id);
+}
+
 
 void ClientWorld::remove_player(int16_t id) {
     std::unique_lock<std::mutex> lock(m);

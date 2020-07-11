@@ -25,6 +25,8 @@ struct ClientWorld {
 
     void remove_player(int16_t id);
 
+    void remove_npc(int16_t id);
+
     void add_npc(ProtocolNpc &protocolNpc);
 
     void update_npcs(ProtocolMessage &msg);

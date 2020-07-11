@@ -135,11 +135,17 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     Attackable* other = world.get_from_position(player_id, other_posX, other_posY);
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
-        // if (!other->is_alive()) {
-        //     std::vector<int> drop_items = other->drop_items();
-        //     int gold = other->drop_gold();
-        // }
-        msg.id_message = PROTOCOL_ATTACK_CONFIRM;
+        if (!other->is_alive()) {
+            // std::vector<int> drop_items = other->drop_items();
+            // int gold = other->drop_gold();
+            int other_id = world.get_id_from_position(player_id, other_posX, other_posY);
+            std::cout << "OTHER GET_ID:::: " << other_id << std::endl;
+            msg.characters[0].other_id = other_id;
+            msg.id_message = PROTOCOL_KILL_CONFIRM;
+        }
+        else {
+            msg.id_message = PROTOCOL_ATTACK_CONFIRM;
+        }
     } 
     this->get_world(msg, world);
 }
@@ -182,7 +188,7 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
 
 void ProtocolTranslator::update_npcs_event(ProtocolMessage& msg, ServerWorld &world) {
     // forEach npc, Npc move, check deaths in order to spawn that amount
-    int deaths = world.dead_npcs();
+    // int deaths = world.dead_npcs();
     world.move_npcs();
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_UPDATE_NPCS_CONFIRM;
@@ -219,7 +225,12 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
     std::map<int16_t, NPC*>::iterator itr;
     std::vector<ProtocolNpc> tmp;
     
-    for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) { 
+    for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) {
+        if (!itr->second->is_alive()) {
+            world.remove_npc(itr->first);
+            std::cout << "ServerWorld::RemovingDeadNpc" << std::endl;
+            continue;
+        }
         ProtocolNpc protocolNpc(
             itr->first,
             itr->second->get_id(),
