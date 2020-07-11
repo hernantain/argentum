@@ -52,6 +52,15 @@ public:
     // Setea el movimiento del personaje hacia una direccion random
     void move_random(int velocity);
 
+    // Acerca al personaje de costado hacia X Y
+    void move_aside(int velocity, int16_t posX);
+
+    // Acerca al personaje en vertical hacia X Y
+    void move_vertical(int velocity, int16_t posY); 
+
+    // Acerca al personaje hacia la posicion posX, posY
+    void move_to(int velocity, int16_t posX, int16_t posY);
+
     // Detiene el movimiento.
     void stop_moving();
 
@@ -65,6 +74,15 @@ public:
 
     // Booleano que devuelve verdadero si posY esta cerca del personaje bodyPosY
     bool is_near_Y(int posY);
+
+    // Booleano que devuelve verdadero si posX y posY son atacables
+    bool is_attackable(int16_t posX, int16_t posY);
+
+    // Booleano que devuelve verdadero si posX es atacable
+    bool is_attackable_X(int16_t posX);
+
+    // Booleano que devuelve verdadero si posY es atacable
+    bool is_attackable_Y(int16_t posY);
 
     // Booleano que devuelve verdadero si la zona es segura o falso si no.
     bool is_safe();
@@ -81,14 +99,6 @@ public:
     // Devuelve true si el personaje está mirando hacia abajo, false en caso contrario.
     bool is_facing_down();
 
-    // Devuelve un booleano indicando si puede moverse o no.
-    // TODO: aca deberia recibir una referencia al mapa o algo asi.
-    // bool can_move(int velocityX=0, int velocityY=0);
-
-    // Devuelve un booleano indicando si está colisionando
-    // con algún objeto.
-    bool is_colliding();
-
     // Corrige la posicion en X si el personaje se va de los limites del mapa
     void check_out_of_bounds_X(int velocity);
 
@@ -96,7 +106,6 @@ public:
     void check_out_of_bounds_Y(int velocity);
 
     bool check_map_collision();
-
 };
 
 

@@ -17,9 +17,10 @@ struct ServerWorld {
     ServerWorld();
 
     Character* get(uint16_t message_id);
-
+    Character* get_closest_from_position(int16_t npc_posX, int16_t npc_posY);
     Attackable* get_from_position(uint16_t player_id, int16_t posX, int16_t posY);
 
+    bool has_character_close(int16_t npc_posX, int16_t npc_posY);
     void move_npcs();
     void recover_characters();
     

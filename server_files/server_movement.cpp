@@ -7,7 +7,7 @@
 #define CHARACTER_WIDTH 21
 #define CHARACTER_HEIGHT 31
 #define MAX_OFFSET_TOLERANCE 30
-
+#define MAX_ATTACK_OFFSET_TOLERANCE 330
 
 Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) {
     srand(time(NULL));
@@ -81,6 +81,25 @@ void Movement::move_random(int velocity) {
     }
 }
 
+void Movement::move_aside(int velocity, int16_t posX) {
+    int16_t diff_X = bodyPosX - posX;
+    if (diff_X < 0) move_right(velocity);
+    else move_left(velocity);
+}
+
+void Movement::move_vertical(int velocity, int16_t posY) {
+    int16_t diff_Y = bodyPosY - posY;
+    if (diff_Y < 0) move_down(velocity);
+    else move_top(velocity);
+}
+
+void Movement::move_to(int velocity, int16_t posX, int16_t posY) {
+    int16_t diff_X = std::abs(bodyPosX - posX);
+    int16_t diff_Y = std::abs(bodyPosY - posY);
+    if (diff_X > MAX_OFFSET_TOLERANCE) move_aside(velocity, posX);
+    else if (diff_Y > MAX_OFFSET_TOLERANCE) move_vertical(velocity, posY);
+}
+
 void Movement::stop_moving() {
     last_movement = STAND;
 }
@@ -120,6 +139,22 @@ bool Movement::is_near_Y(int posY){
 
 bool Movement::is_near(int posX, int posY) {
     return is_near_X(posX) && is_near_Y(posY);
+}
+
+bool Movement::is_attackable_Y(int16_t posY){
+    int diff = std::abs(bodyPosY - posY);
+    // std::cout << "Diff to Attack in Y " << diff << std::endl;
+    return diff <= MAX_ATTACK_OFFSET_TOLERANCE;
+}
+
+bool Movement::is_attackable_X(int16_t posX) {
+    int diff = std::abs(bodyPosX - posX);
+    // std::cout << "Diff to Attack in X " << diff << std::endl;
+    return diff <= MAX_ATTACK_OFFSET_TOLERANCE;
+}
+    
+bool Movement::is_attackable(int16_t posX, int16_t posY){
+    return is_attackable_X(posX) && is_attackable_Y(posY);
 }
 
 bool Movement::is_safe() {

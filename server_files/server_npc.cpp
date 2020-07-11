@@ -150,6 +150,11 @@ void NPC::move_random() {
     movement.move_random(config["graphics"]["velocity"].asInt());
 }
 
+void NPC::move_to(int16_t posX, int16_t posY) {
+    movement.move_to(config["graphics"]["velocity"].asInt(), posX, posY);
+}
+
+
 int NPC::get_body_facing() { 
     return (int) movement.get_facing_direction();
 }

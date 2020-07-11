@@ -348,6 +348,10 @@ bool Character::is_near(int posX, int posY) {
     return movement.is_near(posX, posY);
 }
 
+bool Character::is_attackable(int16_t posX, int16_t posY) {
+    return movement.is_attackable(posX, posY);
+}
+
 void Character::move_right() {
     movement.move_right(config["graphics"]["velocity"].asInt());
 }
