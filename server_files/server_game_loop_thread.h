@@ -13,12 +13,9 @@ class GameLoopThread : public Thread {
 private:
     Queue &queue;
     std::atomic<bool> running;
-    int max_npcs;
-
-    void create_npcs();
 
 public:
-    GameLoopThread(Queue &queue, int max_npcs);
+    GameLoopThread(Queue &queue);
 
     virtual void run() override;
 };

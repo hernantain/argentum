@@ -4,7 +4,6 @@
 
 ServerWorld::ServerWorld() {}
 
-
 Character* ServerWorld::get(uint16_t message_id) {
     return this->characters[message_id];
 }
@@ -30,13 +29,8 @@ bool ServerWorld::empty() {
     return (this->characters.size() == 0);
 }
 
-int ServerWorld::dead_npcs() {
-    int deaths = 0;
-    std::map<uint16_t, NPC*>::iterator itr;
-    for (itr = npcs.begin(); itr != npcs.end(); ++itr) {
-        if(!itr->second->is_alive()) deaths++;
-    }
-    return deaths;
+bool ServerWorld::is_full(size_t max_npcs) {
+    return (this->npcs.size() == max_npcs);
 }
 
 void ServerWorld::move_npcs() {

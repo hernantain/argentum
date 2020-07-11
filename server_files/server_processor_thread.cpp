@@ -20,8 +20,7 @@ ServerProcessorThread::ServerProcessorThread(
 
 void ServerProcessorThread::run() {
 
-    int npc_limit = config["npc"]["max_limit"].asInt();
-    Thread* game_loop = new GameLoopThread(receiversQueue, npc_limit);
+    Thread* game_loop = new GameLoopThread(receiversQueue);
     game_loop->start();  // NPC THREAD
 
     ProtocolTranslator protocol_translator(config, collisionInfo);
