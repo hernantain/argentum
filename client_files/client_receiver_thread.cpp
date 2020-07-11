@@ -33,7 +33,8 @@ void ClientReceiverThread::run() {
 
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
-    // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
+    std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
+    print_response_info(msg);
     if (msg.id_message == 20) this->process_move(msg);
     if (msg.id_message == 25) this->process_attack(msg);
     if (msg.id_message == 26) this->process_death(msg);
@@ -47,40 +48,40 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == 71) this->process_create_npc(msg);
     if (msg.id_message == 73) this->process_move_npcs(msg);
     if (msg.id_message == 75) this->process_recover_characters(msg);
-    
     if (msg.id_player == this->player_id)
         world.players[this->player_id]->set_camera(camera);
 }
 
 
 void ClientReceiverThread::process_move(ProtocolMessage &msg) {
-    Player* player = world.players[msg.id_player];
     int i = msg.find(msg.id_player);
-
-    player->set_position((int) msg.characters[i].bodyPosX, (int) msg.characters[i].bodyPosY, (int) msg.characters[i].orientation);
+    if (i != -1)
+        world.move_player(msg.id_player, msg.characters[i].bodyPosX, msg.characters[i].bodyPosY, msg.characters[i].orientation);
 }
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
-    Player* player = world.players[msg.id_player];
     int i = msg.find(msg.id_player);
-    player->set_helmet(msg.characters[i].helmetId);
+    if (i != -1)
+        world.player_set_helmet(msg.id_player, msg.characters[i].helmetId);
+    
 }
 
 void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
-    Player* player = world.players[msg.id_player];
     int i = msg.find(msg.id_player);
-    player->set_armor(msg.characters[i].armorId);
+    if (i != -1)
+        world.player_set_armor(msg.id_player, msg.characters[i].armorId);
 }
 
 void ClientReceiverThread::process_equip_shield(ProtocolMessage &msg) {
-    Player* player = world.players[msg.id_player];
     int i = msg.find(msg.id_player);
-    player->set_shield(msg.characters[i].shieldId);
+    if (i != -1)
+        world.player_set_shield(msg.id_player, msg.characters[i].shieldId);
 }
 
 void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
-    Player* player = world.players[msg.id_player];
-    player->set_weapon(msg.characters[0].weaponId);
+    int i = msg.find(msg.id_player);
+    if (i != -1)
+        world.player_set_weapon(msg.id_player, msg.characters[i].weaponId);
 }
 
 
@@ -94,7 +95,7 @@ void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
 void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
     if (i != -1) {
-        // std::cout << "HAY QUE CREAR OTRO PLAYER" << std::endl;
+        std::cout << "HAY QUE CREAR OTRO PLAYER: " << msg.id_player << "EN POS: " << i << std::endl; 
         world.add_player(msg.characters[i]);
     }
 }
@@ -154,3 +155,23 @@ void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
     }
 }
 
+
+void ClientReceiverThread::print_response_info(ProtocolMessage &msg) {
+    std::cout << "TAMANIO MUNDO: " << world.players.size() << std::endl;
+    for (unsigned int i = 0; i < msg.characters.size(); ++i) {
+        std::cout << "PROT CHARACTER ID " << (int) msg.characters[i].id << std::endl;
+        std::cout << "PROT CHARACTER ID RACE " << (int) msg.characters[i].id_race << std::endl;
+        std::cout << "PROT CHARACTER ID CLASE " << (int) msg.characters[i].id_class << std::endl;
+        std::cout << "PROT CHARACTER bodyposX " << (int) msg.characters[i].bodyPosX << std::endl;
+        std::cout << "PROT CHARACTER bodyposY " << (int) msg.characters[i].bodyPosY << std::endl;
+        std::cout << "PROT CHARACTER ORIENTAT " << (int) msg.characters[i].orientation << std::endl;
+        std::cout << "PROT CHARACTER MANA " << (int) msg.characters[i].mana << std::endl;
+        std::cout << "PROT CHARACTER MAX_MANA " << (int) msg.characters[i].max_mana << std::endl;
+        std::cout << "PROT CHARACTER LIFE " << (int) msg.characters[i].life << std::endl;
+        std::cout << "PROT CHARACTER MAX_LIFE " << (int) msg.characters[i].max_life << std::endl;
+        std::cout << "PROT CHARACTER EXPERIEN " << (int) msg.characters[i].experience << std::endl;
+        std::cout << "PROT CHARACTER MAX EXP " << (int) msg.characters[i].max_experience << std::endl;
+        std::cout << "PROT CHARACTER ALIVE " << (int) msg.characters[i].alive << std::endl;
+        std::cout << std::endl;
+    }
+}

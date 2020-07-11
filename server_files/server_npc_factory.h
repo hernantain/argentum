@@ -12,12 +12,9 @@
 /* Clase que funciona como factory para los distintos tipos de NPC de la aplicacion */
 class NPCFactory {
 public:
-    NPCFactory() {}
 
     /* Recibiendo un id crea al npc correspondiente */
-    NPC* make_npc(int npc_id, Json::Value& config, CollisionInfo& collisionInfo);
-
-    ~NPCFactory() {}
+    static NPC* make_npc(int npc_id, Json::Value& config, CollisionInfo& collisionInfo);
 };
 
 #endif // _NPC_FACTORY_H

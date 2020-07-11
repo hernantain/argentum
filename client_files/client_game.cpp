@@ -22,8 +22,8 @@
 
 
 Game::Game(
-	int16_t player_race, 
-	int16_t player_class) : gRenderer(NULL), 
+	uint8_t player_race, 
+	uint8_t player_class) : gRenderer(NULL), 
 							running(true), 
 							player_race(player_race),
 							player_class(player_class) {
@@ -41,7 +41,6 @@ Game::Game(
 	main.y = 0;
 	main.w = 3 * (this->window.getWidth() / 4);
 	main.h = this->window.getHeight();
-	// SDL_RenderSetViewport( gRenderer, &main );
 
 	camera.x = main.x;
 	camera.y = main.y;
@@ -69,7 +68,7 @@ Map Game::loadMap() {
 
 ClientWorld Game::loadWorld(InfoView &infoView) {
 	ProtocolCharacter character(this->player_id, this->player_race, this->player_class);
-	ProtocolMessage msg(65, this->player_id, std::move(character)); // 65 para crear
+	ProtocolMessage msg(65, this->player_id, character); // 65 para crear
 
 	msgpack::sbuffer buffer;
 	msgpack::packer<msgpack::sbuffer> pk(&buffer);
@@ -86,24 +85,24 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
     
 	ClientWorld clientWorld(gRenderer);
 
-	std::cout << "Recibiendo mundo tamanio: " << rec_msg.characters.size() << std::endl;
+	std::cout << "Tamanio mundo: " << rec_msg.characters.size() << std::endl;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
+		std::cout << "ID PLAYER: " << (int) rec_msg.characters[i].id << std::endl;
+		std::cout << "ID RAZA PLAYER: " << (int) rec_msg.characters[i].id_race << std::endl;
+		std::cout << "ID  CLASE PLAYER: " << (int) rec_msg.characters[i].id_class << std::endl;
 		if (rec_msg.characters[i].id == this->player_id) {
 			infoView.set_life(rec_msg.characters[i].life, rec_msg.characters[i].max_life);
 			infoView.set_mana(rec_msg.characters[i].mana, rec_msg.characters[i].max_mana);
 			infoView.set_experience(rec_msg.characters[i].experience, rec_msg.characters[i].max_experience);
-			std::cout << "POR ACA PASA UNA VEZ" << std::endl;
 		}
-		std::cout << "PLAYER ID: " << (int) rec_msg.characters[i].id << std::endl;
-		std::cout << "PLAYER RAZA: " << (int) rec_msg.characters[i].id_race << std::endl;
-		std::cout << "PLAYER Clase: " << (int) rec_msg.characters[i].id_class << std::endl;
+
 		clientWorld.add_player(rec_msg.characters[i]);
 	}
 
 	for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
 		clientWorld.add_npc(rec_msg.npcs[i]);
 
-	return std::move(clientWorld);
+	return clientWorld;
 }
 
 
@@ -117,30 +116,24 @@ void Game::run() {
 	InfoView infoView(this->gRenderer, inventory);
 	ClientWorld world = this->loadWorld(infoView);
 
+	std::cout << "TAMANIO MUNDO EN GAME RUN: " << world.players.size() << std::endl;
 
-	std::cout << "MUNDO CREADO" << std::endl;
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
-
-	std::cout << "SENDER CREADO" << std::endl;
-	Player* player = world.get_player(this->player_id);
 
 	Thread* receiver = new ClientReceiverThread(skt, world, camera, infoView, player_id);
 	receiver->start();
 
-	std::cout << "Receiver Creado" << std::endl;
-	int it = 0;
-	
+	int it = 0;	
 	// auto rate = std::chrono::duration<double, std::milli>(float(1000)/60);
 	// auto t_start = std::chrono::high_resolution_clock::now();
-	std::cout << "LLEGA ACA" << std::endl;
+
 	SDL_Event e;
 	// Event handler
 	while(this->running) {	
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
-				// skt.close_socket();
 				ProtocolMessage msg;
 				msg.id_message = 67;
 				msg.id_player = this->player_id;
@@ -156,22 +149,22 @@ void Game::run() {
 				continue;
 
 			} else {
-				ProtocolMessage msg = player->handleEvent(e, camera);
+				ProtocolMessage msg = world.player_handle_event(player_id, e, camera);
 				queue.push(msg);	
 			}
 		}
 
 		SDL_RenderSetViewport( gRenderer, &inventory );
 		SDL_SetRenderDrawColor(gRenderer, 17, 5, 92, 1);
-		SDL_RenderClear( gRenderer );
+		SDL_RenderClear(gRenderer);
 		infoView.render();
 
-		SDL_RenderSetViewport( gRenderer, &main );
+		SDL_RenderSetViewport(gRenderer, &main);
 		map.renderFirstLayer(camera);
 		world.render(this->player_id, camera, it);
 		map.renderSecondLayer(camera);
 		
-		SDL_RenderPresent( this->gRenderer ); //Update screen
+		SDL_RenderPresent(this->gRenderer); 
 				
 		// auto t_end = std::chrono::high_resolution_clock::now();
 		// auto rest = rate - (t_end - t_start);
@@ -189,21 +182,18 @@ void Game::run() {
 		it++;
 	}
 
-	std::cout << "AFUERA DEL WHILE?" << std::endl;
 	sender->join();
 	delete sender;
 
 	receiver->join();
 	delete receiver;
 
-	std::cout << "ACA SEGURO QUE NO" << std::endl;
 	skt.close_socket();
 }
 
 
 
 bool Game::init() {
-
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
 		return false;
@@ -213,22 +203,19 @@ bool Game::init() {
 		printf( "Warning: Linear texture filtering not enabled!" );
 	} 
 
-
 	if( !this->window.init() ) {
 		printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 		return false;
 	} 
 	
-
 	this->gRenderer = this->window.createRenderer();
 	if( this->gRenderer == NULL ) {
 		printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
 		return false;
 	} 
-	//Initialize renderer color
+
 	SDL_SetRenderDrawColor( this->gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
-	//Initialize PNG loading
 	int imgFlags = IMG_INIT_PNG;
 	if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
 		printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );

@@ -1,12 +1,14 @@
 #ifndef _SERVER_MANA_POINTS
 #define _SERVER_MANA_POINTS
 
+#include <stdint.h>
+
 /* Clase que representa a los puntos de mana de un personaje */
 class ManaPoints {
 private:
     int intelligence;
     float class_multiplier, race_multiplier;
-    int current_mana, max_mana;
+    int16_t current_mana, max_mana;
 
 public:
     // Contructor, recibe la inteligencia de la raza
@@ -19,10 +21,10 @@ public:
     void add(int mana_points);
     
     // Devuelve la mana actual
-    int current();
+    int16_t current();
 
     // Devuelve la mana maxima
-    int max();
+    int16_t max();
 
     // Setter de la max mana para el nivel recibido
     void set_new_max(int level);

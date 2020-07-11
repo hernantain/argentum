@@ -15,27 +15,30 @@ ClientWorld::ClientWorld(SDL_Renderer *gRenderer) {
 }
     
 
-void ClientWorld::add_player(int16_t id, Player* player) {
+void ClientWorld::add_player(uint16_t id, Player* player) {
+    std::cout << "Antes de insertar, tamanio: " << players.size() << std::endl;
     std::cout << "Insertando " << id << std::endl;
-    this->players.insert(std::pair<int16_t, Player*> (id, player));
+    this->players.insert(std::pair<uint16_t, Player*> (id, player));
+    std::cout << "Despues de insertar, tamanio: " << players.size() << std::endl;
 }
 
-void ClientWorld::add_npc(int16_t id, NPC* npc) {
+void ClientWorld::add_npc(uint16_t id, NPC* npc) {
     // std::cout << "Insertando " << id << std::endl;
-    this->npcs.insert(std::pair<int16_t, NPC*> (id, npc));
+    this->npcs.insert(std::pair<uint16_t, NPC*> (id, npc));
 }
 
 
-Player* ClientWorld::get_player(int16_t id) {
+Player* ClientWorld::get_player(uint16_t id) {
     std::unique_lock<std::mutex> lock(m);
     return this->players[id];
 }
 
+// ADD PLAYER
 
 void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
     std::unique_lock<std::mutex> lock(m);
     Player* player;
-    
+    std::cout << "PROTOCOL_CHARACTER ID: " << protocolCharacter.id << std::endl;
     if (protocolCharacter.id_race == 1) {
         player = new Human(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);
@@ -52,7 +55,10 @@ void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
         player = new Gnome(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);
     }
+
 }
+
+// ADD NPCs
 
 
 void ClientWorld::add_npc(ProtocolNpc &protocolNpc) {
@@ -60,6 +66,9 @@ void ClientWorld::add_npc(ProtocolNpc &protocolNpc) {
     NPC* npc = new NPC(protocolNpc.id, protocolNpc.npc_type, gRenderer, protocolNpc.posX, protocolNpc.posY);
     this->add_npc(protocolNpc.id, npc);
 }
+
+// UPDATE NPCs
+
 
 void ClientWorld::update_npcs(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);
@@ -86,37 +95,86 @@ void ClientWorld::remove_npc(int16_t id) {
 }
 
 
-void ClientWorld::remove_player(int16_t id) {
+// MOVE PLAYER
+
+
+void ClientWorld::move_player(uint16_t id, int16_t newPosX, int16_t newPosY, int16_t orientation) {
+    std::unique_lock<std::mutex> lock(m);
+    Player* player = players[id];
+    player->set_position(newPosX, newPosY, orientation);
+}
+
+
+// SETTER OBJECTS
+
+void ClientWorld::player_set_helmet(uint16_t id, uint8_t helmet_id) {
+    std::unique_lock<std::mutex> lock(m);
+    Player* player = players[id];
+    player->set_helmet(helmet_id);
+}
+
+void ClientWorld::player_set_armor(uint16_t id, uint8_t armor_id) {
+    std::unique_lock<std::mutex> lock(m);
+    Player* player = players[id];
+    player->set_armor(armor_id);
+}
+
+void ClientWorld::player_set_weapon(uint16_t id, uint8_t weapon_id) {
+    std::unique_lock<std::mutex> lock(m);
+    Player* player = players[id];
+    player->set_weapon(weapon_id);
+}
+
+void ClientWorld::player_set_shield(uint16_t id, uint8_t shield_id) {
+    std::unique_lock<std::mutex> lock(m);
+    Player* player = players[id];
+    player->set_shield(shield_id);
+}
+
+
+// REMOVE PLAYER
+
+void ClientWorld::remove_player(uint16_t id) {
     std::unique_lock<std::mutex> lock(m);
     delete this->players[id];
     this->players.erase(id);
 }
 
+// HANDLE EVENT PLAYER
 
-void ClientWorld::render(int16_t id, SDL_Rect &camera, int &it) {
+ProtocolMessage ClientWorld::player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera) {
     std::unique_lock<std::mutex> lock(m);
-    std::map<int16_t, Player*>::iterator itr;
+    return std::move(this->players[player_id]->handleEvent(e, camera));
+}
+
+// RENDER
+
+void ClientWorld::render(uint16_t id, SDL_Rect &camera, int &it) {
+    std::unique_lock<std::mutex> lock(m);
+    std::map<uint16_t, Player*>::iterator itr;
     for (itr = players.begin(); itr != players.end(); ++itr)  
         itr->second->render(camera, it);
 
-    std::map<int16_t, NPC*>::iterator npc_itr;
+    std::map<uint16_t, NPC*>::iterator npc_itr;
     for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr)  
         npc_itr->second->render(camera);
-
 }
 
 
+// Constructor y asignacion por movimiento.
+
 
 ClientWorld::ClientWorld(ClientWorld&& other) {
-    this->players = std::move(other.players);
-    this->npcs = std::move(other.npcs);
+    this->players = other.players;
+    this->npcs = other.npcs;
     this->gRenderer = other.gRenderer;
 }
 
 
 ClientWorld& ClientWorld::operator=(ClientWorld&& other) {
-    this->players = std::move(other.players);
-    this->npcs = std::move(other.npcs);
+    this->players = other.players;
+    this->npcs = other.npcs;
     this->gRenderer = other.gRenderer;
     return *this;
 }
+

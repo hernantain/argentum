@@ -8,12 +8,12 @@
 class Drawable {
 
     protected:
-        int16_t id;
+        uint16_t id;
         int orientation;
         SDL_Renderer* gRenderer;
 
     public:
-        Drawable(int16_t id, SDL_Renderer* gRenderer);
+        Drawable(uint16_t id, SDL_Renderer* gRenderer);
 
 };
 

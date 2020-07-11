@@ -6,7 +6,7 @@
 
 
 struct ProtocolNpc {
-    int16_t id;
+    uint16_t id;
     int16_t npc_type;
     int16_t posX;
     int16_t posY;
@@ -14,10 +14,10 @@ struct ProtocolNpc {
 
     ProtocolNpc();
 
-    ProtocolNpc(int16_t id, int16_t npc_type);
+    ProtocolNpc(uint16_t id, int16_t npc_type);
 
     ProtocolNpc(
-        int16_t id,
+        uint16_t id,
         int16_t npc_type,
         int16_t posX,
         int16_t posY,

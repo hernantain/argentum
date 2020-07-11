@@ -4,7 +4,7 @@
 
 
 Drawable::Drawable(
-    int16_t id, 
+    uint16_t id, 
     SDL_Renderer* gRenderer) : id(id),
                                 orientation(STANDING){
     this->gRenderer = gRenderer;

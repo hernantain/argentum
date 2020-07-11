@@ -15,13 +15,13 @@
 
 
 class Player: public Drawable {
-    std::mutex m;
-    int headOffsetX, headOffsetY;
+    // std::mutex m;
+    int16_t headOffsetX, headOffsetY;
     protected:
-        int bodyPosX, bodyPosY;
-        int headPosX, headPosY;
+        int16_t bodyPosX, bodyPosY;
+        int16_t headPosX, headPosY;
         int16_t otherPosX, otherPosY;
-        int helmetId, armorId, shieldId, weaponId;
+        uint8_t helmetId, armorId, shieldId, weaponId;
         std::vector<Clothes*> clothes;
         std::vector<Helmet*> helmets;
         std::vector<Weapon*> weapons;
@@ -33,7 +33,7 @@ class Player: public Drawable {
     void load_weapons();
     void load_shields();
     public:
-        Player(int bodyPosX, int bodyPosY, int headPosX, int headPosY, int16_t id, SDL_Renderer* gRenderer);
+        Player(int16_t bodyPosX, int16_t bodyPosY, int16_t headPosX, int16_t headPosY, uint16_t id, SDL_Renderer* gRenderer);
 
 		ProtocolMessage handleEvent( SDL_Event& e, SDL_Rect &camera );
 
@@ -41,7 +41,7 @@ class Player: public Drawable {
 
 		void update_frames();
 
-		void set_position(int newBodyPosX, int newBodyPosY, int orientation);
+		void set_position(int16_t newBodyPosX, int16_t newBodyPosY, int orientation);
         void set_camera(SDL_Rect &camera);
 
         void set_weapon(int weaponId);
@@ -49,10 +49,7 @@ class Player: public Drawable {
         void set_armor(int armorId);
         void set_shield(int shieldId);
 
-        int getPosX() const;
-        int getPosY() const;
-
-        int16_t getId() const;
+        uint16_t getId() const;
 
 };
 

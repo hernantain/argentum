@@ -8,7 +8,7 @@ ProtocolMessage::ProtocolMessage(
     uint16_t id_player, 
     ProtocolCharacter character) : id_message(id_message),
                                    id_player(id_player) {
-    this->characters.push_back(std::move(character));
+    this->characters.push_back(character);
 }
 
 ProtocolMessage::ProtocolMessage(
@@ -34,8 +34,8 @@ ProtocolMessage::ProtocolMessage() {}
 
 ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
     // std::cout << "Constructor por movimiento" << std::endl;
-    this->id_message = std::move(other.id_message);
-    this->id_player = std::move(other.id_player);
+    this->id_message = other.id_message;
+    this->id_player = other.id_player;
     this->characters = other.characters;
     this->npcs = other.npcs;
     this->items = other.items;
@@ -43,8 +43,8 @@ ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
 
 ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
     // std::cout << "Asignando por movimiento" << std::endl;
-    this->id_message = std::move(other.id_message);
-    this->id_player = std::move(other.id_player);
+    this->id_message = other.id_message;
+    this->id_player = other.id_player;
     this->characters = other.characters;
     this->npcs = other.npcs;
     this->items = other.items;

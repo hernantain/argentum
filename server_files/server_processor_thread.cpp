@@ -18,7 +18,6 @@ ServerProcessorThread::ServerProcessorThread(
 
 
 
-
 void ServerProcessorThread::run() {
 
     int npc_limit = config["npc"]["max_limit"].asInt();
@@ -30,9 +29,11 @@ void ServerProcessorThread::run() {
     
     while (running) {
         ProtocolMessage received_msg = this->receiversQueue.pop();
+        if (received_msg.id_message == 1)
+            continue;
+        
         protocol_translator.translate(received_msg, serverWorld);
         if (received_msg.id_message != NOTHING)
            this->clientManager.broadcastMessage(received_msg);
-
     }
 }

@@ -23,11 +23,11 @@ void LifePoints::add(int life_points){
     if (current_life >= max_life) current_life = max_life;
 }
 
-int LifePoints::current(){
+int16_t LifePoints::current(){
     return current_life;
 }
 
-int LifePoints::max(){
+int16_t LifePoints::max(){
     return max_life;
 }
 

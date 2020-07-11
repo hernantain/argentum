@@ -6,7 +6,7 @@ std::string Item::get_name() {
     return name;
 }
 
-int Item::get_id() {
+uint8_t Item::get_id() {
     return id;
 }
 

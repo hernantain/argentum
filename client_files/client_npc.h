@@ -11,11 +11,11 @@
 class NPC: public Drawable {
 
     public:
-        uint16_t npc_id;
+        uint8_t npc_id;
         int16_t posX, posY;
         NpcPicture* npcPicture;
 
-        NPC(int16_t id, int16_t npc_id, SDL_Renderer* gRenderer, int16_t posX, int16_t posY);
+        NPC(uint16_t id, uint8_t npc_id, SDL_Renderer* gRenderer, int16_t posX, int16_t posY);
 
 		void set_position(int newPosX, int newPosY, int orientation);
 
