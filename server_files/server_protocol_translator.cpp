@@ -138,9 +138,6 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
         if (!other->is_alive()) {
             // std::vector<int> drop_items = other->drop_items();
             // int gold = other->drop_gold();
-            int other_id = world.get_id_from_position(player_id, other_posX, other_posY);
-            std::cout << "OTHER GET_ID:::: " << other_id << std::endl;
-            msg.characters[0].other_id = other_id;
             msg.id_message = PROTOCOL_KILL_CONFIRM;
         }
         else {

@@ -31,6 +31,8 @@ struct ClientWorld {
 
     void update_npcs(ProtocolMessage &msg);
 
+    void update_dead_npcs(ProtocolMessage &msg);
+
     void render(int16_t id, SDL_Rect &camera, int &it);
 
     Player* get_player(int16_t id);

@@ -24,7 +24,6 @@ struct ProtocolCharacter {
     int16_t experience;
     int16_t max_experience;
     int16_t gold;
-    int16_t other_id;
     bool alive;
 
     ProtocolCharacter(

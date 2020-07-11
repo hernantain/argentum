@@ -110,12 +110,10 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
-    // std::cout << "NPCs moving"<< std::endl;
     world.update_npcs(msg);
 }
 
 void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
-    // std::cout << "Recovering Character" << std::endl;
     int i = msg.find(this->player_id);
     bool is_alive = msg.characters[i].alive;
     if (i != -1 && is_alive) {
@@ -136,19 +134,12 @@ void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_death(ProtocolMessage &msg) {
     int i = msg.find(this->player_id);
-    std::cout << "Show me i " << i << std::endl;
-    int id_other = msg.characters[i].other_id;
-    std::cout << "Show me the other ID: " << id_other << std::endl;
     if (i != -1) {
         this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
         this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
         this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
     }
-    // if (id_other == -1) {
-        // If it didnt found it, its because its dead
-        // world.remove_npc(msg.id_other);
-    // }
-    // world.update_npcs(msg);
+    world.update_dead_npcs(msg);
 }
 
 
