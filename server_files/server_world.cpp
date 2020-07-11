@@ -59,7 +59,7 @@ void ServerWorld::move_npcs() {
         int16_t posX = current->get_body_pos_X();
         int16_t posY = current->get_body_pos_Y();
         if (!has_character_close(posX, posY)) {
-            std::cout << "No esta cerca" << std::endl;
+            std::cout << "No hay characters cerca" << std::endl;
             current->move_random();
         } else{
             std::cout << "Tengo a un character cerca" << std::endl;
