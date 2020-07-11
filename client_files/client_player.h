@@ -5,22 +5,22 @@
 #include "client_player_picture.h"
 #include "client_drawable.h"
 #include "client_shield.h"
+#include "client_ghost.h"
 
 #include "../common_files/common_protocol_message.h"
 #include "../common_files/common_protocol_character.h"
 
 #include <vector>
-#include <mutex>
 #include <stdint.h>
 
 
 class Player: public Drawable {
-    // std::mutex m;
-    int16_t headOffsetX, headOffsetY;
     protected:
         int16_t bodyPosX, bodyPosY;
         int16_t headPosX, headPosY;
         int16_t otherPosX, otherPosY;
+        bool alive;
+        int16_t headOffsetX, headOffsetY;
         uint8_t helmetId, armorId, shieldId, weaponId;
         std::vector<Clothes*> clothes;
         std::vector<Helmet*> helmets;
@@ -28,6 +28,7 @@ class Player: public Drawable {
         std::vector<Shield*> shields;
         PlayerPicture* playerPicture;
         EquippedPlayer* equippedPlayer;
+        Ghost* ghost;
 
     void load_helmets();
     void load_weapons();
@@ -48,6 +49,8 @@ class Player: public Drawable {
         void set_helmet(int helmetId);
         void set_armor(int armorId);
         void set_shield(int shieldId);
+
+        void update_alive_status(bool alive);
 
         uint16_t getId() const;
 

@@ -15,6 +15,7 @@
 #include "client_player.h"
 #include <iostream>
 
+
 Player::Player(
     int16_t bodyPosX, 
     int16_t bodyPosY, 
@@ -28,10 +29,12 @@ Player::Player(
 								headPosY(headPosY) {
 	this->headOffsetX = headPosX - bodyPosX;
 	this->headOffsetY = headPosY - bodyPosY;
+	this->alive = true;
 	this->armorId = 0;
 	this->weaponId = 0;
 	this->shieldId = 0;
 	this->helmetId = 0;
+	this->ghost = NULL;
 }
 
 
@@ -56,7 +59,6 @@ void Player::set_camera(SDL_Rect &camera) {
 }
 
 void Player::set_position(int16_t newBodyPosX, int16_t newBodyPosY, int orientation) {
-	// std::unique_lock<std::mutex> lock(this->m);
 	this->orientation = orientation;
 	this->bodyPosX = newBodyPosX;
 	this->bodyPosY = newBodyPosY;
@@ -71,18 +73,32 @@ void Player::set_position(int16_t newBodyPosX, int16_t newBodyPosY, int orientat
 // }
 
 
+void Player::update_alive_status(bool alive) {
+	this->alive = alive;
+}
+
 
 void Player::render(SDL_Rect &camera, int &it) {
-	// std::unique_lock<std::mutex> lock(this->m);
-	equippedPlayer->render(
-		bodyPosX - camera.x, 
-		bodyPosY - camera.y, 
-		headPosX - camera.x, 
-		headPosY - camera.y, 
-		gRenderer, 
-		this->orientation, 
-		it
-	);
+	if (alive) {
+		equippedPlayer->render(
+			bodyPosX - camera.x, 
+			bodyPosY - camera.y, 
+			headPosX - camera.x, 
+			headPosY - camera.y, 
+			gRenderer, 
+			this->orientation, 
+			it
+		);
+	} else {
+		ghost = (ghost != NULL) ? ghost : new Ghost(this->gRenderer);
+		ghost->render(
+			bodyPosX - camera.x, 
+			bodyPosY - camera.y, 
+			gRenderer, 
+			orientation, 
+			it
+		);
+	}
 }
 
 
@@ -174,8 +190,7 @@ void Player::set_shield(int shieldId) {
 
 
 ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
-	//If a key was pressed
-	// std::unique_lock<std::mutex> lock(m);
+
 	int event_id = 1;
 	int x, y;
 	if( e.type == SDL_KEYDOWN ) {

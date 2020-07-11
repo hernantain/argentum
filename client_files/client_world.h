@@ -4,6 +4,7 @@
 #include <map>
 #include <SDL2/SDL.h>
 #include <stdint.h>
+#include <mutex>
 
 #include "client_player.h"
 #include "client_npc.h"
@@ -34,7 +35,9 @@ struct ClientWorld {
     void player_set_shield(uint16_t id, uint8_t shield_id);
 
     void update_npcs(ProtocolMessage &msg);
+    void update_player_alive_status(ProtocolMessage &msg);
     void update_dead_npcs(ProtocolMessage &msg);
+
 
     void render(uint16_t id, SDL_Rect &camera, int &it);
 
@@ -47,7 +50,6 @@ struct ClientWorld {
 
     ClientWorld(const ClientWorld&) = delete;
     ClientWorld& operator=(const ClientWorld&) = delete;
-
 };
 
 
