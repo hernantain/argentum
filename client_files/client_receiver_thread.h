@@ -33,6 +33,7 @@ class ClientReceiverThread : public Thread {
     void process_recover_characters(ProtocolMessage &msg);
     void process_meditation(ProtocolMessage &msg);
     void process_attack(ProtocolMessage &msg);
+    void process_death(ProtocolMessage &msg);
     void process_log_off(ProtocolMessage &msg);
     void print_response_info(ProtocolMessage &msg);
     public:

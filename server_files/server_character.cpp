@@ -151,7 +151,6 @@ int Character::drop_gold() {
 }
 
 void Character::take_item(Item& item) {
-    // TODO: heres just the logic, we should send some message to the client
     if(!alive) return;
     inventory.add_item(item);
 }
@@ -397,8 +396,8 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.max_life = this->get_max_life();
     protocolCharacter.experience = this->get_current_experience();
     protocolCharacter.max_experience = this->get_max_experience();
-    protocolCharacter.alive = this->is_alive();
-    
+    protocolCharacter.alive = this->is_alive();   
+  
     protocolCharacter.otherPosX = 0;
     protocolCharacter.otherPosY = 0;
     protocolCharacter.shieldId = 0;
@@ -422,11 +421,9 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     // std::cout << std::endl;
 }
 
-
 uint16_t Character::get_id() {
     return id;
 }
-
 
 uint8_t Character::get_race_id() const {
     return race.get_id();

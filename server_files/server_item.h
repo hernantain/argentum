@@ -10,6 +10,9 @@ class Item {
 protected:
     uint8_t id;
     std::string name;
+    int posX;
+    int posY;
+    int amount;
 
 public:
     // Contructor, recibe la cantidad de ese objeto
@@ -18,6 +21,13 @@ public:
     std::string get_name();
 
     uint8_t get_id();
+
+    int get_amount();
+    int get_posX();
+    int get_posY();
+    void set_amount(int item_amount);
+    void set_posX(int pos);
+    void set_posY(int pos);
 
     bool operator <(const Item& other) const {
         return id < other.id;

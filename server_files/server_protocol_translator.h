@@ -27,6 +27,7 @@
 #define PROTOCOL_EQUIP_WEAPON 5
 #define PROTOCOL_EQUIP_SHIELD 6
 #define PROTOCOL_MEDITATION 7
+#define PROTOCOL_TAKE_ITEM 8
 
 #define PROTOCOL_MOVE_STOP 9
 #define PROTOCOL_MOVE_TOP 10
@@ -48,11 +49,13 @@
 // Sending to the client
 #define PROTOCOL_MOVE_CONFIRM 20
 #define PROTOCOL_ATTACK_CONFIRM 25
+#define PROTOCOL_KILL_CONFIRM 26
 #define PROTOCOL_HELMET_CONFIRM 30
 #define PROTOCOL_ARMOR_CONFIRM 31
 #define PROTOCOL_WEAPON_CONFIRM 32
 #define PROTOCOL_SHIELD_CONFIRM 33
 #define PROTOCOL_MEDITATE_CONFIRM 34
+#define PROTOCOL_TAKE_ITEM_CONFIRM 35
 #define PROTOCOL_CREATE_CHARACTER 65
 #define PROTOCOL_CREATE_CHARACTER_CONFIRM 66
 #define PROTOCOL_LOG_OFF 67
@@ -72,6 +75,7 @@ private:
     void move_left_event(ProtocolMessage& msg, ServerWorld &world);
     void move_top_event(ProtocolMessage& msg, ServerWorld &world);
     void move_down_event(ProtocolMessage& msg, ServerWorld &world);
+    void take_item_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_shield_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_weapon_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_helmet_event(ProtocolMessage& msg, ServerWorld &world);
@@ -80,12 +84,13 @@ private:
     void update_npcs_event(ProtocolMessage& msg, ServerWorld &world);
     void update_characters_event(ProtocolMessage& msg, ServerWorld &world);
     void create_character(ProtocolMessage& msg, ServerWorld &world);
-    void get_all_npcs(ProtocolMessage& msg, ServerWorld &world);
     void attack_event(ProtocolMessage& msg, ServerWorld &world);
     void meditation_event(ProtocolMessage& msg, ServerWorld &world);
     void create_character_event(ProtocolMessage& msg, ServerWorld &world);
     void log_off_event(ProtocolMessage&msg, ServerWorld &world);
     void get_all_characters(ProtocolMessage& msg, ServerWorld &world);
+    void get_all_npcs(ProtocolMessage& msg, ServerWorld &world);
+    void get_all_items(ProtocolMessage& msg, ServerWorld &world);
     void get_world(ProtocolMessage& msg, ServerWorld &world);
 
 public:

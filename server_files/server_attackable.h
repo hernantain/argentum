@@ -17,6 +17,7 @@ public:
     virtual bool is_safe() = 0;
     virtual bool is_newbie() = 0;
     virtual bool is_alive() = 0;
+    virtual int16_t get_id() = 0;
     virtual int16_t get_max_life() = 0;
     virtual int16_t get_level() = 0;
     virtual int16_t get_body_pos_X() const = 0;

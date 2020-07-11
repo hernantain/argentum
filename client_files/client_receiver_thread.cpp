@@ -37,6 +37,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     print_response_info(msg);
     if (msg.id_message == 20) this->process_move(msg);
     if (msg.id_message == 25) this->process_attack(msg);
+    if (msg.id_message == 26) this->process_death(msg);
     if (msg.id_message == 30) this->process_equip_helmet(msg);
     if (msg.id_message == 31) this->process_equip_armor(msg);
     if (msg.id_message == 32) this->process_equip_weapon(msg);
@@ -110,12 +111,10 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
-    // std::cout << "NPCs moving"<< std::endl;
     world.update_npcs(msg);
 }
 
 void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
-    std::cout << "Recovering Character" << std::endl;
     int i = msg.find(this->player_id);
     bool is_alive = msg.characters[i].alive;
     if (i != -1 && is_alive) {
@@ -132,6 +131,16 @@ void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
         this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
         this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
     }
+}
+
+void ClientReceiverThread::process_death(ProtocolMessage &msg) {
+    int i = msg.find(this->player_id);
+    if (i != -1) {
+        this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
+        this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
+        this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
+    }
+    world.update_dead_npcs(msg);
 }
 
 
