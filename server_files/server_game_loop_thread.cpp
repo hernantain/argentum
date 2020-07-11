@@ -6,49 +6,43 @@
 
 #define MILISECONDS_TO_CREATE 3000
 #define MILISECONDS_TO_UPDATE 1000
-#define NPC_STARTING_ID 100
+
+#define NPC_INITIAL_ID 100
+#define NPC_INITIAL_TYPE 1
+#define MAX_NPC_TYPES 4
+
 #define NPC_CREATION_MSG_ID 70
 #define NPC_UPDATE_MSG 72
 #define CHARACTERS_UPDATE_MSG 74
-#define MAX_NPC_TYPES 4
 
-GameLoopThread::GameLoopThread(
-    Queue &queue, 
-    int max_npcs) : queue(queue), running(true), max_npcs(max_npcs) {}
-
+GameLoopThread::GameLoopThread(Queue &queue) : queue(queue), running(true) {}
 
 
 void GameLoopThread::run() {
 
     std::cout << "GameLoopThread Running::" << std::endl;
-    create_npcs();
+    uint16_t npc_id = NPC_INITIAL_ID;
+    int16_t npc_type = NPC_INITIAL_TYPE;
     int iteration = 1;
     while (this->running) {
         std::this_thread::sleep_for(std::chrono::milliseconds(MILISECONDS_TO_UPDATE));
         if (iteration % 2 == 0) {
-            // Every 4 seconds
+            // Every 2 seconds
             ProtocolMessage npcs_update_msg(NPC_UPDATE_MSG);
             queue.push(npcs_update_msg);
         }
-        // Every 2 seconds
+        if (iteration % 3 == 0) {
+            // Every 3 seconds
+            ProtocolNpc npc(npc_id, npc_type);
+            ProtocolMessage npc_create_msg(NPC_CREATION_MSG_ID, npc_id, std::move(npc));
+            queue.push(npc_create_msg);
+        }
+        // Every second
         ProtocolMessage characters_update_msg(CHARACTERS_UPDATE_MSG);
         queue.push(characters_update_msg);
         iteration++;
-    }
-}
-
-void GameLoopThread::create_npcs() {
-    int npc_id = NPC_STARTING_ID;
-    int npc_type = 1;
-    for (int i = 0; i < max_npcs; i++) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(MILISECONDS_TO_UPDATE));
-        std::cout << "Creating NPCs::" << std::endl;
-        ProtocolNpc npc(npc_id, npc_type);
-        ProtocolMessage npc_msg(NPC_CREATION_MSG_ID, npc_id, std::move(npc));
-        queue.push(npc_msg);
         npc_id++;
         npc_type++;
-        if(npc_type > MAX_NPC_TYPES) npc_type = 1;
+        if(npc_type > MAX_NPC_TYPES) npc_type = NPC_INITIAL_TYPE;
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(MILISECONDS_TO_CREATE));
 }

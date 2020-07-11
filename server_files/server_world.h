@@ -20,11 +20,11 @@ struct ServerWorld {
 
     Attackable* get_from_position(uint16_t player_id, int16_t posX, int16_t posY);
 
-    int dead_npcs();
     void move_npcs();
     void recover_characters();
     
     bool empty();
+    bool is_full(size_t max_npcs);
 
     void add(uint16_t id, Character* character);
     void add(uint16_t id, NPC* npc);

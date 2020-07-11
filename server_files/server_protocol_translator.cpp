@@ -161,13 +161,12 @@ void ProtocolTranslator::log_off_event(ProtocolMessage& msg, ServerWorld &world)
 }
 
 void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &world) {
-    if (world.empty()) {
+    size_t max_npcs = config["npc"]["max_limit"].asUInt();
+    if (world.empty() || world.is_full(max_npcs)) {
         msg.id_message = NOTHING;
         return; 
     }
-    
     int npc_id = msg.npcs[0].npc_type;
-
     NPC* npc = NPCFactory::make_npc(npc_id, config, collisionInfo);
     std::cout << "NPC CREADO: " << std::endl;
     world.add(msg.id_player, npc);
@@ -177,8 +176,6 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
 }
 
 void ProtocolTranslator::update_npcs_event(ProtocolMessage& msg, ServerWorld &world) {
-    // forEach npc, Npc move, check deaths in order to spawn that amount
-    // int deaths = world.dead_npcs();
     world.move_npcs();
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_UPDATE_NPCS_CONFIRM;
