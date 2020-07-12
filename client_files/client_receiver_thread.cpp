@@ -36,6 +36,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
     // print_response_info(msg);
     if (msg.id_message == 20) this->process_move(msg);
+    if (msg.id_message == 21) this->process_deposit(msg);
     if (msg.id_message == 25) this->process_attack(msg);
     if (msg.id_message == 26) this->process_death(msg);
     if (msg.id_message == 30) this->process_equip_helmet(msg);
@@ -57,6 +58,11 @@ void ClientReceiverThread::process_move(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
     if (i != -1)
         world.move_player(msg.id_player, msg.characters[i].bodyPosX, msg.characters[i].bodyPosY, msg.characters[i].orientation);
+}
+
+void ClientReceiverThread::process_deposit(ProtocolMessage &msg) {
+    // update_gold_status()
+    std::cout << "Depositando OK" << std::endl;
 }
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {

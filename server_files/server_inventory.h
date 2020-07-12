@@ -2,13 +2,12 @@
 #define _SERVER_INVENTORY
 
 #include <vector>
-#include <map>
 #include "server_item.h"
 
 /* Clase que representa a un item del juego */
 class Inventory {
 private:
-    std::map<Item, int> items;
+    std::vector<Item> items;
     unsigned int max_size;
 
 public:
@@ -22,7 +21,7 @@ public:
     void remove_item(Item& item);
 
     // Dropea todos los items del inventario
-    void drop_items();
+    void drop_items(std::vector<Item> &worldItems);
 
     // Devuelve el tam del inventario
     unsigned int size();

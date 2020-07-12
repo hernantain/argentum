@@ -300,6 +300,10 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				weaponId = this->weapons[4]->get_id(); // BACULO NUDOSO
 				break;
 
+			case SDLK_d:
+				event_id = 14;
+				break;
+
 			case SDLK_z:
 				event_id = 7;
 				break;			
