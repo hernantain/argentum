@@ -42,7 +42,6 @@ int get_race(std::string race) {
 }
 
 
-
 int main(int argc, char* argv[]) {
 
     if (argc != TOTAL_ARGS) {

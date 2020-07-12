@@ -66,7 +66,7 @@ Map Game::loadMap() {
 }
 
 
-ClientWorld Game::loadWorld(InfoView &infoView) {
+ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 	ProtocolCharacter character(this->player_id, this->player_race, this->player_class);
 	ProtocolMessage msg(65, this->player_id, character); // 65 para crear
 
@@ -83,7 +83,7 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
     msgpack::object obj = oh.get();
     obj.convert(rec_msg);
     
-	ClientWorld clientWorld(gRenderer);
+	ClientWorld clientWorld(gRenderer, itemViewer);
 
 	std::cout << "Tamanio mundo: " << rec_msg.characters.size() << std::endl;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
@@ -102,6 +102,11 @@ ClientWorld Game::loadWorld(InfoView &infoView) {
 	for (unsigned int i = 0; i < rec_msg.npcs.size(); ++i) 
 		clientWorld.add_npc(rec_msg.npcs[i]);
 
+	for (unsigned int i = 0; i < rec_msg.items.size(); ++i)
+		clientWorld.add_item(rec_msg.items[i]);
+
+	std::cout << "CANTIDAD DE ITEMS: " << rec_msg.items.size() << std::endl;
+
 	return clientWorld;
 }
 
@@ -113,10 +118,13 @@ void Game::run() {
 	skt >> this->player_id;
 	Map map = this->loadMap();
 
+	ItemViewer itemViewer(gRenderer);
 	InfoView infoView(this->gRenderer, inventory);
-	ClientWorld world = this->loadWorld(infoView);
+	ClientWorld world = this->loadWorld(infoView, itemViewer);
 
 	std::cout << "TAMANIO MUNDO EN GAME RUN: " << world.players.size() << std::endl;
+	std::cout << "TAMANIO MUNDO EN GAME RUN: " << world.items.size() << std::endl;
+
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();

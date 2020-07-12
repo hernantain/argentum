@@ -11,7 +11,7 @@ protected:
     int16_t id;
     int16_t posX, posY, amount;
     std::string name;
-
+  
 public:
     // Contructor, recibe la cantidad de ese objeto
     Item();
@@ -22,6 +22,7 @@ public:
     int16_t get_amount();
     int16_t get_posX();
     int16_t get_posY();
+  
     void set_id(int16_t new_id);
     void set_amount(int16_t item_amount);
     void set_posX(int16_t pos);

@@ -2,27 +2,33 @@
 #define _CLIENT_WORLD
 
 #include <map>
+#include <vector>
 #include <SDL2/SDL.h>
 #include <stdint.h>
 #include <mutex>
 
+#include "client_item_viewer.h"
 #include "client_player.h"
 #include "client_npc.h"
+#include "client_item.h"
 
 struct ClientWorld {
     SDL_Renderer *gRenderer;
+    ItemViewer &itemViewer;
     std::mutex m;
 
     std::map<uint16_t, Player*> players;
     std::map<uint16_t, NPC*> npcs;
+    std::vector<Item*> items;
 
-    ClientWorld(SDL_Renderer *gRenderer);
+    ClientWorld(SDL_Renderer *gRenderer, ItemViewer &itemViewer);
 
     void add_player(uint16_t id, Player* player);
     void add_npc(uint16_t id, NPC* npc);
 
     void add_player(ProtocolCharacter &protocolCharacter);
     void add_npc(ProtocolNpc &protocolNpc);
+    void add_item(ProtocolItem &protocolItem);
 
     void remove_player(uint16_t id);
     void remove_npc(int16_t id);
@@ -37,7 +43,9 @@ struct ClientWorld {
     void update_npcs(ProtocolMessage &msg);
     void update_player_alive_status(ProtocolMessage &msg);
     void update_dead_npcs(ProtocolMessage &msg);
-
+    void update_items(ProtocolMessage &msg);
+    bool item_exists(ProtocolItem &i);
+    void cleanItems(unsigned int i);
 
     void render(uint16_t id, SDL_Rect &camera, int &it);
 

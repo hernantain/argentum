@@ -44,6 +44,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == 32) this->process_equip_weapon(msg);
     if (msg.id_message == 33) this->process_equip_shield(msg);
     if (msg.id_message == 34) this->process_meditation(msg);
+    if (msg.id_message == 35) this->process_take_item(msg);
     if (msg.id_message == 66) this->process_create_player(msg);
     if (msg.id_message == 68) this->process_log_off(msg);
     if (msg.id_message == 71) this->process_create_npc(msg);
@@ -116,6 +117,13 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
     if (i != -1)
         world.add_npc(msg.npcs[i]);
 }
+
+void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
+    std::cout << "ITEMS ANTES" << world.items.size() << std::endl;
+    world.update_items(msg);
+    std::cout << "ITEMS DESPUES" << world.items.size() << std::endl;
+}
+
 
 void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
     world.update_npcs(msg);
