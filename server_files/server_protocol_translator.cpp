@@ -135,8 +135,7 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
         if (!other->is_alive()) {
-            // other->drop_items(world);
-            // int gold = other->drop_gold();
+            other->drop_items(world.items);
             msg.id_message = PROTOCOL_KILL_CONFIRM;
         }
         else {
@@ -244,10 +243,10 @@ void ProtocolTranslator::get_all_items(ProtocolMessage& msg, ServerWorld &world)
 
     for (size_t i = 0; i < world.items.size(); ++i) {
         ProtocolItem protocolItem(
-            world.items[i]->get_id(),
-            world.items[i]->get_posX(),
-            world.items[i]->get_posY(),
-            world.items[i]->get_amount()
+            world.items[i].get_id(),
+            world.items[i].get_posX(),
+            world.items[i].get_posY(),
+            world.items[i].get_amount()
         );
         tmp.push_back(std::move(protocolItem));
     }

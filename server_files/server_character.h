@@ -145,7 +145,7 @@ Race race, CollisionInfo &collisionInfo);
     void drop_items(std::vector<Item> &worldItems);
 
     // Dropea el item que recibe por parametro
-    void drop_item(Item& item);
+    void drop_item(int16_t id);
 
     // Toma una suma de oro del suelo;
     void take_gold(int amount);

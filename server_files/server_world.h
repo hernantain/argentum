@@ -13,7 +13,7 @@ struct ServerWorld {
 
     std::map<uint16_t, Character*> characters;
     std::map<uint16_t, NPC*> npcs;
-    std::vector<Item*> items;
+    std::vector<Item> items;
     std::vector<Banker> bankers;
 
     ServerWorld();
@@ -32,7 +32,7 @@ struct ServerWorld {
 
     void add(uint16_t id, Character* character);
     void add(uint16_t id, NPC* npc);
-    void add(Item* item);
+    void add(Item& item);
     void add(Banker banker);
 
     void move_character_right(uint16_t id);

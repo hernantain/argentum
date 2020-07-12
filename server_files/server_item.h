@@ -8,11 +8,9 @@
 /* Clase que representa a un item del juego */
 class Item {
 protected:
-    uint8_t id;
+    int16_t id;
+    int16_t posX, posY, amount;
     std::string name;
-    int posX;
-    int posY;
-    int amount;
 
 public:
     // Contructor, recibe la cantidad de ese objeto
@@ -20,14 +18,14 @@ public:
 
     std::string get_name();
 
-    uint8_t get_id();
-
-    int get_amount();
-    int get_posX();
-    int get_posY();
-    void set_amount(int item_amount);
-    void set_posX(int pos);
-    void set_posY(int pos);
+    int16_t get_id();
+    int16_t get_amount();
+    int16_t get_posX();
+    int16_t get_posY();
+    void set_id(int16_t new_id);
+    void set_amount(int16_t item_amount);
+    void set_posX(int16_t pos);
+    void set_posY(int16_t pos);
 
     bool operator <(const Item& other) const {
         return id < other.id;
