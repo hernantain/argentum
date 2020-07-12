@@ -106,7 +106,7 @@ void ServerWorld::player_take_item(uint16_t id) {
         std::cout << "ACA LLEGA" << std::endl;
         if ((std::abs(items[i].get_posX() - characters[id]->get_body_pos_X() < 30) && 
             std::abs(items[i].get_posY() - characters[id]->get_body_pos_Y() < 30))) {
-            // CHARACTER.INVENTORY.ADD 
+            characters[id]->take_item(items[i]);
             std::cout << "Estas cerca como para agarrar un item" << std::endl;
             this->update_world_items(i);
             break;
