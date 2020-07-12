@@ -16,6 +16,10 @@ class Item {
         uint8_t get_id() const;
         int16_t get_posX() const;
         int16_t get_posY() const;
+
+        void set_posX(int16_t posX);
+        void set_posY(int16_t posY);
+        void add_amount();
 };
 
 

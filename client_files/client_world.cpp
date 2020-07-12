@@ -71,7 +71,6 @@ void ClientWorld::add_npc(ProtocolNpc &protocolNpc) {
 // ADD ITEM
 
 void ClientWorld::add_item(ProtocolItem &protocolItem) {
-    std::unique_lock<std::mutex> lock(m);
     Item* i = new Item(protocolItem.id, protocolItem.posX, protocolItem.posY, protocolItem.amount);
     this->items.push_back(i);
 }
@@ -113,28 +112,65 @@ void ClientWorld::update_player_alive_status(ProtocolMessage &msg) {
     }
 }
 
+
+void ClientWorld::add_items(ProtocolMessage &msg) {
+    std::unique_lock<std::mutex> lock(m);
+    for (unsigned int i = 0; i < msg.items.size(); ++i) {
+        if (!item_in_world(msg.items[i])) {
+            this->add_item(msg.items[i]);
+        }
+    }
+}
+
+
+bool ClientWorld::item_in_world(ProtocolItem &item) {
+    for (unsigned int i = 0; i < items.size(); i++) {
+        if ((item.id == items[i]->get_id()) && (item.posX == items[i]->get_posX()) && (item.posY == items[i]->get_posY())) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 // UPDATE 
 
-
-void ClientWorld::update_items(ProtocolMessage &msg) {
+Item* ClientWorld::update_items(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);
 
     std::cout << "LEN DE ITEMS ES: " << msg.items.size() << std::endl;
 
-    if (msg.items.size() == 0) {
-        std::cout << "Es CERO" << std::endl;
-        this->cleanItems(0);
-        return;
-    }
-
+    Item* removedItem = NULL;
     for (unsigned int i = 0; i < items.size(); ++i) {
         if (!this->item_exists(msg, i)) {
             std::cout << "Voy a hacer clean" << std::endl;
-            this->cleanItems(i);
+            removedItem = this->cleanItems(i);
             break;
         }
     }
+
+    return removedItem;
 }
+
+// void ClientWorld::update_items(ProtocolMessage &msg) {
+//     std::unique_lock<std::mutex> lock(m);
+
+//     std::cout << "LEN DE ITEMS ES: " << msg.items.size() << std::endl;
+
+//     // if (msg.items.size() == 0) {
+//     //     std::cout << "Es CERO" << std::endl;
+//     //     this->cleanItems(0);
+//     //     return;
+//     // }
+
+//     for (unsigned int i = 0; i < items.size(); ++i) {
+//         if (!this->item_exists(msg, i)) {
+//             std::cout << "Voy a hacer clean" << std::endl;
+//             this->cleanItems(i);
+//             break;
+//         }
+//     }
+// }
 
 
 bool ClientWorld::item_exists(ProtocolMessage &msg, unsigned int &i) {
@@ -147,17 +183,32 @@ bool ClientWorld::item_exists(ProtocolMessage &msg, unsigned int &i) {
     return false;
 }
 
-void ClientWorld::cleanItems(unsigned int i) {
+// void ClientWorld::cleanItems(unsigned int i) {
+//     std::vector<Item*> tmp;
+//     for (unsigned int j = 0; j < items.size(); ++j) {
+//         if (j == i) {
+//             delete items[j];
+//             continue;
+//         }
+
+//         tmp.push_back(items[j]);
+//     }
+//     items.swap(tmp);
+// }
+
+Item* ClientWorld::cleanItems(unsigned int i) {
     std::vector<Item*> tmp;
+    Item* itemToRemove = NULL;
     for (unsigned int j = 0; j < items.size(); ++j) {
         if (j == i) {
-            delete items[j];
+            itemToRemove = items[j];
             continue;
         }
 
         tmp.push_back(items[j]);
     }
     items.swap(tmp);
+    return itemToRemove;
 }
 
 // MOVE PLAYER

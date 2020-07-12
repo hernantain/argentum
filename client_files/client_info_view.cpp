@@ -38,10 +38,30 @@ void InfoView::render_experience() {
 }
 
 
+void InfoView::render_items() {
+    int paddedX = infoPanel.w / 8;
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        this->items[i]->set_posX(paddedX);
+        this->items[i]->set_posY(100);
+        paddedX += 40;
+    }
+
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        uint8_t itemId = items[i]->get_id();
+        int16_t posX = items[i]->get_posX();
+        int16_t posY = items[i]->get_posY();
+
+        LTexture* item = this->itemViewer.get_item_icon(itemId);
+        item->render(posX, posY, gRenderer);
+    }
+}
+
+
 
 InfoView::InfoView(
     SDL_Renderer* gRenderer, 
-    SDL_Rect &infoPanel) : infoPanel(infoPanel) {
+    SDL_Rect &infoPanel,
+    ItemViewer &itemViewer) : infoPanel(infoPanel), itemViewer(itemViewer) {
     
     this->manaColor =  {36, 255, 240, 0xFF};
     this->lifeColor =  {255, 175, 36, 0xFF};
@@ -68,10 +88,23 @@ void InfoView::set_life(int16_t currentLife, int16_t maxLife) {
     this->maxLife = maxLife;
 }
 
+
 void InfoView::set_experience(int16_t currentExp, int16_t maxExp) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentExp = currentExp;
     this->maxExp = maxExp;
+}
+
+
+void InfoView::add_item(Item* item) {
+    std::unique_lock<std::mutex> lock(this->m);
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        if (items[i]->get_id() == item->get_id()) {
+            this->items[i]->add_amount();
+            delete item;
+        }
+    }
+    this->items.push_back(item);
 }
 
 
@@ -81,6 +114,7 @@ void InfoView::render() {
     this->render_life();
     this->render_mana();
     this->render_experience();
+    this->render_items();
 }
 
 

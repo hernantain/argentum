@@ -5,6 +5,7 @@
 #include "../common_files/common_mapinfo.h"
 
 #include "server_sword.h"
+#include "server_gnarled_staff.h"
 
 
 ServerProcessorThread::ServerProcessorThread(
@@ -33,8 +34,8 @@ void ServerProcessorThread::run() {
     i.set_amount(1);
     serverWorld.items.push_back(i);
 
-    Sword j(config);
-    j.set_posX(3100);
+    GnarledStaff j(config);
+    j.set_posX(200);
     j.set_posY(200);
     j.set_amount(1);
     serverWorld.items.push_back(j);

@@ -119,7 +119,7 @@ void Game::run() {
 	Map map = this->loadMap();
 
 	ItemViewer itemViewer(gRenderer);
-	InfoView infoView(this->gRenderer, inventory);
+	InfoView infoView(this->gRenderer, inventory, itemViewer);
 	ClientWorld world = this->loadWorld(infoView, itemViewer);
 
 	std::cout << "TAMANIO MUNDO EN GAME RUN: " << world.players.size() << std::endl;
