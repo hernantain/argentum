@@ -37,6 +37,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // print_response_info(msg);
     if (msg.id_message == PROTOCOL_MOVE_CONFIRM) this->process_move(msg);
     if (msg.id_message == PROTOCOL_DEPOSIT_CONFIRM) this->process_deposit(msg);
+    if (msg.id_message == PROTOCOL_WITHDRAW_CONFIRM) this->process_withdraw(msg);
     if (msg.id_message == PROTOCOL_ATTACK_CONFIRM) this->process_attack(msg);
     if (msg.id_message == PROTOCOL_KILL_CONFIRM) this->process_death(msg);
     if (msg.id_message == PROTOCOL_HELMET_CONFIRM) this->process_equip_helmet(msg);
@@ -65,6 +66,13 @@ void ClientReceiverThread::process_deposit(ProtocolMessage &msg) {
     // update_gold_status()
     std::cout << "Depositando OK" << std::endl;
 }
+
+void ClientReceiverThread::process_withdraw(ProtocolMessage &msg) {
+    // TODO: is the same for the deposit and withdraw -> make just One Method
+    // update_gold_status()
+    std::cout << "Retirando OK" << std::endl;
+}
+
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);

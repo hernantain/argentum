@@ -34,6 +34,7 @@ class ClientReceiverThread : public Thread {
     void process_move_npcs(ProtocolMessage &msg);
     void process_recover_characters(ProtocolMessage &msg);
     void process_deposit(ProtocolMessage &msg);
+    void process_withdraw(ProtocolMessage &msg);
     void process_meditation(ProtocolMessage &msg);
     void process_attack(ProtocolMessage &msg);
     void process_death(ProtocolMessage &msg);

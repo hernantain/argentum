@@ -36,6 +36,7 @@ private:
     void move_top_event(ProtocolMessage& msg, ServerWorld &world);
     void move_down_event(ProtocolMessage& msg, ServerWorld &world);
     void deposit_event(ProtocolMessage& msg, ServerWorld &world);
+    void withdraw_event(ProtocolMessage& msg, ServerWorld &world);
     void take_item_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_shield_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_weapon_event(ProtocolMessage& msg, ServerWorld &world);

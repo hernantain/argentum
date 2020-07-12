@@ -3,6 +3,7 @@
 
 #include "server_world.h"
 #include "server_protocol_translator.h"
+#include "server_banker.h"
 
 ProtocolTranslator::ProtocolTranslator(
     Json::Value &config, 
@@ -23,6 +24,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
         case PROTOCOL_MOVE_DOWN: return move_down_event(msg, world);
         case PROTOCOL_DEPOSIT: return deposit_event(msg, world);
+        case PROTOCOL_WITHDRAW: return withdraw_event(msg, world);
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
@@ -72,6 +74,12 @@ void ProtocolTranslator::deposit_event(ProtocolMessage &msg, ServerWorld &world)
     msg.id_message = PROTOCOL_DEPOSIT_CONFIRM;
 }
 
+void ProtocolTranslator::withdraw_event(ProtocolMessage &msg, ServerWorld &world) {
+    if (world.has_banker_close(msg.id_player))
+        world.characters[msg.id_player]->withdraw_gold();
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_WITHDRAW_CONFIRM;
+}
 
 void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
 
