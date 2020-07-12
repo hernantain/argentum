@@ -9,6 +9,8 @@ Goblin::Goblin(Json::Value &config, CollisionInfo &collisionInfo) : NPC(config, 
     this->max_life = config["goblin"]["life"].asInt();
     this->min_damage = config["goblin"]["min_damage"].asInt();
     this->max_damage = config["goblin"]["max_damage"].asInt();
-    this->defense_points = config["goblin"]["defense"].asInt();    
+    this->defense_points = config["goblin"]["defense"].asInt();
+    this->width = config["goblin"]["width"].asInt();   
+    this->height = config["goblin"]["height"].asInt();   
 }
 

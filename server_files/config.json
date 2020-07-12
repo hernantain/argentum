@@ -24,8 +24,9 @@
         "life": 50,
         "min_damage": 5,
         "max_damage": 10,
-        "defense": 0
-        
+        "defense": 0,
+        "width": 21,
+        "height": 31
     },
     "skeleton": {
         "id": 2,
@@ -33,7 +34,9 @@
         "life": 70,
         "min_damage": 5,
         "max_damage": 10,
-        "defense": 2
+        "defense": 2,
+        "width": 21,
+        "height": 31
     },
     "zombie": {
         "id": 3,
@@ -41,7 +44,9 @@
         "life": 90,
         "min_damage": 5,
         "max_damage": 10,
-        "defense": 4
+        "defense": 4,
+        "width": 21,
+        "height": 31
     },
     "spider": {
         "id": 4,
@@ -49,7 +54,9 @@
         "life": 100,
         "min_damage": 5,
         "max_damage": 10,
-        "defense": 5
+        "defense": 5,
+        "width": 21,
+        "height": 31
     },
     "paladin": {
         "life_multiplier": 0.7,
@@ -77,7 +84,9 @@
         "constitution_modifier": 2,
         "life_multiplier": 1,
         "mana_multiplier": 1,
-        "recovery_factor": 1
+        "recovery_factor": 1,
+        "width": 21,
+        "height": 31
     },
     "elf": {
         "strength_modifier": -1,
@@ -86,7 +95,9 @@
         "constitution_modifier": 1,
         "life_multiplier": 1,
         "mana_multiplier": 1,
-        "recovery_factor": 1
+        "recovery_factor": 1,
+        "width": 21,
+        "height": 31
     },
     "gnome": {
         "strength_modifier": -2,
@@ -94,7 +105,9 @@
         "intelligence_modifier": 4,
         "life_multiplier": 1,
         "mana_multiplier": 1,
-        "recovery_factor": 1
+        "recovery_factor": 1,
+        "width": 21,
+        "height": 31
     },
     "dwarf": {
         "strength_modifier": 3,
@@ -102,7 +115,9 @@
         "constitution_modifier": 3,
         "life_multiplier": 1,
         "mana_multiplier": 1,
-        "recovery_factor": 1
+        "recovery_factor": 1,
+        "width": 21,
+        "height": 31
     },
     "gold": {
         "extra_gold_rate": 0.5,

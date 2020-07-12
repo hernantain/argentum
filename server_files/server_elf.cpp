@@ -13,4 +13,7 @@ Elf::Elf(Json::Value &config) :
         this->life_multiplier = config["elf"]["life_multiplier"].asFloat();
         this->mana_multiplier = config["elf"]["mana_multiplier"].asFloat();
         this->recovery_factor = config["elf"]["recovery_factor"].asFloat();
+
+        this->width = config["elf"]["width"].asInt();
+        this->height = config["elf"]["height"].asInt(); 
     }

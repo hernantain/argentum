@@ -9,6 +9,8 @@ Skeleton::Skeleton(Json::Value &config, CollisionInfo &collisionInfo) : NPC(conf
     this->max_life = config["skeleton"]["life"].asInt();
     this->min_damage = config["skeleton"]["min_damage"].asInt();
     this->max_damage = config["skeleton"]["max_damage"].asInt();
-    this->defense_points = config["skeleton"]["defense"].asInt();    
+    this->defense_points = config["skeleton"]["defense"].asInt();
+    this->width = config["skeleton"]["width"].asInt();   
+    this->height = config["skeleton"]["height"].asInt();  
 }
 

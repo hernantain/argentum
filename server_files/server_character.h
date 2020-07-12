@@ -87,6 +87,12 @@ Race race, CollisionInfo &collisionInfo);
     // Devuelve el nivel del personaje
     int16_t get_level();
 
+    // Devuelve el ancho del personaje
+    int get_width();
+
+    // Devuelve el alto del personaje
+    int get_height();
+
     // Devuelve el oro del personaje en el banco
     int get_bank_gold();
 

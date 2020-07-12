@@ -51,6 +51,14 @@ int16_t Character::get_level() {
     return level;
 }
 
+int Character::get_width() {
+    return race.get_width();
+}
+
+int Character::get_height() {
+    return race.get_height();
+}
+
 int Character::get_gold() {
     return gold;
 }

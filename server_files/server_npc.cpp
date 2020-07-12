@@ -32,6 +32,14 @@ int16_t NPC::get_max_life() {
     return max_life;
 }
 
+int NPC::get_width() {
+    return width;
+}
+
+int NPC::get_height() {
+    return height;
+}
+
 bool NPC::is_alive() {
     return alive;
 }

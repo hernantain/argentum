@@ -8,6 +8,8 @@ Spider::Spider(Json::Value &config, CollisionInfo &collisionInfo) : NPC(config, 
     this->max_life = config["spider"]["life"].asInt();
     this->min_damage = config["spider"]["min_damage"].asInt();
     this->max_damage = config["spider"]["max_damage"].asInt();
-    this->defense_points = config["spider"]["defense"].asInt();   
+    this->defense_points = config["spider"]["defense"].asInt();
+    this->width = config["spider"]["width"].asInt();   
+    this->height = config["spider"]["height"].asInt();   
 }
 
