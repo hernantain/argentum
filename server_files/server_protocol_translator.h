@@ -34,6 +34,7 @@
 #define PROTOCOL_MOVE_RIGHT 11
 #define PROTOCOL_MOVE_LEFT 12
 #define PROTOCOL_MOVE_DOWN 13
+#define PROTOCOL_DEPOSIT 14
 
 #define NOTHING 55
 
@@ -48,6 +49,7 @@
 
 // Sending to the client
 #define PROTOCOL_MOVE_CONFIRM 20
+#define PROTOCOL_DEPOSIT_CONFIRM 21
 #define PROTOCOL_ATTACK_CONFIRM 25
 #define PROTOCOL_KILL_CONFIRM 26
 #define PROTOCOL_HELMET_CONFIRM 30
@@ -75,6 +77,7 @@ private:
     void move_left_event(ProtocolMessage& msg, ServerWorld &world);
     void move_top_event(ProtocolMessage& msg, ServerWorld &world);
     void move_down_event(ProtocolMessage& msg, ServerWorld &world);
+    void deposit_event(ProtocolMessage& msg, ServerWorld &world);
     void take_item_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_shield_event(ProtocolMessage& msg, ServerWorld &world);
     void equip_weapon_event(ProtocolMessage& msg, ServerWorld &world);

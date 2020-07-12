@@ -6,6 +6,7 @@
 #include "server_character.h"
 #include "server_npc.h"
 #include "server_item.h"
+#include "server_banker.h"
 #include "server_attackable.h"
 
 struct ServerWorld {
@@ -13,13 +14,15 @@ struct ServerWorld {
     std::map<uint16_t, Character*> characters;
     std::map<uint16_t, NPC*> npcs;
     std::vector<Item> items;
+    std::vector<Banker> bankers;
 
     ServerWorld();
 
     Character* get(uint16_t message_id);
-    Character* get_closest_from_position(int16_t npc_posX, int16_t npc_posY);
+    Attackable* get_closest_from_position(int16_t npc_posX, int16_t npc_posY);
     Attackable* get_from_position(uint16_t player_id, int16_t posX, int16_t posY);
 
+    bool has_banker_close(uint16_t id);
     bool has_character_close(int16_t npc_posX, int16_t npc_posY);
     void move_npcs();
     void recover_characters();
@@ -30,6 +33,7 @@ struct ServerWorld {
     void add(uint16_t id, Character* character);
     void add(uint16_t id, NPC* npc);
     void add(Item* item);
+    void add(Banker banker);
 
     void move_character_right(uint16_t id);
     void move_character_left(uint16_t id);

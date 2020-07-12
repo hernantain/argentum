@@ -25,7 +25,7 @@ Attackable* ServerWorld::get_from_position(uint16_t player_id, int16_t other_pos
     return NULL;
 }
 
-Character* ServerWorld::get_closest_from_position(int16_t npc_posX, int16_t npc_posY) {
+Attackable* ServerWorld::get_closest_from_position(int16_t npc_posX, int16_t npc_posY) {
     std::map<uint16_t, Character*>::iterator characters_itr;
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
         Character* other_character = characters_itr->second;
@@ -39,6 +39,16 @@ bool ServerWorld::has_character_close(int16_t npc_posX, int16_t npc_posY) {
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
         Character* other_character = characters_itr->second;
         if (other_character->is_attackable(npc_posX, npc_posY)) return true;
+    }
+    return false;
+}
+
+bool ServerWorld::has_banker_close(uint16_t id) {
+    Character* player = this->characters[id];
+    for (unsigned int i = 0; i < bankers.size(); i++) {
+        int16_t posX = bankers[i].get_pos_X();
+        int16_t posY = bankers[i].get_pos_Y();
+        if (player->can_deposit(posX, posY)) return true;
     }
     return false;
 }
@@ -62,9 +72,10 @@ void ServerWorld::move_npcs() {
             // std::cout << "No hay characters cerca" << std::endl;
             current->move_random();
         } else{
-            // std::cout << "Tengo a un character cerca" << std::endl;
-            Character* closest = get_closest_from_position(posX, posY);
+            std::cout << "Tengo a un character cerca" << std::endl;
+            Attackable* closest = get_closest_from_position(posX, posY);
             current->move_to(closest->get_body_pos_X(), closest->get_body_pos_Y());
+            current->attack(*closest);
         }
     }
 }
@@ -118,6 +129,10 @@ void ServerWorld::update_world_items(unsigned int &i) {
     items.swap(tmp);
 }
 
+
+void ServerWorld::add(Banker banker) {
+    this->bankers.push_back(banker);
+}
 
 void ServerWorld::remove_character(uint16_t id) {
     // delete this->characters[id];

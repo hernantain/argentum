@@ -81,6 +81,21 @@
          "firstgid":76,
          "source":"maps/desert.json"
         }],
+ "bankers": [
+        {
+         "posX": 100,
+         "posY": 100
+        }],
+ "priests": [
+        {
+        "posX": 100,
+        "posY": 100
+        }],
+ "merchants": [
+       {
+        "posX": 100,
+        "posY": 100
+       }],
  "tilewidth":128,
  "type":"map",
  "version":1.2,

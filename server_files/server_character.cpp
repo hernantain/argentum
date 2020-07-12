@@ -7,6 +7,7 @@
 
 #define NO_LIFE 0
 #define NO_DAMAGE 0
+#define NO_GOLD 0
 #define INITIAL_GOLD 0
 #define INITIAL_LEVEL 1
 #define CRITICAL_MULTIPLIER 2
@@ -24,6 +25,7 @@ Character::Character(uint16_t id, Json::Value &config, CharacterClass character_
     inventory(config["inventory"]["max_items"].asUInt()) {
     this->id = id;
     this->gold = INITIAL_GOLD;
+    this->bank_gold = INITIAL_GOLD;
     this->level = INITIAL_LEVEL;
     this->alive = true;
     this->newbie = true;
@@ -47,6 +49,14 @@ int16_t Character::get_max_mana() {
 
 int16_t Character::get_level() {
     return level;
+}
+
+int Character::get_gold() {
+    return gold;
+}
+
+int Character::get_bank_gold() {
+    return bank_gold;
 }
 
 bool Character::is_alive() {
@@ -91,10 +101,16 @@ void Character::meditate() {
     mana.add(character_class.get_meditation_multiplier() * race.get_intelligence());
 }
 
+bool Character::can_deposit(int16_t posX, int16_t posY) {
+    return alive && movement.is_near(posX, posY);
+}
+
 int Character::deposit_gold() {
     int amount = config["gold"]["gold_amount_constant"].asInt();
     if (gold < amount) amount = gold;
     gold -= amount;
+    bank_gold += amount;
+    std::cout << "DepositGold::::" << amount << std::endl;
     return amount;
 }
 
@@ -102,13 +118,6 @@ void Character::withdraw_gold() {
     // TODO: think about it
     int amount = config["gold"]["gold_amount_constant"].asInt();
     gold += amount;
-}
-
-void Character::drop() {
-    std::cout << "Dropping gold & items" << std::endl;
-    // unequip everything;
-    drop_gold();
-    drop_items();
 }
 
 void Character::drop_item(Item& item) {
@@ -155,8 +164,8 @@ void Character::take_item(Item& item) {
     inventory.add_item(item);
 }
 
-void Character::drop_items() {
-    inventory.drop_items();
+void Character::drop_items(std::vector<Item> &worldItems) {
+    inventory.drop_items(worldItems);
 }
 
 void Character::equip_life_potion(Potion& item) {
@@ -177,7 +186,7 @@ void Character::equip_weapon(Weapon& item) {
     equipment.equip_weapon(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
-    // if (inventory.has(item)) {
+    // if (inventory.has(item) && alive) {
     //     equipment.equip_weapon(item);
     // } 
 }
@@ -186,7 +195,7 @@ void Character::equip_armor(Armor& item) {
     equipment.equip_armor(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
-    // if (inventory.has(item)) {
+    // if (inventory.has(item) && alive) {
     //     equipment.equip_armor(item);
     // }
 }
@@ -195,7 +204,7 @@ void Character::equip_shield(Shield& item) {
     equipment.equip_shield(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
-    // if (inventory.has(item)) {
+    // if (inventory.has(item) && alive) {
     //     equipment.equip_shield(item);
     // }
 }
@@ -204,7 +213,7 @@ void Character::equip_helmet(Helmet& item) {
     equipment.equip_helmet(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
-    // if (inventory.has(item)) {
+    // if (inventory.has(item) && alive) {
     //     equipment.equip_helmet(item);
     // }
 }
@@ -349,7 +358,7 @@ bool Character::is_near(int posX, int posY) {
 }
 
 bool Character::is_attackable(int16_t posX, int16_t posY) {
-    return movement.is_attackable(posX, posY);
+    return movement.is_attackable(posX, posY) && alive;
 }
 
 void Character::move_right() {
