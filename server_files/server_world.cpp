@@ -43,6 +43,16 @@ bool ServerWorld::has_character_close(int16_t npc_posX, int16_t npc_posY) {
     return false;
 }
 
+bool ServerWorld::has_banker_close(uint16_t id) {
+    Character* player = this->characters[id];
+    for (unsigned int i = 0; i < bankers.size(); i++) {
+        int16_t posX = bankers[i].get_pos_X();
+        int16_t posY = bankers[i].get_pos_Y();
+        if (player->can_deposit(posX, posY)) return true;
+    }
+    return false;
+}
+
 bool ServerWorld::empty() {
     return (this->characters.size() == 0);
 }
@@ -89,6 +99,10 @@ void ServerWorld::add(uint16_t id, NPC* npc) {
 
 void ServerWorld::add(Item* item) {
     this->items.push_back(item);
+}
+
+void ServerWorld::add(Banker banker) {
+    this->bankers.push_back(banker);
 }
 
 void ServerWorld::remove_character(uint16_t id) {

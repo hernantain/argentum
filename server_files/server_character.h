@@ -43,6 +43,7 @@ private:
     Equipment equipment;
 
     int gold;
+    int bank_gold;
     int16_t level;
     bool alive;
     bool newbie;
@@ -51,8 +52,6 @@ private:
     Character(const Character&) = delete;
     Character& operator=(const Character&) = delete;
 
-    int drop_gold();
-    void drop_items();
     const int max_secure_gold();
     const int max_gold();
     bool is_critical();
@@ -88,6 +87,12 @@ Race race, CollisionInfo &collisionInfo);
     // Devuelve el nivel del personaje
     int16_t get_level();
 
+    // Devuelve el oro del personaje en el banco
+    int get_bank_gold();
+
+    // Devuelve el oro del personaje
+    int get_gold();
+
     // Devuelve un booleano que indica si el jugador es newbie o no
     bool is_newbie();
 
@@ -99,6 +104,9 @@ Race race, CollisionInfo &collisionInfo);
 
     // Pone al jugador en estado de meditacion
     void meditate();
+
+    // Booleano que devuelve verdadero si puede depositar o no
+    bool can_deposit(int16_t posX, int16_t posY);
 
     // Emula el deposito de oro, devuelve una suma fija de dinero a depsitar
     int deposit_gold();
@@ -130,8 +138,11 @@ Race race, CollisionInfo &collisionInfo);
     // Devuelve verdadero si el jugador esta vivo, falso si no.
     bool is_alive();
 
-    // Dropea los items y el oro correspondiente
-    void drop();
+    // Dropea el Oro que tiene el personaje actualmente
+    int drop_gold();
+
+    // Dropea los Items que tiene el personaje actualmente
+    void drop_items(std::vector<Item> &worldItems);
 
     // Dropea el item que recibe por parametro
     void drop_item(Item& item);

@@ -22,6 +22,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
         case PROTOCOL_MOVE_DOWN: return move_down_event(msg, world);
+        case PROTOCOL_DEPOSIT: return deposit_event(msg, world);
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
@@ -64,6 +65,14 @@ void ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, ServerWorld &w
     msg.id_message = PROTOCOL_HELMET_CONFIRM;
 }
 
+void ProtocolTranslator::deposit_event(ProtocolMessage &msg, ServerWorld &world) {
+    if (world.has_banker_close(msg.id_player))
+        world.characters[msg.id_player]->deposit_gold();
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_DEPOSIT_CONFIRM;
+}
+
+
 void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
 
     world.characters[msg.id_player]->stop_moving();
@@ -105,7 +114,7 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
 void ProtocolTranslator::take_item_event(ProtocolMessage &msg, ServerWorld &world) {
     // int item_id = msg.characters[0].itemId;
     // ItemFactory factory;
-    // Item item = factory.make_itemt(item_id, config);
+    // Item item = factory.make_item(item_id, config);
     // world.characters[msg.id_player]->take_item(item);
     // msg.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
 }
@@ -126,7 +135,7 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
         if (!other->is_alive()) {
-            // std::vector<int> drop_items = other->drop_items();
+            // other->drop_items(world);
             // int gold = other->drop_gold();
             msg.id_message = PROTOCOL_KILL_CONFIRM;
         }

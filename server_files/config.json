@@ -1,5 +1,6 @@
 {
     "service": "8080",
+    "map": "argentum.json",
     "initialAttributes": 18,
     "newbieLimit": 12,
     "maxAttackLvlDiff": 10,
