@@ -25,8 +25,8 @@
         "min_damage": 5,
         "max_damage": 10,
         "defense": 0,
-        "width": 21,
-        "height": 31
+        "width": 20,
+        "height": 20
     },
     "skeleton": {
         "id": 2,
@@ -36,7 +36,7 @@
         "max_damage": 10,
         "defense": 2,
         "width": 21,
-        "height": 31
+        "height": 30
     },
     "zombie": {
         "id": 3,
@@ -46,7 +46,7 @@
         "max_damage": 10,
         "defense": 4,
         "width": 21,
-        "height": 31
+        "height": 30
     },
     "spider": {
         "id": 4,
@@ -55,8 +55,8 @@
         "min_damage": 5,
         "max_damage": 10,
         "defense": 5,
-        "width": 21,
-        "height": 31
+        "width": 50,
+        "height": 20
     },
     "paladin": {
         "life_multiplier": 0.7,
@@ -107,7 +107,7 @@
         "mana_multiplier": 1,
         "recovery_factor": 1,
         "width": 21,
-        "height": 31
+        "height": 21
     },
     "dwarf": {
         "strength_modifier": 3,
@@ -117,7 +117,7 @@
         "mana_multiplier": 1,
         "recovery_factor": 1,
         "width": 21,
-        "height": 31
+        "height": 21
     },
     "gold": {
         "extra_gold_rate": 0.5,

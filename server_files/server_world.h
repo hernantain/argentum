@@ -43,7 +43,11 @@ struct ServerWorld {
     void player_take_item(uint16_t id);
     void update_world_items(unsigned int &i);
 
+    bool check_characters_collision(uint16_t id);
+    bool check_npcs_collision(uint16_t id);
+
     bool check_collision(uint16_t id, uint16_t other_id);
+    bool check_collision(Attackable* me, Attackable* other);
 
     void remove_npc(uint16_t id);
     void remove_character(uint16_t id);
