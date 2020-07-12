@@ -118,30 +118,31 @@ void ClientWorld::update_player_alive_status(ProtocolMessage &msg) {
 
 void ClientWorld::update_items(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);
-    if (msg.items.size() == 0)
-        this->cleanItems(0);
 
-    for (unsigned int i = 0; i < msg.items.size(); ++i) {
-        if (!this->item_exists(msg.items[i])) {
+    std::cout << "LEN DE ITEMS ES: " << msg.items.size() << std::endl;
+
+    if (msg.items.size() == 0) {
+        std::cout << "Es CERO" << std::endl;
+        this->cleanItems(0);
+        return;
+    }
+
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        if (!this->item_exists(msg, i)) {
+            std::cout << "Voy a hacer clean" << std::endl;
             this->cleanItems(i);
+            break;
         }
     }
 }
 
 
-bool ClientWorld::item_exists(ProtocolItem &i) {
-    for (unsigned int j = 0; j < items.size(); ++j) {
-        
-        std::cout << "WORLD ID: " << items[j]->get_id() << std::endl; 
-        std::cout << "WORLD POSX: " << items[j]->get_posX() << std::endl; 
-        std::cout << "WORLD POSY: " << items[j]->get_posY() << std::endl;
-        std::cout << "PROTOCOL ID: " << i.id << std::endl; 
-        std::cout << "PROTOCOL POSX: " << i.posX << std::endl; 
-        std::cout << "PROTOCOL POSY: " << i.posY << std::endl; 
-        if ((items[j]->get_id() == i.id) && (items[j]->get_posX() == i.posX) && (items[j]->get_posY() == i.posY))
+bool ClientWorld::item_exists(ProtocolMessage &msg, unsigned int &i) {
+    for (unsigned int j = 0; j < msg.items.size(); ++j) {
+        if ((msg.items[j].id == items[i]->get_id()) && 
+            (msg.items[j].posX == items[i]->get_posX()) && 
+            (msg.items[j].posY == items[i]->get_posY()))
             return true;
-
-        
     }
     return false;
 }

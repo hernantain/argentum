@@ -11,11 +11,11 @@ uint8_t Item::get_id() {
 }
 
 int16_t Item::get_posX() {
-    return id;
+    return posX;
 }
 
 int16_t Item::get_posY() {
-    return id;
+    return posY;
 }
 
 int16_t Item::get_amount() {
