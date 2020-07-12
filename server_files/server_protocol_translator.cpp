@@ -3,7 +3,6 @@
 
 #include "server_world.h"
 #include "server_protocol_translator.h"
-#include "server_banker.h"
 
 ProtocolTranslator::ProtocolTranslator(
     Json::Value &config, 
