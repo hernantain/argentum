@@ -71,16 +71,17 @@ void NPC::drop_potion(Item &drop_item) {
     int rand_potion = rand() % 2;
     if (rand_potion == 0) {
         int16_t mana_potion_id = config["manaPotion"]["id"].asInt();
-        drop_item.set_id(mana_potion_id);
+        drop_item = ItemFactory::make_item(mana_potion_id, config);
     } else {
         int16_t life_potion_id = config["lifePotion"]["id"].asInt();
-        drop_item.set_id(life_potion_id);
+        drop_item = ItemFactory::make_item(life_potion_id, config);
     }
 }
 
 void NPC::drop_random_item(Item &drop_item) {
     int16_t random_item_id = rand() % MAX_ITEM_ID + 1;
-    drop_item.set_id(random_item_id);
+    drop_item = ItemFactory::make_item(random_item_id, config);
+    std::cout << "NPC::DroppingItem::" << drop_item.get_name() << std::endl;
 }
 
 int NPC::gold_drop() {

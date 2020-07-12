@@ -8,6 +8,7 @@
 #include "server_movement.h"
 #include "server_character.h"
 #include "server_attackable.h"
+#include "server_item_factory.h"
 
 #include "../common_files/common_collision_info.h"
 
