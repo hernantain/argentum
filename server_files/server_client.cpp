@@ -42,7 +42,7 @@ void SrvClient::send_message(ProtocolMessage &updated_msg) {
     //     std::cout << "ENVIANDO --> PROT CHARACTER MAX EXP " << updated_msg.characters[i].max_experience << std::endl;
     //     std::cout << "ENVIANDO --> PROT CHARACTER ALIVE " << (int) updated_msg.characters[i].alive << std::endl;
     //     std::cout << std::endl;
-    // }
+    // }    
     this->messageQueue.push(updated_msg);
 }
 

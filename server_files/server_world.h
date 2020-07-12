@@ -12,7 +12,7 @@ struct ServerWorld {
 
     std::map<uint16_t, Character*> characters;
     std::map<uint16_t, NPC*> npcs;
-    std::vector<Item*> items;
+    std::vector<Item> items;
 
     ServerWorld();
 
@@ -35,6 +35,9 @@ struct ServerWorld {
     void move_character_left(uint16_t id);
     void move_character_down(uint16_t id);
     void move_character_top(uint16_t id);
+
+    void player_take_item(uint16_t id);
+    void update_world_items(unsigned int &i);
 
     bool check_collision(uint16_t id, uint16_t other_id);
 

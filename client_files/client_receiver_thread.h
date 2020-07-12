@@ -36,6 +36,7 @@ class ClientReceiverThread : public Thread {
     void process_death(ProtocolMessage &msg);
     void process_log_off(ProtocolMessage &msg);
     void print_response_info(ProtocolMessage &msg);
+    void process_take_item(ProtocolMessage &msg);
     public:
         ClientReceiverThread(Socket &skt, ClientWorld &world, SDL_Rect &camera, InfoView &infoView, uint16_t player_id);
     

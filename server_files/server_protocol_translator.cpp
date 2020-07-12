@@ -103,11 +103,13 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
 }
 
 void ProtocolTranslator::take_item_event(ProtocolMessage &msg, ServerWorld &world) {
+    world.player_take_item(msg.id_player);
+    this->get_world(msg, world);
     // int item_id = msg.characters[0].itemId;
     // ItemFactory factory;
     // Item item = factory.make_itemt(item_id, config);
     // world.characters[msg.id_player]->take_item(item);
-    // msg.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
+    msg.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
 }
 
 void ProtocolTranslator::meditation_event(ProtocolMessage &msg, ServerWorld &world) {
@@ -126,7 +128,7 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
         if (!other->is_alive()) {
-            // std::vector<int> drop_items = other->drop_items();
+            // std::vector<int> drop_items = other->drop_items(world.items);
             // int gold = other->drop_gold();
             msg.id_message = PROTOCOL_KILL_CONFIRM;
         }
@@ -235,10 +237,10 @@ void ProtocolTranslator::get_all_items(ProtocolMessage& msg, ServerWorld &world)
 
     for (size_t i = 0; i < world.items.size(); ++i) {
         ProtocolItem protocolItem(
-            world.items[i]->get_id(),
-            world.items[i]->get_posX(),
-            world.items[i]->get_posY(),
-            world.items[i]->get_amount()
+            world.items[i].get_id(),
+            world.items[i].get_posX(),
+            world.items[i].get_posY(),
+            world.items[i].get_amount()
         );
         tmp.push_back(std::move(protocolItem));
     }

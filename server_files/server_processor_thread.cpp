@@ -4,6 +4,7 @@
 #include "server_processor_thread.h"
 #include "../common_files/common_mapinfo.h"
 
+#include "server_sword.h"
 
 
 ServerProcessorThread::ServerProcessorThread(
@@ -25,6 +26,12 @@ void ServerProcessorThread::run() {
 
     ProtocolTranslator protocol_translator(config, collisionInfo);
     ServerWorld serverWorld;
+
+    Sword i(config);
+    i.set_posX(100);
+    i.set_posY(100);
+    i.set_amount(1);
+    serverWorld.items.push_back(i);
     
     while (running) {
         ProtocolMessage received_msg = this->receiversQueue.pop();
