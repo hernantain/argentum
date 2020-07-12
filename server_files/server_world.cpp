@@ -214,16 +214,21 @@ void ServerWorld::move_character_top(uint16_t id) {
 bool ServerWorld::check_collision(uint16_t id, uint16_t other_id) {
     Character* me = this->characters[id];
     Character* other = this->characters[other_id];
+    //Attackable* me = this->characters[id];
+    //Attackable* other = this->characters[other_id];
 
     int leftMe = me->get_body_pos_X();
     int rightMe = me->get_body_pos_X() + 21; // CAMBIAR POR UN GETTER A LA RAZA
+    // me->get_width()
     int topMe = me->get_body_pos_Y();
     int bottomMe = me->get_body_pos_Y() + 31; // CAMBIAR POR UN GETTER A LA RAZA
-
+    // me->get_height()
     int leftOther = other->get_body_pos_X();
     int rightOther = other->get_body_pos_X() + 21; // CAMBIAR POR UN GETTER A LA RAZA
+    // other->get_width()
     int topOther = other->get_body_pos_Y();
     int bottomOther = other->get_body_pos_Y() + 31; // CAMBIAR POR UN GETTER A LA RAZA
+    // other->get_height()
 
     if( bottomMe <= topOther ) return false;
     if( topMe >= bottomOther ) return false;
