@@ -24,7 +24,7 @@ Character::Character(uint16_t id, Json::Value &config, CharacterClass character_
     experience(config["experience"]["difficulty_constant"].asUInt(), config["experience"]["level_multiplier"].asFloat()),
     inventory(config["inventory"]["max_items"].asUInt()) {
     this->id = id;
-    this->gold = 500;
+    this->gold = INITIAL_GOLD;
     this->bank_gold = INITIAL_GOLD;
     this->level = INITIAL_LEVEL;
     this->alive = true;
