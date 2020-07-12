@@ -9,6 +9,7 @@
 
 #include "../common_files/common_protocol_message.h"
 #include "../common_files/common_protocol_character.h"
+#include "../common_files/common_protocol_codes.h"
 
 #include <vector>
 #include <stdint.h>

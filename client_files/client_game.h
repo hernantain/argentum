@@ -16,6 +16,7 @@
 
 #include "../common_files/common_sockets.h"
 #include "../common_files/common_queue.h"
+#include "../common_files/common_protocol_codes.h"
 
 
 class Game {
