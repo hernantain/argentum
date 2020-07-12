@@ -114,10 +114,13 @@ int Character::deposit_gold() {
     return amount;
 }
 
-void Character::withdraw_gold() {
-    // TODO: think about it
+int Character::withdraw_gold() {
     int amount = config["gold"]["gold_amount_constant"].asInt();
+    if (bank_gold < amount) amount = bank_gold;
     gold += amount;
+    bank_gold -= amount;
+    std::cout << "WithdrawingGold::::" << amount << std::endl;
+    return amount;
 }
 
 void Character::drop_item(int16_t id) {

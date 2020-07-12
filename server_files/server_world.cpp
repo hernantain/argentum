@@ -72,7 +72,7 @@ void ServerWorld::move_npcs() {
             current->move_random();
         } else{
             Attackable* closest = get_closest_from_position(posX, posY);
-            current->move_to(closest->get_body_pos_X(), closest->get_body_pos_Y());
+            current->move_to(*closest);
             current->attack(*closest);
         }
     }

@@ -111,8 +111,8 @@ Race race, CollisionInfo &collisionInfo);
     // Emula el deposito de oro, devuelve una suma fija de dinero a depsitar
     int deposit_gold();
 
-    // Emula el retiro de oro, devuelve una suma fija de dinero a depsitar
-    void withdraw_gold();
+    // Emula el retiro de oro, devuelve una suma fija de dinero que retiro
+    int withdraw_gold();
 
     // Devuelve un booleano que indica si el jugador esta en zona segura o no.
     bool is_safe();

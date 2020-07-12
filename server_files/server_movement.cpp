@@ -69,7 +69,6 @@ void Movement::move_down(int velocity) {
 
 void Movement::move_random(int velocity) {
     int randNum = (rand() % 4) + 1;
-    // std::cout << "Im moving random to " << randNum << std::endl;
     switch (randNum) {
         case 1: return move_right(velocity);
         case 2: return move_left(velocity);

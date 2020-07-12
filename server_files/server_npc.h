@@ -95,7 +95,7 @@ public:
     void move_random();
 
     // Acerca al NPC hacia la direccion posX, posY
-    void move_to(int16_t posX, int16_t posY);
+    void move_to(Attackable& other);
 
     // Devuelve la direccion hacia donde se mueve el NPC
     int get_body_facing();

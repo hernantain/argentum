@@ -308,6 +308,10 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				event_id = PROTOCOL_DEPOSIT;
 				break;
 
+			case SDLK_s:
+				event_id = PROTOCOL_WITHDRAW;
+				break;
+
 			case SDLK_z:
 				event_id = PROTOCOL_MEDITATION;
 				break;			
