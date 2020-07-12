@@ -12,6 +12,7 @@
 #include "client_npc.h"
 #include "client_item.h"
 
+
 struct ClientWorld {
     SDL_Renderer *gRenderer;
     ItemViewer &itemViewer;
@@ -44,7 +45,7 @@ struct ClientWorld {
     void update_player_alive_status(ProtocolMessage &msg);
     void update_dead_npcs(ProtocolMessage &msg);
     void update_items(ProtocolMessage &msg);
-    bool item_exists(ProtocolItem &i);
+    bool item_exists(ProtocolMessage &msg, unsigned int &i);
     void cleanItems(unsigned int i);
 
     void render(uint16_t id, SDL_Rect &camera, int &it);

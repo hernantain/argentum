@@ -32,6 +32,12 @@ void ServerProcessorThread::run() {
     i.set_posY(100);
     i.set_amount(1);
     serverWorld.items.push_back(i);
+
+    Sword j(config);
+    j.set_posX(3100);
+    j.set_posY(200);
+    j.set_amount(1);
+    serverWorld.items.push_back(j);
     
     while (running) {
         ProtocolMessage received_msg = this->receiversQueue.pop();
