@@ -10,7 +10,7 @@
 
 
 
-ClientWorld::ClientWorld(SDL_Renderer *gRenderer) {
+ClientWorld::ClientWorld(SDL_Renderer *gRenderer, ItemViewer &itemViewer) : itemViewer(itemViewer) {
     this->gRenderer = gRenderer;
 }
     
@@ -55,8 +55,8 @@ void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
         player = new Gnome(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);
     }
-
 }
+
 
 // ADD NPCs
 
@@ -66,6 +66,16 @@ void ClientWorld::add_npc(ProtocolNpc &protocolNpc) {
     NPC* npc = new NPC(protocolNpc.id, protocolNpc.npc_type, gRenderer, protocolNpc.posX, protocolNpc.posY);
     this->add_npc(protocolNpc.id, npc);
 }
+
+
+// ADD ITEM
+
+void ClientWorld::add_item(ProtocolItem &protocolItem) {
+    std::unique_lock<std::mutex> lock(m);
+    Item* i = new Item(protocolItem.id, protocolItem.posX, protocolItem.posY, protocolItem.amount);
+    this->items.push_back(i);
+}
+
 
 // UPDATE NPCs
 
@@ -103,6 +113,51 @@ void ClientWorld::update_player_alive_status(ProtocolMessage &msg) {
     }
 }
 
+// UPDATE 
+
+
+void ClientWorld::update_items(ProtocolMessage &msg) {
+    std::unique_lock<std::mutex> lock(m);
+    if (msg.items.size() == 0)
+        this->cleanItems(0);
+
+    for (unsigned int i = 0; i < msg.items.size(); ++i) {
+        if (!this->item_exists(msg.items[i])) {
+            this->cleanItems(i);
+        }
+    }
+}
+
+
+bool ClientWorld::item_exists(ProtocolItem &i) {
+    for (unsigned int j = 0; j < items.size(); ++j) {
+        
+        std::cout << "WORLD ID: " << items[j]->get_id() << std::endl; 
+        std::cout << "WORLD POSX: " << items[j]->get_posX() << std::endl; 
+        std::cout << "WORLD POSY: " << items[j]->get_posY() << std::endl;
+        std::cout << "PROTOCOL ID: " << i.id << std::endl; 
+        std::cout << "PROTOCOL POSX: " << i.posX << std::endl; 
+        std::cout << "PROTOCOL POSY: " << i.posY << std::endl; 
+        if ((items[j]->get_id() == i.id) && (items[j]->get_posX() == i.posX) && (items[j]->get_posY() == i.posY))
+            return true;
+
+        
+    }
+    return false;
+}
+
+void ClientWorld::cleanItems(unsigned int i) {
+    std::vector<Item*> tmp;
+    for (unsigned int j = 0; j < items.size(); ++j) {
+        if (j == i) {
+            delete items[j];
+            continue;
+        }
+
+        tmp.push_back(items[j]);
+    }
+    items.swap(tmp);
+}
 
 // MOVE PLAYER
 
@@ -167,23 +222,34 @@ void ClientWorld::render(uint16_t id, SDL_Rect &camera, int &it) {
     std::map<uint16_t, NPC*>::iterator npc_itr;
     for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr)  
         npc_itr->second->render(camera);
+
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        uint8_t itemId = items[i]->get_id();
+        int16_t posX = items[i]->get_posX();
+        int16_t posY = items[i]->get_posY();
+
+        // this->itemViewer.print_works();
+        // std::cout << "ITEM ACA LLEGA" << std::endl;
+        LTexture* item = this->itemViewer.get_item_icon(itemId);
+        item->render(posX-camera.x, posY-camera.y, gRenderer);
+    }
 }
 
 
 // Constructor y asignacion por movimiento.
 
 
-ClientWorld::ClientWorld(ClientWorld&& other) {
-    this->players = other.players;
-    this->npcs = other.npcs;
-    this->gRenderer = other.gRenderer;
-}
+// ClientWorld::ClientWorld(ClientWorld&& other) {
+//     this->players = other.players;
+//     this->npcs = other.npcs;
+//     this->gRenderer = other.gRenderer;
+// }
 
 
-ClientWorld& ClientWorld::operator=(ClientWorld&& other) {
-    this->players = other.players;
-    this->npcs = other.npcs;
-    this->gRenderer = other.gRenderer;
-    return *this;
-}
+// ClientWorld& ClientWorld::operator=(ClientWorld&& other) {
+//     this->players = other.players;
+//     this->npcs = other.npcs;
+//     this->gRenderer = other.gRenderer;
+//     return *this;
+// }
 

@@ -211,6 +211,10 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				event_id = 11;
 				break;
 
+			case SDLK_a:
+				event_id = 8;
+				break;
+
 			/* A CAMBIAR */
 			case SDLK_m:
 				event_id = 4;

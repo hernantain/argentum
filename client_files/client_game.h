@@ -36,7 +36,7 @@ class Game {
 	void adjust_camera(InfoView &infoView);
 
 	Map loadMap(); 
-	ClientWorld loadWorld(InfoView &infoView);
+	ClientWorld loadWorld(InfoView &infoView, ItemViewer &itemViewer);
 
 
 	public:
