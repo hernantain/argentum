@@ -69,10 +69,8 @@ void ServerWorld::move_npcs() {
         int16_t posX = current->get_body_pos_X();
         int16_t posY = current->get_body_pos_Y();
         if (!has_character_close(posX, posY)) {
-            // std::cout << "No hay characters cerca" << std::endl;
             current->move_random();
         } else{
-            std::cout << "Tengo a un character cerca" << std::endl;
             Attackable* closest = get_closest_from_position(posX, posY);
             current->move_to(closest->get_body_pos_X(), closest->get_body_pos_Y());
             current->attack(*closest);
@@ -97,9 +95,9 @@ void ServerWorld::add(uint16_t id, NPC* npc) {
     this->npcs.insert(std::pair<uint16_t, NPC*> (id, npc));
 }
 
-// void ServerWorld::add(Item &item) {
-//     this->items.push_back(item);
-// }
+void ServerWorld::add(Item& item) {
+    this->items.push_back(item);
+}
 
 
 void ServerWorld::player_take_item(uint16_t id) {

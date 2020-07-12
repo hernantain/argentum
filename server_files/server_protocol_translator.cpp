@@ -137,10 +137,7 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
         if (!other->is_alive()) {
-            // std::vector<int> drop_items = other->drop_items(world.items);
-
-            // other->drop_items(world);
-
+            other->drop_items(world.items);
             // int gold = other->drop_gold();
             msg.id_message = PROTOCOL_KILL_CONFIRM;
         }

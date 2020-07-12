@@ -6,20 +6,24 @@ std::string Item::get_name() {
     return name;
 }
 
-uint8_t Item::get_id() {
+int16_t Item::get_id() {
     return id;
 }
 
 int16_t Item::get_posX() {
-    return id;
+    return posX;
 }
 
 int16_t Item::get_posY() {
-    return id;
+    return posY;
 }
 
 int16_t Item::get_amount() {
     return amount;
+}
+
+void Item::set_id(int16_t new_id) {
+    id = new_id;
 }
 
 void Item::set_amount(int16_t item_amount) {
