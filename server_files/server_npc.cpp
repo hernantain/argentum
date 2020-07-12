@@ -7,6 +7,8 @@
 #define NO_DAMAGE 0
 #define MIN_GOLD_MULTIPLIER 0.01
 #define MAX_GOLD_MULTIPLIER 0.2
+#define MAX_ITEM_ID 19
+#define DROP_ITEM_AMOUNT 1
 
 NPC::NPC(Json::Value &config, CollisionInfo &collisionInfo) : 
     config(config),
@@ -38,35 +40,50 @@ bool NPC::is_newbie() {
     return false;
 }
 
-void NPC::drop() {
+void NPC::drop_items(std::vector<Item> &worldItems) {
     int nothing_percentage = config["npc"]["nothing_drop_probability"].asFloat() * 100;
     int gold_percentage = config["npc"]["gold_drop_probability"].asFloat() * 100;
     int potion_percentage = config["npc"]["potion_drop_probability"].asFloat() * 100;
-    int item_percentage = config["npc"]["another_item_probability"].asFloat() * 100;
+    // int item_percentage = config["npc"]["another_item_probability"].asFloat() * 100;
 
-    srand (time(NULL));
+    Item drop_item;
     int drop_chances = rand() % 100 + 1;
     if (drop_chances <= nothing_percentage) return;
-    if (drop_chances <= nothing_percentage + gold_percentage) {
-        // send message of drop gold
+    else if (drop_chances <= nothing_percentage + gold_percentage) {
         int gold = gold_drop();
-        std::cout << "Im going to drop GOLD: " << gold << std::endl;
+        std::cout << "Im going to drop Gold: " << gold << std::endl;
+        // TODO: Make the GoldItem and add it to the world
         return;
+    } else if (drop_chances <= nothing_percentage + gold_percentage + potion_percentage) {
+        drop_potion(drop_item);
+    } else {
+        drop_random_item(drop_item);
     }
-    if (drop_chances <= nothing_percentage + gold_percentage + potion_percentage) {
-        // send message of drop potion
-        std::cout << "Im going to drop a POTION " << std::endl;
-        return;
-    }
-    if (drop_chances <= nothing_percentage + gold_percentage + potion_percentage + item_percentage) {
-        // send message of drop item
-        std::cout << "Im going to drop a ITEM " << std::endl;
-        return;
+
+    drop_item.set_amount(DROP_ITEM_AMOUNT);
+    drop_item.set_posX(get_body_pos_X());
+    drop_item.set_posY(get_body_pos_Y());
+    worldItems.push_back(drop_item);
+    std::cout << "NPC::DroppingItem ID::" << drop_item.get_id() << std::endl;    
+}
+
+void NPC::drop_potion(Item &drop_item) {
+    int rand_potion = rand() % 2;
+    if (rand_potion == 0) {
+        int16_t mana_potion_id = config["manaPotion"]["id"].asInt();
+        drop_item.set_id(mana_potion_id);
+    } else {
+        int16_t life_potion_id = config["lifePotion"]["id"].asInt();
+        drop_item.set_id(life_potion_id);
     }
 }
 
+void NPC::drop_random_item(Item &drop_item) {
+    int16_t random_item_id = rand() % MAX_ITEM_ID + 1;
+    drop_item.set_id(random_item_id);
+}
+
 int NPC::gold_drop() {
-    srand (time(NULL));
     float random = ((float) rand()) / (float) RAND_MAX;
     float gold_multiplier = random * (MAX_GOLD_MULTIPLIER - MIN_GOLD_MULTIPLIER);
     gold_multiplier += MIN_GOLD_MULTIPLIER;
@@ -79,7 +96,6 @@ int NPC::get_defense() {
 }
 
 int NPC::get_damage() {
-    srand (time(NULL));
     int damage = rand() % (max_damage - min_damage + 1) + min_damage;
     return damage;
 }
@@ -88,12 +104,20 @@ bool NPC::is_safe() {
     return movement.is_safe();
 }
 
+bool NPC::attack_zone(Attackable& other) {
+    if (is_safe() || other.is_safe()) {
+        std::cout << "SafeZone::Your or your rival are on safe zone" << std::endl;
+        return false;
+    }
+    return true;
+}
 
 bool NPC::can_attack(Attackable& other) {
     if(!alive || !other.is_alive()) {
         std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
         return false;
     }
+    if(!attack_zone(other)) return false;
     int posX = other.get_body_pos_X();
     int posY = other.get_body_pos_Y();
     std::cout << "NPC::other posX: " << posX << std::endl;
@@ -150,10 +174,15 @@ void NPC::move_random() {
     movement.move_random(config["graphics"]["velocity"].asInt());
 }
 
-void NPC::move_to(int16_t posX, int16_t posY) {
+void NPC::move_to(Attackable& other) {
+    if(!attack_zone(other)) {
+        move_random();
+        return;
+    }
+    int16_t posX = other.get_body_pos_X();
+    int16_t posY = other.get_body_pos_Y();
     movement.move_to(config["graphics"]["velocity"].asInt(), posX, posY);
 }
-
 
 int NPC::get_body_facing() { 
     return (int) movement.get_facing_direction();

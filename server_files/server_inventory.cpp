@@ -1,6 +1,8 @@
 #include "server_inventory.h"
 #include <iostream>
 
+#define DROP_OFFSET_TOLERANCE 20
+
 Inventory::Inventory(int size) {
     this->max_size = size;
 }
@@ -12,29 +14,56 @@ void Inventory::add_item(Item& item) {
     std::cout << "Inventory::Size::" << items.size() << std::endl;
 }
 
-void Inventory::remove_item(Item &item) {
+void Inventory::remove_item(int16_t id) {
     if (items.empty()) return;
-    // if (items.find(item) == items.end()) return;
-    // // found
-    // std::map<Item, int>::iterator it;
-    // it = items.find(item);
-    // items.erase(it);
+    std::vector<Item> tmp;
+    std::vector<Item>::iterator it = items.begin();
+    for (; it != items.end(); ++it) {
+        if (it->get_id() == id) {
+            std::cout << "Inventory::Deleting Item" << std::endl;
+            continue;
+        }
+        tmp.push_back(*it);
+    }
+    items.swap(tmp);
 }
 
-void Inventory::drop_items(std::vector<Item> &worldItems) {
+void Inventory::drop_items(int16_t posX, int16_t posY, std::vector<Item> &worldItems) {
     if (items.empty()) return;
+    int16_t last_assignedX = posX - DROP_OFFSET_TOLERANCE;
+    int16_t last_assignedY = posY - DROP_OFFSET_TOLERANCE;
 
-    // for i in items: popula el world items seteando posXposY, id
+    // std::cout << "MyPosX::: " << posX << std::endl;
+    // std::cout << "MyPosY::: " << posY << std::endl;
+    for (unsigned int i = 0; i < items.size(); i++) {
+        // std::cout << "ItemDropPosX::: " << last_assignedX << std::endl;
+        // std::cout << "ItemDropPosY::: " << last_assignedY << std::endl;
+        items[i].set_posX(last_assignedX);
+        items[i].set_posY(last_assignedY);
 
+        last_assignedX += DROP_OFFSET_TOLERANCE;
+        if(last_assignedX == posX + 2 * DROP_OFFSET_TOLERANCE) {
+            last_assignedX -= DROP_OFFSET_TOLERANCE;
+            last_assignedY += DROP_OFFSET_TOLERANCE;
+        }
+        if(last_assignedY == posY + 2 * DROP_OFFSET_TOLERANCE) {
+            last_assignedX -= DROP_OFFSET_TOLERANCE;
+            last_assignedY -= DROP_OFFSET_TOLERANCE;
+        }
+        worldItems.push_back(items[i]);
+    }
     items.clear();
-    std::cout << "InventorySize:: " << items.size() << std::endl;
+    std::cout << "InventorySize::ShouldBe0:: " << items.size() << std::endl;
 }
 
-bool Inventory::has(Item& item) {
-    // if (items.find(item) != items.end()) {
-    //     std::cout << "Inventory::ItemFound" << std::endl;
-    //     return true;
-    // }
+bool Inventory::has(int16_t id) {
+    std::vector<Item>::iterator it = items.begin();
+    for (; it != items.end(); ++it) {
+        if (it->get_id() == id) {
+            std::cout << "Inventory::ItemFound" << std::endl;
+            return true;
+        }
+    }
     return false;
 }
 

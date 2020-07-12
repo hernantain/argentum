@@ -4,9 +4,12 @@
 #include <atomic>
 #include <vector>
 
-#include "server_protocol_translator.h"
 #include "../common_files/common_thread.h"
 #include "../common_files/common_queue.h"
+#include "../common_files/common_queue.h"
+#include "../common_files/common_protocol_codes.h"
+
+#include "server_protocol_translator.h"
 #include "server_client.h"
 #include "server_world.h"
 #include "server_client_manager.h"

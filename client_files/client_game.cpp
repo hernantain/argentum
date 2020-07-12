@@ -68,7 +68,7 @@ Map Game::loadMap() {
 
 ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 	ProtocolCharacter character(this->player_id, this->player_race, this->player_class);
-	ProtocolMessage msg(65, this->player_id, character); // 65 para crear
+	ProtocolMessage msg(PROTOCOL_CREATE_CHARACTER, this->player_id, character);
 
 	msgpack::sbuffer buffer;
 	msgpack::packer<msgpack::sbuffer> pk(&buffer);
@@ -143,7 +143,7 @@ void Game::run() {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
 				ProtocolMessage msg;
-				msg.id_message = 67;
+				msg.id_message = PROTOCOL_LOG_OFF;
 				msg.id_player = this->player_id;
 				std::cout << "POR MANDAR ULTIMO MSG EN GAME" << std::endl;
 				queue.push(msg);

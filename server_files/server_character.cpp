@@ -114,15 +114,22 @@ int Character::deposit_gold() {
     return amount;
 }
 
-void Character::withdraw_gold() {
-    // TODO: think about it
+int Character::withdraw_gold() {
     int amount = config["gold"]["gold_amount_constant"].asInt();
+    if (bank_gold < amount) amount = bank_gold;
     gold += amount;
+    bank_gold -= amount;
+    std::cout << "WithdrawingGold::::" << amount << std::endl;
+    return amount;
 }
 
-void Character::drop_item(Item& item) {
+void Character::drop_item(int16_t id) {
     std::cout << "Dropping an item" << std::endl;
-    inventory.remove_item(item);
+    if (alive) inventory.remove_item(id);
+}
+
+void Character::drop_items(std::vector<Item> &worldItems) {
+    inventory.drop_items(get_body_pos_X(), get_body_pos_Y(), worldItems);
 }
 
 const int Character::max_secure_gold() {
@@ -164,20 +171,16 @@ void Character::take_item(Item& item) {
     inventory.add_item(item);
 }
 
-void Character::drop_items(std::vector<Item> &worldItems) {
-    inventory.drop_items(worldItems);
-}
-
 void Character::equip_life_potion(Potion& item) {
     int recovery = item.get_recovery_points();
-    if (inventory.has(item)) {
+    if (inventory.has(item.get_id())) {
         life.add(recovery);
     } 
 }
 
 void Character::equip_mana_potion(Potion& item) {
     int recovery = item.get_recovery_points();
-    if (inventory.has(item)) {
+    if (inventory.has(item.get_id())) {
         mana.add(recovery);
     } 
 }
@@ -248,7 +251,6 @@ void Character::consume_mana() {
 
 bool Character::is_critical() {
     int critical_percentage = config["attack"]["critical_probability"].asFloat() * 100;
-    srand (time(NULL));
     int critical_chances = rand() % 100 + 1;
     if (critical_chances <= critical_percentage) return true;
     return false;
@@ -288,7 +290,6 @@ void Character::attack(Attackable& other) {
 }
 
 bool Character::evade_attack() {
-    srand (time(NULL));
     double evasion_chances = ((double) rand() / (RAND_MAX));
     double evasion_power = pow(evasion_chances, race.get_agility());
     bool evade = evasion_power < config["defense"]["evasion_constant"].asDouble();
@@ -313,7 +314,6 @@ int Character::experience_formula(int enemy_level) {
 }
 
 int Character::get_extra_experience(int enemy_life, int enemy_level) {
-    srand (time(NULL));
     float min = config["experience"]["min_extra_probability"].asFloat();
     float max = config["experience"]["max_extra_probability"].asFloat();
     float random = ((float) rand()) / (float) RAND_MAX;

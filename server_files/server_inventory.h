@@ -18,16 +18,17 @@ public:
     void add_item(Item& item);
 
     // Remueve un item del inventario
-    void remove_item(Item& item);
+    void remove_item(int16_t id);
 
-    // Dropea todos los items del inventario
-    void drop_items(std::vector<Item> &worldItems);
+    // Dropea todos los items del inventario populando el mundo de items
+    // Y recibiendo las posiciones del jugador como parametro
+    void drop_items(int16_t posX, int16_t posY, std::vector<Item> &worldItems);
 
     // Devuelve el tam del inventario
     unsigned int size();
 
     // Boleana, verdadera si posee el item
-    bool has(Item& item);
+    bool has(int16_t id);
 
     // Booleana, esta lleno el inventario
     bool is_full();

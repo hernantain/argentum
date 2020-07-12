@@ -10,12 +10,10 @@
 #define MAX_ATTACK_OFFSET_TOLERANCE 330
 
 Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) {
-    srand(time(NULL));
     bodyPosX = rand() % (collisionInfo.get_map_width() - 0 + 1) + 0;
     bodyPosY = rand() % (collisionInfo.get_map_height() - 0 + 1) + 0;
 
     while(check_map_collision()) {
-        srand(time(NULL));
         bodyPosX = rand() % (collisionInfo.get_map_width() - 0 + 1) + 0;
         bodyPosY = rand() % (collisionInfo.get_map_height() - 0 + 1) + 0;
     }
@@ -70,9 +68,7 @@ void Movement::move_down(int velocity) {
 }
 
 void Movement::move_random(int velocity) {
-    srand(time(NULL));
     int randNum = (rand() % 4) + 1;
-    // std::cout << "Im moving random to " << randNum << std::endl;
     switch (randNum) {
         case 1: return move_right(velocity);
         case 2: return move_left(velocity);

@@ -196,38 +196,38 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 	if( e.type == SDL_KEYDOWN ) {
 		switch( e.key.keysym.sym ) {
             case SDLK_UP: 
-				event_id = 10;
+				event_id = PROTOCOL_MOVE_TOP;
 				break;
 
             case SDLK_DOWN:
-				event_id = 13;
+				event_id = PROTOCOL_MOVE_DOWN;
 				break;
 
             case SDLK_LEFT:
-				event_id = 12; 
+				event_id = PROTOCOL_MOVE_LEFT; 
 				break;
 
             case SDLK_RIGHT:
-				event_id = 11;
+				event_id = PROTOCOL_MOVE_RIGHT;
 				break;
 
 			case SDLK_a:
-				event_id = 8;
+				event_id = PROTOCOL_TAKE_ITEM;
 				break;
 
 			/* A CAMBIAR */
 			case SDLK_m:
-				event_id = 4;
+				event_id = PROTOCOL_EQUIP_ARMOR;
 				armorId = this->clothes[1]->get_id();
 				break;
 
 			case SDLK_n:
-				event_id = 4;
+				event_id = PROTOCOL_EQUIP_ARMOR;
 				armorId = this->clothes[2]->get_id();
 				break;
 
 			case SDLK_v:
-				event_id = 4;
+				event_id = PROTOCOL_EQUIP_ARMOR;
 				armorId = this->clothes[3]->get_id(); 
 				break;
 
@@ -236,17 +236,17 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				break;
 
 			case SDLK_h:
-				event_id = 3;
+				event_id = PROTOCOL_EQUIP_HELMET;
 				helmetId = this->helmets[0]->get_id();
 				break;
 
 			case SDLK_j:
-				event_id = 3;
+				event_id = PROTOCOL_EQUIP_HELMET;
 				helmetId = this->helmets[1]->get_id();
 				break;
 
 			case SDLK_k:
-				event_id = 3;
+				event_id = PROTOCOL_EQUIP_HELMET;
 				helmetId = this->helmets[2]->get_id();
 				break;
 
@@ -255,71 +255,75 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				break;
 
 			case SDLK_q:
-				event_id = 6;
+				event_id = PROTOCOL_EQUIP_SHIELD;
 				shieldId = this->shields[0]->get_id();
 				break;
 
 			case SDLK_w:
-				event_id = 6;
+				event_id = PROTOCOL_EQUIP_SHIELD;
 				shieldId = this->shields[1]->get_id();
 				break;
 
 			case SDLK_e:
-				event_id = 5;
+				event_id = PROTOCOL_EQUIP_WEAPON;
 				weaponId = this->weapons[7]->get_id();
 				break;
 
 			case SDLK_r:
-				event_id = 5;
+				event_id = PROTOCOL_EQUIP_WEAPON;
 				weaponId = this->weapons[6]->get_id(); // SIMPLE BOW
 				break;
 
 			case SDLK_t:
-				event_id = 5;
+				event_id = PROTOCOL_EQUIP_WEAPON;
 				weaponId = this->weapons[5]->get_id(); // COMPOUND BOW
 				break;
 
 			case SDLK_u:
-				event_id = 5;
+				event_id = PROTOCOL_EQUIP_WEAPON;
 				weaponId = this->weapons[0]->get_id(); // SOWRD
 				break;
 
 			case SDLK_y:
-				event_id = 5;
+				event_id = PROTOCOL_EQUIP_WEAPON;
 				weaponId = this->weapons[1]->get_id(); // AXE
 				break;
 
 			case SDLK_i:
-				event_id = 5;
+				event_id = PROTOCOL_EQUIP_WEAPON;
 				weaponId = this->weapons[2]->get_id(); // HAMMER
 				break;
 
 			case SDLK_o:
-				event_id = 5;
+				event_id = PROTOCOL_EQUIP_WEAPON;
 				weaponId = this->weapons[3]->get_id(); // BACULO ENGARZADO
 				break;
 
 			case SDLK_p:
-				event_id = 5;
+				event_id = PROTOCOL_EQUIP_WEAPON;
 				weaponId = this->weapons[4]->get_id(); // BACULO NUDOSO
 				break;
 
 			case SDLK_d:
-				event_id = 14;
+				event_id = PROTOCOL_DEPOSIT;
+				break;
+
+			case SDLK_s:
+				event_id = PROTOCOL_WITHDRAW;
 				break;
 
 			case SDLK_z:
-				event_id = 7;
+				event_id = PROTOCOL_MEDITATION;
 				break;			
         }
 
 	} else if( e.type == SDL_KEYUP && e.key.repeat == 0 ) {
-		event_id = 9;
+		event_id = PROTOCOL_MOVE_STOP;
 
 	} 
 	else if ( e.type == SDL_MOUSEBUTTONDOWN) {
 		SDL_GetMouseState( &x, &y ); 
-		event_id = 2;
+		event_id = PROTOCOL_ATTACK;
 		otherPosX = x + camera.x; 
 		otherPosY = y + camera.y;
 		std::cout << "CLICK EN: " << x + camera.x << " Y EN: " << y + camera.y << std::endl; 

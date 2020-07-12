@@ -25,11 +25,12 @@ protected:
     NPC(const NPC&) = delete;
     NPC& operator=(const NPC&) = delete;
 
-    // bool can_attack(Character& other);
     bool can_attack(Attackable& other);
     int get_damage();
     int get_defense();
     int gold_drop();
+    void drop_potion(Item &drop_item);
+    void drop_random_item(Item &drop_item);
 
 public:
     // Contructor, recibe el id, la vida inicial
@@ -50,6 +51,9 @@ public:
     // Booleano devuelve verdadero si el NPC se encuentra en una zona segura
     bool is_safe();
 
+    // Chequea que tanto vos como el otro jugador esten en zona segura
+    bool attack_zone(Attackable& other);
+
     // Booleano devuelve verdadero si esta vivo el NPC
     bool is_alive();
 
@@ -60,6 +64,9 @@ public:
 
     // Dropea la recompensa si la hubiere del NPC
     void drop();
+
+    // Dropea la recompensa si la hubiere del NPC
+    void drop_items(std::vector<Item> &worldItems);
 
     // Ataca a un personaje del juego
     // void attack(Character& other);
@@ -88,7 +95,7 @@ public:
     void move_random();
 
     // Acerca al NPC hacia la direccion posX, posY
-    void move_to(int16_t posX, int16_t posY);
+    void move_to(Attackable& other);
 
     // Devuelve la direccion hacia donde se mueve el NPC
     int get_body_facing();

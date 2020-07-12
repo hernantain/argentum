@@ -111,8 +111,8 @@ Race race, CollisionInfo &collisionInfo);
     // Emula el deposito de oro, devuelve una suma fija de dinero a depsitar
     int deposit_gold();
 
-    // Emula el retiro de oro, devuelve una suma fija de dinero a depsitar
-    void withdraw_gold();
+    // Emula el retiro de oro, devuelve una suma fija de dinero que retiro
+    int withdraw_gold();
 
     // Devuelve un booleano que indica si el jugador esta en zona segura o no.
     bool is_safe();
@@ -145,7 +145,7 @@ Race race, CollisionInfo &collisionInfo);
     void drop_items(std::vector<Item> &worldItems);
 
     // Dropea el item que recibe por parametro
-    void drop_item(Item& item);
+    void drop_item(int16_t id);
 
     // Toma una suma de oro del suelo;
     void take_gold(int amount);

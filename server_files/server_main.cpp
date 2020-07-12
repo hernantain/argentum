@@ -1,5 +1,7 @@
 
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
 #include "server.h"
 #include "server_os_error.h"
 
@@ -11,6 +13,7 @@
 
 int main(int argc, char* argv[]) {
     try {
+        srand (time(NULL));
         if (argc != PARAMS) {
             throw OSError(ARGS_ERROR_MSG);
         }

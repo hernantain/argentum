@@ -23,6 +23,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
         case PROTOCOL_MOVE_DOWN: return move_down_event(msg, world);
         case PROTOCOL_DEPOSIT: return deposit_event(msg, world);
+        case PROTOCOL_WITHDRAW: return withdraw_event(msg, world);
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
@@ -72,6 +73,12 @@ void ProtocolTranslator::deposit_event(ProtocolMessage &msg, ServerWorld &world)
     msg.id_message = PROTOCOL_DEPOSIT_CONFIRM;
 }
 
+void ProtocolTranslator::withdraw_event(ProtocolMessage &msg, ServerWorld &world) {
+    if (world.has_banker_close(msg.id_player))
+        world.characters[msg.id_player]->withdraw_gold();
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_WITHDRAW_CONFIRM;
+}
 
 void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
 
@@ -112,6 +119,7 @@ void ProtocolTranslator::move_down_event(ProtocolMessage &msg, ServerWorld &worl
 }
 
 void ProtocolTranslator::take_item_event(ProtocolMessage &msg, ServerWorld &world) {
+    
     world.player_take_item(msg.id_player);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
@@ -133,10 +141,7 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
         if (!other->is_alive()) {
-            // std::vector<int> drop_items = other->drop_items(world.items);
-
-            // other->drop_items(world);
-
+            other->drop_items(world.items);
             // int gold = other->drop_gold();
             msg.id_message = PROTOCOL_KILL_CONFIRM;
         }

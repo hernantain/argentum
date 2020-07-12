@@ -35,21 +35,22 @@ void ClientReceiverThread::run() {
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
     // print_response_info(msg);
-    if (msg.id_message == 20) this->process_move(msg);
-    if (msg.id_message == 21) this->process_deposit(msg);
-    if (msg.id_message == 25) this->process_attack(msg);
-    if (msg.id_message == 26) this->process_death(msg);
-    if (msg.id_message == 30) this->process_equip_helmet(msg);
-    if (msg.id_message == 31) this->process_equip_armor(msg);
-    if (msg.id_message == 32) this->process_equip_weapon(msg);
-    if (msg.id_message == 33) this->process_equip_shield(msg);
-    if (msg.id_message == 34) this->process_meditation(msg);
-    if (msg.id_message == 35) this->process_take_item(msg);
-    if (msg.id_message == 66) this->process_create_player(msg);
-    if (msg.id_message == 68) this->process_log_off(msg);
-    if (msg.id_message == 71) this->process_create_npc(msg);
-    if (msg.id_message == 73) this->process_move_npcs(msg);
-    if (msg.id_message == 75) this->process_recover_characters(msg);
+    if (msg.id_message == PROTOCOL_MOVE_CONFIRM) this->process_move(msg);
+    if (msg.id_message == PROTOCOL_DEPOSIT_CONFIRM) this->process_deposit(msg);
+    if (msg.id_message == PROTOCOL_WITHDRAW_CONFIRM) this->process_withdraw(msg);
+    if (msg.id_message == PROTOCOL_ATTACK_CONFIRM) this->process_attack(msg);
+    if (msg.id_message == PROTOCOL_KILL_CONFIRM) this->process_death(msg);
+    if (msg.id_message == PROTOCOL_HELMET_CONFIRM) this->process_equip_helmet(msg);
+    if (msg.id_message == PROTOCOL_ARMOR_CONFIRM) this->process_equip_armor(msg);
+    if (msg.id_message == PROTOCOL_WEAPON_CONFIRM) this->process_equip_weapon(msg);
+    if (msg.id_message == PROTOCOL_SHIELD_CONFIRM) this->process_equip_shield(msg);
+    if (msg.id_message == PROTOCOL_MEDITATE_CONFIRM) this->process_meditation(msg);
+    if (msg.id_message == PROTOCOL_TAKE_ITEM_CONFIRM) this->process_take_item(msg);
+    if (msg.id_message == PROTOCOL_CREATE_CHARACTER_CONFIRM) this->process_create_player(msg);
+    if (msg.id_message == PROTOCOL_LOG_OFF_CONFIRM) this->process_log_off(msg);
+    if (msg.id_message == PROTOCOL_CREATE_NPC_CONFIRM) this->process_create_npc(msg);
+    if (msg.id_message == PROTOCOL_UPDATE_NPCS_CONFIRM) this->process_move_npcs(msg);
+    if (msg.id_message == PROTOCOL_UPDATE_CHARACTERS_CONFIRM) this->process_recover_characters(msg);
     if (msg.id_player == this->player_id)
         world.players[this->player_id]->set_camera(camera);
 }
@@ -65,6 +66,13 @@ void ClientReceiverThread::process_deposit(ProtocolMessage &msg) {
     // update_gold_status()
     std::cout << "Depositando OK" << std::endl;
 }
+
+void ClientReceiverThread::process_withdraw(ProtocolMessage &msg) {
+    // TODO: is the same for the deposit and withdraw -> make just One Method
+    // update_gold_status()
+    std::cout << "Retirando OK" << std::endl;
+}
+
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
