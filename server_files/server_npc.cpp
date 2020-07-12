@@ -174,10 +174,6 @@ void NPC::move_random() {
     movement.move_random(config["graphics"]["velocity"].asInt());
 }
 
-// void NPC::move_to(int16_t posX, int16_t posY) {
-//     movement.move_to(config["graphics"]["velocity"].asInt(), posX, posY);
-// }
-
 void NPC::move_to(Attackable& other) {
     if(!attack_zone(other)) {
         move_random();
