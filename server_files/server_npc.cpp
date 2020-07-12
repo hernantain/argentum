@@ -2,9 +2,6 @@
 #include <iostream>
 #include <stdio.h>
 #include "server_npc.h"
-#include "server_life_potion.h"
-#include "server_mana_potion.h"
-#include "server_potion.h"
 
 #define NO_LIFE 0
 #define NO_DAMAGE 0
