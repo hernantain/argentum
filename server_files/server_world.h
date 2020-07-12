@@ -46,7 +46,6 @@ struct ServerWorld {
     bool check_characters_collision(uint16_t id);
     bool check_npcs_collision(uint16_t id);
 
-    bool check_collision(uint16_t id, uint16_t other_id);
     bool check_collision(Attackable* me, Attackable* other);
 
     void remove_npc(uint16_t id);
