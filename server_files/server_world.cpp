@@ -189,22 +189,21 @@ bool ServerWorld::check_npcs_collision(uint16_t id) {
 
 bool ServerWorld::check_collision(Attackable* me, Attackable* other) {
     int leftMe = me->get_body_pos_X();
-    int rightMe = me->get_body_pos_X() + me->get_width(); // CAMBIAR POR UN GETTER A LA RAZA
+    int rightMe = me->get_body_pos_X() + me->get_width();
 
     int topMe = me->get_body_pos_Y();
-    int bottomMe = me->get_body_pos_Y() + me->get_height(); // CAMBIAR POR UN GETTER A LA RAZA
+    int bottomMe = me->get_body_pos_Y() + me->get_height();
 
     int leftOther = other->get_body_pos_X();
-    int rightOther = other->get_body_pos_X() + other->get_width(); // CAMBIAR POR UN GETTER A LA RAZA
+    int rightOther = other->get_body_pos_X() + other->get_width();
 
     int topOther = other->get_body_pos_Y();
-    int bottomOther = other->get_body_pos_Y() + other->get_height();; // CAMBIAR POR UN GETTER A LA RAZA
+    int bottomOther = other->get_body_pos_Y() + other->get_height();;
 
-    if( bottomMe <= topOther ) return false;
-    
-    if( topMe >= bottomOther ) return false;
-    if( rightMe <= leftOther ) return false;
-    if( leftMe >= rightOther ) return false;
+    if(bottomMe <= topOther) return false;
+    if(topMe >= bottomOther) return false;
+    if(rightMe <= leftOther) return false;
+    if(leftMe >= rightOther) return false;
 
     return true;
 }
