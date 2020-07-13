@@ -25,6 +25,7 @@ struct ProtocolCharacter {
     int16_t max_experience;
     // int16_t gold;
     bool alive;
+    bool meditating;
 
     ProtocolCharacter();
 
@@ -51,7 +52,7 @@ struct ProtocolCharacter {
     // ProtocolCharacter& operator=(const ProtocolCharacter&) = delete;
 
     MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, orientation, otherPosX, otherPosY, 
-                   helmetId, armorId, weaponId, shieldId, life, max_life, mana, max_mana, experience, max_experience, alive)
+                   helmetId, armorId, weaponId, shieldId, life, max_life, mana, max_mana, experience, max_experience, alive, meditating)
 };
 
 #endif

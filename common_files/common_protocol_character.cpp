@@ -34,6 +34,7 @@ ProtocolCharacter::ProtocolCharacter(
     this->max_mana = 0;
     this->experience = 0;
     this->max_experience = 0;
+    this->meditating = false;
 }
 
 ProtocolCharacter::ProtocolCharacter() {}
@@ -58,6 +59,7 @@ ProtocolCharacter::ProtocolCharacter(
     this->experience = 0;
     this->max_experience = 0;
     this->alive = false;
+    this->meditating = false;
 }
 
 

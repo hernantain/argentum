@@ -26,6 +26,10 @@ int16_t ManaPoints::current() {
     return current_mana;
 }
 
+bool ManaPoints::is_full() {
+    return current_mana == max_mana;
+}
+
 int16_t ManaPoints::max(){
     return max_mana;
 }

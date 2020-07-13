@@ -111,9 +111,8 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
-    // Player* player = world.players[msg.id_player];
-    // std::cout << "Estoy meditando" << std::endl;
-    // player->set_meditation();    
+    update_bars(msg);
+    // world.update_player_meditation_status(msg);
 }
 
 
