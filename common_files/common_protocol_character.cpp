@@ -15,6 +15,7 @@ ProtocolCharacter::ProtocolCharacter(
         uint8_t armorId,
         uint8_t weaponId,
         uint8_t shieldId,
+        uint8_t itemId,
         bool alive) : id(id), 
                         bodyPosX(bodyPosX), 
                         bodyPosY(bodyPosY),
@@ -25,6 +26,7 @@ ProtocolCharacter::ProtocolCharacter(
                         armorId(armorId),
                         weaponId(weaponId),
                         shieldId(shieldId),
+                        itemId(itemId),
                         alive(alive) {
     this->id_race = 0;
     this->id_class = 0;
@@ -34,6 +36,7 @@ ProtocolCharacter::ProtocolCharacter(
     this->max_mana = 0;
     this->experience = 0;
     this->max_experience = 0;
+    this->meditating = false;
 }
 
 ProtocolCharacter::ProtocolCharacter() {}
@@ -51,6 +54,7 @@ ProtocolCharacter::ProtocolCharacter(
     this->armorId = 0;
     this->weaponId = 0;
     this->shieldId = 0;
+    this->itemId = 0;
     this->life = 0; 
     this->max_life = 0;
     this->mana = 0; 
@@ -58,6 +62,7 @@ ProtocolCharacter::ProtocolCharacter(
     this->experience = 0;
     this->max_experience = 0;
     this->alive = false;
+    this->meditating = false;
 }
 
 

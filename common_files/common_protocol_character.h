@@ -18,6 +18,7 @@ struct ProtocolCharacter {
     uint8_t armorId;
     uint8_t weaponId;
     uint8_t shieldId;
+    uint8_t itemId;
     int16_t life, max_life;
     int16_t mana, max_mana;
     // int16_t level;
@@ -25,6 +26,7 @@ struct ProtocolCharacter {
     int16_t max_experience;
     // int16_t gold;
     bool alive;
+    bool meditating;
 
     ProtocolCharacter();
 
@@ -41,6 +43,7 @@ struct ProtocolCharacter {
         uint8_t armorId,
         uint8_t weaponId,
         uint8_t shieldId,
+        uint8_t itemId,
         bool alive);
 
 
@@ -51,7 +54,8 @@ struct ProtocolCharacter {
     // ProtocolCharacter& operator=(const ProtocolCharacter&) = delete;
 
     MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, orientation, otherPosX, otherPosY, 
-                   helmetId, armorId, weaponId, shieldId, life, max_life, mana, max_mana, experience, max_experience, alive)
+                   helmetId, armorId, weaponId, shieldId, itemId, life, max_life, mana, max_mana, 
+                   experience, max_experience, alive, meditating)
 };
 
 #endif

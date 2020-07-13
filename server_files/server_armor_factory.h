@@ -11,7 +11,7 @@ class ArmorFactory {
 public:
 
     /* Recibiendo un id crea el casco correspondiente */
-    static Armor make_armor(const int armor_id, Json::Value& config);
+    static Armor make_armor(const uint8_t armor_id, Json::Value& config);
 };
 
 #endif // _ARMOR_FACTORY_H

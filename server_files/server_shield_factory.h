@@ -11,7 +11,7 @@ class ShieldFactory {
 public:
 
     /* Recibiendo un id crea el arma correspondiente */
-    static Shield make_shield(const int shield_id, Json::Value& config);
+    static Shield make_shield(const uint8_t shield_id, Json::Value& config);
 };
 
 

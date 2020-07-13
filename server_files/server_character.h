@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include <time.h>
 #include <jsoncpp/json/json.h>
+
 #include "server_life_points.h"
 #include "server_mana_points.h"
 #include "server_experience_points.h"
@@ -45,8 +45,7 @@ private:
     int gold;
     int bank_gold;
     int16_t level;
-    bool alive;
-    bool newbie;
+    bool alive, newbie, meditating;
 
     // No copiable.
     Character(const Character&) = delete;
@@ -67,7 +66,7 @@ private:
 public:
     // Contructor, recibe el id, la vida inicial
     Character(uint16_t id, Json::Value& config, CharacterClass character_class,
-Race race, CollisionInfo &collisionInfo);
+    Race race, CollisionInfo &collisionInfo);
 
     // Devuelve el id
     uint16_t get_id();
@@ -96,6 +95,9 @@ Race race, CollisionInfo &collisionInfo);
     // Devuelve un booleano que indica si el jugador es newbie o no
     bool is_newbie();
 
+    // Devuelve un booleano que indica si el jugador esta meditando o no
+    bool is_meditating();
+
     // Resucita al personaje en cuestion
     void resurrect();
 
@@ -107,6 +109,9 @@ Race race, CollisionInfo &collisionInfo);
 
     // Booleano que devuelve verdadero si puede depositar o no
     bool can_deposit(int16_t posX, int16_t posY);
+
+    // Booleano que devuelve verdadero si puede resucitar o no
+    bool can_resurrect(int16_t posX, int16_t posY);
 
     // Emula el deposito de oro, devuelve una suma fija de dinero a depsitar
     int deposit_gold();
@@ -144,8 +149,8 @@ Race race, CollisionInfo &collisionInfo);
     // Dropea los Items que tiene el personaje actualmente
     void drop_items(std::vector<Item> &worldItems);
 
-    // Dropea el item que recibe por parametro
-    void drop_item(int16_t id);
+    // Dropea el item que recibe por parametro y popula worldItems
+    void drop_item(uint8_t id, std::vector<Item> &worldItems);
 
     // Toma una suma de oro del suelo;
     void take_gold(int amount);

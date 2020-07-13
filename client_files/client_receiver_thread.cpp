@@ -38,6 +38,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == PROTOCOL_MOVE_CONFIRM) this->process_move(msg);
     if (msg.id_message == PROTOCOL_DEPOSIT_CONFIRM) this->process_deposit(msg);
     if (msg.id_message == PROTOCOL_WITHDRAW_CONFIRM) this->process_withdraw(msg);
+    if (msg.id_message == PROTOCOL_RESURRECT_CONFIRM) this->process_resurrection(msg);
     if (msg.id_message == PROTOCOL_ATTACK_CONFIRM) this->process_attack(msg);
     if (msg.id_message == PROTOCOL_KILL_CONFIRM) this->process_death(msg);
     if (msg.id_message == PROTOCOL_HELMET_CONFIRM) this->process_equip_helmet(msg);
@@ -46,6 +47,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == PROTOCOL_SHIELD_CONFIRM) this->process_equip_shield(msg);
     if (msg.id_message == PROTOCOL_MEDITATE_CONFIRM) this->process_meditation(msg);
     if (msg.id_message == PROTOCOL_TAKE_ITEM_CONFIRM) this->process_take_item(msg);
+    if (msg.id_message == PROTOCOL_DROP_ITEM_CONFIRM) this->process_drop_item(msg);
     if (msg.id_message == PROTOCOL_CREATE_CHARACTER_CONFIRM) this->process_create_player(msg);
     if (msg.id_message == PROTOCOL_LOG_OFF_CONFIRM) this->process_log_off(msg);
     if (msg.id_message == PROTOCOL_CREATE_NPC_CONFIRM) this->process_create_npc(msg);
@@ -73,6 +75,11 @@ void ClientReceiverThread::process_withdraw(ProtocolMessage &msg) {
     std::cout << "Retirando OK" << std::endl;
 }
 
+void ClientReceiverThread::process_resurrection(ProtocolMessage &msg) {
+    update_bars(msg);
+    world.update_player_alive_status(msg);
+    std::cout << "Resucitando OK" << std::endl;
+}
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
@@ -106,9 +113,8 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
-    // Player* player = world.players[msg.id_player];
-    // std::cout << "Estoy meditando" << std::endl;
-    // player->set_meditation();    
+    update_bars(msg);
+    // world.update_player_meditation_status(msg);
 }
 
 
@@ -143,6 +149,12 @@ void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
     }
 
     std::cout << "ITEMS DESPUES: " << world.items.size() << std::endl;
+}
+
+void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
+    std::cout << "ITEMS ANTES DROP" << world.items.size() << std::endl;
+    world.update_items(msg);
+    std::cout << "ITEMS DESPUES DROP" << world.items.size() << std::endl;
 }
 
 

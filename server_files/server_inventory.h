@@ -17,8 +17,8 @@ public:
     // Agrega un item al inventario
     void add_item(Item& item);
 
-    // Remueve un item del inventario
-    void remove_item(int16_t id);
+    // Droppea un item del inventario
+    Item drop_item(uint8_t id);
 
     // Dropea todos los items del inventario populando el mundo de items
     // Y recibiendo las posiciones del jugador como parametro

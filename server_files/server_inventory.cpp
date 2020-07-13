@@ -10,22 +10,23 @@ Inventory::Inventory(int size) {
 void Inventory::add_item(Item& item) {
     if (is_full()) return;
     items.push_back(item);
-    std::cout << "Inventory::Added::" << item.get_id() << std::endl;
-    std::cout << "Inventory::Size::" << items.size() << std::endl;
+    std::cout << "Inventory::Added::" << item.get_name() << std::endl;
 }
 
-void Inventory::remove_item(int16_t id) {
-    if (items.empty()) return;
+Item Inventory::drop_item(uint8_t id) {
+    Item drop_item;
     std::vector<Item> tmp;
     std::vector<Item>::iterator it = items.begin();
     for (; it != items.end(); ++it) {
         if (it->get_id() == id) {
-            std::cout << "Inventory::Deleting Item" << std::endl;
+            drop_item = (*it);
+            std::cout << "Inventory::Deleting Item::" << drop_item.get_name() << std::endl;
             continue;
         }
         tmp.push_back(*it);
     }
     items.swap(tmp);
+    return drop_item;
 }
 
 void Inventory::drop_items(int16_t posX, int16_t posY, std::vector<Item> &worldItems) {

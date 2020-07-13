@@ -10,7 +10,7 @@
 #define SIMPLE_BOW 16
 #define COMPOUND_BOW 17
 
-Weapon WeaponFactory::make_weapon(const int weapon_id, Json::Value& config) {
+Weapon WeaponFactory::make_weapon(const uint8_t weapon_id, Json::Value& config) {
     switch (weapon_id) {
         case SWORD: return Sword(config);
         case AXE: return Axe(config);

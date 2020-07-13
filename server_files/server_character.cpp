@@ -29,6 +29,7 @@ Character::Character(uint16_t id, Json::Value &config, CharacterClass character_
     this->level = INITIAL_LEVEL;
     this->alive = true;
     this->newbie = true;
+    this->meditating = false;
 }
 
 int16_t Character::get_life() {
@@ -67,11 +68,13 @@ bool Character::is_newbie() {
     return newbie;
 }
 
+bool Character::is_meditating() {
+    return meditating;
+}
+
 void Character::resurrect() {
-    if (!alive) {
-        alive = true;
-        restore_life_and_mana();
-    }
+    alive = true;
+    restore_life_and_mana();
 }
 
 void Character::restore_life_and_mana() {
@@ -98,6 +101,11 @@ void Character::take_off_mana(int mana_points) {
 }
 
 void Character::meditate() {
+    if (mana.is_full() || !alive) {
+        meditating = false;
+        return;
+    }
+    meditating = true;
     mana.add(character_class.get_meditation_multiplier() * race.get_intelligence());
 }
 
@@ -105,7 +113,12 @@ bool Character::can_deposit(int16_t posX, int16_t posY) {
     return alive && movement.is_near(posX, posY);
 }
 
+bool Character::can_resurrect(int16_t posX, int16_t posY) {
+    return !alive && movement.is_near(posX, posY);
+}
+
 int Character::deposit_gold() {
+    meditating = false;
     int amount = config["gold"]["gold_amount_constant"].asInt();
     if (gold < amount) amount = gold;
     gold -= amount;
@@ -115,6 +128,7 @@ int Character::deposit_gold() {
 }
 
 int Character::withdraw_gold() {
+    meditating = false;
     int amount = config["gold"]["gold_amount_constant"].asInt();
     if (bank_gold < amount) amount = bank_gold;
     gold += amount;
@@ -123,9 +137,12 @@ int Character::withdraw_gold() {
     return amount;
 }
 
-void Character::drop_item(int16_t id) {
-    std::cout << "Dropping an item" << std::endl;
-    if (alive) inventory.remove_item(id);
+void Character::drop_item(uint8_t id, std::vector<Item> &worldItems) {
+    if (!alive || !inventory.has(id)) return;
+    Item drop_item = inventory.drop_item(id);
+    drop_item.set_posX(get_body_pos_X());
+    drop_item.set_posY(get_body_pos_Y());
+    worldItems.push_back(drop_item);
 }
 
 void Character::drop_items(std::vector<Item> &worldItems) {
@@ -168,6 +185,7 @@ int Character::drop_gold() {
 
 void Character::take_item(Item& item) {
     if(!alive) return;
+    meditating = false;
     inventory.add_item(item);
 }
 
@@ -186,6 +204,7 @@ void Character::equip_mana_potion(Potion& item) {
 }
 
 void Character::equip_weapon(Weapon& item) {
+    meditating = false;
     equipment.equip_weapon(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
@@ -195,6 +214,7 @@ void Character::equip_weapon(Weapon& item) {
 }
 
 void Character::equip_armor(Armor& item) {
+    meditating = false;
     equipment.equip_armor(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
@@ -204,6 +224,7 @@ void Character::equip_armor(Armor& item) {
 }
 
 void Character::equip_shield(Shield& item) {
+    meditating = false;
     equipment.equip_shield(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
@@ -213,6 +234,7 @@ void Character::equip_shield(Shield& item) {
 }
 
 void Character::equip_helmet(Helmet& item) {
+    meditating = false;
     equipment.equip_helmet(item);
     // As we dont have the inventory on the UI
     // we assume we have the item
@@ -279,6 +301,7 @@ bool Character::can_attack(Attackable& other) {
 }
 
 void Character::attack(Attackable& other) {
+    meditating = false;
     if(!can_attack(other)) return;
     consume_mana();
     int damage = equipment.get_weapon_damage();
@@ -298,6 +321,7 @@ bool Character::evade_attack() {
 }
 
 int Character::defense(int damage) {
+    meditating = false;
     if (evade_attack()) return NO_DAMAGE;
     int defense = equipment.get_equipment_defense();
     std::cout << "Defensa:: " << defense << std::endl;
@@ -362,18 +386,22 @@ bool Character::is_attackable(int16_t posX, int16_t posY) {
 }
 
 void Character::move_right() {
+    meditating = false;
     movement.move_right(config["graphics"]["velocity"].asInt());
 }
 
 void Character::move_left() {
+    meditating = false;
     movement.move_left(config["graphics"]["velocity"].asInt());
 }
 
 void Character::move_top() {
+    meditating = false;
     movement.move_top(config["graphics"]["velocity"].asInt());
 }
 
 void Character::move_down() {
+    meditating = false;
     movement.move_down(config["graphics"]["velocity"].asInt());
 }
 
@@ -409,7 +437,8 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.max_life = this->get_max_life();
     protocolCharacter.experience = this->get_current_experience();
     protocolCharacter.max_experience = this->get_max_experience();
-    protocolCharacter.alive = this->is_alive();   
+    protocolCharacter.alive = this->is_alive();
+    protocolCharacter.meditating = this->is_meditating();   
   
     protocolCharacter.otherPosX = 0;
     protocolCharacter.otherPosY = 0;
