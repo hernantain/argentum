@@ -21,6 +21,7 @@ protected:
     bool alive;
     int16_t level, life, max_life;
     int min_damage, max_damage, defense_points;
+    int width, height;
 
     // No copiable.
     NPC(const NPC&) = delete;
@@ -48,6 +49,12 @@ public:
 
     // Devuelve la vida maxima
     int16_t get_max_life() const;
+
+    // Devuelve el ancho del NPC
+    int get_width();
+
+    // Devuelve el alto del NPC
+    int get_height();
 
     // Booleano devuelve verdadero si el NPC se encuentra en una zona segura
     bool is_safe();

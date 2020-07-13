@@ -17,6 +17,9 @@ public:
     virtual bool is_safe() = 0;
     virtual bool is_newbie() = 0;
     virtual bool is_alive() const = 0;
+    virtual bool is_alive() = 0;
+    virtual int get_height() = 0;
+    virtual int get_width() = 0;
     virtual void drop_items(std::vector<Item> &worldItems) = 0;
     virtual uint16_t get_id() const = 0;
     virtual int16_t get_max_life() const = 0;

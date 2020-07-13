@@ -12,4 +12,7 @@ Dwarf::Dwarf(Json::Value &config) :
         this->life_multiplier = config["dwarf"]["life_multiplier"].asFloat();
         this->mana_multiplier = config["dwarf"]["mana_multiplier"].asFloat();
         this->recovery_factor = config["dwarf"]["recovery_factor"].asFloat();
+
+        this->width = config["dwarf"]["width"].asInt();
+        this->height = config["dwarf"]["height"].asInt(); 
     }

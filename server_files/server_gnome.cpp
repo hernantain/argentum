@@ -12,4 +12,7 @@ Gnome::Gnome(Json::Value &config) :
         this->life_multiplier = config["gnome"]["life_multiplier"].asFloat();
         this->mana_multiplier = config["gnome"]["mana_multiplier"].asFloat();
         this->recovery_factor = config["gnome"]["recovery_factor"].asFloat();
+
+        this->width = config["gnome"]["width"].asInt();
+        this->height = config["gnome"]["height"].asInt(); 
     }

@@ -12,4 +12,7 @@ Human::Human(Json::Value &config) :
         this->life_multiplier = config["human"]["life_multiplier"].asFloat();
         this->mana_multiplier = config["human"]["mana_multiplier"].asFloat();
         this->recovery_factor = config["human"]["recovery_factor"].asFloat();
+
+        this->width = config["human"]["width"].asInt();
+        this->height = config["human"]["height"].asInt(); 
     }
