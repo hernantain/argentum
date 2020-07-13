@@ -68,10 +68,8 @@ bool Character::is_newbie() {
 }
 
 void Character::resurrect() {
-    if (!alive) {
-        alive = true;
-        restore_life_and_mana();
-    }
+    alive = true;
+    restore_life_and_mana();
 }
 
 void Character::restore_life_and_mana() {
@@ -103,6 +101,10 @@ void Character::meditate() {
 
 bool Character::can_deposit(int16_t posX, int16_t posY) {
     return alive && movement.is_near(posX, posY);
+}
+
+bool Character::can_resurrect(int16_t posX, int16_t posY) {
+    return !alive && movement.is_near(posX, posY);
 }
 
 int Character::deposit_gold() {

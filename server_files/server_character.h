@@ -108,6 +108,9 @@ Race race, CollisionInfo &collisionInfo);
     // Booleano que devuelve verdadero si puede depositar o no
     bool can_deposit(int16_t posX, int16_t posY);
 
+    // Booleano que devuelve verdadero si puede resucitar o no
+    bool can_resurrect(int16_t posX, int16_t posY);
+
     // Emula el deposito de oro, devuelve una suma fija de dinero a depsitar
     int deposit_gold();
 
