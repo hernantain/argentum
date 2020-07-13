@@ -272,6 +272,7 @@ ProtocolMessage Player::handleEquipEvent(int &itemId) {
 		this->armorId,
 		this->weaponId,
 		this->shieldId,
+		this->itemId,
 		this->alive
 	);
 	std::cout << "PASA POR EL EQUIP EVENT" << std::endl;
