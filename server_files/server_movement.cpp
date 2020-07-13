@@ -10,12 +10,12 @@
 #define MAX_ATTACK_OFFSET_TOLERANCE 330
 
 Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) {
-    bodyPosX = rand() % (collisionInfo.get_map_width() - 0 + 1) + 0;
-    bodyPosY = rand() % (collisionInfo.get_map_height() - 0 + 1) + 0;
+    bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
+    bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;
 
     while(check_map_collision()) {
-        bodyPosX = rand() % (collisionInfo.get_map_width() - 0 + 1) + 0;
-        bodyPosY = rand() % (collisionInfo.get_map_height() - 0 + 1) + 0;
+        bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
+        bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;
     }
 }
 

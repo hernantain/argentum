@@ -8,6 +8,7 @@ Character* ServerWorld::get(uint16_t message_id) {
     return this->characters[message_id];
 }
 
+
 Attackable* ServerWorld::get_from_position(uint16_t player_id, int16_t other_posX, int16_t other_posY) {
     std::map<uint16_t, Character*>::iterator characters_itr;
     std::map<uint16_t, NPC*>::iterator npc_itr;
@@ -25,6 +26,7 @@ Attackable* ServerWorld::get_from_position(uint16_t player_id, int16_t other_pos
     return NULL;
 }
 
+
 Attackable* ServerWorld::get_closest_from_position(int16_t npc_posX, int16_t npc_posY) {
     std::map<uint16_t, Character*>::iterator characters_itr;
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
@@ -33,6 +35,7 @@ Attackable* ServerWorld::get_closest_from_position(int16_t npc_posX, int16_t npc
     }
     return NULL;
 }
+
 
 bool ServerWorld::has_character_close(int16_t npc_posX, int16_t npc_posY) {
     std::map<uint16_t, Character*>::iterator characters_itr;
@@ -55,6 +58,7 @@ bool ServerWorld::has_priest_close(uint16_t id) {
     return false;
 }
 
+
 bool ServerWorld::has_banker_close(uint16_t id) {
     Character* player = this->characters[id];
     for (unsigned int i = 0; i < bankers.size(); i++) {
@@ -65,9 +69,11 @@ bool ServerWorld::has_banker_close(uint16_t id) {
     return false;
 }
 
+
 bool ServerWorld::empty() {
     return (this->characters.size() == 0);
 }
+
 
 bool ServerWorld::is_full(size_t max_npcs) {
     return (this->npcs.size() == max_npcs);
@@ -132,14 +138,14 @@ void ServerWorld::player_take_item(uint16_t id) {
         std::cout << "ACA LLEGA" << std::endl;
         int16_t item_posX = items[i].get_posX();
         int16_t item_posY = items[i].get_posY();
-        if (current->is_near(item_posX, item_posY)) {
+        if ((current->is_near(item_posX, item_posY)) && (this->characters[id]->is_alive())) {
             characters[id]->take_item(items[i]);
-            std::cout << "Estas cerca como para agarrar un item" << std::endl;
+            // std::cout << "Estas cerca como para agarrar un item" << std::endl;
             this->update_world_items(i);
             break;
         }
     }
-    std::cout << "Cantidad de items despues: " << items.size() << std::endl;
+    // std::cout << "Cantidad de items despues: " << items.size() << std::endl;
 }
 
 

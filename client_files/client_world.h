@@ -44,13 +44,17 @@ struct ClientWorld {
     void update_npcs(ProtocolMessage &msg);
     void update_player_alive_status(ProtocolMessage &msg);
     void update_dead_npcs(ProtocolMessage &msg);
-    void update_items(ProtocolMessage &msg);
+    Item* update_items(ProtocolMessage &msg);
+    void add_items(ProtocolMessage &msg);
+
     bool item_exists(ProtocolMessage &msg, unsigned int &i);
-    void cleanItems(unsigned int i);
+    bool item_in_world(ProtocolItem &item);
+    Item* cleanItems(unsigned int i);
 
     void render(uint16_t id, SDL_Rect &camera, int &it);
 
     ProtocolMessage player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera);
+    ProtocolMessage player_handle_equip_event(uint16_t &player_id, int &itemId);
 
     Player* get_player(uint16_t id);
 

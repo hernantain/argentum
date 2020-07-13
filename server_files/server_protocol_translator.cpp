@@ -157,8 +157,10 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
     if (other) { 
         world.characters[msg.id_player]->attack(*other);
         if (!other->is_alive()) {
+            std::cout << "ITEMS ANTES: " << world.items.size() << std::endl;
             other->drop_items(world.items);
             // int gold = other->drop_gold();
+            std::cout << "ITEMS DESPUES: " << world.items.size() << std::endl;
             msg.id_message = PROTOCOL_KILL_CONFIRM;
         }
         else {
@@ -199,7 +201,7 @@ void ProtocolTranslator::create_npc_event(ProtocolMessage& msg, ServerWorld &wor
     }
     int npc_id = msg.npcs[0].npc_type;
     NPC* npc = NPCFactory::make_npc(npc_id, config, collisionInfo);
-    std::cout << "NPC CREADO: " << std::endl;
+    // std::cout << "NPC CREADO: " << std::endl;
     world.add(msg.id_player, npc);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_CREATE_NPC_CONFIRM;

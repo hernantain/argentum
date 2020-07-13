@@ -24,3 +24,18 @@ int16_t Item::get_posY() const {
     return this->posY;
 }
 
+
+void Item::set_posX(int16_t posX) {
+    this->posX = posX;
+}
+
+
+void Item::set_posY(int16_t posY) {
+    this->posY = posY;
+}
+
+void Item::add_amount() {
+    this->amount++;
+}
+
+

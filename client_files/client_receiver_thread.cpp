@@ -104,6 +104,7 @@ void ClientReceiverThread::process_equip_shield(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
+    std::cout << "EQUIP WEAPON" << std::endl;
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
     if (i != -1 && is_alive)
@@ -133,9 +134,21 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
-    std::cout << "ITEMS ANTES" << world.items.size() << std::endl;
-    world.update_items(msg);
-    std::cout << "ITEMS DESPUES" << world.items.size() << std::endl;
+    std::cout << "ITEMS ANTES: " << world.items.size() << std::endl;
+    Item* item = world.update_items(msg);
+    if (item == NULL) 
+        return;
+    
+    std::cout << "No es NULL" << std::endl;
+    if (msg.id_player == this->player_id) {
+        std::cout << "Agregando a infoview" << std::endl;        
+        this->infoView.add_item(item);
+
+    } else { 
+        delete item;
+    }
+
+    std::cout << "ITEMS DESPUES: " << world.items.size() << std::endl;
 }
 
 void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
@@ -168,6 +181,7 @@ void ClientReceiverThread::process_death(ProtocolMessage &msg) {
     update_bars(msg);
     world.update_dead_npcs(msg);
     world.update_player_alive_status(msg);
+    world.add_items(msg);
 }
 
 void ClientReceiverThread::update_bars(ProtocolMessage &msg) {

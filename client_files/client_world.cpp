@@ -16,10 +16,10 @@ ClientWorld::ClientWorld(SDL_Renderer *gRenderer, ItemViewer &itemViewer) : item
     
 
 void ClientWorld::add_player(uint16_t id, Player* player) {
-    std::cout << "Antes de insertar, tamanio: " << players.size() << std::endl;
-    std::cout << "Insertando " << id << std::endl;
+    // std::cout << "Antes de insertar, tamanio: " << players.size() << std::endl;
+    // std::cout << "Insertando " << id << std::endl;
     this->players.insert(std::pair<uint16_t, Player*> (id, player));
-    std::cout << "Despues de insertar, tamanio: " << players.size() << std::endl;
+    // std::cout << "Despues de insertar, tamanio: " << players.size() << std::endl;
 }
 
 void ClientWorld::add_npc(uint16_t id, NPC* npc) {
@@ -37,8 +37,8 @@ Player* ClientWorld::get_player(uint16_t id) {
 
 void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
     std::unique_lock<std::mutex> lock(m);
-    Player* player;
-    std::cout << "PROTOCOL_CHARACTER ID: " << protocolCharacter.id << std::endl;
+    Player* player = NULL;
+    // std::cout << "PROTOCOL_CHARACTER ID: " << protocolCharacter.id << std::endl;
     if (protocolCharacter.id_race == 1) {
         player = new Human(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);
@@ -71,7 +71,6 @@ void ClientWorld::add_npc(ProtocolNpc &protocolNpc) {
 // ADD ITEM
 
 void ClientWorld::add_item(ProtocolItem &protocolItem) {
-    std::unique_lock<std::mutex> lock(m);
     Item* i = new Item(protocolItem.id, protocolItem.posX, protocolItem.posY, protocolItem.amount);
     this->items.push_back(i);
 }
@@ -113,27 +112,50 @@ void ClientWorld::update_player_alive_status(ProtocolMessage &msg) {
     }
 }
 
+
+void ClientWorld::add_items(ProtocolMessage &msg) {
+    std::unique_lock<std::mutex> lock(m);
+    for (unsigned int i = 0; i < msg.items.size(); ++i) {
+        if (!item_in_world(msg.items[i])) {
+            this->add_item(msg.items[i]);
+        }
+    }
+}
+
+
+bool ClientWorld::item_in_world(ProtocolItem &item) {
+    for (unsigned int i = 0; i < items.size(); i++) {
+        if ((item.id == items[i]->get_id()) && (item.posX == items[i]->get_posX()) && (item.posY == items[i]->get_posY())) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 // UPDATE 
 
-
-void ClientWorld::update_items(ProtocolMessage &msg) {
+Item* ClientWorld::update_items(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);
 
     std::cout << "LEN DE ITEMS ES: " << msg.items.size() << std::endl;
 
-    if (msg.items.size() == 0) {
-        std::cout << "Es CERO" << std::endl;
-        this->cleanItems(0);
-        return;
-    }
-
+    Item* removedItem = NULL;
     for (unsigned int i = 0; i < items.size(); ++i) {
         if (!this->item_exists(msg, i)) {
             std::cout << "Voy a hacer clean" << std::endl;
-            this->cleanItems(i);
+            removedItem = this->cleanItems(i);
             break;
         }
     }
+
+    return removedItem;
+}
+
+
+ProtocolMessage ClientWorld::player_handle_equip_event(uint16_t &player_id, int &itemId) {
+    std::unique_lock<std::mutex> lock(m);
+    return std::move(players[player_id]->handleEquipEvent(itemId));
 }
 
 
@@ -147,17 +169,20 @@ bool ClientWorld::item_exists(ProtocolMessage &msg, unsigned int &i) {
     return false;
 }
 
-void ClientWorld::cleanItems(unsigned int i) {
+
+Item* ClientWorld::cleanItems(unsigned int i) {
     std::vector<Item*> tmp;
+    Item* itemToRemove = NULL;
     for (unsigned int j = 0; j < items.size(); ++j) {
         if (j == i) {
-            delete items[j];
+            itemToRemove = items[j];
             continue;
         }
 
         tmp.push_back(items[j]);
     }
     items.swap(tmp);
+    return itemToRemove;
 }
 
 // MOVE PLAYER

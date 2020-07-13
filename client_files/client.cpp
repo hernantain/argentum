@@ -20,7 +20,7 @@
 
 #include "client_game.h"
 #include <string>
-
+#include <iostream>
 
 int get_class(std::string player_class) {
     if (player_class == "mago") return MAGICIAN_CODE;
