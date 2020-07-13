@@ -317,11 +317,6 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				event_id = PROTOCOL_RESURRECT;
 				break;
 
-			case SDLK_g:
-				itemId = 1;
-				event_id = PROTOCOL_DROP_ITEM;
-				break;
-
 			case SDLK_z:
 				event_id = PROTOCOL_MEDITATION;
 				break;			
