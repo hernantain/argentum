@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include <time.h>
 #include <jsoncpp/json/json.h>
+
 #include "server_life_points.h"
 #include "server_mana_points.h"
 #include "server_experience_points.h"
@@ -66,7 +66,7 @@ private:
 public:
     // Contructor, recibe el id, la vida inicial
     Character(uint16_t id, Json::Value& config, CharacterClass character_class,
-Race race, CollisionInfo &collisionInfo);
+    Race race, CollisionInfo &collisionInfo);
 
     // Devuelve el id
     uint16_t get_id();
@@ -149,8 +149,8 @@ Race race, CollisionInfo &collisionInfo);
     // Dropea los Items que tiene el personaje actualmente
     void drop_items(std::vector<Item> &worldItems);
 
-    // Dropea el item que recibe por parametro
-    void drop_item(int16_t id);
+    // Dropea el item que recibe por parametro y popula worldItems
+    void drop_item(uint8_t id, std::vector<Item> &worldItems);
 
     // Toma una suma de oro del suelo;
     void take_gold(int amount);

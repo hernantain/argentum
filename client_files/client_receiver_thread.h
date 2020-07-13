@@ -42,6 +42,7 @@ class ClientReceiverThread : public Thread {
     void process_log_off(ProtocolMessage &msg);
     void print_response_info(ProtocolMessage &msg);
     void process_take_item(ProtocolMessage &msg);
+    void process_drop_item(ProtocolMessage &msg);
     void update_bars(ProtocolMessage &msg);
     
     public:

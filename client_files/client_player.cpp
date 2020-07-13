@@ -34,6 +34,7 @@ Player::Player(
 	this->weaponId = 0;
 	this->shieldId = 0;
 	this->helmetId = 0;
+	this->itemId = 0;
 	this->ghost = NULL;
 }
 
@@ -316,6 +317,11 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				event_id = PROTOCOL_RESURRECT;
 				break;
 
+			case SDLK_g:
+				itemId = 1;
+				event_id = PROTOCOL_DROP_ITEM;
+				break;
+
 			case SDLK_z:
 				event_id = PROTOCOL_MEDITATION;
 				break;			
@@ -344,6 +350,7 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		this->armorId,
 		this->weaponId,
 		this->shieldId,
+		this->itemId,
 		this->alive
 	);
 	ProtocolMessage msg(event_id, this->id, character);

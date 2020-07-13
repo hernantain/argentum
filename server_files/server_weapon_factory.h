@@ -16,7 +16,7 @@ class WeaponFactory {
 public:
 
     /* Recibiendo un id crea el arma correspondiente */
-    static Weapon make_weapon(const int weapon_id, Json::Value& config);
+    static Weapon make_weapon(const uint8_t weapon_id, Json::Value& config);
 
 };
 

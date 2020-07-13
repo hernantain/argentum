@@ -33,27 +33,28 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_ATTACK: return attack_event(msg, world);
         case PROTOCOL_MEDITATION: return meditation_event(msg, world);
         case PROTOCOL_TAKE_ITEM: return take_item_event(msg, world);
+        case PROTOCOL_DROP_ITEM: return drop_item_event(msg, world);
         case PROTOCOL_LOG_OFF: return log_off_event(msg, world);
     }
 }
 
 void ProtocolTranslator::equip_shield_event(ProtocolMessage &msg, ServerWorld &world) {
 
-    int shield_id = msg.characters[0].shieldId;
+    uint8_t shield_id = msg.characters[0].shieldId;
     Shield shield = ShieldFactory::make_shield(shield_id, config);
     world.characters[msg.id_player]->equip_shield(shield);
     msg.id_message = PROTOCOL_SHIELD_CONFIRM;
 }
 
 void ProtocolTranslator::equip_weapon_event(ProtocolMessage &msg, ServerWorld &world) {
-    int weapon_id = msg.characters[0].weaponId;
+    uint8_t weapon_id = msg.characters[0].weaponId;
     Weapon weapon = WeaponFactory::make_weapon(weapon_id, config);
     world.characters[msg.id_player]->equip_weapon(weapon);
     msg.id_message = PROTOCOL_WEAPON_CONFIRM;
 }
 
 void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &world) {
-    int armor_id = msg.characters[0].armorId;
+    uint8_t armor_id = msg.characters[0].armorId;
     Armor armor = ArmorFactory::make_armor(armor_id, config);
     world.characters[msg.id_player]->equip_armor(armor);
     msg.id_message = PROTOCOL_ARMOR_CONFIRM;
@@ -61,7 +62,7 @@ void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &wo
 
 
 void ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, ServerWorld &world) {
-    int helmet_id = msg.characters[0].helmetId;
+    uint8_t helmet_id = msg.characters[0].helmetId;
     Helmet helmet = HelmetFactory::make_helmet(helmet_id, config);
     world.characters[msg.id_player]->equip_helmet(helmet);
     msg.id_message = PROTOCOL_HELMET_CONFIRM;
@@ -97,6 +98,7 @@ void ProtocolTranslator::stop_moving(ProtocolMessage &msg, ServerWorld &world) {
 
 
 void ProtocolTranslator::move_right_event(ProtocolMessage &msg, ServerWorld &world) {
+    
     world.move_character_right(msg.id_player);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_MOVE_CONFIRM;
@@ -131,6 +133,13 @@ void ProtocolTranslator::take_item_event(ProtocolMessage &msg, ServerWorld &worl
     world.player_take_item(msg.id_player);
     this->get_world(msg, world);
     msg.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
+}
+
+void ProtocolTranslator::drop_item_event(ProtocolMessage &msg, ServerWorld &world) {
+    uint8_t item_id = msg.characters[0].itemId;
+    world.characters[msg.id_player]->drop_item(item_id, world.items);
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_DROP_ITEM_CONFIRM;
 }
 
 void ProtocolTranslator::meditation_event(ProtocolMessage &msg, ServerWorld &world) {
