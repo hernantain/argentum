@@ -13,6 +13,8 @@ protected:
     // Multipliers
     float life_multiplier, mana_multiplier;
     int recovery_factor;
+    // Graphics
+    int width, height;
 
 public:
     // Contructor
@@ -38,6 +40,12 @@ public:
     
     // getter recovery factor
     int get_recovery_factor();
+
+     // getter recovery factor
+    int get_width();
+
+     // getter recovery factor
+    int get_height();
 
     // getter race id
     uint8_t get_id() const;

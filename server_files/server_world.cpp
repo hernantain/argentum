@@ -172,91 +172,66 @@ void ServerWorld::remove_npc(uint16_t id) {
 
 void ServerWorld::move_character_right(uint16_t id) {
     this->characters[id]->move_right();
-    std::map<uint16_t, Character*>::iterator characters_itr;
-    // std::map<int16_t, NPC*>::iterator npc_itr;
-
-    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
-        if (characters_itr->first == id) 
-            continue;
-        
-        if (check_collision(id, characters_itr->first)) {
-            this->characters[id]->move_left();
-            break;
-        }
-    }
+    if(check_characters_collision(id) || check_npcs_collision(id)) this->characters[id]->move_left();
 }
-
 
 void ServerWorld::move_character_left(uint16_t id) {
     this->characters[id]->move_left();
-    std::map<uint16_t, Character*>::iterator characters_itr;
-    // std::map<int16_t, NPC*>::iterator npc_itr;
-
-    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
-        if (characters_itr->first == id) 
-            continue;
-        
-        if (check_collision(id, characters_itr->first)) {
-            this->characters[id]->move_right();
-            break;
-        }
-    }
+    if(check_characters_collision(id) || check_npcs_collision(id)) this->characters[id]->move_right();
 }
-
 
 void ServerWorld::move_character_down(uint16_t id) {
     this->characters[id]->move_down();
-    std::map<uint16_t, Character*>::iterator characters_itr;
-    // std::map<int16_t, NPC*>::iterator npc_itr;
-
-    for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
-        if (characters_itr->first == id) 
-            continue;
-        
-        if (check_collision(id, characters_itr->first)) {
-            this->characters[id]->move_top();
-            break;
-        }
-    }
+    if(check_characters_collision(id) || check_npcs_collision(id)) this->characters[id]->move_top();
 }
-
 
 void ServerWorld::move_character_top(uint16_t id) {
     this->characters[id]->move_top();
+    if(check_characters_collision(id) || check_npcs_collision(id)) this->characters[id]->move_down();
+}
+
+bool ServerWorld::check_characters_collision(uint16_t id) {
     std::map<uint16_t, Character*>::iterator characters_itr;
-    // std::map<int16_t, NPC*>::iterator npc_itr;
+    Character* me = this->characters[id];
 
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
+        Attackable* other = this->characters[characters_itr->first];
         if (characters_itr->first == id) 
             continue;
         
-        if (check_collision(id, characters_itr->first)) {
-            this->characters[id]->move_down();
-            break;
-        }
+        if (check_collision(me, other)) return true;
     }
+    return false;
 }
 
-
-
-bool ServerWorld::check_collision(uint16_t id, uint16_t other_id) {
+bool ServerWorld::check_npcs_collision(uint16_t id) {
+    std::map<uint16_t, NPC*>::iterator npc_itr;
     Character* me = this->characters[id];
-    Character* other = this->characters[other_id];
 
+    for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr) { 
+        Attackable* other = this->npcs[npc_itr->first];       
+        if (check_collision(me, other)) return true;
+    }
+    return false;
+}
+
+bool ServerWorld::check_collision(Attackable* me, Attackable* other) {
     int leftMe = me->get_body_pos_X();
-    int rightMe = me->get_body_pos_X() + 21; // CAMBIAR POR UN GETTER A LA RAZA
+    int rightMe = me->get_body_pos_X() + me->get_width();
+
     int topMe = me->get_body_pos_Y();
-    int bottomMe = me->get_body_pos_Y() + 31; // CAMBIAR POR UN GETTER A LA RAZA
+    int bottomMe = me->get_body_pos_Y() + me->get_height();
 
     int leftOther = other->get_body_pos_X();
-    int rightOther = other->get_body_pos_X() + 21; // CAMBIAR POR UN GETTER A LA RAZA
-    int topOther = other->get_body_pos_Y();
-    int bottomOther = other->get_body_pos_Y() + 31; // CAMBIAR POR UN GETTER A LA RAZA
+    int rightOther = other->get_body_pos_X() + other->get_width();
 
-    if( bottomMe <= topOther ) return false;
-    if( topMe >= bottomOther ) return false;
-    if( rightMe <= leftOther ) return false;
-    if( leftMe >= rightOther ) return false;
+    int topOther = other->get_body_pos_Y();
+    int bottomOther = other->get_body_pos_Y() + other->get_height();;
+
+    if(bottomMe <= topOther) return false;
+    if(topMe >= bottomOther) return false;
+    if(rightMe <= leftOther) return false;
+    if(leftMe >= rightOther) return false;
 
     return true;
 }

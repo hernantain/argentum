@@ -9,5 +9,7 @@ Zombie::Zombie(Json::Value &config, CollisionInfo &collisionInfo) : NPC(config, 
     this->min_damage = config["zombie"]["min_damage"].asInt();
     this->max_damage = config["zombie"]["max_damage"].asInt();
     this->defense_points = config["zombie"]["defense"].asInt();
+    this->width = config["zombie"]["width"].asInt();   
+    this->height = config["zombie"]["height"].asInt();  
 }
 

@@ -37,6 +37,14 @@ int Race::get_recovery_factor() {
     return recovery_factor;
 }
 
+int Race::get_width() {
+    return width;
+}
+
+int Race::get_height() {
+    return height;
+}
+
 uint8_t Race::get_id() const {
     return id;
 }
