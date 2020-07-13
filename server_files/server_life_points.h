@@ -21,10 +21,10 @@ public:
     void add(int life_points);
 
     // Devuelve la vida actual
-    int16_t current();
+    int16_t current() const;
 
     // Devuelve el maximo de vida
-    int16_t max();
+    int16_t max() const;
 
     // Setter de la max vida para el nivel recibido
     void set_new_max(int level);

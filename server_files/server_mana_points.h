@@ -24,10 +24,10 @@ public:
     bool is_full();
     
     // Devuelve la mana actual
-    int16_t current();
+    int16_t current() const;
 
     // Devuelve la mana maxima
-    int16_t max();
+    int16_t max() const;
 
     // Setter de la max mana para el nivel recibido
     void set_new_max(int level);

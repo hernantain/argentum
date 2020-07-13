@@ -22,10 +22,10 @@ public:
     void add(int points);
     
     // Devuelve la experiencia actual
-    int16_t current();
+    int16_t current() const;
 
     // Devuelve la maxima del nivel
-    int16_t max();
+    int16_t max() const;
 
     // Setter de la max experiencia para el nivel recibido
     void set_new_max(int level);

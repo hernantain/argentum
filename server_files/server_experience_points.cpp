@@ -22,11 +22,11 @@ void ExperiencePoints::add(int points) {
     current_exp += points;
 }
 
-int16_t ExperiencePoints::current() {
+int16_t ExperiencePoints::current() const {
     return current_exp;
 }
 
-int16_t ExperiencePoints::max() {
+int16_t ExperiencePoints::max() const {
     return max_exp;
 }
 

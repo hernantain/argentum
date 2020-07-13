@@ -32,23 +32,23 @@ Character::Character(uint16_t id, Json::Value &config, CharacterClass character_
     this->meditating = false;
 }
 
-int16_t Character::get_life() {
+int16_t Character::get_life() const {
     return life.current();
 }
 
-int16_t Character::get_max_life() {
+int16_t Character::get_max_life() const {
     return life.max();
 }
 
-int16_t Character::get_mana() {
+int16_t Character::get_mana() const {
     return mana.current();
 }
 
-int16_t Character::get_max_mana() {
+int16_t Character::get_max_mana() const {
     return mana.max();
 }
 
-int16_t Character::get_level() {
+int16_t Character::get_level() const {
     return level;
 }
 
@@ -60,15 +60,15 @@ int Character::get_height() {
     return race.get_height();
 }
 
-int Character::get_gold() {
+int Character::get_gold() const {
     return gold;
 }
 
-int Character::get_bank_gold() {
+int Character::get_bank_gold() const {
     return bank_gold;
 }
 
-bool Character::is_alive() {
+bool Character::is_alive() const {
     return alive;
 }
 
@@ -427,7 +427,7 @@ int16_t Character::get_body_pos_Y() const {
 }
 
 
-int Character::get_body_facing() { 
+int Character::get_body_facing() const { 
     return (int) movement.get_facing_direction();
 }
 
@@ -471,7 +471,7 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     // std::cout << std::endl;
 }
 
-uint16_t Character::get_id() {
+uint16_t Character::get_id() const {
     return id;
 }
 
@@ -480,16 +480,16 @@ uint8_t Character::get_race_id() const {
 }
 
 
-uint8_t Character::get_class_id() {
+uint8_t Character::get_class_id() const {
     return character_class.get_id();
 }
 
 
-int16_t Character::get_current_experience() {
+int16_t Character::get_current_experience() const {
     return experience.current();
 }
 
 
-int16_t Character::get_max_experience() {
+int16_t Character::get_max_experience() const {
     return experience.max();
 }

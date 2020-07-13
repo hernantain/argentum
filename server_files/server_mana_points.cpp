@@ -22,7 +22,7 @@ void ManaPoints::add(int mana_points) {
     if (current_mana >= max_mana) current_mana = max_mana;
 }
 
-int16_t ManaPoints::current() {
+int16_t ManaPoints::current() const {
     return current_mana;
 }
 
@@ -30,7 +30,7 @@ bool ManaPoints::is_full() {
     return current_mana == max_mana;
 }
 
-int16_t ManaPoints::max(){
+int16_t ManaPoints::max() const {
     return max_mana;
 }
 
