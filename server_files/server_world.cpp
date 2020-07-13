@@ -43,6 +43,18 @@ bool ServerWorld::has_character_close(int16_t npc_posX, int16_t npc_posY) {
     return false;
 }
 
+bool ServerWorld::has_priest_close(uint16_t id) {
+    Character* player = this->characters[id];
+    for (unsigned int i = 0; i < priests.size(); i++) {
+        int16_t posX = priests[i].get_pos_X();
+        int16_t posY = priests[i].get_pos_Y();
+        if (player->can_resurrect(posX, posY)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool ServerWorld::has_banker_close(uint16_t id) {
     Character* player = this->characters[id];
     for (unsigned int i = 0; i < bankers.size(); i++) {
@@ -99,13 +111,23 @@ void ServerWorld::add(Item& item) {
     this->items.push_back(item);
 }
 
+void ServerWorld::add(Banker banker) {
+    this->bankers.push_back(banker);
+}
+
+void ServerWorld::add(Priest priest) {
+    this->priests.push_back(priest);
+}
+
 
 void ServerWorld::player_take_item(uint16_t id) {
     std::cout << "Cantidad de items hasta el momento: " << items.size() << std::endl;
+    Character* current = characters[id];
     for (unsigned int i = 0; i < items.size(); ++i) {
         std::cout << "ACA LLEGA" << std::endl;
-        if (((std::abs(items[i].get_posX() - characters[id]->get_body_pos_X()) < 30) && 
-            (std::abs(items[i].get_posY() - characters[id]->get_body_pos_Y()) < 30))) {
+        int16_t item_posX = items[i].get_posX();
+        int16_t item_posY = items[i].get_posY();
+        if (current->is_near(item_posX, item_posY)) {
             characters[id]->take_item(items[i]);
             std::cout << "Estas cerca como para agarrar un item" << std::endl;
             this->update_world_items(i);
@@ -125,11 +147,6 @@ void ServerWorld::update_world_items(unsigned int &i) {
         tmp.push_back(items[j]);
     }
     items.swap(tmp);
-}
-
-
-void ServerWorld::add(Banker banker) {
-    this->bankers.push_back(banker);
 }
 
 void ServerWorld::remove_character(uint16_t id) {

@@ -22,6 +22,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_MOVE_LEFT: return move_left_event(msg, world);
         case PROTOCOL_MOVE_TOP: return move_top_event(msg, world);
         case PROTOCOL_MOVE_DOWN: return move_down_event(msg, world);
+        case PROTOCOL_RESURRECT: return resurrect_event(msg, world);
         case PROTOCOL_DEPOSIT: return deposit_event(msg, world);
         case PROTOCOL_WITHDRAW: return withdraw_event(msg, world);
         case PROTOCOL_EQUIP_HELMET: return equip_helmet_event(msg, world);
@@ -64,6 +65,13 @@ void ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, ServerWorld &w
     Helmet helmet = HelmetFactory::make_helmet(helmet_id, config);
     world.characters[msg.id_player]->equip_helmet(helmet);
     msg.id_message = PROTOCOL_HELMET_CONFIRM;
+}
+
+void ProtocolTranslator::resurrect_event(ProtocolMessage &msg, ServerWorld &world) {
+    if (world.has_priest_close(msg.id_player))
+        world.characters[msg.id_player]->resurrect();
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_RESURRECT_CONFIRM;
 }
 
 void ProtocolTranslator::deposit_event(ProtocolMessage &msg, ServerWorld &world) {

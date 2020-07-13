@@ -38,6 +38,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == PROTOCOL_MOVE_CONFIRM) this->process_move(msg);
     if (msg.id_message == PROTOCOL_DEPOSIT_CONFIRM) this->process_deposit(msg);
     if (msg.id_message == PROTOCOL_WITHDRAW_CONFIRM) this->process_withdraw(msg);
+    if (msg.id_message == PROTOCOL_RESURRECT_CONFIRM) this->process_resurrection(msg);
     if (msg.id_message == PROTOCOL_ATTACK_CONFIRM) this->process_attack(msg);
     if (msg.id_message == PROTOCOL_KILL_CONFIRM) this->process_death(msg);
     if (msg.id_message == PROTOCOL_HELMET_CONFIRM) this->process_equip_helmet(msg);
@@ -73,6 +74,11 @@ void ClientReceiverThread::process_withdraw(ProtocolMessage &msg) {
     std::cout << "Retirando OK" << std::endl;
 }
 
+void ClientReceiverThread::process_resurrection(ProtocolMessage &msg) {
+    update_bars(msg);
+    world.update_player_alive_status(msg);
+    std::cout << "Resucitando OK" << std::endl;
+}
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
