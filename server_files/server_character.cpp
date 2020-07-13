@@ -138,8 +138,6 @@ int Character::withdraw_gold() {
 }
 
 void Character::drop_item(uint8_t id, std::vector<Item> &worldItems) {
-    LeatherArmor leather(config);
-    take_item(leather);
     if (!alive || !inventory.has(id)) return;
     Item drop_item = inventory.drop_item(id);
     drop_item.set_posX(get_body_pos_X());
