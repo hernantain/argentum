@@ -93,7 +93,12 @@ void ServerWorld::move_npcs() {
 void ServerWorld::recover_characters() {
     if (empty()) return;
     std::map<uint16_t, Character*>::iterator itr;
-    for (itr = characters.begin(); itr != characters.end(); ++itr) { 
+    for (itr = characters.begin(); itr != characters.end(); ++itr) {
+        if(itr->second->is_meditating()) {
+            itr->second->meditate();
+            std::cout << "Estoy meditando" << std::endl;
+            continue;
+        }
         itr->second->recover_life();
         itr->second->recover_mana();
     }

@@ -45,8 +45,7 @@ private:
     int gold;
     int bank_gold;
     int16_t level;
-    bool alive;
-    bool newbie;
+    bool alive, newbie, meditating;
 
     // No copiable.
     Character(const Character&) = delete;
@@ -95,6 +94,9 @@ Race race, CollisionInfo &collisionInfo);
 
     // Devuelve un booleano que indica si el jugador es newbie o no
     bool is_newbie();
+
+    // Devuelve un booleano que indica si el jugador esta meditando o no
+    bool is_meditating();
 
     // Resucita al personaje en cuestion
     void resurrect();

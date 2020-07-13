@@ -134,10 +134,9 @@ void ProtocolTranslator::take_item_event(ProtocolMessage &msg, ServerWorld &worl
 }
 
 void ProtocolTranslator::meditation_event(ProtocolMessage &msg, ServerWorld &world) {
-    world.characters[msg.id_player]->meditate();
-    // Here we might use the following and add a "meditating" boolean on the prot
-    // this->get_all_characters(msg, world);
     std::cout << "Meditando" << std::endl;
+    world.characters[msg.id_player]->meditate();
+    this->get_world(msg, world);
     msg.id_message = PROTOCOL_MEDITATE_CONFIRM;
 }
 

@@ -19,6 +19,9 @@ public:
 
     // Aumenta la mana en mana_points
     void add(int mana_points);
+
+    // Booleano devuelve verdadero si la mana se encuentra llena
+    bool is_full();
     
     // Devuelve la mana actual
     int16_t current();
