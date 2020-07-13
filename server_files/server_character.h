@@ -69,28 +69,28 @@ public:
     Race race, CollisionInfo &collisionInfo);
 
     // Devuelve el id
-    uint16_t get_id();
+    uint16_t get_id() const;
 
     // Devuelve la mana actual del personaje
-    int16_t get_mana();
+    int16_t get_mana() const;
 
     // Devuelve la vida actual del personaje
-    int16_t get_life();
+    int16_t get_life() const;
 
     // Devuelve la mana maxima del personaje en el nivel actual
-    int16_t get_max_mana();
+    int16_t get_max_mana() const;
 
     // Devuelve la vida maxima del personaje en el nivel actual
-    int16_t get_max_life();
+    int16_t get_max_life() const;
 
     // Devuelve el nivel del personaje
-    int16_t get_level();
+    int16_t get_level() const;
 
     // Devuelve el oro del personaje en el banco
-    int get_bank_gold();
+    int get_bank_gold() const;
 
     // Devuelve el oro del personaje
-    int get_gold();
+    int get_gold() const;
 
     // Devuelve un booleano que indica si el jugador es newbie o no
     bool is_newbie();
@@ -141,7 +141,7 @@ public:
     void recover_life();
 
     // Devuelve verdadero si el jugador esta vivo, falso si no.
-    bool is_alive();
+    bool is_alive() const;
 
     // Dropea el Oro que tiene el personaje actualmente
     int drop_gold();
@@ -210,17 +210,17 @@ public:
     int16_t get_body_pos_Y() const;
 
     // Getter de para donde el character apunta
-    int get_body_facing();
+    int get_body_facing() const;
 
     // Getter de la experiencia actual
-    int16_t get_current_experience();
+    int16_t get_current_experience() const;
 
     // Getter de la experinecia max actual
-    int16_t get_max_experience();
+    int16_t get_max_experience() const;
 
     uint8_t get_race_id() const;
 
-    uint8_t get_class_id();
+    uint8_t get_class_id() const;
 
     void populate_protocol_character(ProtocolCharacter &protocolCharacter);
 };

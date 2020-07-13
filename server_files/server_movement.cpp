@@ -101,7 +101,7 @@ void Movement::stop_moving() {
 }
 
 
-_lastMovement Movement::get_facing_direction() {
+_lastMovement Movement::get_facing_direction() const {
     return last_movement;
 }
 

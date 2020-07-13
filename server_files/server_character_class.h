@@ -17,16 +17,16 @@ public:
     CharacterClass();
 
     // Devuelve el id de la clase
-    uint8_t get_id();
+    uint8_t get_id() const;
 
     // Devuelve el multiplicador de vida de la clase
-    float get_life_multiplier();
+    float get_life_multiplier() const;
 
     // Devuelve el multiplicador de mana de la clase
-    float get_mana_multiplier();
+    float get_mana_multiplier() const;
 
     // Devuelve el multiplicador de meditacion de la clase
-    float get_meditation_multiplier();
+    float get_meditation_multiplier() const;
 };
 
 

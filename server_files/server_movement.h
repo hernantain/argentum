@@ -64,7 +64,7 @@ public:
     // Detiene el movimiento.
     void stop_moving();
 
-    _lastMovement get_facing_direction();
+    _lastMovement get_facing_direction() const;
   
     // Booleano que devuelve verdadero si posX y posY estan cerca del personaje
     bool is_near(int posX, int posY);

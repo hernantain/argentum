@@ -16,23 +16,23 @@ NPC::NPC(Json::Value &config, CollisionInfo &collisionInfo) :
     this->alive = true;
 }
 
-uint16_t NPC::get_id() {
+uint16_t NPC::get_id() const {
     return id;
 }
 
-int16_t NPC::get_level() {
+int16_t NPC::get_level() const {
     return level;
 }
 
-int16_t NPC::get_life() {
+int16_t NPC::get_life() const {
     return life;
 }
 
-int16_t NPC::get_max_life() {
+int16_t NPC::get_max_life() const {
     return max_life;
 }
 
-bool NPC::is_alive() {
+bool NPC::is_alive() const {
     return alive;
 }
 

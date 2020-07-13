@@ -38,16 +38,16 @@ public:
     NPC(Json::Value& config, CollisionInfo &collisionInfo);
 
     // Devuelve el id
-    uint16_t get_id();
+    uint16_t get_id() const;
 
     // Devuelve el nivel
-    int16_t get_level();
+    int16_t get_level() const;
 
     // Devuelve la vida
-    int16_t get_life();
+    int16_t get_life() const;
 
     // Devuelve la vida maxima
-    int16_t get_max_life();
+    int16_t get_max_life() const;
 
     // Booleano devuelve verdadero si el NPC se encuentra en una zona segura
     bool is_safe();
@@ -56,7 +56,7 @@ public:
     bool attack_zone(Attackable& other);
 
     // Booleano devuelve verdadero si esta vivo el NPC
-    bool is_alive();
+    bool is_alive() const;
 
     bool is_newbie();
 
