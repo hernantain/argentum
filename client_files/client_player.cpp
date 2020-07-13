@@ -67,12 +67,6 @@ void Player::set_position(int16_t newBodyPosX, int16_t newBodyPosY, int orientat
 }
 
 
-// void Player::update_frames() {
-// 	if (this->frame / 5 >= 5)
-// 		this->frame = 0;
-// }
-
-
 void Player::update_alive_status(bool alive) {
 	this->alive = alive;
 }
@@ -215,95 +209,6 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				event_id = PROTOCOL_TAKE_ITEM;
 				break;
 
-			/* A CAMBIAR */
-			case SDLK_m:
-				event_id = PROTOCOL_EQUIP_ARMOR;
-				armorId = this->clothes[1]->get_id();
-				break;
-
-			case SDLK_n:
-				event_id = PROTOCOL_EQUIP_ARMOR;
-				armorId = this->clothes[2]->get_id();
-				break;
-
-			case SDLK_v:
-				event_id = PROTOCOL_EQUIP_ARMOR;
-				armorId = this->clothes[3]->get_id(); 
-				break;
-
-			case SDLK_b:
-				this->playerPicture->set_clothes(this->clothes[0]);
-				break;
-
-			case SDLK_h:
-				event_id = PROTOCOL_EQUIP_HELMET;
-				helmetId = this->helmets[0]->get_id();
-				break;
-
-			case SDLK_j:
-				event_id = PROTOCOL_EQUIP_HELMET;
-				helmetId = this->helmets[1]->get_id();
-				break;
-
-			case SDLK_k:
-				event_id = PROTOCOL_EQUIP_HELMET;
-				helmetId = this->helmets[2]->get_id();
-				break;
-
-			case SDLK_l:
-				this->equippedPlayer->setHelmet(NULL);
-				break;
-
-			case SDLK_q:
-				event_id = PROTOCOL_EQUIP_SHIELD;
-				shieldId = this->shields[0]->get_id();
-				break;
-
-			case SDLK_w:
-				event_id = PROTOCOL_EQUIP_SHIELD;
-				shieldId = this->shields[1]->get_id();
-				break;
-
-			case SDLK_e:
-				event_id = PROTOCOL_EQUIP_WEAPON;
-				weaponId = this->weapons[7]->get_id();
-				break;
-
-			case SDLK_r:
-				event_id = PROTOCOL_EQUIP_WEAPON;
-				weaponId = this->weapons[6]->get_id(); // SIMPLE BOW
-				break;
-
-			case SDLK_t:
-				event_id = PROTOCOL_EQUIP_WEAPON;
-				weaponId = this->weapons[5]->get_id(); // COMPOUND BOW
-				break;
-
-			case SDLK_u:
-				event_id = PROTOCOL_EQUIP_WEAPON;
-				weaponId = this->weapons[0]->get_id(); // SOWRD
-				break;
-
-			case SDLK_y:
-				event_id = PROTOCOL_EQUIP_WEAPON;
-				weaponId = this->weapons[1]->get_id(); // AXE
-				break;
-
-			case SDLK_i:
-				event_id = PROTOCOL_EQUIP_WEAPON;
-				weaponId = this->weapons[2]->get_id(); // HAMMER
-				break;
-
-			case SDLK_o:
-				event_id = PROTOCOL_EQUIP_WEAPON;
-				weaponId = this->weapons[3]->get_id(); // BACULO ENGARZADO
-				break;
-
-			case SDLK_p:
-				event_id = PROTOCOL_EQUIP_WEAPON;
-				weaponId = this->weapons[4]->get_id(); // BACULO NUDOSO
-				break;
-
 			case SDLK_d:
 				event_id = PROTOCOL_DEPOSIT;
 				break;
@@ -327,6 +232,7 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		otherPosX = x + camera.x; 
 		otherPosY = y + camera.y;
 		std::cout << "CLICK EN: " << x + camera.x << " Y EN: " << y + camera.y << std::endl; 
+		std::cout << "SIN CAMERA OFFSET - CLICK EN: " << x << " Y EN: " << y << std::endl; 
 	}
 
 	ProtocolCharacter character(
@@ -345,6 +251,48 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 	ProtocolMessage msg(event_id, this->id, character);
 	return std::move(msg);
 }
+
+
+ProtocolMessage Player::handleEquipEvent(int &itemId) {
+	int16_t event_id = this->getEventId(itemId);
+	ProtocolCharacter character(
+		this->id,
+		this->bodyPosX, 
+		this->bodyPosY,
+		this->orientation,
+		this->otherPosX,
+		this->otherPosY,
+		this->helmetId,
+		this->armorId,
+		this->weaponId,
+		this->shieldId,
+		this->alive
+	);
+	std::cout << "PASA POR EL EQUIP EVENT" << std::endl;
+	std::cout << "WEAPON ID: " << weaponId << " y event id: " << event_id << std::endl; 
+	ProtocolMessage msg(event_id, this->id, character);
+	return std::move(msg);
+}
+
+
+int16_t Player::getEventId(int &itemId) {
+	if (itemId < 4) {
+		armorId = itemId;
+		return PROTOCOL_EQUIP_ARMOR;
+	} else if ((itemId >= 4) && (itemId < 7)) {
+		helmetId = itemId;	
+		return PROTOCOL_EQUIP_HELMET;
+	} else if ((itemId >= 7) && (itemId < 9)) {
+		shieldId = itemId;
+		return PROTOCOL_EQUIP_SHIELD;
+	} else if ((itemId >= 9) && (itemId < 18)) { 
+		weaponId = itemId;
+		return PROTOCOL_EQUIP_WEAPON;
+	} else {
+		return PROTOCOL_EQUIP_POTION;
+	}
+}
+
 
 
 uint16_t Player::getId() const {

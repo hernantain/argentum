@@ -20,6 +20,58 @@ ServerProcessorThread::ServerProcessorThread(
 
 
 
+void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
+    Sword i(config);
+    i.set_posX(100);
+    i.set_posY(100);
+    i.set_amount(1);
+    world.items.push_back(i);
+
+    GnarledStaff j(config);
+    j.set_posX(200);
+    j.set_posY(200);
+    j.set_amount(1);
+    world.items.push_back(j);
+
+    Axe axe(config);
+    axe.set_posX(100);
+    axe.set_posY(200);
+    axe.set_amount(1);
+    world.items.push_back(axe);
+
+    Hammer hammer(config);
+    hammer.set_posX(100);
+    hammer.set_posY(300);
+    hammer.set_amount(1);
+    world.items.push_back(hammer);
+
+    SimpleBow sb(config);
+    sb.set_posX(100);
+    sb.set_posY(400);
+    sb.set_amount(1);
+    world.items.push_back(sb);
+
+    Hood hood(config);
+    hood.set_posX(100);
+    hood.set_posY(500);
+    hood.set_amount(1);
+    world.items.push_back(hood);
+
+    PlateArmor armor(config);
+    armor.set_posX(300);
+    armor.set_posY(300);
+    armor.set_amount(1);
+    world.items.push_back(armor);
+
+    TortoiseShield shield(config);
+    shield.set_posX(200);
+    shield.set_posY(100);
+    shield.set_amount(1);
+    world.items.push_back(shield);
+}
+
+
+
 void ServerProcessorThread::run() {
 
     Thread* game_loop = new GameLoopThread(receiversQueue);
@@ -28,17 +80,7 @@ void ServerProcessorThread::run() {
     ProtocolTranslator protocol_translator(config, collisionInfo);
     ServerWorld serverWorld;
 
-    Sword i(config);
-    i.set_posX(100);
-    i.set_posY(100);
-    i.set_amount(1);
-    serverWorld.items.push_back(i);
-
-    GnarledStaff j(config);
-    j.set_posX(200);
-    j.set_posY(200);
-    j.set_amount(1);
-    serverWorld.items.push_back(j);
+    this->addingHardcodedItems(serverWorld); // HAY QUE SACAR
     
     while (running) {
         ProtocolMessage received_msg = this->receiversQueue.pop();

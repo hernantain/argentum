@@ -97,6 +97,7 @@ void ClientReceiverThread::process_equip_shield(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
+    std::cout << "EQUIP WEAPON" << std::endl;
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
     if (i != -1 && is_alive)

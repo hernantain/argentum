@@ -5,9 +5,12 @@
 #include <stdint.h>
 #include <vector>
 #include <SDL2/SDL.h>
+
 #include "client_item.h"
 #include "client_item_viewer.h"
+#include "client_text.h"
 
+#define ICON_SIZE 32
 #define BAR_HEIGHT 10 
 
 class InfoView {
@@ -16,7 +19,12 @@ class InfoView {
     std::vector<Item*> items;
 
     SDL_Rect &infoPanel;
-    ItemViewer &itemViewer;    
+    ItemViewer &itemViewer;
+    TextLabel argentumLabel;
+    TextLabel lifeLabel; 
+    TextLabel manaLabel;
+    TextLabel expLabel;
+    
     SDL_Renderer* gRenderer;
 
     SDL_Rect currentLifeRect, maxLifeRect;
@@ -34,6 +42,11 @@ class InfoView {
     void render_experience();
     void render_items();
 
+    bool click_within_bounds(Item* item, int &x, int &y);
+    bool x_within_bounds(Item* item, int &x);
+    bool y_within_bounds(Item* item, int &y);
+    void adjust_items();
+
     public:
         InfoView(SDL_Renderer* gRenderer, SDL_Rect &infoPanel, ItemViewer &itemViewer);
 
@@ -42,6 +55,8 @@ class InfoView {
         void set_experience(int16_t currentExp, int16_t maxExperience);
 
         void add_item(Item* item);
+
+        int handle_click(int &x, int &y);
 
         void render();
 

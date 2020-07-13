@@ -24,6 +24,7 @@ class ServerProcessorThread: public Thread {
     std::atomic<bool> running;
 
     void broadcastMessage(ProtocolMessage &updated_msg);
+    void addingHardcodedItems(ServerWorld &world);
 
     public:
         ServerProcessorThread(Queue &receiversQueue, ClientManager &clientManager, CollisionInfo &collisionInfo, Json::Value &config);

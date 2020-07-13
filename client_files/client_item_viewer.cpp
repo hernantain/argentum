@@ -17,8 +17,17 @@ void ItemViewer::add_item(uint8_t &id) {
     LTexture* texture = new LTexture();
     switch(id) {
         case LEATHER_ARMOR_CODE: 
+            texture->loadFromFile(LEATHER_ARMOR_IMAGE, gRenderer);
+            break;
+        
         case PLATE_ARMOR_CODE: 
+            texture->loadFromFile(PLATE_ARMOR_IMAGE, gRenderer);
+            break;
+
         case BLUE_ROBE_CODE: 
+            texture->loadFromFile(BLUE_ROBE_IMAGE, gRenderer);
+            break;
+
         case HOOD_CODE:
             texture->loadFromFile(HOOD_IMAGE, gRenderer);
             break;
@@ -93,9 +102,4 @@ LTexture* ItemViewer::get_item_icon(uint8_t id) {
         this->add_item(id);
         return this->items[id];
     }
-}
-
-
-void ItemViewer::print_works() {
-    std::cout << "ESTO FUNCIONA" << std::endl;
 }

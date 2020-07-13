@@ -85,11 +85,11 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
     
 	ClientWorld clientWorld(gRenderer, itemViewer);
 
-	std::cout << "Tamanio mundo: " << rec_msg.characters.size() << std::endl;
+	// std::cout << "Tamanio mundo: " << rec_msg.characters.size() << std::endl;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
-		std::cout << "ID PLAYER: " << (int) rec_msg.characters[i].id << std::endl;
-		std::cout << "ID RAZA PLAYER: " << (int) rec_msg.characters[i].id_race << std::endl;
-		std::cout << "ID  CLASE PLAYER: " << (int) rec_msg.characters[i].id_class << std::endl;
+		// std::cout << "ID PLAYER: " << (int) rec_msg.characters[i].id << std::endl;
+		// std::cout << "ID RAZA PLAYER: " << (int) rec_msg.characters[i].id_race << std::endl;
+		// std::cout << "ID  CLASE PLAYER: " << (int) rec_msg.characters[i].id_class << std::endl;
 		if (rec_msg.characters[i].id == this->player_id) {
 			infoView.set_life(rec_msg.characters[i].life, rec_msg.characters[i].max_life);
 			infoView.set_mana(rec_msg.characters[i].mana, rec_msg.characters[i].max_mana);
@@ -105,7 +105,7 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 	for (unsigned int i = 0; i < rec_msg.items.size(); ++i)
 		clientWorld.add_item(rec_msg.items[i]);
 
-	std::cout << "CANTIDAD DE ITEMS: " << rec_msg.items.size() << std::endl;
+	// std::cout << "CANTIDAD DE ITEMS: " << rec_msg.items.size() << std::endl;
 
 	return clientWorld;
 }
@@ -152,18 +152,34 @@ void Game::run() {
 			} else if (e.type == SDL_WINDOWEVENT) {
 				this->window.handleEvent(e);
 				this->adjust_camera(infoView);
+				continue;
+
+			} else if (e.type == SDL_MOUSEBUTTONDOWN) {
+				int x, y;
+				SDL_GetMouseState( &x, &y ); 
+				if (x > inventory.x) {
+					std::cout << "INVENTORY_EVENT" << std::endl;
+					int clickX = x - inventory.x;
+					int itemId = infoView.handle_click(clickX, y); 
+					std::cout << itemId << std::endl;
+					if (itemId < 0)
+						continue;
+
+					ProtocolMessage msg = world.player_handle_equip_event(this->player_id, itemId);
+					queue.push(msg);
+					continue;
+				}
 
 			} else if (e.type == SDL_MOUSEMOTION) {
 				continue;
 
-			} else {
-				ProtocolMessage msg = world.player_handle_event(player_id, e, camera);
-				queue.push(msg);	
 			}
+			ProtocolMessage msg = world.player_handle_event(player_id, e, camera);
+			queue.push(msg);
 		}
 
 		SDL_RenderSetViewport( gRenderer, &inventory );
-		SDL_SetRenderDrawColor(gRenderer, 17, 5, 92, 1);
+		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 1);
 		SDL_RenderClear(gRenderer);
 		infoView.render();
 
@@ -203,22 +219,22 @@ void Game::run() {
 
 bool Game::init() {
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
-		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
+		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		return false;
 	} 
 	
-	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ) {
-		printf( "Warning: Linear texture filtering not enabled!" );
+	if(!SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+		printf("Warning: Linear texture filtering not enabled!");
 	} 
 
-	if( !this->window.init() ) {
-		printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
+	if(!this->window.init()) {
+		printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return false;
 	} 
 	
 	this->gRenderer = this->window.createRenderer();
 	if( this->gRenderer == NULL ) {
-		printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+		printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 		return false;
 	} 
 
@@ -226,7 +242,12 @@ bool Game::init() {
 
 	int imgFlags = IMG_INIT_PNG;
 	if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
-		printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+		printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+		return false;
+	}
+
+	if(TTF_Init() == -1) {
+		printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 		return false;
 	}
 
@@ -250,7 +271,6 @@ void Game::adjust_camera(InfoView &infoView) {
 
 	infoView.adjust();
 }
-
 
 
 
