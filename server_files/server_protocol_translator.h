@@ -9,6 +9,7 @@
 #include "server_attackable.h"
 #include "server_character.h"
 #include "server_npc.h"
+#include "server_item.h"
 #include "server_helmet.h"
 #include "server_armor.h"
 #include "server_character_factory.h"
@@ -17,6 +18,7 @@
 #include "server_armor_factory.h"
 #include "server_weapon_factory.h"
 #include "server_shield_factory.h"
+#include "server_item_factory.h"
 
 #ifndef _PROTOCOL_TRANSLATOR
 #define _PROTOCOL_TRANSLATOR
@@ -56,6 +58,9 @@ private:
 
     // Evento para tomar un item del suelo
     void take_item_event(ProtocolMessage& msg, ServerWorld &world);
+
+    // Evento para dejar un item en el suelo
+    void drop_item_event(ProtocolMessage& msg, ServerWorld &world);
 
     // Evento para equiparse un escudo
     void equip_shield_event(ProtocolMessage& msg, ServerWorld &world);

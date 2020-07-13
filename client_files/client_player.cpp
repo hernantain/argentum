@@ -34,6 +34,7 @@ Player::Player(
 	this->weaponId = 0;
 	this->shieldId = 0;
 	this->helmetId = 0;
+	this->itemId = 0;
 	this->ghost = NULL;
 }
 
@@ -344,6 +345,7 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		this->armorId,
 		this->weaponId,
 		this->shieldId,
+		this->itemId,
 		this->alive
 	);
 	ProtocolMessage msg(event_id, this->id, character);

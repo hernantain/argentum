@@ -11,7 +11,7 @@ class HelmetFactory {
 public:
 
     /* Recibiendo un id crea el casco correspondiente */
-    static Helmet make_helmet(const int helmet_id, Json::Value& config);
+    static Helmet make_helmet(const uint8_t helmet_id, Json::Value& config);
 };
 
 #endif // _HELMET_FACTORY_H

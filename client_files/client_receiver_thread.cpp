@@ -47,6 +47,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == PROTOCOL_SHIELD_CONFIRM) this->process_equip_shield(msg);
     if (msg.id_message == PROTOCOL_MEDITATE_CONFIRM) this->process_meditation(msg);
     if (msg.id_message == PROTOCOL_TAKE_ITEM_CONFIRM) this->process_take_item(msg);
+    if (msg.id_message == PROTOCOL_DROP_ITEM_CONFIRM) this->process_drop_item(msg);
     if (msg.id_message == PROTOCOL_CREATE_CHARACTER_CONFIRM) this->process_create_player(msg);
     if (msg.id_message == PROTOCOL_LOG_OFF_CONFIRM) this->process_log_off(msg);
     if (msg.id_message == PROTOCOL_CREATE_NPC_CONFIRM) this->process_create_npc(msg);
@@ -135,6 +136,12 @@ void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
     std::cout << "ITEMS ANTES" << world.items.size() << std::endl;
     world.update_items(msg);
     std::cout << "ITEMS DESPUES" << world.items.size() << std::endl;
+}
+
+void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
+    std::cout << "ITEMS ANTES DROP" << world.items.size() << std::endl;
+    world.update_items(msg);
+    std::cout << "ITEMS DESPUES DROP" << world.items.size() << std::endl;
 }
 
 
