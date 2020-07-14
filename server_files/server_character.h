@@ -229,6 +229,8 @@ public:
     uint8_t get_class_id() const;
 
     void populate_protocol_character(ProtocolCharacter &protocolCharacter);
+
+    ~Character() override;
 };
 
 

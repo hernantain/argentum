@@ -204,3 +204,5 @@ int16_t NPC::get_body_pos_X() const{
 int16_t NPC::get_body_pos_Y() const {
     return movement.get_vertical_body_position();
 }
+
+NPC::~NPC() {}

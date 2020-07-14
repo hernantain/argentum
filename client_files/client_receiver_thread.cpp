@@ -161,6 +161,7 @@ void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
 void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
     world.update_npcs(msg);
     world.update_player_alive_status(msg);
+    world.add_items(msg);
     update_bars(msg);
 }
 

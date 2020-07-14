@@ -42,7 +42,7 @@ void InfoView::render_mana() {
     SDL_RenderFillRect(gRenderer, &maxManaRect);
 
     SDL_SetRenderDrawColor(gRenderer, manaColor.r, manaColor.g, manaColor.b, manaColor.a);
-    float pct = (this->currentMana == 0) ? 0 : (this->currentMana) / this->maxMana;
+    float pct = float(this->currentMana == 0) ? 0 : float(this->currentMana) / this->maxMana;
     currentManaRect.w = maxManaRect.w * pct;
     SDL_RenderFillRect(gRenderer, &currentManaRect);
 }

@@ -92,6 +92,7 @@ void ServerWorld::move_npcs() {
             Attackable* closest = get_closest_from_position(posX, posY);
             current->move_to(*closest);
             current->attack(*closest);
+            if (!closest->is_alive()) closest->drop_items(items);
         }
     }
 }
@@ -161,12 +162,12 @@ void ServerWorld::update_world_items(unsigned int &i) {
 }
 
 void ServerWorld::remove_character(uint16_t id) {
-    // delete this->characters[id];
+    delete this->characters[id];
     this->characters.erase(id);
 }
 
 void ServerWorld::remove_npc(uint16_t id) {
-    // delete this->npc[id];
+    delete this->npcs[id];
     this->npcs.erase(id);
 }
 

@@ -493,3 +493,5 @@ int16_t Character::get_current_experience() const {
 int16_t Character::get_max_experience() const {
     return experience.max();
 }
+
+Character::~Character() {}

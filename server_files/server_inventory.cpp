@@ -1,7 +1,8 @@
 #include "server_inventory.h"
 #include <iostream>
 
-#define DROP_OFFSET_TOLERANCE 20
+#define DROP_OFFSET_TOLERANCE 30
+#define NOT_FOUND -1
 
 Inventory::Inventory(int size) {
     this->max_size = size;
@@ -9,8 +10,14 @@ Inventory::Inventory(int size) {
 
 void Inventory::add_item(Item& item) {
     if (is_full()) return;
+    int find_item = find(item.get_id());
+    if (find_item != NOT_FOUND) {
+        int16_t current_amount = items[find_item].get_amount();
+        int16_t new_item_amount = item.get_amount();
+        items[find_item].set_amount(current_amount + new_item_amount);
+        return;
+    }
     items.push_back(item);
-    std::cout << "Inventory::Added::" << item.get_name() << std::endl;
 }
 
 Item Inventory::drop_item(uint8_t id) {
@@ -34,11 +41,7 @@ void Inventory::drop_items(int16_t posX, int16_t posY, std::vector<Item> &worldI
     int16_t last_assignedX = posX - DROP_OFFSET_TOLERANCE;
     int16_t last_assignedY = posY - DROP_OFFSET_TOLERANCE;
 
-    // std::cout << "MyPosX::: " << posX << std::endl;
-    // std::cout << "MyPosY::: " << posY << std::endl;
     for (unsigned int i = 0; i < items.size(); i++) {
-        // std::cout << "ItemDropPosX::: " << last_assignedX << std::endl;
-        // std::cout << "ItemDropPosY::: " << last_assignedY << std::endl;
         items[i].set_posX(last_assignedX);
         items[i].set_posY(last_assignedY);
 
@@ -66,6 +69,16 @@ bool Inventory::has(int16_t id) {
         }
     }
     return false;
+}
+
+int Inventory::find(int16_t id) {
+    for (unsigned int i = 0; i < items.size(); i++) {
+        if (items[i].get_id() == id) {
+            std::cout << "Inventory::ItemFound" << std::endl;
+            return i;
+        }
+    }
+    return NOT_FOUND;
 }
 
 bool Inventory::is_full() {

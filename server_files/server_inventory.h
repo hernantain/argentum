@@ -30,6 +30,9 @@ public:
     // Boleana, verdadera si posee el item
     bool has(int16_t id);
 
+    // Devuelve el indice del item si esta en el inventario, -1 si no
+    int find(int16_t id);
+
     // Booleana, esta lleno el inventario
     bool is_full();
 };
