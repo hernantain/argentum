@@ -21,6 +21,7 @@
 #include "server_compound_bow.h"
 #include "server_life_potion.h"
 #include "server_mana_potion.h"
+#include "server_gold.h"
 
 /* Clase que funciona como factory para los distintos tipos de Items de la aplicacion */
 class ItemFactory {
@@ -28,6 +29,8 @@ public:
 
     /* Recibiendo un id crea el item correspondiente */
     static Item make_item(const int16_t item_id, Json::Value& config);
+
+    static Item make_gold(const int gold);
 };
 
 #endif // _ITEM_FACTORY_H

@@ -13,8 +13,10 @@
     },
     "npc": {
         "max_limit": 5,
-        "nothing_drop_probability": 0.9,
-        "gold_drop_probability": 0.08,
+        // "nothing_drop_probability": 0.9,
+        // "gold_drop_probability": 0.08,
+        "nothing_drop_probability": 0.08,
+        "gold_drop_probability": 0.9,
         "potion_drop_probability": 0.01,
         "another_item_probability": 0.01
     },
@@ -119,27 +121,20 @@
         "width": 21,
         "height": 21
     },
-    "gold": {
-        "extra_gold_rate": 0.5,
-        "power_constant": 1.1,
-        "secure_gold_constant": 100,
-        "gold_amount_constant": 500
-
-    },
     "experience": {
         "difficulty_constant": 1000,
         "level_multiplier": 1.8,
         "min_extra_probability": 0,
         "max_extra_probability": 0.1
     },
-    "inventory": {
-        "max_items": 10
-    },
     "attack": {
         "critical_probability": 0.2
     },
     "defense": {
         "evasion_constant": 0.001
+    },
+    "inventory": {
+        "max_items": 10
     },
     "leatherArmor": {
         "id": 1,
@@ -236,6 +231,13 @@
     },
     "manaPotion": {
         "id": 19,
-        "recovery": 20
+        "recovery": 10
+    },
+    "gold": {
+        "id": 20,
+        "extra_gold_rate": 0.5,
+        "power_constant": 1.1,
+        "secure_gold_constant": 100,
+        "gold_amount_constant": 500
     }
 }

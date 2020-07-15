@@ -154,7 +154,18 @@ void Character::drop_item(uint8_t id, std::vector<Item> &worldItems) {
 }
 
 void Character::drop_items(std::vector<Item> &worldItems) {
-    inventory.drop_items(get_body_pos_X(), get_body_pos_Y(), worldItems);
+    int gold_drop = drop_gold();
+    inventory.drop_items(get_body_pos_X(), get_body_pos_Y(), gold_drop, worldItems);
+}
+
+int Character::drop_gold() {
+    if (gold > max_secure_gold()) {
+        const int dropped_gold = gold - max_secure_gold();
+        gold -= dropped_gold;
+        std::cout << "DroppingGold:: "<< dropped_gold << std::endl;
+        return dropped_gold;
+    }
+    return 0;
 }
 
 const int Character::max_secure_gold() {
@@ -168,7 +179,6 @@ const int Character::max_gold() {
 }
 
 void Character::take_gold(int amount) {
-    // TODO: We should drop the excess in this case
     if(!alive) return;
     std::cout << "Current max gold is: "<< max_gold() << std::endl;
     if (gold + amount >= max_gold()) {
@@ -177,18 +187,6 @@ void Character::take_gold(int amount) {
     } else {
         gold += amount;
     }
-}
-
-int Character::drop_gold() {
-    // TODO: heres just the logic, we should send some message to the client, possibly
-    // We are not going to return anything
-    if (gold > max_secure_gold()) {
-        const int dropped_gold = gold - max_secure_gold();
-        gold -= dropped_gold;
-        std::cout << "DroppingGold:: "<< dropped_gold << std::endl;
-        return dropped_gold;
-    }
-    return 0;
 }
 
 void Character::take_item(Item& item) {
@@ -213,42 +211,30 @@ void Character::equip_mana_potion(Potion& item) {
 
 void Character::equip_weapon(Weapon& item) {
     meditating = false;
-    equipment.equip_weapon(item);
-    // As we dont have the inventory on the UI
-    // we assume we have the item
-    // if (inventory.has(item) && alive) {
-    //     equipment.equip_weapon(item);
-    // } 
+    if (inventory.has(item.get_id()) && alive) {
+        equipment.equip_weapon(item);
+    } 
 }
 
 void Character::equip_armor(Armor& item) {
     meditating = false;
-    equipment.equip_armor(item);
-    // As we dont have the inventory on the UI
-    // we assume we have the item
-    // if (inventory.has(item) && alive) {
-    //     equipment.equip_armor(item);
-    // }
+    if (inventory.has(item.get_id()) && alive) {
+        equipment.equip_armor(item);
+    }
 }
 
 void Character::equip_shield(Shield& item) {
     meditating = false;
-    equipment.equip_shield(item);
-    // As we dont have the inventory on the UI
-    // we assume we have the item
-    // if (inventory.has(item) && alive) {
-    //     equipment.equip_shield(item);
-    // }
+    if (inventory.has(item.get_id()) && alive) {
+        equipment.equip_shield(item);
+    }
 }
 
 void Character::equip_helmet(Helmet& item) {
     meditating = false;
-    equipment.equip_helmet(item);
-    // As we dont have the inventory on the UI
-    // we assume we have the item
-    // if (inventory.has(item) && alive) {
-    //     equipment.equip_helmet(item);
-    // }
+    if (inventory.has(item.get_id()) && alive) {
+        equipment.equip_helmet(item);
+    }
 }
 
 bool Character::is_safe() {
