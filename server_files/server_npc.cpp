@@ -58,10 +58,8 @@ void NPC::drop_items(std::vector<Item> &worldItems) {
     int drop_chances = rand() % 100 + 1;
     if (drop_chances <= nothing_percentage) return;
     else if (drop_chances <= nothing_percentage + gold_percentage) {
-        int gold = gold_drop();
-        std::cout << "Im going to drop Gold: " << gold << std::endl;
-        // TODO: Make the GoldItem and add it to the world
-        return;
+        int gold_amount = gold_drop();
+        drop_gold(drop_item, gold_amount);
     } else if (drop_chances <= nothing_percentage + gold_percentage + potion_percentage) {
         drop_potion(drop_item);
     } else {
@@ -73,6 +71,12 @@ void NPC::drop_items(std::vector<Item> &worldItems) {
     drop_item.set_posY(get_body_pos_Y());
     worldItems.push_back(drop_item);
     std::cout << "NPC::DroppingItem ID::" << drop_item.get_id() << std::endl;    
+}
+
+void NPC::drop_gold(Item &drop_item, int gold) {
+    std::cout << "Im going to drop Gold: " << gold << std::endl;
+    drop_item = ItemFactory::make_gold(gold);
+    std::cout << "NPC::DroppingItem::" << drop_item.get_name() << std::endl;
 }
 
 void NPC::drop_potion(Item &drop_item) {
@@ -96,7 +100,7 @@ int NPC::gold_drop() {
     float random = ((float) rand()) / (float) RAND_MAX;
     float gold_multiplier = random * (MAX_GOLD_MULTIPLIER - MIN_GOLD_MULTIPLIER);
     gold_multiplier += MIN_GOLD_MULTIPLIER;
-    int gold_drop = gold_multiplier * life;
+    int gold_drop = gold_multiplier * max_life;
     return gold_drop;
 }
 

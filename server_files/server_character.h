@@ -17,6 +17,7 @@
 #include "server_weapon.h"
 #include "server_helmet.h"
 #include "server_shield.h"
+#include "server_gold.h"
 #include "server_potion.h"
 #include "server_movement.h"
 #include "server_attackable.h"
@@ -41,7 +42,7 @@ private:
     ExperiencePoints experience;
     Inventory inventory;
     Equipment equipment;
-
+    
     int gold;
     int bank_gold;
     int16_t level;

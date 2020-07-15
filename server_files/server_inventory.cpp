@@ -36,8 +36,8 @@ Item Inventory::drop_item(uint8_t id) {
     return drop_item;
 }
 
-void Inventory::drop_items(int16_t posX, int16_t posY, std::vector<Item> &worldItems) {
-    if (items.empty()) return;
+void Inventory::drop_items(int16_t posX, int16_t posY, int gold, std::vector<Item> &worldItems) {
+    if (items.empty() && gold == 0) return;
     int16_t last_assignedX = posX - DROP_OFFSET_TOLERANCE;
     int16_t last_assignedY = posY - DROP_OFFSET_TOLERANCE;
 
@@ -57,7 +57,18 @@ void Inventory::drop_items(int16_t posX, int16_t posY, std::vector<Item> &worldI
         worldItems.push_back(items[i]);
     }
     items.clear();
+    drop_gold(posX, posY, gold, worldItems);
     std::cout << "InventorySize::ShouldBe0:: " << items.size() << std::endl;
+}
+
+void Inventory::drop_gold(int16_t posX, int16_t posY, int gold, std::vector<Item> &worldItems) {
+    if (gold > 0) {
+        std::cout << "Inventory::DroppingGold:: " << gold << std::endl;
+        Gold drop_gold(drop_gold);
+        drop_gold.set_posX(posX - 2 * DROP_OFFSET_TOLERANCE);
+        drop_gold.set_posY(posY - 2 * DROP_OFFSET_TOLERANCE);
+        worldItems.push_back(drop_gold);
+    }
 }
 
 bool Inventory::has(int16_t id) {

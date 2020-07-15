@@ -2,6 +2,8 @@
 #include "server_world.h"
 #include <iostream>
 
+#define GOLD_ITEM_ID 20
+
 ServerWorld::ServerWorld() {}
 
 Character* ServerWorld::get(uint16_t message_id) {
@@ -136,11 +138,14 @@ void ServerWorld::player_take_item(uint16_t id) {
     std::cout << "Cantidad de items hasta el momento: " << items.size() << std::endl;
     Character* current = characters[id];
     for (unsigned int i = 0; i < items.size(); ++i) {
-        std::cout << "ACA LLEGA" << std::endl;
         int16_t item_posX = items[i].get_posX();
         int16_t item_posY = items[i].get_posY();
-        if ((current->is_near(item_posX, item_posY)) && (this->characters[id]->is_alive())) {
-            characters[id]->take_item(items[i]);
+        if (current->is_near(item_posX, item_posY)) {
+            if (items[i].get_id() == GOLD_ITEM_ID) {
+                characters[id]->take_gold(items[i].get_amount());
+            } else {
+                characters[id]->take_item(items[i]);
+            }
             // std::cout << "Estas cerca como para agarrar un item" << std::endl;
             this->update_world_items(i);
             break;

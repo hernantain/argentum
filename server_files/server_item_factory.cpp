@@ -43,3 +43,7 @@ Item ItemFactory::make_item(const int16_t item_id, Json::Value& config) {
     }
     return ManaPotion(config);
 }
+
+Item ItemFactory::make_gold(const int gold) {
+    return Gold(gold);
+}

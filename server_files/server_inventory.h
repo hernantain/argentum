@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "server_item.h"
+#include "server_gold.h"
 
 /* Clase que representa a un item del juego */
 class Inventory {
@@ -10,6 +11,8 @@ private:
     std::vector<Item> items;
     unsigned int max_size;
 
+    // Dropea el oro del personaje
+    void drop_gold(int16_t posX, int16_t posY, int gold, std::vector<Item> &worldItems);
 public:
     // Contructor, recibe el tamaño del inventario
     explicit Inventory(int size);
@@ -21,8 +24,8 @@ public:
     Item drop_item(uint8_t id);
 
     // Dropea todos los items del inventario populando el mundo de items
-    // Y recibiendo las posiciones del jugador como parametro
-    void drop_items(int16_t posX, int16_t posY, std::vector<Item> &worldItems);
+    // Y recibiendo las posiciones del jugador como parametro y la cantidad de oro
+    void drop_items(int16_t posX, int16_t posY, int gold, std::vector<Item> &worldItems);
 
     // Devuelve el tam del inventario
     unsigned int size();

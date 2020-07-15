@@ -31,6 +31,7 @@ protected:
     int get_damage();
     int get_defense();
     int gold_drop();
+    void drop_gold(Item &drop_item, int gold);
     void drop_potion(Item &drop_item);
     void drop_random_item(Item &drop_item);
 
