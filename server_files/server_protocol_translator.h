@@ -34,70 +34,70 @@ private:
     CollisionInfo &collisionInfo;
 
     // Evento parar de moverse 
-    ProtocolMessage stop_moving(MessageToServer& msg, ServerWorld &world);
+    void stop_moving(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para moverse a la derecha
-    ProtocolMessage move_right_event(MessageToServer& msg, ServerWorld &world);
+    void move_right_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para moverse a la izquierda
-    ProtocolMessage move_left_event(MessageToServer& msg, ServerWorld &world);
+    void move_left_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para moverse hacia arriba
-    ProtocolMessage move_top_event(MessageToServer& msg, ServerWorld &world);
+    void move_top_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para moverse hacia abajo
-    ProtocolMessage move_down_event(MessageToServer& msg, ServerWorld &world);
+    void move_down_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para depositar oro en el banco
-    ProtocolMessage deposit_event(MessageToServer& msg, ServerWorld &world);
+    void deposit_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para retirar oro del banco
-    ProtocolMessage withdraw_event(MessageToServer& msg, ServerWorld &world);
+    void withdraw_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para resucitar un personaje
-    ProtocolMessage resurrect_event(MessageToServer& msg, ServerWorld &world);
+    void resurrect_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para tomar un item del suelo
-    ProtocolMessage take_item_event(MessageToServer& msg, ServerWorld &world);
+    void take_item_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para dejar un item en el suelo
-    ProtocolMessage drop_item_event(MessageToServer& msg, ServerWorld &world);
+    void drop_item_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para equiparse un escudo
-    ProtocolMessage equip_shield_event(MessageToServer& msg, ServerWorld &world);
+    void equip_shield_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para equiparse un arma
-    ProtocolMessage equip_weapon_event(MessageToServer& msg, ServerWorld &world);
+    void equip_weapon_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para equiparse un casco
-    ProtocolMessage equip_helmet_event(MessageToServer& msg, ServerWorld &world);
+    void equip_helmet_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para equiparse una armadura
-    ProtocolMessage equip_armor_event(MessageToServer& msg, ServerWorld &world);
+    void equip_armor_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para crear un NPC
-    ProtocolMessage create_npc_event(MessageToServer& msg, ServerWorld &world);
+    void create_npc_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para actualizar los NPCs
-    ProtocolMessage update_npcs_event(MessageToServer& msg, ServerWorld &world);
+    void update_npcs_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para actualizar los Personajes
-    ProtocolMessage update_characters_event(MessageToServer& msg, ServerWorld &world);
+    void update_characters_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para crear un personaje
-    ProtocolMessage create_character(MessageToServer& msg, ServerWorld &world);
+    void create_character(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para atacar a un atacable
-    ProtocolMessage attack_event(MessageToServer& msg, ServerWorld &world);
+    void attack_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para meditar
-    ProtocolMessage meditation_event(MessageToServer& msg, ServerWorld &world);
+    void meditation_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para crear un Personaje
-    ProtocolMessage create_character_event(MessageToServer& msg, ServerWorld &world);
+    void create_character_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para desconectar un Personaje
-    ProtocolMessage log_off_event(MessageToServer&msg, ServerWorld &world);
+    void log_off_event(MessageToServer &msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento actualizar todos los personajes del mundo
     void get_all_characters(ProtocolMessage& msg, ServerWorld &world);
@@ -115,7 +115,7 @@ public:
     ProtocolTranslator(Json::Value &config, CollisionInfo &collisionInfo);
 
     // Mapea el codigo recibido en un mensaje del protocolo
-    ProtocolMessage translate(MessageToServer& msg, ServerWorld &world);
+    void translate(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 };
 
 #endif //_PROTOCOL_TRANSLATOR

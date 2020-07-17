@@ -89,6 +89,7 @@ void ServerProcessorThread::run() {
     this->addingHardcodedItems(serverWorld); // HAY QUE SACAR
     
     while (running) {
+        ProtocolMessage client_response;
         MessageToServer received_msg = this->receiversQueue.pop();
         protocol_translator.translate(received_msg, serverWorld);
         if (received_msg.event_id != NOTHING)
