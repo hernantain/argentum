@@ -14,7 +14,7 @@
     "npc": {
         "max_limit": 5,
         "nothing_drop_probability": 0.9,
-        "gold_drop_probability": 0.08,,
+        "gold_drop_probability": 0.08,
         "potion_drop_probability": 0.01,
         "another_item_probability": 0.01
     },
