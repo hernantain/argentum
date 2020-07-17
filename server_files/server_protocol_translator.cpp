@@ -29,6 +29,7 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, world);
         case PROTOCOL_EQUIP_SHIELD: return equip_shield_event(msg, world);
+        case PROTOCOL_EQUIP_POTION: return equip_potion_event(msg, world);
         case PROTOCOL_MOVE_STOP: return stop_moving(msg, world);
         case PROTOCOL_ATTACK: return attack_event(msg, world);
         case PROTOCOL_MEDITATION: return meditation_event(msg, world);
@@ -36,6 +37,19 @@ void ProtocolTranslator::translate(ProtocolMessage& msg, ServerWorld& world) {
         case PROTOCOL_DROP_ITEM: return drop_item_event(msg, world);
         case PROTOCOL_LOG_OFF: return log_off_event(msg, world);
     }
+}
+
+void ProtocolTranslator::equip_potion_event(ProtocolMessage &msg, ServerWorld &world) {
+    uint8_t potion_id = msg.characters[0].potionId;
+    if (potion_id == config["lifePotion"]["id"].asUInt()) {
+        LifePotion potion(config);
+        world.characters[msg.id_player]->equip_life_potion(potion);
+    } else {
+        ManaPotion potion(config);
+        world.characters[msg.id_player]->equip_mana_potion(potion);
+    }
+    this->get_world(msg, world);
+    msg.id_message = PROTOCOL_EQUIP_POTION_CONFIRM;
 }
 
 void ProtocolTranslator::equip_shield_event(ProtocolMessage &msg, ServerWorld &world) {

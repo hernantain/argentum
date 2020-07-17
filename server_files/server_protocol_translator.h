@@ -12,6 +12,8 @@
 #include "server_item.h"
 #include "server_helmet.h"
 #include "server_armor.h"
+#include "server_life_potion.h"
+#include "server_mana_potion.h"
 #include "server_character_factory.h"
 #include "server_npc_factory.h"
 #include "server_helmet_factory.h"
@@ -61,6 +63,9 @@ private:
 
     // Evento para dejar un item en el suelo
     void drop_item_event(ProtocolMessage& msg, ServerWorld &world);
+
+    // Evento para equiparse una pocion
+    void equip_potion_event(ProtocolMessage& msg, ServerWorld &world);
 
     // Evento para equiparse un escudo
     void equip_shield_event(ProtocolMessage& msg, ServerWorld &world);

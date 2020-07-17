@@ -20,6 +20,15 @@ void Inventory::add_item(Item& item) {
     items.push_back(item);
 }
 
+void Inventory::remove_item(uint8_t id) {
+    int position = find(id);
+    int16_t item_amount = items[position].get_amount();
+    if (item_amount > 1) 
+        items[position].set_amount(item_amount--);
+    else 
+        drop_item(id);
+}
+
 Item Inventory::drop_item(uint8_t id) {
     Item drop_item;
     std::vector<Item> tmp;

@@ -36,8 +36,8 @@ void GameLoopThread::run() {
             queue.push(npc_create_msg);
         }
         // Every second
-        ProtocolMessage characters_update_msg(PROTOCOL_UPDATE_CHARACTERS);
-        queue.push(characters_update_msg);
+        // ProtocolMessage characters_update_msg(PROTOCOL_UPDATE_CHARACTERS);
+        // queue.push(characters_update_msg);
         iteration++;
         npc_id++;
         npc_type++;
