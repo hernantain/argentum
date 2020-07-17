@@ -45,6 +45,7 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == PROTOCOL_ARMOR_CONFIRM) this->process_equip_armor(msg);
     if (msg.id_message == PROTOCOL_WEAPON_CONFIRM) this->process_equip_weapon(msg);
     if (msg.id_message == PROTOCOL_SHIELD_CONFIRM) this->process_equip_shield(msg);
+    if (msg.id_message == PROTOCOL_EQUIP_POTION_CONFIRM) this->process_equip_potion(msg);
     if (msg.id_message == PROTOCOL_MEDITATE_CONFIRM) this->process_meditation(msg);
     if (msg.id_message == PROTOCOL_TAKE_ITEM_CONFIRM) this->process_take_item(msg);
     if (msg.id_message == PROTOCOL_DROP_ITEM_CONFIRM) this->process_drop_item(msg);
@@ -111,6 +112,10 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
         world.player_set_weapon(msg.id_player, msg.characters[i].weaponId);
 }
 
+void ClientReceiverThread::process_equip_potion(ProtocolMessage &msg) {
+    std::cout << "EQUIP POTION" << std::endl;
+    update_bars(msg);
+}
 
 void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
     update_bars(msg);

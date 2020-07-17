@@ -6,7 +6,8 @@
 
 #include "server_sword.h"
 #include "server_gnarled_staff.h"
-
+#include "server_mana_potion.h"
+#include "server_life_potion.h"
 
 ServerProcessorThread::ServerProcessorThread(
     Queue &receiversQueue,
@@ -74,6 +75,18 @@ void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
     shield.set_posY(100);
     shield.set_amount(1);
     world.items.push_back(shield);
+
+    ManaPotion mana(config);
+    mana.set_posX(75);
+    mana.set_posY(75);
+    mana.set_amount(1);
+    world.items.push_back(mana);
+
+    LifePotion life(config);
+    life.set_posX(125);
+    life.set_posY(100);
+    life.set_amount(1);
+    world.items.push_back(life);
 }
 
 

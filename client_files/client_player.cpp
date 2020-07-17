@@ -34,6 +34,7 @@ Player::Player(
 	this->weaponId = 0;
 	this->shieldId = 0;
 	this->helmetId = 0;
+	this->potionId = 0;
 	this->itemId = 0;
 	this->ghost = NULL;
 }
@@ -183,7 +184,6 @@ void Player::set_shield(int shieldId) {
 	} 
 }
 
-
 ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 
 	int event_id = 1;
@@ -251,6 +251,7 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		this->armorId,
 		this->weaponId,
 		this->shieldId,
+		this->potionId,
 		this->itemId,
 		this->alive
 	);
@@ -272,6 +273,7 @@ ProtocolMessage Player::handleEquipEvent(int &itemId) {
 		this->armorId,
 		this->weaponId,
 		this->shieldId,
+		this->potionId,
 		this->itemId,
 		this->alive
 	);
@@ -296,6 +298,7 @@ int16_t Player::getEventId(int &itemId) {
 		weaponId = itemId;
 		return PROTOCOL_EQUIP_WEAPON;
 	} else {
+		potionId = itemId;
 		return PROTOCOL_EQUIP_POTION;
 	}
 }

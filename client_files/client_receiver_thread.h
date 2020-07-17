@@ -29,6 +29,7 @@ class ClientReceiverThread : public Thread {
     void process_equip_helmet(ProtocolMessage &msg);
     void process_equip_shield(ProtocolMessage &msg);
     void process_equip_armor(ProtocolMessage &msg);
+    void process_equip_potion(ProtocolMessage &msg);
     void process_create_player(ProtocolMessage &msg);
     void process_create_npc(ProtocolMessage &msg);
     void process_move_npcs(ProtocolMessage &msg);

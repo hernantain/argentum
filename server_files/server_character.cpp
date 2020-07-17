@@ -197,15 +197,19 @@ void Character::take_item(Item& item) {
 
 void Character::equip_life_potion(Potion& item) {
     int recovery = item.get_recovery_points();
-    if (inventory.has(item.get_id())) {
+    if (inventory.has(item.get_id()) && !life.is_full()) {
         life.add(recovery);
+        inventory.remove_item(item.get_id());
+        std::cout << "Applying life potion::LifeNow::" << get_life() << std::endl;
     } 
 }
 
 void Character::equip_mana_potion(Potion& item) {
     int recovery = item.get_recovery_points();
-    if (inventory.has(item.get_id())) {
+    if (inventory.has(item.get_id()) && !mana.is_full()) {
         mana.add(recovery);
+        inventory.remove_item(item.get_id());
+        std::cout << "Applying mana potion::ManaNow::" << get_mana() << std::endl;
     } 
 }
 
