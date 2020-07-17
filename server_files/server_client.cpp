@@ -8,7 +8,7 @@
 SrvClient::SrvClient(
     uint16_t client_id, 
     Socket skt, 
-    Queue &receiversQueue) : client_id(client_id), 
+    Queue_2 &receiversQueue) : client_id(client_id), 
                             skt(skt),
                             receiversQueue(receiversQueue),
                             active(true) {

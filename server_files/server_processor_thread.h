@@ -8,6 +8,7 @@
 #include "../common_files/common_queue.h"
 #include "../common_files/common_queue.h"
 #include "../common_files/common_protocol_codes.h"
+#include "../common_files/common_message_to_server.h"
 
 #include "server_protocol_translator.h"
 #include "server_client.h"
@@ -17,7 +18,7 @@
 
 class ServerProcessorThread: public Thread {
 
-    Queue &receiversQueue;
+    Queue_2 &receiversQueue;
     ClientManager &clientManager;
     CollisionInfo &collisionInfo;
     Json::Value &config;
@@ -27,7 +28,7 @@ class ServerProcessorThread: public Thread {
     void addingHardcodedItems(ServerWorld &world);
 
     public:
-        ServerProcessorThread(Queue &receiversQueue, ClientManager &clientManager, CollisionInfo &collisionInfo, Json::Value &config);
+        ServerProcessorThread(Queue_2 &receiversQueue, ClientManager &clientManager, CollisionInfo &collisionInfo, Json::Value &config);
 
         virtual void run() override;
 

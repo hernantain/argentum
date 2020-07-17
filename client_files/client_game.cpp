@@ -20,6 +20,8 @@
 
 #include <msgpack.hpp>
 
+#include "../common_files/common_message_to_server.h"
+
 
 Game::Game(
 	uint8_t player_race, 
@@ -67,8 +69,18 @@ Map Game::loadMap() {
 
 
 ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
-	ProtocolCharacter character(this->player_id, this->player_race, this->player_class);
-	ProtocolMessage msg(PROTOCOL_CREATE_CHARACTER, this->player_id, character);
+	// ProtocolCharacter character(this->player_id, this->player_race, this->player_class);
+	// ProtocolMessage msg(PROTOCOL_CREATE_CHARACTER, this->player_id, character);
+
+	/**
+	 * 
+	 */
+
+	std::vector<int16_t> args;
+	args.push_back(this->player_race);
+	args.push_back(this->player_class);
+	MessageToServer msg(PROTOCOL_CREATE_CHARACTER, this->player_id, args);
+
 
 	msgpack::sbuffer buffer;
 	msgpack::packer<msgpack::sbuffer> pk(&buffer);
@@ -105,8 +117,6 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 	for (unsigned int i = 0; i < rec_msg.items.size(); ++i)
 		clientWorld.add_item(rec_msg.items[i]);
 
-	// std::cout << "CANTIDAD DE ITEMS: " << rec_msg.items.size() << std::endl;
-
 	return clientWorld;
 }
 
@@ -114,6 +124,8 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 
 void Game::run() {
 	
+	using namespace std::chrono;
+
 	skt.connect_to("localhost", "8080");
 	skt >> this->player_id;
 	Map map = this->loadMap();
@@ -133,8 +145,8 @@ void Game::run() {
 	receiver->start();
 
 	int it = 0;	
-	// auto rate = std::chrono::duration<double, std::milli>(float(1000)/60);
-	// auto t_start = std::chrono::high_resolution_clock::now();
+	// duration<double, std::milli> rate(float(1000)/60);
+	// system_clock::time_point t1 = system_clock::now();
 
 	SDL_Event e;
 	// Event handler
@@ -142,9 +154,14 @@ void Game::run() {
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;
-				ProtocolMessage msg;
-				msg.id_message = PROTOCOL_LOG_OFF;
-				msg.id_player = this->player_id;
+				// ProtocolMessage msg;
+				// msg.id_message = PROTOCOL_LOG_OFF;
+				// msg.id_player = this->player_id;
+				
+				std::vector<int16_t> args;
+				args.push_back(0);
+				MessageToServer msg(PROTOCOL_LOG_OFF, this->player_id, args);
+				
 				std::cout << "POR MANDAR ULTIMO MSG EN GAME" << std::endl;
 				queue.push(msg);
 				break;
@@ -165,7 +182,7 @@ void Game::run() {
 					if (itemId < 0)
 						continue;
 
-					ProtocolMessage msg = world.player_handle_equip_event(this->player_id, itemId);
+					MessageToServer msg = world.player_handle_equip_event(this->player_id, itemId);
 					queue.push(msg);
 					continue;
 				}
@@ -174,7 +191,7 @@ void Game::run() {
 				continue;
 
 			}
-			ProtocolMessage msg = world.player_handle_event(player_id, e, camera);
+			MessageToServer msg = world.player_handle_event(player_id, e, camera);
 			queue.push(msg);
 		}
 
@@ -190,19 +207,25 @@ void Game::run() {
 		
 		SDL_RenderPresent(this->gRenderer); 
 				
-		// auto t_end = std::chrono::high_resolution_clock::now();
-		// auto rest = rate - (t_end - t_start);
-		// std::cout << std::chrono::duration<double, std::milli>((t_end - t_start)).count() << " ms - " << rate.count() << std::endl;
+		// system_clock::time_point t2 = system_clock::now();
+		// duration<double,std::milli>rest = rate - duration_cast<std::chrono::duration<double,std::milli>>(t2 - t1);
+		
+		// std::cout << "REST: " << rest.count() << " - RATE: " << rate.count() << std::endl;
+		
 		// if (rest.count() < 0) {
-		// 	auto behind = std::chrono::duration<double, std::milli>(-rest);
-		// 	auto mod = std::chrono::duration<double, std::milli>(fmod(float(behind.count()), float(rate.count())));
-		// 	auto lost = std::chrono::duration<double, std::milli>(behind - mod);
-		// 	// it += floor(lost / rate);
+		// 	std::cout << "Es negativo" << std::endl;
+		// 	duration<double, std::milli> behind = duration<double, std::milli>(-rest);
+		// 	std::cout << "BEHIND: " << behind.count() << std::endl;
+		// 	duration<double, std::milli> rest = rate - duration<double, std::milli>(fmod(behind.count(), rate.count()));
+		// 	std::cout << "NEW REST: " << rest.count() << std::endl;
+		// 	duration<double, std::milli> lost = behind + rest;
+		// 	std::cout << "LOST: " << lost.count() << std::endl;
+		// 	duration<double, std::milli> t1 =  duration_cast<std::chrono::duration<double,std::milli>>(t1) + lost;
+		//  	it += (int) floor(lost.count() / rate.count());
 		// }
-		// //std:: cout << int(rest.count()) << std::endl;
-		// //std::this_thread::sleep_for(std::chrono::milliseconds(int(rest.count())));
-		// // t_start = t_start. + rate.count();
-		// // t_start = std::chrono::high_resolution_clock::now();
+		// std::this_thread::sleep_for(duration<double, std::milli>(rest.count()));
+		// duration<double, std::milli> t1 =  duration_cast<std::chrono::duration<double,std::milli>>(t1) + rate;
+		// std::cout << "T1 DSP: " << t1.count() << std::endl;
 		it++;
 	}
 

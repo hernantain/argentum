@@ -9,7 +9,7 @@
 
 
 ServerProcessorThread::ServerProcessorThread(
-    Queue &receiversQueue,
+    Queue_2 &receiversQueue,
     ClientManager &clientManager,
     CollisionInfo &collisionInfo,
     Json::Value &config) : receiversQueue(receiversQueue),
@@ -89,9 +89,9 @@ void ServerProcessorThread::run() {
     this->addingHardcodedItems(serverWorld); // HAY QUE SACAR
     
     while (running) {
-        ProtocolMessage received_msg = this->receiversQueue.pop();
+        MessageToServer received_msg = this->receiversQueue.pop();
         protocol_translator.translate(received_msg, serverWorld);
-        if (received_msg.id_message != NOTHING)
+        if (received_msg.event_id != NOTHING)
            this->clientManager.broadcastMessage(received_msg);
     }
 }

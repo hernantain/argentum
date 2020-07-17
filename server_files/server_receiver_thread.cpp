@@ -7,7 +7,7 @@
 SrvClientReceiverThread::SrvClientReceiverThread(
     uint16_t client_id, 
     Socket &skt, 
-    Queue &receiversQueue) : client_id(client_id),
+    Queue_2 &receiversQueue) : client_id(client_id),
                              skt(skt),
                              receiversQueue(receiversQueue),
                              running(true) {}
@@ -18,8 +18,8 @@ SrvClientReceiverThread::SrvClientReceiverThread(
 void SrvClientReceiverThread::run() {
 
     while (running) {
-        ProtocolMessage msg = this->receive_msg();
-        if (msg.id_message == 67) {
+        MessageToServer msg = this->receive_msg();
+        if (msg.event_id == 67) {
             running = false;
             std::cout << "LLEGO LOG OFF" << std::endl;
         }
@@ -32,9 +32,9 @@ void SrvClientReceiverThread::run() {
 
 
 
-ProtocolMessage SrvClientReceiverThread::receive_msg() {
+MessageToServer SrvClientReceiverThread::receive_msg() {
     // std::cout << "Recibiendo Mensaje" << std::endl;
-    ProtocolMessage msg;
+    MessageToServer msg;
     msgpack::unpacker pac;
     skt >> pac;
     msgpack::object_handle oh;

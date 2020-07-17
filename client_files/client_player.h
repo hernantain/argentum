@@ -10,6 +10,7 @@
 #include "../common_files/common_protocol_message.h"
 #include "../common_files/common_protocol_character.h"
 #include "../common_files/common_protocol_codes.h"
+#include "../common_files/common_message_to_server.h"
 
 #include <vector>
 #include <stdint.h>
@@ -31,15 +32,17 @@ class Player: public Drawable {
         EquippedPlayer* equippedPlayer;
         Ghost* ghost;
 
-    int16_t getEventId(int &itemId);
+
+    void getPosArgs(std::vector<int16_t> &args);
+    int16_t getEventId(int &itemId, std::vector<int16_t> &args);
     void load_helmets();
     void load_weapons();
     void load_shields();
     public:
         Player(int16_t bodyPosX, int16_t bodyPosY, int16_t headPosX, int16_t headPosY, uint16_t id, SDL_Renderer* gRenderer);
 
-		ProtocolMessage handleEvent( SDL_Event& e, SDL_Rect &camera );
-        ProtocolMessage handleEquipEvent(int &itemId);
+		MessageToServer handleEvent( SDL_Event& e, SDL_Rect &camera );
+        MessageToServer handleEquipEvent(int &itemId);
 
 		void render(SDL_Rect &camera, int &it);
 

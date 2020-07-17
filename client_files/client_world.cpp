@@ -153,7 +153,7 @@ Item* ClientWorld::update_items(ProtocolMessage &msg) {
 }
 
 
-ProtocolMessage ClientWorld::player_handle_equip_event(uint16_t &player_id, int &itemId) {
+MessageToServer ClientWorld::player_handle_equip_event(uint16_t &player_id, int &itemId) {
     std::unique_lock<std::mutex> lock(m);
     return std::move(players[player_id]->handleEquipEvent(itemId));
 }
@@ -232,7 +232,7 @@ void ClientWorld::remove_player(uint16_t id) {
 
 // HANDLE EVENT PLAYER
 
-ProtocolMessage ClientWorld::player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera) {
+MessageToServer ClientWorld::player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera) {
     std::unique_lock<std::mutex> lock(m);
     return std::move(this->players[player_id]->handleEvent(e, camera));
 }

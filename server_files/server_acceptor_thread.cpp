@@ -22,7 +22,7 @@ AcceptorThread::AcceptorThread(
 void AcceptorThread::run() {
 
     Socket client_skt; 
-    Queue receiversQueue;
+    Queue_2 receiversQueue;
 
     MapInfo mapInfo;
     CollisionInfo collisionInfo = mapInfo.load();
@@ -32,7 +32,7 @@ void AcceptorThread::run() {
     pk.pack(mapInfo);
 
 
-    // // PROCCESSOR THREAD
+    // PROCCESSOR THREAD
     Thread* processorThread = new ServerProcessorThread(receiversQueue, clientManager, collisionInfo, config);
     processorThread->start(); 
 
