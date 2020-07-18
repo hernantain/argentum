@@ -3,6 +3,7 @@
 
 #define DROP_OFFSET_TOLERANCE 30
 #define NOT_FOUND -1
+#define DEFAULT_EQUIPMENT 0
 
 Inventory::Inventory(int size) {
     this->max_size = size;
@@ -81,6 +82,7 @@ void Inventory::drop_gold(int16_t posX, int16_t posY, int gold, std::vector<Item
 }
 
 bool Inventory::has(int16_t id) {
+    if (id == DEFAULT_EQUIPMENT) return true;
     std::vector<Item>::iterator it = items.begin();
     for (; it != items.end(); ++it) {
         if (it->get_id() == id) {

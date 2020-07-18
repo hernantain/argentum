@@ -4,6 +4,8 @@
 #include "server_world.h"
 #include "server_protocol_translator.h"
 
+#define DEFAULT_EQUIPMENT 0
+
 ProtocolTranslator::ProtocolTranslator(
     Json::Value &config, 
     CollisionInfo &collisionInfo) : config(config),
@@ -53,33 +55,67 @@ void ProtocolTranslator::equip_potion_event(ProtocolMessage &msg, ServerWorld &w
 }
 
 void ProtocolTranslator::equip_shield_event(ProtocolMessage &msg, ServerWorld &world) {
-
     uint8_t shield_id = msg.characters[0].shieldId;
-    Shield shield = ShieldFactory::make_shield(shield_id, config);
+    int16_t current_shield = world.characters[msg.id_player]->current_shield();
+    Shield shield;
+    if (shield_id == current_shield) {
+        shield = ShieldFactory::make_shield(DEFAULT_EQUIPMENT, config);
+        msg.id_message = PROTOCOL_SHIELD_DEFAULT;
+        std::cout << "EquipDefaultShie::" << std::endl;
+    }
+    else {
+        shield = ShieldFactory::make_shield(shield_id, config);
+        msg.id_message = PROTOCOL_SHIELD_CONFIRM;
+    }
     world.characters[msg.id_player]->equip_shield(shield);
-    msg.id_message = PROTOCOL_SHIELD_CONFIRM;
 }
 
 void ProtocolTranslator::equip_weapon_event(ProtocolMessage &msg, ServerWorld &world) {
     uint8_t weapon_id = msg.characters[0].weaponId;
-    Weapon weapon = WeaponFactory::make_weapon(weapon_id, config);
+    int16_t current_weapon = world.characters[msg.id_player]->current_weapon();
+    Weapon weapon;
+    if (weapon_id == current_weapon) {
+        weapon = WeaponFactory::make_weapon(DEFAULT_EQUIPMENT, config);
+        msg.id_message = PROTOCOL_WEAPON_DEFAULT;
+        std::cout << "EquipDefaultWep::" << std::endl;
+    } else {
+        weapon = WeaponFactory::make_weapon(weapon_id, config);
+        msg.id_message = PROTOCOL_WEAPON_CONFIRM;
+    }
     world.characters[msg.id_player]->equip_weapon(weapon);
-    msg.id_message = PROTOCOL_WEAPON_CONFIRM;
 }
 
 void ProtocolTranslator::equip_armor_event(ProtocolMessage &msg, ServerWorld &world) {
     uint8_t armor_id = msg.characters[0].armorId;
-    Armor armor = ArmorFactory::make_armor(armor_id, config);
+    int16_t current_armor = world.characters[msg.id_player]->current_armor();
+    Armor armor;
+    if (armor_id == current_armor) {
+        armor = ArmorFactory::make_armor(DEFAULT_EQUIPMENT, config);
+        msg.id_message = PROTOCOL_ARMOR_DEFAULT;
+        std::cout << "EquipDefaultArmor::" << std::endl;
+    }
+    else {
+        armor = ArmorFactory::make_armor(armor_id, config);
+        msg.id_message = PROTOCOL_ARMOR_CONFIRM;
+    }
     world.characters[msg.id_player]->equip_armor(armor);
-    msg.id_message = PROTOCOL_ARMOR_CONFIRM;
 }
 
 
 void ProtocolTranslator::equip_helmet_event(ProtocolMessage &msg, ServerWorld &world) {
     uint8_t helmet_id = msg.characters[0].helmetId;
-    Helmet helmet = HelmetFactory::make_helmet(helmet_id, config);
+    int16_t current_helmet = world.characters[msg.id_player]->current_helmet();
+    Helmet helmet;
+    if (helmet_id == current_helmet) {
+        helmet = HelmetFactory::make_helmet(DEFAULT_EQUIPMENT, config);
+        msg.id_message = PROTOCOL_HELMET_DEFAULT;
+        std::cout << "EquipDefaultHelmet::" << std::endl;
+    }
+    else {
+        helmet = HelmetFactory::make_helmet(helmet_id, config);
+        msg.id_message = PROTOCOL_HELMET_CONFIRM;
+    }
     world.characters[msg.id_player]->equip_helmet(helmet);
-    msg.id_message = PROTOCOL_HELMET_CONFIRM;
 }
 
 void ProtocolTranslator::resurrect_event(ProtocolMessage &msg, ServerWorld &world) {
@@ -173,7 +209,6 @@ void ProtocolTranslator::attack_event(ProtocolMessage &msg, ServerWorld &world) 
         if (!other->is_alive()) {
             std::cout << "ITEMS ANTES: " << world.items.size() << std::endl;
             other->drop_items(world.items);
-            // int gold = other->drop_gold();
             std::cout << "ITEMS DESPUES: " << world.items.size() << std::endl;
             msg.id_message = PROTOCOL_KILL_CONFIRM;
         }

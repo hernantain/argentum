@@ -8,6 +8,7 @@ Armor ArmorFactory::make_armor(const uint8_t armor_id, Json::Value& config) {
     switch (armor_id) {
         case LEATHER_ARMOR: return LeatherArmor(config);
         case PLATE_ARMOR: return PlateArmor(config);
+        case BLUE_ROBE: return BlueRobe(config);
     }
-    return BlueRobe(config);
+    return DefaultArmor();
 }

@@ -3,6 +3,7 @@
 #include "client_receiver_thread.h"
 #include "client_drawable.h"
 
+#define DEFAULT_EQUIPMENT 0
 
 ClientReceiverThread::ClientReceiverThread(
     Socket &skt, 
@@ -45,6 +46,10 @@ void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     if (msg.id_message == PROTOCOL_ARMOR_CONFIRM) this->process_equip_armor(msg);
     if (msg.id_message == PROTOCOL_WEAPON_CONFIRM) this->process_equip_weapon(msg);
     if (msg.id_message == PROTOCOL_SHIELD_CONFIRM) this->process_equip_shield(msg);
+    if (msg.id_message == PROTOCOL_HELMET_DEFAULT) this->process_default_helmet(msg);
+    if (msg.id_message == PROTOCOL_ARMOR_DEFAULT) this->process_default_armor(msg);
+    if (msg.id_message == PROTOCOL_WEAPON_DEFAULT) this->process_default_weapon(msg);
+    if (msg.id_message == PROTOCOL_SHIELD_DEFAULT) this->process_default_shield(msg);
     if (msg.id_message == PROTOCOL_EQUIP_POTION_CONFIRM) this->process_equip_potion(msg);
     if (msg.id_message == PROTOCOL_MEDITATE_CONFIRM) this->process_meditation(msg);
     if (msg.id_message == PROTOCOL_TAKE_ITEM_CONFIRM) this->process_take_item(msg);
@@ -87,7 +92,35 @@ void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     bool is_alive = msg.characters[i].alive;
     if (i != -1 && is_alive)
         world.player_set_helmet(msg.id_player, msg.characters[i].helmetId);
-    
+}
+
+void ClientReceiverThread::process_default_armor(ProtocolMessage &msg) {
+    int i = msg.find(msg.id_player);
+    bool is_alive = msg.characters[i].alive;
+    if (i != -1 && is_alive)
+        world.player_set_armor(msg.id_player, DEFAULT_EQUIPMENT);
+}
+
+void ClientReceiverThread::process_default_shield(ProtocolMessage &msg) {
+    int i = msg.find(msg.id_player);
+    bool is_alive = msg.characters[i].alive;
+    if (i != -1 && is_alive)
+        world.player_set_shield(msg.id_player, DEFAULT_EQUIPMENT);
+}
+
+void ClientReceiverThread::process_default_weapon(ProtocolMessage &msg) {
+    std::cout << "EQUIP WEAPON" << std::endl;
+    int i = msg.find(msg.id_player);
+    bool is_alive = msg.characters[i].alive;
+    if (i != -1 && is_alive)
+        world.player_set_weapon(msg.id_player, DEFAULT_EQUIPMENT);
+}
+
+void ClientReceiverThread::process_default_helmet(ProtocolMessage &msg) {
+    int i = msg.find(msg.id_player);
+    bool is_alive = msg.characters[i].alive;
+    if (i != -1 && is_alive)
+        world.player_set_helmet(msg.id_player, DEFAULT_EQUIPMENT);
 }
 
 void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {

@@ -43,6 +43,18 @@ public:
     // Devuelve verdadero si el arma equipada es de rango, falso si no
     bool is_weapon_ranged();
 
+    // Devuelve el arma actual equipada, -1 si es la default
+    int16_t current_weapon();
+
+    // Devuelve el escudo actual equipada, -1 si es la default
+    int16_t current_shield();
+
+    // Devuelve la armadura actual equipada, -1 si es la default
+    int16_t current_armor();
+
+    // Devuelve el casco actual equipada, -1 si es la default
+    int16_t current_helmet();
+
     // Obtiene el daño del arma equipada si la hubiere
     int get_equipment_defense();
 };

@@ -21,6 +21,10 @@
 #include "server_potion.h"
 #include "server_movement.h"
 #include "server_attackable.h"
+#include "server_default_armor.h"
+#include "server_default_weapon.h"
+#include "server_default_helmet.h"
+#include "server_default_shield.h"
 
 #include "../common_files/common_collision_info.h"
 #include "../common_files/common_protocol_character.h"
@@ -108,6 +112,9 @@ public:
     // Resucita al personaje en cuestion
     void resurrect();
 
+    // Restablece el equipamiento al default cuando se resucita un personaje
+    void restore_equipment();
+
     // Restablece el nivel maximo de mana y vida del personaje
     void restore_life_and_mana();
 
@@ -182,6 +189,18 @@ public:
 
     // Equipa un casco
     void equip_helmet(Helmet& item);
+
+    // Devuelve el id del arma actual, -1 si es la default
+    int16_t current_weapon();
+
+    // Devuelve el id de la armadura actual, -1 si es la default
+    int16_t current_armor();
+
+    // Devuelve el id del escudo actual, -1 si es el default
+    int16_t current_shield();
+
+    // Devuelve el id del casco actual, -1 si es el default
+    int16_t current_helmet();
 
     // Ataca a un NPC o a un personaje
     void attack(Attackable& other) override;

@@ -5,6 +5,7 @@
 #include "server_iron_helmet.h"
 #include "server_hood.h"
 #include "server_magic_hat.h"
+#include "server_default_helmet.h"
 
 /* Clase que funciona como factory para los distintos tipos de cascos de la aplicacion */
 class HelmetFactory {
