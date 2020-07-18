@@ -50,8 +50,9 @@ void ProtocolTranslator::equip_potion_event(MessageToServer& msg, ProtocolMessag
         ManaPotion potion(config);
         world.characters[msg.player_id]->equip_mana_potion(potion);
     }
-    this->get_world(clientMessage, world);
+    clientMessage.id_player = msg.player_id;
     clientMessage.id_message = PROTOCOL_EQUIP_POTION_CONFIRM;
+    this->get_world(clientMessage, world);
 }
 
 void ProtocolTranslator::equip_shield_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
@@ -68,6 +69,7 @@ void ProtocolTranslator::equip_shield_event(MessageToServer& msg, ProtocolMessag
         clientMessage.id_message = PROTOCOL_SHIELD_CONFIRM;
     }
     world.characters[msg.player_id]->equip_shield(shield);
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -84,6 +86,7 @@ void ProtocolTranslator::equip_weapon_event(MessageToServer& msg, ProtocolMessag
         clientMessage.id_message = PROTOCOL_WEAPON_CONFIRM;
     }
     world.characters[msg.player_id]->equip_weapon(weapon);
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -102,6 +105,7 @@ void ProtocolTranslator::equip_armor_event(MessageToServer& msg, ProtocolMessage
     }
     std::cout << "ARMOR A EQUIPAR: " << (int) armor_id << std::endl;
     world.characters[msg.player_id]->equip_armor(armor);
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -120,6 +124,7 @@ void ProtocolTranslator::equip_helmet_event(MessageToServer& msg, ProtocolMessag
         clientMessage.id_message = PROTOCOL_HELMET_CONFIRM;
     }
     world.characters[msg.player_id]->equip_helmet(helmet);
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 

@@ -180,7 +180,7 @@ void Player::set_armor(int armorId) {
 	} else if (armorId == 3) { 
 		this->playerPicture->set_clothes(this->clothes[3]);
 	} else {
-		this->playerPicture->set_clothes(NULL);
+		this->playerPicture->set_clothes(this->clothes[0]);
 	}
 }
 
