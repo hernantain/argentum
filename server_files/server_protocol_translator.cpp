@@ -46,7 +46,7 @@ void ProtocolTranslator::equip_shield_event(MessageToServer &msg, ProtocolMessag
     
     clientMessage.id_message = PROTOCOL_SHIELD_CONFIRM;
     clientMessage.id_player = msg.player_id;
-    this->get_world(clientMessage, world);
+    // this->get_world(clientMessage, world);
 }
 
 void ProtocolTranslator::equip_weapon_event(MessageToServer &msg, ProtocolMessage &clientMessage, ServerWorld &world) {
@@ -56,7 +56,7 @@ void ProtocolTranslator::equip_weapon_event(MessageToServer &msg, ProtocolMessag
     
     clientMessage.id_message = PROTOCOL_WEAPON_CONFIRM;
     clientMessage.id_player = msg.player_id;
-    this->get_world(clientMessage, world);
+    // this->get_world(clientMessage, world);
 }
 
 void ProtocolTranslator::equip_armor_event(MessageToServer &msg, ProtocolMessage &clientMessage, ServerWorld &world) {
@@ -66,7 +66,7 @@ void ProtocolTranslator::equip_armor_event(MessageToServer &msg, ProtocolMessage
 
     clientMessage.id_message = PROTOCOL_ARMOR_CONFIRM;
     clientMessage.id_player = msg.player_id;
-    this->get_world(clientMessage, world);
+    // this->get_world(clientMessage, world);
 }
 
 
@@ -75,6 +75,8 @@ void ProtocolTranslator::equip_helmet_event(MessageToServer &msg, ProtocolMessag
     Helmet helmet = HelmetFactory::make_helmet(helmet_id, config);
     world.characters[msg.player_id]->equip_helmet(helmet);
     
+    std::cout << "helmet ID: " << (int) helmet_id << std::endl;
+
     clientMessage.id_message = PROTOCOL_HELMET_CONFIRM;
     clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);

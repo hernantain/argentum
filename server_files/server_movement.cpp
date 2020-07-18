@@ -186,7 +186,6 @@ bool Movement::check_map_collision() {
     if (tile == 0)
         return false;
 
-    std::cout << "TILE ES: " << tile << std::endl;
     int pos = collisionInfo.find(tile); //  tiles[tile];
     if (pos == -1)
         return false; // shouldn't happen
@@ -195,7 +194,6 @@ bool Movement::check_map_collision() {
     int collisionX = offsetX * collisionInfo.get_tile_width() + collisionInfo.tiles[pos].x;
     int collisionY = offsetY * collisionInfo.get_tile_height() + collisionInfo.tiles[pos].y;
 
-    std::cout << "BODY POS Y ES ::: " << this->bodyPosY << std::endl;
     if( this->bodyPosY + 31 <= collisionY ) return false;
     if( this->bodyPosY >= collisionY + collisionInfo.tiles[pos].h ) return false;
     if( this->bodyPosX + 21 <= collisionX ) return false;

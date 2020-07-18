@@ -84,6 +84,7 @@ void ClientReceiverThread::process_resurrection(ProtocolMessage &msg) {
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
+    std::cout << "HELMET ID: " << (int) msg.characters[i].helmetId << std::endl;
     if (i != -1 && is_alive)
         world.player_set_helmet(msg.id_player, msg.characters[i].helmetId);
     

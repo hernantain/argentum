@@ -33,7 +33,6 @@ int CollisionInfo::get_map_width() const {
 
 
 int CollisionInfo::get_map_height() const {
-    std::cout << "ES: " << mapheight * tileheight << std::endl;
     return mapheight * tileheight; 
 }
 

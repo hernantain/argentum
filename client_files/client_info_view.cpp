@@ -19,6 +19,13 @@ InfoView::InfoView(
     this->bgdColor = {20, 11, 11, 0xFF};
     this->expColor = {240, 255, 26, 0xFF};
 
+    this->currentMana = 0;
+    this->maxMana = 0;
+    this->currentExp = 0;
+    this->maxExp = 0;
+    this->currentLife = 0;
+    this->maxLife = 0;
+
     this->adjust();
 
     this->gRenderer = gRenderer;
