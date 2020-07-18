@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 #include <stdint.h>
@@ -14,6 +15,7 @@
 #include "client_player.h"
 #include "client_world.h"
 #include "client_info_view.h"
+#include "client_sound_manager.h"
 
 #include "../common_files/common_sockets.h"
 #include "../common_files/common_queue.h"

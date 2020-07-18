@@ -25,9 +25,9 @@ void SrvClient::send_message(ProtocolMessage &updated_msg) {
     if (updated_msg.id_message == 68 && updated_msg.id_player == this->client_id)
         this->active = false;
         
-    std::cout << "EMPEZANDO EL BROADCAST" << std::endl;
-    for (unsigned int i = 0; i < updated_msg.characters.size(); ++i) {
-        std::cout << std::endl;
+    // std::cout << "EMPEZANDO EL BROADCAST" << std::endl;
+    // for (unsigned int i = 0; i < updated_msg.characters.size(); ++i) {
+    //     std::cout << std::endl;
         // std::cout << "ENVIANDO --> PROT CHARACTER ID " << (int) updated_msg.characters[i].id << std::endl;
         // std::cout << "ENVIANDO --> PROT CHARACTER ID RACE " << (int) updated_msg.characters[i].id_race << std::endl;
         // std::cout << "ENVIANDO --> PROT CHARACTER ID CLASE " << (int) updated_msg.characters[i].id_class << std::endl;
@@ -42,8 +42,8 @@ void SrvClient::send_message(ProtocolMessage &updated_msg) {
         // std::cout << "ENVIANDO --> PROT CHARACTER MAX EXP " << updated_msg.characters[i].max_experience << std::endl;
         // std::cout << "ENVIANDO --> PROT CHARACTER ALIVE " << (int) updated_msg.characters[i].alive << std::endl;
         // std::cout << std::endl;
-        std::cout << "ENVIANDO --> PROT ARMOR " << (int) updated_msg.characters[i].armorId << std::endl;
-    }    
+    //     std::cout << "ENVIANDO --> PROT ARMOR " << (int) updated_msg.characters[i].armorId << std::endl;
+    // }    
     this->messageQueue.push(updated_msg);
 }
 
