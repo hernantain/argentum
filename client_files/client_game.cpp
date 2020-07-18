@@ -69,13 +69,6 @@ Map Game::loadMap() {
 
 
 ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
-	// ProtocolCharacter character(this->player_id, this->player_race, this->player_class);
-	// ProtocolMessage msg(PROTOCOL_CREATE_CHARACTER, this->player_id, character);
-
-	/**
-	 * 
-	 */
-
 	std::vector<int16_t> args;
 	args.push_back(this->player_race);
 	args.push_back(this->player_class);
@@ -121,6 +114,8 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 void Game::run() {
 	
 	// using namespace std::chrono;
+	SoundManager sm;
+	sm.play_pause_music();
 
 	skt.connect_to("localhost", "8080");
 	skt >> this->player_id;
@@ -133,7 +128,7 @@ void Game::run() {
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
 
-	Thread* receiver = new ClientReceiverThread(skt, world, camera, infoView, player_id);
+	Thread* receiver = new ClientReceiverThread(skt, world, camera, infoView, sm, player_id);
 	receiver->start();
 
 	int it = 0;	
@@ -176,6 +171,9 @@ void Game::run() {
 			} else if (e.type == SDL_MOUSEMOTION) {
 				continue;
 
+			} else if ((e.type == SDL_KEYDOWN) && (e.key.keysym.sym == SDLK_0)) {
+				sm.play_pause_music();
+				continue;
 			}
 			MessageToServer msg = world.player_handle_event(player_id, e, camera);
 			queue.push(msg);
@@ -191,6 +189,8 @@ void Game::run() {
 		world.render(this->player_id, camera, it);
 		map.renderSecondLayer(camera);
 		
+		sm.play_sound();
+
 		SDL_RenderPresent(this->gRenderer); 
 				
 		// system_clock::time_point t2 = system_clock::now();
@@ -260,6 +260,11 @@ bool Game::init() {
 		return false;
 	}
 
+	if( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		return false;
+	}
+
 	return true;
 }
 
@@ -287,6 +292,8 @@ Game::~Game() {
 	SDL_DestroyRenderer(this->gRenderer);
 	this->gRenderer = NULL;
 
+	TTF_Quit();
 	IMG_Quit(); //Quit SDL subsystems
 	SDL_Quit();
+	Mix_Quit();	
 }
