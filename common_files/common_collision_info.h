@@ -9,9 +9,6 @@ struct CollisionTile {
     int x, y, w, h, id;
 
     CollisionTile();
-
-    // CollisionTile(int x, int y, int w, int h);
-
 };
 
 
@@ -23,7 +20,6 @@ class CollisionInfo {
     public:
         std::vector<int> layer1;
         std::vector<int> layer2;
-        // std::map<int, CollisionTile> tiles;
         std::vector<CollisionTile> tiles;
     
         CollisionInfo(int tilewidth, int tileheight, int mapwidth, int mapheight);

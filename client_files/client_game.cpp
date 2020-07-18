@@ -97,11 +97,7 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
     
 	ClientWorld clientWorld(gRenderer, itemViewer);
 
-	// std::cout << "Tamanio mundo: " << rec_msg.characters.size() << std::endl;
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
-		// std::cout << "ID PLAYER: " << (int) rec_msg.characters[i].id << std::endl;
-		// std::cout << "ID RAZA PLAYER: " << (int) rec_msg.characters[i].id_race << std::endl;
-		// std::cout << "ID  CLASE PLAYER: " << (int) rec_msg.characters[i].id_class << std::endl;
 		if (rec_msg.characters[i].id == this->player_id) {
 			infoView.set_life(rec_msg.characters[i].life, rec_msg.characters[i].max_life);
 			infoView.set_mana(rec_msg.characters[i].mana, rec_msg.characters[i].max_mana);
@@ -124,7 +120,7 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 
 void Game::run() {
 	
-	using namespace std::chrono;
+	// using namespace std::chrono;
 
 	skt.connect_to("localhost", "8080");
 	skt >> this->player_id;
@@ -133,10 +129,6 @@ void Game::run() {
 	ItemViewer itemViewer(gRenderer);
 	InfoView infoView(this->gRenderer, inventory, itemViewer);
 	ClientWorld world = this->loadWorld(infoView, itemViewer);
-
-	std::cout << "TAMANIO MUNDO EN GAME RUN: " << world.players.size() << std::endl;
-	std::cout << "TAMANIO MUNDO EN GAME RUN: " << world.items.size() << std::endl;
-
 
 	Thread* sender = new SenderThread(skt, queue);
 	sender->start();
@@ -153,16 +145,10 @@ void Game::run() {
 	while(this->running) {	
 		while( SDL_PollEvent( &e ) != 0 ) {
 			if( e.type == SDL_QUIT ) {
-				this->running = false;
-				// ProtocolMessage msg;
-				// msg.id_message = PROTOCOL_LOG_OFF;
-				// msg.id_player = this->player_id;
-				
+				this->running = false;				
 				std::vector<int16_t> args;
-				args.push_back(0);
+				args.push_back(0); // no va
 				MessageToServer msg(PROTOCOL_LOG_OFF, this->player_id, args);
-				
-				std::cout << "POR MANDAR ULTIMO MSG EN GAME" << std::endl;
 				queue.push(msg);
 				break;
 

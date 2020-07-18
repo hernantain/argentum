@@ -13,9 +13,6 @@ CollisionInfo::CollisionInfo(int tilewidth, int tileheight, int mapwidth, int ma
 
 CollisionTile::CollisionTile() {}
 
-// CollisionTile::CollisionTile(int x, int y, int w, int h) : x(x), y(y), w(w), h(h) {}
-
-
 CollisionInfo::CollisionInfo(CollisionInfo&& other) {
     this->tilewidth = std::move(other.tilewidth);
     this->tileheight = std::move(other.tileheight);
