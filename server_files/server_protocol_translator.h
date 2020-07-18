@@ -66,7 +66,7 @@ private:
     void drop_item_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para equiparse una pocion
-    void equip_potion_event(ProtocolMessage& msg, ServerWorld &world);
+    void equip_potion_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
     // Evento para equiparse un escudo
     void equip_shield_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);

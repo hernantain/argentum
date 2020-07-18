@@ -127,6 +127,7 @@ void ClientReceiverThread::process_default_helmet(ProtocolMessage &msg) {
 void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
+    std::cout << "ARMOR ID: " << (int) msg.characters[i].armorId << std::endl;
     if (i != -1 && is_alive)
         world.player_set_armor(msg.id_player, msg.characters[i].armorId);
 }
@@ -134,7 +135,7 @@ void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
 void ClientReceiverThread::process_equip_shield(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
-    if (i != -1 && is_alive)
+    if (i != -1 && is_alive)    
         world.player_set_shield(msg.id_player, msg.characters[i].shieldId);
 }
 

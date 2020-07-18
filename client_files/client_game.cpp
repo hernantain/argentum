@@ -164,7 +164,7 @@ void Game::run() {
 					std::cout << "INVENTORY_EVENT" << std::endl;
 					int clickX = x - inventory.x;
 					int itemId = infoView.handle_click(clickX, y); 
-					std::cout << itemId << std::endl;
+					std::cout << "Seleccionando item: " << itemId << std::endl;
 					if (itemId < 0)
 						continue;
 
