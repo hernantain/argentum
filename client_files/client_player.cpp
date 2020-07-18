@@ -15,6 +15,7 @@
 #include "client_player.h"
 #include <iostream>
 
+#include "../common_files/common_message_to_server.h"
 
 Player::Player(
     int16_t bodyPosX, 
@@ -30,6 +31,7 @@ Player::Player(
 	this->headOffsetX = headPosX - bodyPosX;
 	this->headOffsetY = headPosY - bodyPosY;
 	this->alive = true;
+	this->orientation = STANDING;
 	this->armorId = 0;
 	this->weaponId = 0;
 	this->shieldId = 0;
@@ -192,26 +194,31 @@ void Player::set_shield(int shieldId) {
 	}
 }
 
-ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
+MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 
+	std::vector<int16_t> args;
 	int event_id = 1;
 	int x, y;
 	if( e.type == SDL_KEYDOWN ) {
 		switch( e.key.keysym.sym ) {
             case SDLK_UP: 
 				event_id = PROTOCOL_MOVE_TOP;
+				this->getPosArgs(args);
 				break;
 
             case SDLK_DOWN:
 				event_id = PROTOCOL_MOVE_DOWN;
+				this->getPosArgs(args);
 				break;
 
             case SDLK_LEFT:
-				event_id = PROTOCOL_MOVE_LEFT; 
+				event_id = PROTOCOL_MOVE_LEFT;
+				this->getPosArgs(args); 
 				break;
 
             case SDLK_RIGHT:
 				event_id = PROTOCOL_MOVE_RIGHT;
+				this->getPosArgs(args);
 				break;
 
 			case SDLK_a:
@@ -244,55 +251,45 @@ ProtocolMessage Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		event_id = PROTOCOL_ATTACK;
 		otherPosX = x + camera.x; 
 		otherPosY = y + camera.y;
+		args.push_back(otherPosX);
+		args.push_back(otherPosY);
 		std::cout << "CLICK EN: " << x + camera.x << " Y EN: " << y + camera.y << std::endl; 
 		std::cout << "SIN CAMERA OFFSET - CLICK EN: " << x << " Y EN: " << y << std::endl; 
 	}
 
-	ProtocolCharacter character(
+	MessageToServer msg(
+		event_id,
 		this->id,
-		this->bodyPosX, 
-		this->bodyPosY,
-		this->orientation,
-		this->otherPosX,
-		this->otherPosY,
-		this->helmetId,
-		this->armorId,
-		this->weaponId,
-		this->shieldId,
-		this->potionId,
-		this->itemId,
-		this->alive
+		args
 	);
-	ProtocolMessage msg(event_id, this->id, character);
+
 	return std::move(msg);
 }
 
 
-ProtocolMessage Player::handleEquipEvent(int &itemId) {
-	int16_t event_id = this->getEventId(itemId);
-	ProtocolCharacter character(
+MessageToServer Player::handleEquipEvent(int &itemId) {
+	std::vector<int16_t> args;
+	int16_t event_id = this->getEventId(itemId, args);
+	MessageToServer msg(
+		event_id, 
 		this->id,
-		this->bodyPosX, 
-		this->bodyPosY,
-		this->orientation,
-		this->otherPosX,
-		this->otherPosY,
-		this->helmetId,
-		this->armorId,
-		this->weaponId,
-		this->shieldId,
-		this->potionId,
-		this->itemId,
-		this->alive
+		args
 	);
-	std::cout << "PASA POR EL EQUIP EVENT" << std::endl;
-	std::cout << "WEAPON ID: " << weaponId << " y event id: " << event_id << std::endl; 
-	ProtocolMessage msg(event_id, this->id, character);
 	return std::move(msg);
 }
 
 
-int16_t Player::getEventId(int &itemId) {
+
+void Player::getPosArgs(std::vector<int16_t> &args) {
+	args.push_back(bodyPosX);
+	args.push_back(bodyPosY);
+}
+
+
+
+
+int16_t Player::getEventId(int &itemId, std::vector<int16_t> &args) {
+	args.push_back(itemId);
 	if (itemId < 4) {
 		armorId = itemId;
 		return PROTOCOL_EQUIP_ARMOR;

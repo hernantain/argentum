@@ -11,6 +11,7 @@
 #include "client_player.h"
 #include "client_npc.h"
 #include "client_item.h"
+#include "../common_files/common_message_to_server.h"
 
 
 struct ClientWorld {
@@ -53,8 +54,8 @@ struct ClientWorld {
 
     void render(uint16_t id, SDL_Rect &camera, int &it);
 
-    ProtocolMessage player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera);
-    ProtocolMessage player_handle_equip_event(uint16_t &player_id, int &itemId);
+    MessageToServer player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera);
+    MessageToServer player_handle_equip_event(uint16_t &player_id, int &itemId);
 
     Player* get_player(uint16_t id);
 

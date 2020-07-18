@@ -26,7 +26,7 @@ class Game {
 	bool running;
 	uint8_t player_race, player_class;
 	LWindow window;
-	Queue queue;
+	Queue_2 queue;
 	Socket skt;
 	SDL_Rect main;
 	SDL_Rect inventory;

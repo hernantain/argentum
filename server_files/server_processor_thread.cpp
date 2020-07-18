@@ -10,7 +10,7 @@
 #include "server_life_potion.h"
 
 ServerProcessorThread::ServerProcessorThread(
-    Queue &receiversQueue,
+    Queue_2 &receiversQueue,
     ClientManager &clientManager,
     CollisionInfo &collisionInfo,
     Json::Value &config) : receiversQueue(receiversQueue),
@@ -102,9 +102,10 @@ void ServerProcessorThread::run() {
     this->addingHardcodedItems(serverWorld); // HAY QUE SACAR
     
     while (running) {
-        ProtocolMessage received_msg = this->receiversQueue.pop();
-        protocol_translator.translate(received_msg, serverWorld);
-        if (received_msg.id_message != NOTHING)
-           this->clientManager.broadcastMessage(received_msg);
+        ProtocolMessage client_response;
+        MessageToServer received_msg = this->receiversQueue.pop();
+        protocol_translator.translate(received_msg, client_response, serverWorld);
+        if (client_response.id_message != NOTHING)
+           this->clientManager.broadcastMessage(client_response);
     }
 }

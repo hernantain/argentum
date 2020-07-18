@@ -31,24 +31,6 @@ struct ProtocolCharacter {
 
     ProtocolCharacter();
 
-    ProtocolCharacter(uint16_t id, uint8_t id_race, uint8_t id_class);
-
-    ProtocolCharacter(
-        uint16_t id,
-        int16_t bodyPosX, 
-        int16_t bodyPosY,
-        int16_t orientation,
-        int16_t otherPosX,
-        int16_t otherPosY,
-        uint8_t helmetId,
-        uint8_t armorId,
-        uint8_t weaponId,
-        uint8_t shieldId,
-        uint8_t potionId,
-        uint8_t itemId,
-        bool alive);
-
-
     // ProtocolCharacter(ProtocolCharacter&& other);
     // ProtocolCharacter& operator=(ProtocolCharacter&& other);
 

@@ -20,7 +20,7 @@ void ClientManager::cleanDeadClients() {
 }
 
 
-void ClientManager::add_client(uint16_t client_id, Socket &skt, Queue &receiversQueue) {
+void ClientManager::add_client(uint16_t client_id, Socket &skt, Queue_2 &receiversQueue) {
     std::unique_lock<std::mutex> lock(this->m);
     this->cleanDeadClients();
     SrvClient* client = new SrvClient(client_id, skt, receiversQueue);

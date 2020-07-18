@@ -6,20 +6,23 @@
 
 SenderThread::SenderThread(
     Socket &skt, 
-    Queue &queue) : skt(skt), queue(queue), running(true) {}
+    Queue_2 &queue) : skt(skt), queue(queue), running(true) {}
 
 
 void SenderThread::run() {
 
     while (running) {
-        ProtocolMessage msg = this->queue.pop();
+        MessageToServer msg = this->queue.pop();
         msgpack::sbuffer buffer;
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
         pk.pack(msg);
-        if (msg.id_message == 67) {
+        if (msg.event_id == 67) {
             running = false;
             std::cout << "MANDANDO ULTIMO MENSAJE" << std::endl;
         }
+
+        if (msg.event_id == 1)
+            continue;
 
         this->skt << buffer;
     }

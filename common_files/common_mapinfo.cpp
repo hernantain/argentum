@@ -12,15 +12,25 @@ MapInfo::MapInfo() {}
 void MapInfo::loadCollisionInfo(CollisionInfo &collisionInfo, Json::Value &tileJson, int &first_tile_gid) {
 
     const Json::Value& tiles = tileJson["tiles"];
-    int id;
+    // nt id;
     for (unsigned int i = 0; i < tiles.size(); ++i) {
         CollisionTile collisionTile;
         collisionTile.x = tiles[i]["objectgroup"]["objects"][0]["x"].asInt();
         collisionTile.y = tiles[i]["objectgroup"]["objects"][0]["y"].asInt() ;
         collisionTile.w = tiles[i]["objectgroup"]["objects"][0]["width"].asInt();
         collisionTile.h = tiles[i]["objectgroup"]["objects"][0]["height"].asInt();
-        id = tiles[i]["id"].asInt();
-        collisionInfo.tiles.insert(std::pair<int, CollisionTile> (id+first_tile_gid, collisionTile));
+        collisionTile.id = tiles[i]["id"].asInt() + first_tile_gid;
+        // collisionInfo.tiles.insert(std::pair<int, CollisionTile> (id+first_tile_gid, collisionTile));
+        collisionInfo.tiles.push_back(collisionTile);
+
+        // CollisionTile collisionTile(
+        //     tiles[i]["objectgroup"]["objects"][0]["x"].asInt(),
+        //     tiles[i]["objectgroup"]["objects"][0]["y"].asInt(),
+        //     tiles[i]["objectgroup"]["objects"][0]["width"].asInt(),
+        //     tiles[i]["objectgroup"]["objects"][0]["height"].asInt()
+        // );
+        // id = tiles[i]["id"].asInt();
+        // collisionInfo.tiles.insert(std::pair<int, CollisionTile> (id+first_tile_gid, collisionTile));
     }
 }
 
