@@ -8,14 +8,15 @@
 #include "../common_files/common_thread.h"
 #include "../common_files/common_queue.h"
 #include "../common_files/common_protocol_message.h"
+#include "../common_files/common_message_to_server.h"
 
 class GameLoopThread : public Thread {
 private:
-    Queue &queue;
+    Queue_2 &queue;
     std::atomic<bool> running;
 
 public:
-    GameLoopThread(Queue &queue);
+    GameLoopThread(Queue_2 &queue);
 
     virtual void run() override;
 };

@@ -3,6 +3,9 @@
 #include "common_message_to_server.h"
 
 
+MessageToServer::MessageToServer() {}
+
+
 MessageToServer::MessageToServer(
     int16_t event_id, 
     uint16_t player_id, 

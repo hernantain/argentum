@@ -1,3 +1,5 @@
+#ifndef _COMMON_MESSAGE_TO_SERVER
+#define _COMMON_MESSAGE_TO_SERVER
 
 
 #include <msgpack.hpp>
@@ -25,4 +27,4 @@ struct MessageToServer {
 
 };
 
-
+#endif

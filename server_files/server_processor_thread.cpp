@@ -91,8 +91,8 @@ void ServerProcessorThread::run() {
     while (running) {
         ProtocolMessage client_response;
         MessageToServer received_msg = this->receiversQueue.pop();
-        protocol_translator.translate(received_msg, serverWorld);
+        protocol_translator.translate(received_msg, client_response, serverWorld);
         if (received_msg.event_id != NOTHING)
-           this->clientManager.broadcastMessage(received_msg);
+           this->clientManager.broadcastMessage(client_response);
     }
 }

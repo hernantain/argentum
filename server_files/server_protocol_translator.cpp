@@ -45,6 +45,7 @@ void ProtocolTranslator::equip_shield_event(MessageToServer &msg, ProtocolMessag
     world.characters[msg.player_id]->equip_shield(shield);
     
     clientMessage.id_message = PROTOCOL_SHIELD_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -54,6 +55,7 @@ void ProtocolTranslator::equip_weapon_event(MessageToServer &msg, ProtocolMessag
     world.characters[msg.player_id]->equip_weapon(weapon);
     
     clientMessage.id_message = PROTOCOL_WEAPON_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -63,6 +65,7 @@ void ProtocolTranslator::equip_armor_event(MessageToServer &msg, ProtocolMessage
     world.characters[msg.player_id]->equip_armor(armor);
 
     clientMessage.id_message = PROTOCOL_ARMOR_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -73,6 +76,7 @@ void ProtocolTranslator::equip_helmet_event(MessageToServer &msg, ProtocolMessag
     world.characters[msg.player_id]->equip_helmet(helmet);
     
     clientMessage.id_message = PROTOCOL_HELMET_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -81,6 +85,7 @@ void ProtocolTranslator::resurrect_event(MessageToServer &msg, ProtocolMessage &
         world.characters[msg.player_id]->resurrect();
     
     clientMessage.id_message = PROTOCOL_RESURRECT_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -89,6 +94,7 @@ void ProtocolTranslator::deposit_event(MessageToServer &msg, ProtocolMessage &cl
         world.characters[msg.player_id]->deposit_gold();
     
     clientMessage.id_message = PROTOCOL_DEPOSIT_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -97,6 +103,7 @@ void ProtocolTranslator::withdraw_event(MessageToServer &msg, ProtocolMessage &c
         world.characters[msg.player_id]->withdraw_gold();
 
     clientMessage.id_message = PROTOCOL_WITHDRAW_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -105,6 +112,7 @@ void ProtocolTranslator::stop_moving(MessageToServer &msg, ProtocolMessage &clie
     world.characters[msg.player_id]->stop_moving();
     
     clientMessage.id_message = PROTOCOL_MOVE_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -114,6 +122,7 @@ void ProtocolTranslator::move_right_event(MessageToServer &msg, ProtocolMessage 
     world.move_character_right(msg.player_id);
 
     clientMessage.id_message = PROTOCOL_MOVE_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -123,6 +132,7 @@ void ProtocolTranslator::move_left_event(MessageToServer &msg, ProtocolMessage &
     world.move_character_left(msg.player_id);
 
     clientMessage.id_message = PROTOCOL_MOVE_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -132,6 +142,7 @@ void ProtocolTranslator::move_top_event(MessageToServer &msg, ProtocolMessage &c
     world.move_character_top(msg.player_id);
 
     clientMessage.id_message = PROTOCOL_MOVE_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -141,6 +152,7 @@ void ProtocolTranslator::move_down_event(MessageToServer &msg, ProtocolMessage &
     world.move_character_down(msg.player_id);
 
     clientMessage.id_message = PROTOCOL_MOVE_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -149,6 +161,7 @@ void ProtocolTranslator::take_item_event(MessageToServer &msg, ProtocolMessage &
     world.player_take_item(msg.player_id);
 
     clientMessage.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -157,6 +170,7 @@ void ProtocolTranslator::drop_item_event(MessageToServer &msg, ProtocolMessage &
     world.characters[msg.player_id]->drop_item(item_id, world.items);
 
     clientMessage.id_message = PROTOCOL_DROP_ITEM_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -165,6 +179,7 @@ void ProtocolTranslator::meditation_event(MessageToServer &msg, ProtocolMessage 
     world.characters[msg.player_id]->meditate();
 
     clientMessage.id_message = PROTOCOL_MEDITATE_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -172,7 +187,6 @@ void ProtocolTranslator::attack_event(MessageToServer &msg, ProtocolMessage &cli
     int other_posX = msg.args[0];
     int other_posY = msg.args[1];
     int player_id = msg.player_id;
-    ProtocolMessage clientMessage;
     Attackable* other = world.get_from_position(player_id, other_posX, other_posY);
     if (other) { 
         world.characters[msg.player_id]->attack(*other);
@@ -187,6 +201,7 @@ void ProtocolTranslator::attack_event(MessageToServer &msg, ProtocolMessage &cli
             clientMessage.id_message = PROTOCOL_ATTACK_CONFIRM;
         }
     } 
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -203,6 +218,7 @@ void ProtocolTranslator::create_character_event(MessageToServer& msg, ProtocolMe
     world.add(msg.player_id, character);
 
     clientMessage.id_message = PROTOCOL_CREATE_CHARACTER_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -210,24 +226,24 @@ void ProtocolTranslator::log_off_event(MessageToServer& msg, ProtocolMessage &cl
     std::cout << "ALGUIEN SE VA. MUNDO ANTES: " << world.characters.size() << std::endl;
     world.remove_character(msg.player_id);
 
-    ProtocolMessage clientMessage;
     clientMessage.id_message = PROTOCOL_LOG_OFF_CONFIRM;
     std::cout << "ALGUIEN SE VA. MUNDO DESPUES: " << world.characters.size() << std::endl;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
 void ProtocolTranslator::create_npc_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
     size_t max_npcs = config["npc"]["max_limit"].asUInt();
-    ProtocolMessage clientMessage;
     if (world.empty() || world.is_full(max_npcs)) {
         clientMessage.id_message = NOTHING;
         return; 
     }
-    int npc_id = msg.npcs[0].npc_type;
-    NPC* npc = NPCFactory::make_npc(npc_id, config, collisionInfo);
+    int npc_type = msg.args[0];
+    NPC* npc = NPCFactory::make_npc(npc_type, config, collisionInfo);
     // std::cout << "NPC CREADO: " << std::endl;
     world.add(msg.player_id, npc);
     clientMessage.id_message = PROTOCOL_CREATE_NPC_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -235,6 +251,7 @@ void ProtocolTranslator::update_npcs_event(MessageToServer& msg, ProtocolMessage
     world.move_npcs();
 
     clientMessage.id_message = PROTOCOL_UPDATE_NPCS_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
@@ -242,6 +259,7 @@ void ProtocolTranslator::update_characters_event(MessageToServer& msg, ProtocolM
     world.recover_characters();
     
     clientMessage.id_message = PROTOCOL_UPDATE_CHARACTERS_CONFIRM;
+    clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
 
