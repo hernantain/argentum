@@ -37,8 +37,6 @@ void GameLoopThread::run() {
                 args
             );
             queue.push(message);
-            // ProtocolMessage npcs_update_msg(PROTOCOL_UPDATE_NPCS);
-            // queue.push(npcs_update_msg);
         }
         if (iteration % 3 == 0) {
             // Every 3 seconds
@@ -51,14 +49,8 @@ void GameLoopThread::run() {
                 args
             );
             queue.push(message);
-            // ProtocolNpc npc(npc_id, npc_type);
-            // ProtocolMessage npc_create_msg(PROTOCOL_CREATE_NPC, npc_id, std::move(npc));
-            // queue.push(npc_create_msg);
         }
         // Every second
-        
-        // ProtocolMessage characters_update_msg(PROTOCOL_UPDATE_CHARACTERS);
-        // queue.push(characters_update_msg);
         
         std::vector<int16_t> args;
         args.push_back(npc_type);

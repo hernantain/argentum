@@ -17,8 +17,8 @@ enum _lastMovement {
 class Movement {
 private:
     CollisionInfo &collisionInfo;
-    int16_t bodyPosX, bodyPosY;
-    // int headPosX, headPosY;
+    int16_t bodyPosX;
+    int16_t bodyPosY;
     _lastMovement last_movement;
   
     // No copiable

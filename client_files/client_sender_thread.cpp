@@ -21,6 +21,9 @@ void SenderThread::run() {
             std::cout << "MANDANDO ULTIMO MENSAJE" << std::endl;
         }
 
+        if (msg.event_id == 1)
+            continue;
+
         this->skt << buffer;
     }
 

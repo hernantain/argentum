@@ -31,6 +31,7 @@ Player::Player(
 	this->headOffsetX = headPosX - bodyPosX;
 	this->headOffsetY = headPosY - bodyPosY;
 	this->alive = true;
+	this->orientation = STANDING;
 	this->armorId = 0;
 	this->weaponId = 0;
 	this->shieldId = 0;
@@ -248,23 +249,6 @@ MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		std::cout << "SIN CAMERA OFFSET - CLICK EN: " << x << " Y EN: " << y << std::endl; 
 	}
 
-	// ProtocolCharacter character(
-	// 	this->id,
-	// 	this->bodyPosX, 
-	// 	this->bodyPosY,
-	// 	this->orientation,
-	// 	this->otherPosX,
-	// 	this->otherPosY,
-	// 	this->helmetId,
-	// 	this->armorId,
-	// 	this->weaponId,
-	// 	this->shieldId,
-	// 	this->itemId,
-	// 	this->alive
-	// );
-	// ProtocolMessage msg(event_id, this->id, character);
-
-
 	MessageToServer msg(
 		event_id,
 		this->id,
@@ -278,24 +262,6 @@ MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 MessageToServer Player::handleEquipEvent(int &itemId) {
 	std::vector<int16_t> args;
 	int16_t event_id = this->getEventId(itemId, args);
-	// ProtocolCharacter character(
-	// 	this->id,
-	// 	this->bodyPosX, 
-	// 	this->bodyPosY,
-	// 	this->orientation,
-	// 	this->otherPosX,
-	// 	this->otherPosY,
-	// 	this->helmetId,
-	// 	this->armorId,
-	// 	this->weaponId,
-	// 	this->shieldId,
-	// 	this->itemId,
-	// 	this->alive
-	// );
-	// std::cout << "PASA POR EL EQUIP EVENT" << std::endl;
-	// std::cout << "WEAPON ID: " << weaponId << " y event id: " << event_id << std::endl; 
-	// ProtocolMessage msg(event_id, this->id, character);
-
 	MessageToServer msg(
 		event_id, 
 		this->id,

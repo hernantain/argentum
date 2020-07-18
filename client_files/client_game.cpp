@@ -47,7 +47,7 @@ Game::Game(
 	camera.x = main.x;
 	camera.y = main.y;
 	camera.w = main.w;
-	camera.h = camera.h;
+	camera.h = main.h;
 }
 
 

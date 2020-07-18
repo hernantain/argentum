@@ -10,13 +10,17 @@
 #define MAX_ATTACK_OFFSET_TOLERANCE 330
 
 Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) {
-    bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
-    bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;
+    this->bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
+    this->bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;
+
+    std::cout << "BODYPOSY" << bodyPosY << std::endl;
 
     while(check_map_collision()) {
-        bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
-        bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;
+        this->bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
+        this->bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;
     }
+
+    this->last_movement = STAND;
 }
 
 
@@ -182,15 +186,20 @@ bool Movement::check_map_collision() {
     if (tile == 0)
         return false;
 
-    CollisionTile collisionTile = collisionInfo.tiles[tile];
-    
-    int collisionX = offsetX * collisionInfo.get_tile_width() + collisionTile.x;
-    int collisionY = offsetY * collisionInfo.get_tile_height() + collisionTile.y;
+    std::cout << "TILE ES: " << tile << std::endl;
+    int pos = collisionInfo.find(tile); //  tiles[tile];
+    if (pos == -1)
+        return false; // shouldn't happen
 
-    if( bodyPosY + 31 <= collisionY ) return false;
-    if( bodyPosY >= collisionY + collisionTile.h ) return false;
-    if( bodyPosX + 21 <= collisionX ) return false;
-    if( bodyPosX >= collisionX + collisionTile.w ) return false;
+
+    int collisionX = offsetX * collisionInfo.get_tile_width() + collisionInfo.tiles[pos].x;
+    int collisionY = offsetY * collisionInfo.get_tile_height() + collisionInfo.tiles[pos].y;
+
+    std::cout << "BODY POS Y ES ::: " << this->bodyPosY << std::endl;
+    if( this->bodyPosY + 31 <= collisionY ) return false;
+    if( this->bodyPosY >= collisionY + collisionInfo.tiles[pos].h ) return false;
+    if( this->bodyPosX + 21 <= collisionX ) return false;
+    if( this->bodyPosX >= collisionX + collisionInfo.tiles[pos].w ) return false;
 
     return true;
 }

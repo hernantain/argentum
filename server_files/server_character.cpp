@@ -440,6 +440,7 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.weaponId = 0;
     protocolCharacter.helmetId = 0;
     protocolCharacter.armorId = 0;
+    protocolCharacter.itemId = 0;
 
     // std::cout << "PROT CHARACTER ID " << (int) protocolCharacter.id << std::endl;
     // std::cout << "PROT CHARACTER ID RACE " << (int) protocolCharacter.id_race << std::endl;

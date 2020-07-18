@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "common_collision_info.h"
 
 
@@ -11,6 +12,8 @@ CollisionInfo::CollisionInfo(int tilewidth, int tileheight, int mapwidth, int ma
 
 
 CollisionTile::CollisionTile() {}
+
+// CollisionTile::CollisionTile(int x, int y, int w, int h) : x(x), y(y), w(w), h(h) {}
 
 
 CollisionInfo::CollisionInfo(CollisionInfo&& other) {
@@ -30,6 +33,7 @@ int CollisionInfo::get_map_width() const {
 
 
 int CollisionInfo::get_map_height() const {
+    std::cout << "ES: " << mapheight * tileheight << std::endl;
     return mapheight * tileheight; 
 }
 
@@ -40,4 +44,13 @@ int CollisionInfo::get_tile_width() const {
 
 int CollisionInfo::get_tile_height() const {
     return tileheight;
+}
+
+int CollisionInfo::find(int tileId) const {
+    for (unsigned int i = 0; i < tiles.size(); ++i) {
+        if (tiles[i].id == tileId)
+            return i;
+    }
+
+    return -1;
 }

@@ -301,7 +301,7 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
             itr->second->get_body_pos_Y(),
             itr->second->get_body_facing()
         );
-        tmp.push_back(std::move(protocolNpc));
+        tmp.push_back(protocolNpc);
     }
     msg.npcs = tmp;
 }
@@ -316,7 +316,7 @@ void ProtocolTranslator::get_all_items(ProtocolMessage& msg, ServerWorld &world)
             world.items[i].get_posY(),
             world.items[i].get_amount()
         );
-        tmp.push_back(std::move(protocolItem));
+        tmp.push_back(protocolItem);
     }
     msg.items = tmp;
 }
