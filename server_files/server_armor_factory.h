@@ -5,6 +5,7 @@
 #include "server_blue_robe.h"
 #include "server_leather_armor.h"
 #include "server_plate_armor.h"
+#include "server_default_armor.h"
 
 /* Clase que funciona como factory para los distintos tipos de armaduras de la aplicacion */
 class ArmorFactory {

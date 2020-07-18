@@ -15,10 +15,11 @@ Weapon WeaponFactory::make_weapon(const uint8_t weapon_id, Json::Value& config) 
         case SWORD: return Sword(config);
         case AXE: return Axe(config);
         case HAMMER: return Hammer(config);
+        case ASH_STAFF: return AshStaff(config);
         case GNARLED_STAFF: return GnarledStaff(config);
+        case CRIMP_STAFF: return CrimpStaff(config);
         case SIMPLE_BOW: return SimpleBow(config);
         case COMPOUND_BOW: return CompoundBow(config);
-        case ASH_STAFF: return AshStaff(config);
     }
-    return CrimpStaff(config);
+    return DefaultWeapon();
 }
