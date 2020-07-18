@@ -20,6 +20,9 @@ public:
     // Aumenta la vida en life_points
     void add(int life_points);
 
+    // Booleano devuelve verdadero si la vida se encuentra llena
+    bool is_full();
+
     // Devuelve la vida actual
     int16_t current() const;
 

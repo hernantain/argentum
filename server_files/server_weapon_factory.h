@@ -10,6 +10,7 @@
 #include "server_crimp_staff.h"
 #include "server_simple_bow.h"
 #include "server_compound_bow.h"
+#include "server_default_weapon.h"
 
 /* Clase que funciona como factory para los distintos tipos de armas de la aplicacion */
 class WeaponFactory {

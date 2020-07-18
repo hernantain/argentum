@@ -23,7 +23,7 @@ class Player: public Drawable {
         int16_t otherPosX, otherPosY;
         bool alive;
         int16_t headOffsetX, headOffsetY;
-        uint8_t helmetId, armorId, shieldId, weaponId, itemId;
+        uint8_t helmetId, armorId, shieldId, weaponId, itemId, potionId;
         std::vector<Clothes*> clothes;
         std::vector<Helmet*> helmets;
         std::vector<Weapon*> weapons;

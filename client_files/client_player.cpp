@@ -36,6 +36,7 @@ Player::Player(
 	this->weaponId = 0;
 	this->shieldId = 0;
 	this->helmetId = 0;
+	this->potionId = 0;
 	this->itemId = 0;
 	this->ghost = NULL;
 }
@@ -149,11 +150,13 @@ void Player::set_weapon(int weaponId) {
 	} else if (weaponId == 14) {
 		this->equippedPlayer->setWeapon(this->weapons[3]);
 	} else if (weaponId == 15) {
+		this->equippedPlayer->setWeapon(this->weapons[4]);
+	} else if (weaponId == 16) {
 		this->equippedPlayer->setWeapon(this->weapons[6]);
 	} else if (weaponId == 17) { 
 		this->equippedPlayer->setWeapon(this->weapons[5]);
 	} else {
-		this->equippedPlayer->setWeapon(this->weapons[4]);
+		this->equippedPlayer->setWeapon(NULL);
 	}
 }
 
@@ -162,8 +165,10 @@ void Player::set_helmet(int helmetId) {
 		this->equippedPlayer->setHelmet(this->helmets[0]);
 	} else if (helmetId == 5) {
 		this->equippedPlayer->setHelmet(this->helmets[1]);
-	} else {
+	} else if (helmetId == 6) {
 		this->equippedPlayer->setHelmet(this->helmets[2]);
+	} else {
+		this->equippedPlayer->setHelmet(NULL);
 	}
 }
 
@@ -172,19 +177,22 @@ void Player::set_armor(int armorId) {
 		this->playerPicture->set_clothes(this->clothes[1]);
 	} else if (armorId == 2) {
 		this->playerPicture->set_clothes(this->clothes[2]);
-	}  else { 
+	} else if (armorId == 3) { 
 		this->playerPicture->set_clothes(this->clothes[3]);
+	} else {
+		this->playerPicture->set_clothes(NULL);
 	}
 }
 
 void Player::set_shield(int shieldId) {
 	if (shieldId == 7) {
 		this->equippedPlayer->setShield(this->shields[1]);
-	} else {
+	} else if (shieldId == 8){
 		this->equippedPlayer->setShield(this->shields[0]);
-	} 
+	} else {
+		this->equippedPlayer->setShield(NULL);
+	}
 }
-
 
 MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 
@@ -295,6 +303,7 @@ int16_t Player::getEventId(int &itemId, std::vector<int16_t> &args) {
 		weaponId = itemId;
 		return PROTOCOL_EQUIP_WEAPON;
 	} else {
+		potionId = itemId;
 		return PROTOCOL_EQUIP_POTION;
 	}
 }

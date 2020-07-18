@@ -83,6 +83,19 @@ bool Character::is_meditating() {
 void Character::resurrect() {
     alive = true;
     restore_life_and_mana();
+    restore_equipment();
+}
+
+void Character::restore_equipment() {
+    DefaultArmor armor;
+    DefaultHelmet helmet;
+    DefaultWeapon weapon;
+    DefaultShield shield;
+
+    equipment.equip_armor(armor);
+    equipment.equip_helmet(helmet);
+    equipment.equip_weapon(weapon);
+    equipment.equip_shield(shield);
 }
 
 void Character::restore_life_and_mana() {
@@ -197,15 +210,19 @@ void Character::take_item(Item& item) {
 
 void Character::equip_life_potion(Potion& item) {
     int recovery = item.get_recovery_points();
-    if (inventory.has(item.get_id())) {
+    if (inventory.has(item.get_id()) && !life.is_full()) {
         life.add(recovery);
+        inventory.remove_item(item.get_id());
+        std::cout << "Applying life potion::LifeNow::" << get_life() << std::endl;
     } 
 }
 
 void Character::equip_mana_potion(Potion& item) {
     int recovery = item.get_recovery_points();
-    if (inventory.has(item.get_id())) {
+    if (inventory.has(item.get_id()) && !mana.is_full()) {
         mana.add(recovery);
+        inventory.remove_item(item.get_id());
+        std::cout << "Applying mana potion::ManaNow::" << get_mana() << std::endl;
     } 
 }
 
@@ -235,6 +252,22 @@ void Character::equip_helmet(Helmet& item) {
     if (inventory.has(item.get_id()) && alive) {
         equipment.equip_helmet(item);
     }
+}
+
+int16_t Character::current_weapon() {
+    return equipment.current_weapon();
+}
+
+int16_t Character::current_armor() {
+    return equipment.current_armor();
+}
+
+int16_t Character::current_shield() {
+    return equipment.current_shield();
+}
+
+int16_t Character::current_helmet() {
+    return equipment.current_helmet();
 }
 
 bool Character::is_safe() {

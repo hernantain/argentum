@@ -6,5 +6,6 @@
 
 Shield ShieldFactory::make_shield(const uint8_t shield_id, Json::Value& config) {
     if (shield_id == TURTLE_SHIELD) return TortoiseShield(config);
-    else return IronShield(config);
+    if (shield_id == IRON_SHIELD) return IronShield(config);
+    else return DefaultShield();
 }

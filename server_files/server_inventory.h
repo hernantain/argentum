@@ -17,6 +17,9 @@ public:
     // Contructor, recibe el tamaño del inventario
     explicit Inventory(int size);
 
+    // Remueve un item al inventario
+    void remove_item(uint8_t id);
+
     // Agrega un item al inventario
     void add_item(Item& item);
 

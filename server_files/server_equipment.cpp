@@ -3,6 +3,7 @@
 
 #define NO_DAMAGE 0
 #define NO_DEFENSE 0
+#define DEFAULT_EQUIPMENT 0
 
 Equipment::Equipment() : 
     weapon(NO_DAMAGE, NO_DAMAGE), 
@@ -44,6 +45,26 @@ bool Equipment::is_weapon_ranged() {
 
 int Equipment::get_weapon_consumption() {
     return weapon.get_mana_consumption();
+}
+
+int16_t Equipment::current_weapon() {
+    if (weapon.get_damage() > 0) return weapon.get_id();
+    return DEFAULT_EQUIPMENT;
+}
+
+int16_t Equipment::current_shield() {
+    if (shield.get_defense() > 0) return shield.get_id();
+    return DEFAULT_EQUIPMENT;
+}
+
+int16_t Equipment::current_armor() {
+    if (armor.get_defense() > 0) return armor.get_id();
+    return DEFAULT_EQUIPMENT;
+}
+
+int16_t Equipment::current_helmet() {
+    if (helmet.get_defense() > 0) return helmet.get_id();
+    return DEFAULT_EQUIPMENT;
 }
 
 int Equipment::get_equipment_defense() {

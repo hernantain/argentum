@@ -4,7 +4,7 @@
 #include "server_shield.h"
 #include "server_tortoise_shield.h"
 #include "server_iron_shield.h"
-
+#include "server_default_shield.h"
 
 /* Clase que funciona como factory para los distintos tipos de armas de la aplicacion */
 class ShieldFactory {
