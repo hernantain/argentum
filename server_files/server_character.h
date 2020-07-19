@@ -56,16 +56,16 @@ private:
     Character(const Character&) = delete;
     Character& operator=(const Character&) = delete;
 
-    const int max_secure_gold();
-    const int max_gold();
-    bool is_critical();
-    bool evade_attack();
-    int experience_formula(int enemy_level);
-    int get_extra_experience(int enemy_life, int enemy_level);
-    void get_experience(Attackable& other, int damage);
+    const int max_secure_gold() const;
+    const int max_gold() const;
+    bool is_critical() const;
+    bool evade_attack() const;
+    int experience_formula(const int enemy_level) const;
+    int get_extra_experience(const int enemy_life, const int enemy_level) const;
+    void get_experience(const Attackable& other, const int damage);
     void update_level();
     void update_newbie();
-    bool can_attack(Attackable& other);
+    bool can_attack(const Attackable& other) const;
     void consume_mana();
 
 public:
@@ -92,10 +92,10 @@ public:
     int16_t get_level() const;
 
     // Devuelve el ancho del personaje
-    int get_width();
+    int get_width() const;
 
     // Devuelve el alto del personaje
-    int get_height();
+    int get_height() const;
 
     // Devuelve el oro del personaje en el banco
     int get_bank_gold() const;
@@ -104,10 +104,10 @@ public:
     int get_gold() const;
 
     // Devuelve un booleano que indica si el jugador es newbie o no
-    bool is_newbie();
+    bool is_newbie() const;
 
     // Devuelve un booleano que indica si el jugador esta meditando o no
-    bool is_meditating();
+    bool is_meditating() const;
 
     // Resucita al personaje en cuestion
     void resurrect();
@@ -122,10 +122,10 @@ public:
     void meditate();
 
     // Booleano que devuelve verdadero si puede depositar o no
-    bool can_deposit(int16_t posX, int16_t posY);
+    bool can_deposit(const int16_t posX, const int16_t posY) const;
 
     // Booleano que devuelve verdadero si puede resucitar o no
-    bool can_resurrect(int16_t posX, int16_t posY);
+    bool can_resurrect(const int16_t posX, const int16_t posY) const;
 
     // Emula el deposito de oro, devuelve una suma fija de dinero a depsitar
     int deposit_gold();
@@ -134,19 +134,19 @@ public:
     int withdraw_gold();
 
     // Devuelve un booleano que indica si el jugador esta en zona segura o no.
-    bool is_safe();
+    bool is_safe() const;
 
     // Chequea que tanto vos como el otro jugador esten en zona segura
-    bool attack_zone(Attackable& other);
+    bool attack_zone(const Attackable& other) const;
 
     // Devuelve un booleano que indica si hay fairplay o no.
-    bool fairplay(Attackable& other);
+    bool fairplay(const Attackable& other) const;
 
     // Le quita vida al personaje
-    void take_off_life(int life_points);
+    void take_off_life(const int life_points);
 
     // Le quita mana al personaje
-    void take_off_mana(int mana_points);
+    void take_off_mana(const int mana_points);
 
     // Recupera la mana en FRazaRecuperacion puntos
     void recover_mana();
@@ -164,10 +164,10 @@ public:
     void drop_items(std::vector<Item> &worldItems);
 
     // Dropea el item que recibe por parametro y popula worldItems
-    bool drop_item(uint8_t id, std::vector<Item> &worldItems);
+    bool drop_item(const uint8_t id, std::vector<Item> &worldItems);
 
     // Toma una suma de oro del suelo;
-    bool take_gold(int amount);
+    bool take_gold(const int amount);
 
     // Toma un item del suelo
     bool take_item(Item& item);
@@ -191,31 +191,31 @@ public:
     void equip_helmet(Helmet& item);
 
     // Devuelve el id del arma actual, -1 si es la default
-    int16_t current_weapon();
+    int16_t current_weapon() const;
 
     // Devuelve el id de la armadura actual, -1 si es la default
-    int16_t current_armor();
+    int16_t current_armor() const;
 
     // Devuelve el id del escudo actual, -1 si es el default
-    int16_t current_shield();
+    int16_t current_shield() const;
 
     // Devuelve el id del casco actual, -1 si es el default
-    int16_t current_helmet();
+    int16_t current_helmet() const;
 
     // Devuelve verdadero si el item con itemId esta equipado, falso si no
-    bool is_equiped(int16_t itemId);
+    bool is_equiped(const int16_t itemId) const;
 
     // Ataca a un NPC o a un personaje
     void attack(Attackable& other) override;
 
     // Defiende al personaje de un ataque. Devuelve el daño final realizado
-    int defense(int damage) override;
+    int defense(const int damage) override;
 
     // Booleano que devuelve si el personaje esta cerca de la posicion
-    bool is_near(int posX, int posY);
+    bool is_near(const int posX, const int posY) const;
 
     // Booleano que devuelve si el personaje se encuentra cerca para atacar
-    bool is_attackable(int16_t posX, int16_t posY);
+    bool is_attackable(const int16_t posX, const int16_t posY) const;
 
     // Mueve el personaje hacia la derecha
     void move_right();

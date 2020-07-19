@@ -52,11 +52,11 @@ int16_t Character::get_level() const {
     return level;
 }
 
-int Character::get_width() {
+int Character::get_width() const {
     return race.get_width();
 }
 
-int Character::get_height() {
+int Character::get_height() const {
     return race.get_height();
 }
 
@@ -72,11 +72,11 @@ bool Character::is_alive() const {
     return alive;
 }
 
-bool Character::is_newbie() {
+bool Character::is_newbie() const {
     return newbie;
 }
 
-bool Character::is_meditating() {
+bool Character::is_meditating() const {
     return meditating;
 }
 
@@ -113,11 +113,11 @@ void Character::recover_mana() {
     mana.add(race.get_recovery_factor());
 }
 
-void Character::take_off_life(int life_points) {
+void Character::take_off_life(const int life_points) {
     life.subtract(life_points);
 }
 
-void Character::take_off_mana(int mana_points) {
+void Character::take_off_mana(const int mana_points) {
     mana.subtract(mana_points);
 }
 
@@ -130,11 +130,11 @@ void Character::meditate() {
     mana.add(character_class.get_meditation_multiplier() * race.get_intelligence());
 }
 
-bool Character::can_deposit(int16_t posX, int16_t posY) {
+bool Character::can_deposit(const int16_t posX, const int16_t posY) const {
     return alive && movement.is_near(posX, posY);
 }
 
-bool Character::can_resurrect(int16_t posX, int16_t posY) {
+bool Character::can_resurrect(const int16_t posX, const int16_t posY) const {
     return !alive && movement.is_near(posX, posY);
 }
 
@@ -158,7 +158,7 @@ int Character::withdraw_gold() {
     return amount;
 }
 
-bool Character::drop_item(uint8_t id, std::vector<Item> &worldItems) {
+bool Character::drop_item(const uint8_t id, std::vector<Item> &worldItems) {
     if (!alive || !inventory.has(id) || is_equiped(id)) return false;
     Item drop_item = inventory.drop_item(id);
     drop_item.set_posX(get_body_pos_X());
@@ -182,17 +182,17 @@ int Character::drop_gold() {
     return 0;
 }
 
-const int Character::max_secure_gold() {
+const int Character::max_secure_gold() const {
     return config["gold"]["secure_gold_constant"].asInt() 
     * (pow(level, config["gold"]["power_constant"].asFloat()));
 }
 
-const int Character::max_gold() {
+const int Character::max_gold() const {
     const int excess = max_secure_gold() * config["gold"]["extra_gold_rate"].asFloat();
     return max_secure_gold() + excess;
 }
 
-bool Character::take_gold(int amount) {
+bool Character::take_gold(const int amount) {
     if(!alive) return false;
     std::cout << "Current max gold is: "<< max_gold() << std::endl;
     std::cout << "TakingGold:: "<< amount << std::endl;
@@ -258,32 +258,32 @@ void Character::equip_helmet(Helmet& item) {
     }
 }
 
-int16_t Character::current_weapon() {
+int16_t Character::current_weapon() const {
     return equipment.current_weapon();
 }
 
-int16_t Character::current_armor() {
+int16_t Character::current_armor() const {
     return equipment.current_armor();
 }
 
-int16_t Character::current_shield() {
+int16_t Character::current_shield() const {
     return equipment.current_shield();
 }
 
-int16_t Character::current_helmet() {
+int16_t Character::current_helmet() const {
     return equipment.current_helmet();
 }
 
-bool Character::is_equiped(int16_t id) {
+bool Character::is_equiped(int16_t id) const {
     return current_helmet() == id || current_shield() == id || 
            current_armor() == id || current_weapon() == id;
 }
 
-bool Character::is_safe() {
+bool Character::is_safe() const {
     return movement.is_safe();
 }
 
-bool Character::fairplay(Attackable& other) {
+bool Character::fairplay(const Attackable& other) const {
     int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
     if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) {
         std::cout << "Fairplay::You are newbie or the other is newbie or big diff lvl" << std::endl;
@@ -292,7 +292,7 @@ bool Character::fairplay(Attackable& other) {
     return true;
 }
 
-bool Character::attack_zone(Attackable& other) {
+bool Character::attack_zone(const Attackable& other) const {
     if (is_safe() || other.is_safe()) {
         std::cout << "SafeZone::Your or your rival are on safe zone" << std::endl;
         return false;
@@ -307,14 +307,14 @@ void Character::consume_mana() {
     take_off_mana(mana_consumption);
 }
 
-bool Character::is_critical() {
+bool Character::is_critical() const {
     int critical_percentage = config["attack"]["critical_probability"].asFloat() * 100;
     int critical_chances = rand() % 100 + 1;
     if (critical_chances <= critical_percentage) return true;
     return false;
 }
 
-bool Character::can_attack(Attackable& other) {
+bool Character::can_attack(const Attackable& other) const {
     if(!alive || !other.is_alive()) {
         std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
         return false;
@@ -348,7 +348,7 @@ void Character::attack(Attackable& other) {
     update_level();
 }
 
-bool Character::evade_attack() {
+bool Character::evade_attack() const {
     double evasion_chances = ((double) rand() / (RAND_MAX));
     double evasion_power = pow(evasion_chances, race.get_agility());
     bool evade = evasion_power < config["defense"]["evasion_constant"].asDouble();
@@ -356,7 +356,7 @@ bool Character::evade_attack() {
     return evade;
 }
 
-int Character::defense(int damage) {
+int Character::defense(const int damage) {
     meditating = false;
     if (evade_attack()) return NO_DAMAGE;
     int defense = equipment.get_equipment_defense();
@@ -369,11 +369,11 @@ int Character::defense(int damage) {
     return final_damage;
 }
 
-int Character::experience_formula(int enemy_level) {
+int Character::experience_formula(const int enemy_level) const {
     return std::max(enemy_level - level + HIGH_CONSTANT_EXP, LOW_CONSTANT_EXP);
 }
 
-int Character::get_extra_experience(int enemy_life, int enemy_level) {
+int Character::get_extra_experience(const int enemy_life, const int enemy_level) const {
     float min = config["experience"]["min_extra_probability"].asFloat();
     float max = config["experience"]["max_extra_probability"].asFloat();
     float random = ((float) rand()) / (float) RAND_MAX;
@@ -383,7 +383,7 @@ int Character::get_extra_experience(int enemy_life, int enemy_level) {
     return extra_exp;
 }
 
-void Character::get_experience(Attackable& other, int damage) {
+void Character::get_experience(const Attackable& other, const int damage) {
     int enemy_level = other.get_level();
     int enemy_life = other.get_max_life();
     int won_experience = damage * experience_formula(enemy_level);
@@ -413,11 +413,11 @@ void Character::update_newbie() {
     }
 }
 
-bool Character::is_near(int posX, int posY) {
+bool Character::is_near(const int posX, const int posY) const {
     return movement.is_near(posX, posY);
 }
 
-bool Character::is_attackable(int16_t posX, int16_t posY) {
+bool Character::is_attackable(const int16_t posX, const int16_t posY) const {
     return movement.is_attackable(posX, posY) && alive;
 }
 

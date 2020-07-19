@@ -15,7 +15,7 @@ public:
     Armor() = default;
 
     // Devuelve la defensa de la armadura
-    int get_defense();
+    int get_defense() const;
 };
 
 

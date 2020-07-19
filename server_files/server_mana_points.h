@@ -15,13 +15,13 @@ public:
     ManaPoints(int intelligence, float class_multiplier, float race_multiplier);
 
     // Disminuye la mana en mana_points
-    void subtract(int mana_points);
+    void subtract(const int mana_points);
 
     // Aumenta la mana en mana_points
-    void add(int mana_points);
+    void add(const int mana_points);
 
     // Booleano devuelve verdadero si la mana se encuentra llena
-    bool is_full();
+    bool is_full() const;
     
     // Devuelve la mana actual
     int16_t current() const;
@@ -30,7 +30,7 @@ public:
     int16_t max() const;
 
     // Setter de la max mana para el nivel recibido
-    void set_new_max(int level);
+    void set_new_max(const int level);
 };
 
 

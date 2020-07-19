@@ -39,7 +39,7 @@ Attackable* ServerWorld::get_closest_from_position(int16_t npc_posX, int16_t npc
 }
 
 
-bool ServerWorld::has_character_close(int16_t npc_posX, int16_t npc_posY) {
+bool ServerWorld::has_character_close(const int16_t npc_posX, const int16_t npc_posY) {
     std::map<uint16_t, Character*>::iterator characters_itr;
     for (characters_itr = characters.begin(); characters_itr != characters.end(); ++characters_itr) {
         Character* other_character = characters_itr->second;
@@ -48,7 +48,7 @@ bool ServerWorld::has_character_close(int16_t npc_posX, int16_t npc_posY) {
     return false;
 }
 
-bool ServerWorld::has_priest_close(uint16_t id) {
+bool ServerWorld::has_priest_close(const uint16_t id) {
     Character* player = this->characters[id];
     for (unsigned int i = 0; i < priests.size(); i++) {
         int16_t posX = priests[i].get_pos_X();
@@ -61,7 +61,7 @@ bool ServerWorld::has_priest_close(uint16_t id) {
 }
 
 
-bool ServerWorld::has_banker_close(uint16_t id) {
+bool ServerWorld::has_banker_close(const uint16_t id) {
     Character* player = this->characters[id];
     for (unsigned int i = 0; i < bankers.size(); i++) {
         int16_t posX = bankers[i].get_pos_X();
@@ -72,12 +72,12 @@ bool ServerWorld::has_banker_close(uint16_t id) {
 }
 
 
-bool ServerWorld::empty() {
+bool ServerWorld::empty() const {
     return (this->characters.size() == 0);
 }
 
 
-bool ServerWorld::is_full(size_t max_npcs) {
+bool ServerWorld::is_full(size_t const max_npcs) const {
     return (this->npcs.size() == max_npcs);
 }
 
@@ -113,11 +113,11 @@ void ServerWorld::recover_characters() {
     }
 }
 
-void ServerWorld::add(uint16_t id, Character* character) {
+void ServerWorld::add(const uint16_t id, Character* character) {
     this->characters.insert(std::pair<uint16_t, Character*> (id, character));
 }
 
-void ServerWorld::add(uint16_t id, NPC* npc) {
+void ServerWorld::add(const uint16_t id, NPC* npc) {
     this->npcs.insert(std::pair<uint16_t, NPC*> (id, npc));
 }
 
@@ -134,7 +134,7 @@ void ServerWorld::add(Priest priest) {
 }
 
 
-bool ServerWorld::player_take_item(uint16_t id) {
+bool ServerWorld::player_take_item(const uint16_t id) {
     Character* current = characters[id];
     bool took = false;
     for (unsigned int i = 0; i < items.size(); ++i) {
@@ -175,7 +175,7 @@ void ServerWorld::remove_npc(uint16_t id) {
     this->npcs.erase(id);
 }
 
-void ServerWorld::move_character_right(uint16_t id) {
+void ServerWorld::move_character_right(const uint16_t id) {
     this->characters[id]->move_right();
     if(check_characters_collision(id) || check_npcs_collision(id)) {
         this->characters[id]->move_left();
@@ -183,7 +183,7 @@ void ServerWorld::move_character_right(uint16_t id) {
         }
 }
 
-void ServerWorld::move_character_left(uint16_t id) {
+void ServerWorld::move_character_left(const uint16_t id) {
     this->characters[id]->move_left();
     if(check_characters_collision(id) || check_npcs_collision(id)) {
         this->characters[id]->move_right();
@@ -191,7 +191,7 @@ void ServerWorld::move_character_left(uint16_t id) {
     }
 }
 
-void ServerWorld::move_character_down(uint16_t id) {
+void ServerWorld::move_character_down(const uint16_t id) {
     this->characters[id]->move_down();
     if(check_characters_collision(id) || check_npcs_collision(id)) {
         this->characters[id]->move_top();
@@ -199,7 +199,7 @@ void ServerWorld::move_character_down(uint16_t id) {
     }
 }
 
-void ServerWorld::move_character_top(uint16_t id) {
+void ServerWorld::move_character_top(const uint16_t id) {
     this->characters[id]->move_top();
     if(check_characters_collision(id) || check_npcs_collision(id)) {
         this->characters[id]->move_down();
@@ -207,7 +207,7 @@ void ServerWorld::move_character_top(uint16_t id) {
     }
 }
 
-bool ServerWorld::check_characters_collision(uint16_t id) {
+bool ServerWorld::check_characters_collision(const uint16_t id) {
     std::map<uint16_t, Character*>::iterator characters_itr;
     Character* me = this->characters[id];
 
@@ -221,7 +221,7 @@ bool ServerWorld::check_characters_collision(uint16_t id) {
     return false;
 }
 
-bool ServerWorld::check_npcs_collision(uint16_t id) {
+bool ServerWorld::check_npcs_collision(const uint16_t id) {
     std::map<uint16_t, NPC*>::iterator npc_itr;
     Character* me = this->characters[id];
 
@@ -232,7 +232,7 @@ bool ServerWorld::check_npcs_collision(uint16_t id) {
     return false;
 }
 
-bool ServerWorld::check_collision(Attackable* me, Attackable* other) {
+bool ServerWorld::check_collision(Attackable* me, Attackable* other) const {
     int leftMe = me->get_body_pos_X();
     int rightMe = me->get_body_pos_X() + me->get_width();
 

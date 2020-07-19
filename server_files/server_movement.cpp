@@ -81,19 +81,19 @@ void Movement::move_random(int velocity) {
     }
 }
 
-void Movement::move_aside(int velocity, int16_t posX) {
+void Movement::move_aside(const int velocity, const int16_t posX) {
     int16_t diff_X = bodyPosX - posX;
     if (diff_X < 0) move_right(velocity);
     else move_left(velocity);
 }
 
-void Movement::move_vertical(int velocity, int16_t posY) {
+void Movement::move_vertical(const int velocity, const int16_t posY) {
     int16_t diff_Y = bodyPosY - posY;
     if (diff_Y < 0) move_down(velocity);
     else move_top(velocity);
 }
 
-void Movement::move_to(int velocity, int16_t posX, int16_t posY) {
+void Movement::move_to(const int velocity, const int16_t posX, int16_t const posY) {
     int16_t diff_X = std::abs(bodyPosX - posX);
     int16_t diff_Y = std::abs(bodyPosY - posY);
     if (diff_X > MAX_OFFSET_TOLERANCE) move_aside(velocity, posX);
@@ -109,19 +109,19 @@ _lastMovement Movement::get_facing_direction() const {
     return last_movement;
 }
 
-bool Movement::is_facing_right(){
+bool Movement::is_facing_right() const {
     return last_movement == RIGHT;
 }
 
-bool Movement::is_facing_left(){
+bool Movement::is_facing_left() const {
     return last_movement == LEFT;
 }
 
-bool Movement::is_facing_top(){
+bool Movement::is_facing_top() const {
     return last_movement == TOP;
 }
 
-bool Movement::is_facing_down(){
+bool Movement::is_facing_down() const {
     return last_movement == DOWN;
 }
 
@@ -132,57 +132,57 @@ void Movement::invert_body_facing(){
     else last_movement = LEFT;
 }
 
-bool Movement::is_near_X(int posX){
+bool Movement::is_near_X(const int posX) const{
     int diff = std::abs(bodyPosX - posX);
     std::cout << "Diff in X " << diff << std::endl;
     return diff <= MAX_OFFSET_TOLERANCE;
 }
 
-bool Movement::is_near_Y(int posY){
+bool Movement::is_near_Y(const int posY) const {
     int diff = std::abs(bodyPosY - posY);
     std::cout << "Diff in Y " << diff << std::endl;
     return diff <= MAX_OFFSET_TOLERANCE;
 }
 
-bool Movement::is_near(int posX, int posY) {
+bool Movement::is_near(const int posX, int const posY) const {
     return is_near_X(posX) && is_near_Y(posY);
 }
 
-bool Movement::is_attackable_Y(int16_t posY){
+bool Movement::is_attackable_Y(const int16_t posY) const {
     int diff = std::abs(bodyPosY - posY);
     return diff <= MAX_ATTACK_OFFSET_TOLERANCE;
 }
 
-bool Movement::is_attackable_X(int16_t posX) {
+bool Movement::is_attackable_X(const int16_t posX) const {
     int diff = std::abs(bodyPosX - posX);
     return diff <= MAX_ATTACK_OFFSET_TOLERANCE;
 }
     
-bool Movement::is_attackable(int16_t posX, int16_t posY){
+bool Movement::is_attackable(const int16_t posX, const int16_t posY) const {
     return is_attackable_X(posX) && is_attackable_Y(posY);
 }
 
-bool Movement::is_safe() {
+bool Movement::is_safe() const {
     int offsetX = bodyPosX / collisionInfo.get_tile_width();
     int offsetY = bodyPosY / collisionInfo.get_tile_height();
     int tileNumber = (offsetY * 25) + offsetX;
     return (collisionInfo.layer1[tileNumber] == 75);
 }
 
-void Movement::check_out_of_bounds_X(int velocity){
+void Movement::check_out_of_bounds_X(const int velocity) {
     if(bodyPosX < 0 || bodyPosX + CHARACTER_WIDTH > collisionInfo.get_map_width()) {
         bodyPosX -= velocity;
     }
 }
 
-void Movement::check_out_of_bounds_Y(int velocity){
+void Movement::check_out_of_bounds_Y(const int velocity) {
     if((bodyPosY - HEAD_SIZE) < 0 || bodyPosY + CHARACTER_HEIGHT > collisionInfo.get_map_height()) { 
         bodyPosY -= velocity;
     }
 }
 
 
-bool Movement::check_map_collision() {
+bool Movement::check_map_collision() const {
     int offsetX = bodyPosX / collisionInfo.get_tile_width();
     int offsetY = bodyPosY / collisionInfo.get_tile_height();
     int tileNumber = (offsetY * 25) + offsetX; 
