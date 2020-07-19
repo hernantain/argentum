@@ -15,6 +15,8 @@ class Drawable {
     public:
         Drawable(uint16_t id, SDL_Renderer* gRenderer);
 
+        virtual ~Drawable();
+
 };
 
 enum PlayerMoving {

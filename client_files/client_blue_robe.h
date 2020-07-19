@@ -10,6 +10,8 @@ class BlueTallRobe: public Clothes {
         BlueTallRobe(SDL_Renderer* gRenderer, int width, int height);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+        virtual ~BlueTallRobe();
 };
 
 
@@ -20,6 +22,8 @@ class BlueShortRobe: public Clothes {
         BlueShortRobe(SDL_Renderer* gRenderer, int width, int height);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+        virtual ~BlueShortRobe();        
 };
 
 #endif

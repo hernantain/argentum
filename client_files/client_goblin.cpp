@@ -8,6 +8,8 @@ Goblin::Goblin(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
 }
 
 
+Goblin::~Goblin() {}
+
 
 void Goblin::set_sprites() {
     this->load_front_walking_sprite();  

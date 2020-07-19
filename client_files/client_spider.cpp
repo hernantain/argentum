@@ -8,7 +8,7 @@ Spider::Spider(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
         this->set_sprites();
 }
 
-
+Spider::~Spider() {}
 
 void Spider::set_sprites() {
     this->load_front_walking_sprite();  

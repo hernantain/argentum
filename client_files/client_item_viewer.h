@@ -57,6 +57,8 @@ class ItemViewer {
         LTexture* get_item_icon(uint8_t id);    
 
         ItemViewer(SDL_Renderer* gRenderer);
+
+        ~ItemViewer();
 };
 
 

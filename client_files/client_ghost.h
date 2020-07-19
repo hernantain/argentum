@@ -31,6 +31,8 @@ class Ghost {
 
         void render(int16_t posX, int16_t posY, SDL_Renderer* gRenderer, int &orientation, int &frame);
 
+        ~Ghost();
+
 };
 
 

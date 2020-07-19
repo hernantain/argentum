@@ -12,6 +12,8 @@ class IronHelmet: public Helmet {
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
 
+        virtual ~IronHelmet();
+
 };
 
 #endif

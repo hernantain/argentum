@@ -1,9 +1,14 @@
-
+#include <iostream>
 #include "client_helmet.h"
 #include "client_player.h"
 
 
 Helmet::Helmet(int offset) : offset(offset) {}
+
+Helmet::~Helmet() {
+	std::cout << "DESTRUYENDO HELMET" << std::endl;
+	helmetTexture.free();
+}
 
 void Helmet::render(int &headPosX, int &headPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
 	//Show Character

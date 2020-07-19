@@ -314,3 +314,25 @@ int16_t Player::getEventId(int &itemId, std::vector<int16_t> &args) {
 uint16_t Player::getId() const {
 	return this->id;
 }
+
+
+Player::~Player() {
+	for (unsigned int i = 0; i < clothes.size(); ++i) 
+		delete clothes[i];
+
+	for (unsigned int i = 0; i < weapons.size(); ++i) 
+		delete weapons[i];
+
+	for (unsigned int i = 0; i < helmets.size(); ++i) 
+		delete helmets[i];
+
+	for (unsigned int i = 0; i < shields.size(); ++i) 
+		delete shields[i];
+
+	delete playerPicture;
+	delete equippedPlayer;
+
+	if (ghost != NULL)
+		delete ghost;
+}
+

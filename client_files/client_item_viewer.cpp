@@ -103,3 +103,11 @@ LTexture* ItemViewer::get_item_icon(uint8_t id) {
         return this->items[id];
     }
 }
+
+
+ItemViewer::~ItemViewer() {
+    std::cout << "Destroying Item Viewer" << std::endl;
+    std::map<uint8_t, LTexture*>::iterator itr;
+    for (itr = items.begin(); itr != items.end(); ++itr)  
+        itr->second->free();
+}

@@ -8,19 +8,15 @@
 #include "client_game.h"
 #include "client_sender_thread.h"
 #include "client_receiver_thread.h"
-#include "client_player.h"
 #include "client_map.h"
-#include "client_npc.h"
 
-
-#include "../common_files/common_protocol_message.h"
+#include "../common_files/common_message_to_server.h"
 #include "../common_files/common_queue.h"
 #include "../common_files/common_sockets.h"
 #include "../common_files/common_mapinfo.h"
 
 #include <msgpack.hpp>
 
-#include "../common_files/common_message_to_server.h"
 
 
 Game::Game(
@@ -155,10 +151,10 @@ void Game::run() {
 				int x, y;
 				SDL_GetMouseState( &x, &y ); 
 				if (x > inventory.x) {
-					std::cout << "INVENTORY_EVENT" << std::endl;
+					// std::cout << "INVENTORY_EVENT" << std::endl;
 					int clickX = x - inventory.x;
 					int itemId = infoView.handle_click(clickX, y); 
-					std::cout << "Seleccionando item: " << itemId << std::endl;
+					// std::cout << "Seleccionando item: " << itemId << std::endl;
 					if (itemId < 0)
 						continue;
 
@@ -226,7 +222,7 @@ void Game::run() {
 
 
 bool Game::init() {
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
+	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		return false;
 	} 
@@ -241,7 +237,7 @@ bool Game::init() {
 	} 
 	
 	this->gRenderer = this->window.createRenderer();
-	if( this->gRenderer == NULL ) {
+	if(this->gRenderer == NULL) {
 		printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 		return false;
 	} 
@@ -249,7 +245,7 @@ bool Game::init() {
 	SDL_SetRenderDrawColor( this->gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
 	int imgFlags = IMG_INIT_PNG;
-	if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
+	if(!( IMG_Init( imgFlags ) & imgFlags)) {
 		printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 		return false;
 	}
@@ -259,7 +255,7 @@ bool Game::init() {
 		return false;
 	}
 
-	if( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
 	}
@@ -269,7 +265,6 @@ bool Game::init() {
 
 
 void Game::adjust_camera(InfoView &infoView) {
-
 	inventory.x =  3 * (this->window.getWidth() / 4);
 	inventory.w = 1 * (this->window.getWidth() / 4);
 	inventory.h = this->window.getHeight();

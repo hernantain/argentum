@@ -1,4 +1,4 @@
-
+#include <iostream>
 
 #include "client_sound_manager.h"
 
@@ -114,6 +114,7 @@ void SoundManager::play_sound() {
 
 
 SoundManager::~SoundManager() {
+    std::cout << "Destoying music" << std::endl;
     Mix_FreeChunk(swordSound);
 	Mix_FreeChunk(arrowSound);
 	Mix_FreeChunk(axeSound);

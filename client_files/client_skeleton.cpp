@@ -8,6 +8,9 @@ Skeleton::Skeleton(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
 }
 
 
+Skeleton::~Skeleton() {}
+
+
 
 void Skeleton::set_sprites() {
     this->load_front_walking_sprite();  

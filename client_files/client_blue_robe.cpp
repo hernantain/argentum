@@ -23,6 +23,10 @@ bool BlueTallRobe::load_pictures(SDL_Renderer* gRenderer) {
 }
 
 
+BlueTallRobe::~BlueTallRobe() {}
+
+
+
 BlueShortRobe::BlueShortRobe(
     SDL_Renderer* gRenderer, 
     int width, 
@@ -42,3 +46,5 @@ bool BlueShortRobe::load_pictures(SDL_Renderer* gRenderer) {
     this->set_short_sprites();
     return true;
 }
+
+BlueShortRobe::~BlueShortRobe() {}
