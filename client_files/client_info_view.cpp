@@ -104,6 +104,33 @@ int InfoView::handle_click(int &x, int &y) {
 }
 
 
+int InfoView::handleDrop(int &x, int &y) {
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        if (click_within_bounds(items[i], x, y)) {
+            int id = items[i]->get_id();
+            this->cleanItems(i);
+            return id;
+        }
+    }
+    return -1;
+}
+
+
+void InfoView::cleanItems(unsigned int i) {
+    std::vector<Item*> tmp;
+    for (unsigned int j = 0; j < items.size(); ++j) {
+        if (j == i) {
+            delete items[j];
+            continue;
+        }
+
+        tmp.push_back(items[j]);
+    }
+    items.swap(tmp);
+}
+
+
+
 bool InfoView::click_within_bounds(Item* item, int &x, int &y) {
     return (x_within_bounds(item, x) && y_within_bounds(item, y));
 }

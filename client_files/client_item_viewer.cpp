@@ -88,6 +88,11 @@ void ItemViewer::add_item(uint8_t &id) {
         case MANA_POTION_CODE: 
             texture->loadFromFile(MANA_POTION_IMAGE, gRenderer);
             break;
+
+        case GOLD_CODE:
+            texture->loadFromFile(GOLD_IMAGE, gRenderer);
+            break;
+            
     }
     this->items.insert(std::pair<uint8_t, LTexture*>(id, texture));
 }

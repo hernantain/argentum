@@ -147,6 +147,18 @@ void Game::run() {
 				this->adjust_camera(infoView);
 				continue;
 
+			} else if ((e.type == SDL_MOUSEBUTTONDOWN) && (e.button.button == SDL_BUTTON_RIGHT)) {
+				int x, y;
+				SDL_GetMouseState( &x, &y ); 
+				if (x > inventory.x) {
+					int clickX = x - inventory.x;
+					int itemId = infoView.handleDrop(clickX, y);
+					MessageToServer msg = world.player_handle_drop_event(this->player_id, itemId);
+					queue.push(msg);
+				}
+				// std::cout << "RIGHT CLICK" << std::endl;
+				continue;
+
 			} else if (e.type == SDL_MOUSEBUTTONDOWN) {
 				int x, y;
 				SDL_GetMouseState( &x, &y ); 

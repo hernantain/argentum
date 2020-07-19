@@ -46,6 +46,7 @@ class InfoView {
     bool x_within_bounds(Item* item, int &x);
     bool y_within_bounds(Item* item, int &y);
     void adjust_items();
+    void cleanItems(unsigned int i);
 
     public:
         InfoView(SDL_Renderer* gRenderer, SDL_Rect &infoPanel, ItemViewer &itemViewer);
@@ -57,6 +58,7 @@ class InfoView {
         void add_item(Item* item);
 
         int handle_click(int &x, int &y);
+        int handleDrop(int &x, int &y);
 
         void render();
 
