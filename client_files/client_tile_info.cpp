@@ -34,9 +34,21 @@ LTexture* TileInfo::getTexture(int i) {
 }
 
 
+TileInfo::TileInfo(TileInfo&& other) {
+    this->textures = std::move(other.textures);
+    this->tiles = std::move(other.tiles);
+}
+
+TileInfo& TileInfo::operator=(TileInfo&& other) {
+    this->textures = std::move(other.textures);
+    this->tiles = std::move(other.tiles);
+    return *this;
+}
+
+
 TileInfo::~TileInfo() {
-    // std::cout << "Destroying TILE INFO TEXTURES" << std::endl;
-    // std::map<int, LTexture*>::iterator itr;
-    // for (itr = textures.begin(); itr != textures.end(); ++itr)  
-    //     itr->second->free();
+    std::cout << "Destroying TILE INFO TEXTURES" << std::endl;
+    std::map<int, LTexture*>::iterator itr;
+    for (itr = textures.begin(); itr != textures.end(); ++itr)  
+        itr->second->free();
 }

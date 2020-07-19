@@ -98,6 +98,7 @@ void InfoView::render_items() {
 
 
 int InfoView::handle_click(int &x, int &y) {
+    std::unique_lock<std::mutex> lock(this->m);
     for (unsigned int i = 0; i < items.size(); ++i) {
         if (click_within_bounds(items[i], x, y)) 
             return items[i]->get_id();
@@ -107,10 +108,10 @@ int InfoView::handle_click(int &x, int &y) {
 
 
 int InfoView::handleDrop(int &x, int &y) {
+    std::unique_lock<std::mutex> lock(this->m);
     for (unsigned int i = 0; i < items.size(); ++i) {
         if (click_within_bounds(items[i], x, y)) {
             int id = items[i]->get_id();
-            // this->cleanItems(i);
             return id;
         }
     }
@@ -119,6 +120,7 @@ int InfoView::handleDrop(int &x, int &y) {
 
 
 void InfoView::dropItem(uint8_t &itemId) {
+    std::unique_lock<std::mutex> lock(this->m);
     for (unsigned int i = 0; i < items.size(); ++i) {
         uint8_t id = items[i]->get_id();
         if (id == itemId) 
@@ -203,7 +205,7 @@ void InfoView::render() {
     argentumLabel.render((infoPanel.w - argentumLabel.getWidth()) / 2, 30);
     lifeLabel.render((infoPanel.w - lifeLabel.getWidth()) / 2, currentLifeRect.y - 40);
     // currLifeLabel.render(maxLifeRect.x, maxLifeRect.y - 30);
-    // maxLifeLabel.    render(maxLifeRect.x + maxLifeRect.w, maxLifeRect.y - 30);
+    // maxLifeLabel.render(maxLifeRect.x + maxLifeRect.w, maxLifeRect.y - 30);
     manaLabel.render((infoPanel.w - manaLabel.getWidth()) / 2, currentManaRect.y - 40);
     expLabel.render((infoPanel.w - expLabel.getWidth()) / 2, currentExpRect.y - 40);
 }

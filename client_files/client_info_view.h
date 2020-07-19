@@ -24,7 +24,8 @@ class InfoView {
     TextLabel lifeLabel; 
     TextLabel manaLabel;
     TextLabel expLabel;
-    // TextLabel currLifeLabel, maxLifeLabel;
+    // TextLabel currLifeLabel;
+    // TextLabel maxLifeLabel;
     
     SDL_Renderer* gRenderer;
 

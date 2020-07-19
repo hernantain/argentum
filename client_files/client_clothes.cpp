@@ -11,20 +11,25 @@ Clothes::Clothes(int width, int height) : width(width), height(height) {}
 
 void Clothes::render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
     // Show Character
+	std::cout << "FRAME: " << frame << std::endl;
     if (orientation == RIGHT) {
-		SDL_Rect* currentClip = &this->walkingRightPlayer[frame % walkingRightPlayer.size()];
+		int it = frame % (walkingRightPlayer.size() * DESACCELERATING_RATE);
+		SDL_Rect* currentClip = &this->walkingRightPlayer[it / DESACCELERATING_RATE];
 		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
         
 	} else if(orientation == LEFT)  {
-		SDL_Rect *currentClip = &this->walkingLeftPlayer[frame % walkingLeftPlayer.size()];
+		int it = frame % (walkingLeftPlayer.size() * DESACCELERATING_RATE);
+		SDL_Rect *currentClip = &this->walkingLeftPlayer[it / DESACCELERATING_RATE];
 		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
 	
     } else if(orientation == UP)  {
-		SDL_Rect *currentClip = &this->walkingBackPlayer[frame % walkingBackPlayer.size()];
+		int it = frame % (walkingBackPlayer.size() * DESACCELERATING_RATE);
+		SDL_Rect *currentClip = &this->walkingBackPlayer[it / DESACCELERATING_RATE];
 		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
 	
     } else if(orientation == DOWN)  {
-		SDL_Rect *currentClip = &this->walkingFrontPlayer[frame % walkingFrontPlayer.size()];
+		int it = frame % (walkingFrontPlayer.size() * DESACCELERATING_RATE);
+		SDL_Rect *currentClip = &this->walkingFrontPlayer[it / DESACCELERATING_RATE];
 		this->bodyTexture.render(bodyPosX, bodyPosY, gRenderer, currentClip);
 
 	} else {
