@@ -146,7 +146,8 @@ bool ServerWorld::player_take_item(const uint16_t id) {
             } else {
                 took = characters[id]->take_item(items[i]);
             }
-            this->update_world_items(i);
+            std::cout << "Took item???" << took << std::endl;
+            if(took) this->update_world_items(i);
             return took;
         }
     }
