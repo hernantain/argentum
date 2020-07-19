@@ -17,7 +17,7 @@ class SrvClient {
 
     uint16_t client_id;
     Socket skt;
-    Queue_2 &receiversQueue;
+    MessageToServerQueue &receiversQueue;
     std::atomic<bool> active;
     SrvClientReceiverThread* cReceiverThread;
     SrvClientSenderThread* cSenderThread;
@@ -25,7 +25,7 @@ class SrvClient {
 
     public:
 
-        SrvClient(uint16_t client_id, Socket skt, Queue_2 &receiversQueue);
+        SrvClient(uint16_t client_id, Socket skt, MessageToServerQueue &receiversQueue);
 
         void send_message(ProtocolMessage &updated_msg);
 

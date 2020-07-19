@@ -17,7 +17,7 @@ class ClientManager {
     public:
         ClientManager();
 
-        void add_client(uint16_t client_id, Socket &skt, Queue_2 &receiversQueue);
+        void add_client(uint16_t client_id, Socket &skt, MessageToServerQueue &receiversQueue);
 
         void broadcastMessage(ProtocolMessage &msg);
 

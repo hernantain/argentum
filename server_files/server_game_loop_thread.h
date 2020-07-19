@@ -12,11 +12,11 @@
 
 class GameLoopThread : public Thread {
 private:
-    Queue_2 &queue;
+    MessageToServerQueue &queue;
     std::atomic<bool> running;
 
 public:
-    GameLoopThread(Queue_2 &queue);
+    GameLoopThread(MessageToServerQueue &queue);
 
     virtual void run() override;
 };

@@ -11,7 +11,7 @@
 #include "server_iron_shield.h"
 
 ServerProcessorThread::ServerProcessorThread(
-    Queue_2 &receiversQueue,
+    MessageToServerQueue &receiversQueue,
     ClientManager &clientManager,
     CollisionInfo &collisionInfo,
     Json::Value &config) : receiversQueue(receiversQueue),

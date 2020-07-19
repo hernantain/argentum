@@ -12,9 +12,7 @@
 Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) {
     this->bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
     this->bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;
-
-    std::cout << "BODYPOSY " << bodyPosY << std::endl;
-
+    
     while(check_map_collision()) {
         this->bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
         this->bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;

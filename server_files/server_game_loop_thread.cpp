@@ -17,7 +17,7 @@
 #include <vector>
 
 
-GameLoopThread::GameLoopThread(Queue_2 &queue) : queue(queue), running(true) {}
+GameLoopThread::GameLoopThread(MessageToServerQueue &queue) : queue(queue), running(true) {}
 
 
 void GameLoopThread::run() {

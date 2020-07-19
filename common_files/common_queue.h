@@ -29,14 +29,14 @@ class Queue {
 
 
 
-class Queue_2 {
+class MessageToServerQueue {
     std::mutex m;
 	std::condition_variable cond_var;
     std::queue<MessageToServer> messages;
     bool operating;
 
     public:
-        Queue_2();
+        MessageToServerQueue();
 
         void push(MessageToServer &message);
 
@@ -44,7 +44,7 @@ class Queue_2 {
 
         void stop();
 
-        ~Queue_2();
+        ~MessageToServerQueue();
 };
 
 

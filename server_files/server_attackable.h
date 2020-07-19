@@ -27,7 +27,7 @@ public:
     virtual int16_t get_body_pos_Y() const = 0;
     virtual int defense(const int damage) = 0;
     virtual void attack(Attackable& other) = 0;
-    virtual ~Attackable() = default;
+    virtual ~Attackable() {}
 };
 
 

@@ -24,6 +24,7 @@ class InfoView {
     TextLabel lifeLabel; 
     TextLabel manaLabel;
     TextLabel expLabel;
+    // TextLabel currLifeLabel, maxLifeLabel;
     
     SDL_Renderer* gRenderer;
 
@@ -65,7 +66,6 @@ class InfoView {
         void adjust();
 
         void clear_items();
-
 };
 
 

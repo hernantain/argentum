@@ -14,13 +14,13 @@ class SrvClientReceiverThread: public Thread {
 
     uint16_t client_id;
     Socket &skt;
-    Queue_2 &receiversQueue;
+    MessageToServerQueue &receiversQueue;
     std::atomic<bool> running;
 
     MessageToServer receive_msg();
 
     public:
-        SrvClientReceiverThread(uint16_t client_id, Socket &skt, Queue_2 &receiversQueue);
+        SrvClientReceiverThread(uint16_t client_id, Socket &skt, MessageToServerQueue &receiversQueue);
 
 
         virtual void run() override;
