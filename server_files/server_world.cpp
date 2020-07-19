@@ -177,22 +177,34 @@ void ServerWorld::remove_npc(uint16_t id) {
 
 void ServerWorld::move_character_right(uint16_t id) {
     this->characters[id]->move_right();
-    if(check_characters_collision(id) || check_npcs_collision(id)) this->characters[id]->move_left();
+    if(check_characters_collision(id) || check_npcs_collision(id)) {
+        this->characters[id]->move_left();
+        this->characters[id]->invert_body_facing();
+        }
 }
 
 void ServerWorld::move_character_left(uint16_t id) {
     this->characters[id]->move_left();
-    if(check_characters_collision(id) || check_npcs_collision(id)) this->characters[id]->move_right();
+    if(check_characters_collision(id) || check_npcs_collision(id)) {
+        this->characters[id]->move_right();
+        this->characters[id]->invert_body_facing();
+    }
 }
 
 void ServerWorld::move_character_down(uint16_t id) {
     this->characters[id]->move_down();
-    if(check_characters_collision(id) || check_npcs_collision(id)) this->characters[id]->move_top();
+    if(check_characters_collision(id) || check_npcs_collision(id)) {
+        this->characters[id]->move_top();
+        this->characters[id]->invert_body_facing();
+    }
 }
 
 void ServerWorld::move_character_top(uint16_t id) {
     this->characters[id]->move_top();
-    if(check_characters_collision(id) || check_npcs_collision(id)) this->characters[id]->move_down();
+    if(check_characters_collision(id) || check_npcs_collision(id)) {
+        this->characters[id]->move_down();
+        this->characters[id]->invert_body_facing();
+    }
 }
 
 bool ServerWorld::check_characters_collision(uint16_t id) {

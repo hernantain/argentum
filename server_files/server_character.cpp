@@ -452,6 +452,9 @@ int Character::get_body_facing() const {
     return (int) movement.get_facing_direction();
 }
 
+void Character::invert_body_facing() { 
+    movement.invert_body_facing();
+}
 
 void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter) {
     protocolCharacter.id = this->get_id();

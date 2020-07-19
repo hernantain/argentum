@@ -238,6 +238,9 @@ public:
     // Getter de para donde el character apunta
     int get_body_facing() const;
 
+    // Invierte hacia donde mira el personaje
+    void invert_body_facing();
+
     // Getter de la experiencia actual
     int16_t get_current_experience() const;
 

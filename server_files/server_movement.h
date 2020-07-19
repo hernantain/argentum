@@ -99,12 +99,16 @@ public:
     // Devuelve true si el personaje está mirando hacia abajo, false en caso contrario.
     bool is_facing_down();
 
+    // Invierte hacia donde esta mirando el personaje, se usa en caso de que colisione
+    void invert_body_facing();
+
     // Corrige la posicion en X si el personaje se va de los limites del mapa
     void check_out_of_bounds_X(int velocity);
 
     // Corrige la posicion en Y si el personaje se va de los limites del mapa
     void check_out_of_bounds_Y(int velocity);
 
+    // Chequea las colisiones estaticas contra el mapa del personaje
     bool check_map_collision();
 };
 
