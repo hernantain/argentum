@@ -33,6 +33,8 @@ Se puede instalar SDL 2 en el sistema corriendo los siguientes comandos en la te
 
 `sudo apt-get install libsdl2-image-ttf`
 
+`sudo apt-get install libsdl2-ttf-dev`
+
 ## msgpack y CMake
 
 Para poder instalar msgpack, debemos tener previamente instalado CMake en nuestro sistema. 
