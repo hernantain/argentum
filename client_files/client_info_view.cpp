@@ -186,3 +186,10 @@ void InfoView::adjust() {
 
     this->adjust_items();
 }
+
+void InfoView::clear_items() {
+    for (unsigned int i = 0; i < items.size(); ++i) 
+        delete items[i];
+
+    items.clear();
+}

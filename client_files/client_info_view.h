@@ -62,6 +62,8 @@ class InfoView {
 
         void adjust();
 
+        void clear_items();
+
 };
 
 

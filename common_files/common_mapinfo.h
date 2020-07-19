@@ -28,7 +28,7 @@ class MapInfo {
         void loadCollisionInfo(CollisionInfo &collisionInfo, Json::Value &tileJson, int &first_tile_gid);
 
 
-    MSGPACK_DEFINE(layer1, layer2, tileSetInfo)
+    MSGPACK_DEFINE(layer1, layer2, tileSetInfo, tile_width, tile_height, map_width, map_height)
 
 };
 

@@ -37,7 +37,7 @@ void ClientReceiverThread::run() {
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
-    // print_response_info(msg);
+    print_response_info(msg);
     if (msg.id_message == PROTOCOL_MOVE_CONFIRM) this->process_move(msg);
     if (msg.id_message == PROTOCOL_DEPOSIT_CONFIRM) this->process_deposit(msg);
     if (msg.id_message == PROTOCOL_WITHDRAW_CONFIRM) this->process_withdraw(msg);
@@ -219,14 +219,19 @@ void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
 void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
     update_bars(msg);
     int i = msg.find(this->player_id);
-    std::cout << "es un attack !!" << std::endl;
-    if (msg.id_player == this->player_id) {
-        std::cout << "Seteando sonido: " << (int) msg.characters[i].weaponId << std::endl;
+    if (msg.id_player == this->player_id)
         soundManager.set_sound(msg.characters[i].weaponId);
-    }
 }
 
 void ClientReceiverThread::process_death(ProtocolMessage &msg) {
+    std::cout << "DEATH: " << (int) msg.id_player << std::endl;
+    int i = msg.find(this->player_id);
+    std::cout << "i es: " << i << std::endl;
+    std::cout << "SOY PLAYER: " << player_id << " Y estoy: " << ((msg.characters[i].alive) ? "vivo!" : "muerto") << std::endl;
+    std::cout << "PLAYER: " << msg.characters[i].id << " ALIVE? " << msg.characters[i].alive << std::endl;
+    if (!msg.characters[i].alive)
+        infoView.clear_items();
+        
     update_bars(msg);
     world.update_dead_npcs(msg);
     world.update_player_alive_status(msg);
