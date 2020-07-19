@@ -23,6 +23,12 @@ struct TileInfo {
     LTexture* getTexture(int i);
     SDL_Rect getTileBox(int i);
 
+    TileInfo(TileInfo&& other);
+    TileInfo& operator=(TileInfo&& other);
+
+    TileInfo(const TileInfo&) = delete;
+    TileInfo& operator=(const TileInfo&) = delete;
+
     ~TileInfo();
 };
 

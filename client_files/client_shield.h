@@ -5,6 +5,8 @@
 #include "client_texture.h"
 #include <vector>
 
+#define DESACCELERATING_RATE 4
+
 class Shield {
 
     int offset;
