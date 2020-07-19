@@ -11,11 +11,11 @@ SenderThread::SenderThread(
 
 void SenderThread::run() {
 
-    while (running) {
+    while (running) {        
         MessageToServer msg = this->queue.pop();
-        if (msg.event_id == 1)
+        if (msg.event_id == 1) 
             continue;
-        
+      
         msgpack::sbuffer buffer;
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
         pk.pack(msg);

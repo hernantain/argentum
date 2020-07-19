@@ -163,7 +163,7 @@ void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
 void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
     if (i != -1) {
-        std::cout << "HAY QUE CREAR OTRO PLAYER: " << msg.id_player << "EN POS: " << i << std::endl; 
+        std::cout << "HAY QUE CREAR OTRO PLAYER: " << msg.id_player << "EN POS: " << i << std::endl;
         world.add_player(msg.characters[i]);
     }
 }

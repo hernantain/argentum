@@ -60,7 +60,6 @@ Map Game::loadMap() {
 	pac.next(oh);
 	msgpack::object obj = oh.get();
 	obj.convert(mapInfo);
-	
 	Map map(gRenderer);
     map.load(mapInfo);
 

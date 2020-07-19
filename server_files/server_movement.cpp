@@ -13,7 +13,7 @@ Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) 
     this->bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
     this->bodyPosY = rand() % (collisionInfo.get_map_height() - 40 + 1) + 0;
 
-    std::cout << "BODYPOSY" << bodyPosY << std::endl;
+    std::cout << "BODYPOSY " << bodyPosY << std::endl;
 
     while(check_map_collision()) {
         this->bodyPosX = rand() % (collisionInfo.get_map_width() - 40 + 1) + 0;
@@ -143,13 +143,11 @@ bool Movement::is_near(int posX, int posY) {
 
 bool Movement::is_attackable_Y(int16_t posY){
     int diff = std::abs(bodyPosY - posY);
-    // std::cout << "Diff to Attack in Y " << diff << std::endl;
     return diff <= MAX_ATTACK_OFFSET_TOLERANCE;
 }
 
 bool Movement::is_attackable_X(int16_t posX) {
     int diff = std::abs(bodyPosX - posX);
-    // std::cout << "Diff to Attack in X " << diff << std::endl;
     return diff <= MAX_ATTACK_OFFSET_TOLERANCE;
 }
     

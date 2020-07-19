@@ -38,11 +38,9 @@ Player* ClientWorld::get_player(uint16_t id) {
 void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
     std::unique_lock<std::mutex> lock(m);
     Player* player = NULL;
-    // std::cout << "PROTOCOL_CHARACTER ID: " << protocolCharacter.id << std::endl;
     if (protocolCharacter.id_race == 1) {
         player = new Human(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);
-    
     } else if (protocolCharacter.id_race == 2) {
         player = new Elf(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
         this->add_player(protocolCharacter.id, player);

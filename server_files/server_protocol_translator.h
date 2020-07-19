@@ -116,6 +116,9 @@ private:
     // Evento actualizar todos los NPCs, Items y Personajes del mundo
     void get_world(ProtocolMessage& msg, ServerWorld &world);
 
+    // Evento indefinid, security case
+    void undefined_event(MessageToServer &msg, ProtocolMessage& clientMessage);
+
 public:
     ProtocolTranslator(Json::Value &config, CollisionInfo &collisionInfo);
 

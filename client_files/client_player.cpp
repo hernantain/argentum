@@ -198,7 +198,8 @@ MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 
 	std::vector<int16_t> args;
 	int event_id = 1;
-	int x, y;
+	int x = 0;
+	int y = 0;
 	if( e.type == SDL_KEYDOWN ) {
 		switch( e.key.keysym.sym ) {
             case SDLK_UP: 
