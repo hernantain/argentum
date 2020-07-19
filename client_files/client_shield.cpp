@@ -1,3 +1,4 @@
+#include <iostream>
 #include "client_shield.h"
 #include "client_player.h"
 
@@ -5,7 +6,10 @@
 
 Shield::Shield(int offset) : offset(offset) {}
 
-Shield::~Shield() {}
+Shield::~Shield() {
+	std::cout << "Destruyendo SHIELD" << std::endl;
+	shieldTexture.free();
+}
 
 
 void Shield::render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {

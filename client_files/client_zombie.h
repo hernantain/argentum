@@ -25,6 +25,8 @@ class Zombie: public NpcPicture {
 
         virtual void render(int posX, int posY, SDL_Renderer* gRenderer, int &orientation, int &frame) override;
 
+        virtual ~Zombie();
+
 };
 
 

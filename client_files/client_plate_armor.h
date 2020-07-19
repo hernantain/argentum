@@ -10,6 +10,8 @@ class PlateTallArmor: public Clothes {
         PlateTallArmor(SDL_Renderer* gRenderer, int width, int height);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+        virtual ~PlateTallArmor();
 };
 
 
@@ -20,6 +22,8 @@ class PlateShortArmor: public Clothes {
         PlateShortArmor(SDL_Renderer* gRenderer, int width, int height);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+        virtual ~PlateShortArmor();
 };
 
 #endif

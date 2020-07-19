@@ -3,10 +3,13 @@
 
 
 MagicHat::MagicHat(SDL_Renderer* gRenderer) : Helmet(-12) {
-
     this->load_pictures(gRenderer);
 	this->id = 6;
 }
+
+
+MagicHat::~MagicHat() {}
+
 
 
 bool MagicHat::load_pictures(SDL_Renderer* gRenderer) {

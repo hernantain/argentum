@@ -10,6 +10,8 @@ class CommonTallClothes: public Clothes {
         CommonTallClothes(SDL_Renderer* gRenderer, int width, int height);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+        virtual ~CommonTallClothes();
 };
 
 
@@ -20,6 +22,8 @@ class CommonShortClothes: public Clothes {
         CommonShortClothes(SDL_Renderer* gRenderer, int width, int height);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+        virtual ~CommonShortClothes();
 };
 
 

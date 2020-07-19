@@ -19,7 +19,7 @@ class BaculoEngarzado: public Weapon {
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
 
-        virtual ~BaculoEngarzado() override;
+        virtual ~BaculoEngarzado();
 
 };
 

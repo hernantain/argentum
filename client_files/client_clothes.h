@@ -42,6 +42,8 @@ class Clothes {
         virtual void render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame);
 
         int get_id();
+
+        virtual ~Clothes();
 };
 
 

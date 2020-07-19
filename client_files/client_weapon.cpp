@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 #include "client_weapon.h"
 #include "client_player.h"
 
@@ -6,7 +8,10 @@
 
 Weapon::Weapon(int offset) : offset(offset) {}
 
-Weapon::~Weapon() {}
+Weapon::~Weapon() {
+	std::cout << "DESTRUYENDO WEAPON" << std::endl;
+	weaponTexture.free();
+}
 
 
 void Weapon::render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {

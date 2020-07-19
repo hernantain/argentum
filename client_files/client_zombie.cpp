@@ -8,6 +8,9 @@ Zombie::Zombie(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
 }
 
 
+Zombie::~Zombie() {}
+
+
 void Zombie::set_sprites() {
     this->load_front_walking_sprite();  
     this->load_back_walking_sprite();

@@ -21,6 +21,8 @@ class Picture {
             int &orientation, 
             int &frame) = 0;
 
+        virtual ~Picture();
+
 };
 
 
@@ -45,6 +47,8 @@ class PlayerPicture: public Picture {
             SDL_Renderer* gRenderer, 
             int &orientation, 
             int &frame) override;
+
+        virtual ~PlayerPicture();
 };
 
 
@@ -70,6 +74,8 @@ class EquippedPlayer: public Picture {
             SDL_Renderer* gRenderer, 
             int &orientation, 
             int &frame) override;
+
+        virtual ~EquippedPlayer();
 };
 
 

@@ -261,6 +261,16 @@ void ClientWorld::render(uint16_t id, SDL_Rect &camera, int &it) {
 }
 
 
+ClientWorld::~ClientWorld() {
+    std::map<uint16_t, Player*>::iterator itr;
+    for (itr = players.begin(); itr != players.end(); ++itr)  
+        delete itr->second;
+
+    std::map<uint16_t, NPC*>::iterator npc_itr;
+    for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr)  
+        delete npc_itr->second;
+}
+
 // Constructor y asignacion por movimiento.
 
 

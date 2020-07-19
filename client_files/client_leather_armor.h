@@ -10,6 +10,8 @@ class LeatherTallArmor: public Clothes {
         LeatherTallArmor(SDL_Renderer* gRenderer, int width, int height);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+        virtual ~LeatherTallArmor();
 };
 
 
@@ -19,6 +21,8 @@ class LeatherShortArmor: public Clothes {
         LeatherShortArmor(SDL_Renderer* gRenderer, int width, int height);
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
+
+        virtual ~LeatherShortArmor();
 };
 
 

@@ -57,6 +57,8 @@ class Player: public Drawable {
 
         uint16_t getId() const;
 
+        virtual ~Player();
+
 };
 
 #endif

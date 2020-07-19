@@ -19,7 +19,7 @@ class AshStaff: public Weapon {
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
 
-        ~AshStaff();
+        virtual ~AshStaff();
 
 
 };

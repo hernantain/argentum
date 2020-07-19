@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "client_ghost.h"
 #include "client_drawable.h"
 
@@ -7,7 +8,11 @@ Ghost::Ghost(SDL_Renderer* gRenderer) {
     this->load_pictures(gRenderer);
 }
 
-
+Ghost::~Ghost() {
+    std::cout << "Destruyendo Ghost" << std::endl;
+    bodyTexture.free();
+    headTexture.free();
+}
 
 bool Ghost::load_pictures(SDL_Renderer* gRenderer) {
 

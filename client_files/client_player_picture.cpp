@@ -1,23 +1,25 @@
 
+#include <iostream>
 #include "client_player.h"
 #include "client_player_picture.h"
 
+
+
+Picture::~Picture() {}
 
 /**
  * PlayerPicture
  */
 
 PlayerPicture::PlayerPicture(SDL_Renderer* gRenderer, const char* head_path) {
-
     this->load_pictures(gRenderer, head_path); 
-
 }
 
 
 
 bool PlayerPicture::load_pictures(SDL_Renderer* gRenderer, const char* head_path) {
-    if( !this->headTexture.loadFromFile( head_path, gRenderer ) ) {
-		printf( "Failed to load walking animation texture!\n" );
+    if(!this->headTexture.loadFromFile(head_path, gRenderer)) {
+		printf("Failed to load walking animation texture!\n");
 		return false;
 	}
 
@@ -77,6 +79,12 @@ void PlayerPicture::render(int bodyPosX, int bodyPosY, int headPosX, int headPos
 
 
 
+PlayerPicture::~PlayerPicture() {
+	std::cout << "Destruyendo PLAYER PICTURE" << std::endl;
+	headTexture.free();
+}
+
+
 
 EquippedPlayer::EquippedPlayer(PlayerPicture* player) {
 	this->player = player;
@@ -115,4 +123,9 @@ void EquippedPlayer::render(
 
 	if (shield != NULL)
 		shield->render(bodyPosX, bodyPosY, gRenderer, orientation, frame);			
+}
+
+
+EquippedPlayer::~EquippedPlayer() {
+	std::cout << "Destruyendo EQUIPPED PLAYER" << std::endl;
 }

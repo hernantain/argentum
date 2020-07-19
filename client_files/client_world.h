@@ -64,6 +64,8 @@ struct ClientWorld {
 
     ClientWorld(const ClientWorld&) = delete;
     ClientWorld& operator=(const ClientWorld&) = delete;
+
+    ~ClientWorld();
 };
 
 

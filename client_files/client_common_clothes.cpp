@@ -12,7 +12,7 @@ CommonTallClothes::CommonTallClothes(
 
 
 bool CommonTallClothes::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->bodyTexture.loadFromFile( "images/vestimenta_comun_he.png", gRenderer ) ) {
+    if(!this->bodyTexture.loadFromFile( "images/vestimenta_comun_he.png", gRenderer)) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
@@ -20,6 +20,9 @@ bool CommonTallClothes::load_pictures(SDL_Renderer* gRenderer) {
     this->set_tall_sprites();
     return true;
 }
+
+
+CommonTallClothes::~CommonTallClothes() {}
 
 
 CommonShortClothes::CommonShortClothes(
@@ -41,3 +44,6 @@ bool CommonShortClothes::load_pictures(SDL_Renderer* gRenderer) {
     this->set_short_sprites();
     return true;
 }
+
+
+CommonShortClothes::~CommonShortClothes() {}

@@ -25,6 +25,8 @@ class Helmet {
 
         int get_id();
 
+        virtual ~Helmet();
+
 };
 
 

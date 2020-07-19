@@ -10,3 +10,6 @@ Drawable::Drawable(
     this->gRenderer = gRenderer;
 }
 
+
+Drawable::~Drawable() {}
+

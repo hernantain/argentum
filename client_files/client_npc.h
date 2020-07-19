@@ -21,6 +21,8 @@ class NPC: public Drawable {
 
         void render(SDL_Rect &camera);
 
+        virtual ~NPC();
+
 
 };
 

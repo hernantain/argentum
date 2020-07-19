@@ -22,6 +22,8 @@ struct TileInfo {
 
     LTexture* getTexture(int i);
     SDL_Rect getTileBox(int i);
+
+    ~TileInfo();
 };
 
 

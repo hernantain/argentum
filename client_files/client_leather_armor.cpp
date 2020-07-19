@@ -20,8 +20,11 @@ bool LeatherTallArmor::load_pictures(SDL_Renderer* gRenderer) {
 
     this->set_tall_sprites();
     return true;
-    
 }
+
+LeatherTallArmor::~LeatherTallArmor() {}
+
+
 
 
 LeatherShortArmor::LeatherShortArmor(
@@ -41,6 +44,7 @@ bool LeatherShortArmor::load_pictures(SDL_Renderer* gRenderer) {
 	}
 
     this->set_short_sprites();
-    return true;
-    
+    return true;   
 }
+
+LeatherShortArmor::~LeatherShortArmor() {}

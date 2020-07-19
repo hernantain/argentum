@@ -20,7 +20,7 @@ class Hammer: public Weapon {
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
 
-        virtual ~Hammer() override;
+        virtual ~Hammer();
 
 };
 

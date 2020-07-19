@@ -20,7 +20,7 @@ class Axe: public Weapon {
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
 
-        virtual ~Axe() override;
+        virtual ~Axe();
 
 };
 

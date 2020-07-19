@@ -23,6 +23,9 @@ bool PlateTallArmor::load_pictures(SDL_Renderer* gRenderer) {
 }
 
 
+PlateTallArmor::~PlateTallArmor() {}
+
+
 PlateShortArmor::PlateShortArmor(
     SDL_Renderer* gRenderer, 
     int width, 
@@ -42,3 +45,5 @@ bool PlateShortArmor::load_pictures(SDL_Renderer* gRenderer) {
     this->set_short_sprites();
     return true;
 }
+
+PlateShortArmor::~PlateShortArmor() {}

@@ -20,7 +20,7 @@ class BaculoNudoso: public Weapon {
 
         virtual bool load_pictures(SDL_Renderer* gRenderer) override;
 
-        virtual ~BaculoNudoso() override;
+        virtual ~BaculoNudoso();
 
 
 };

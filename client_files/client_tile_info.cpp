@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "client_tile_info.h"
 
 
@@ -30,4 +31,12 @@ SDL_Rect TileInfo::getTileBox(int i) {
 
 LTexture* TileInfo::getTexture(int i) {
     return this->textures[i];
+}
+
+
+TileInfo::~TileInfo() {
+    std::cout << "Destroying TILE INFO TEXTURES" << std::endl;
+    std::map<int, LTexture*>::iterator itr;
+    for (itr = textures.begin(); itr != textures.end(); ++itr)  
+        itr->second->free();
 }

@@ -20,6 +20,8 @@ class Item {
         void set_posX(int16_t posX);
         void set_posY(int16_t posY);
         void add_amount();
+
+        ~Item();
 };
 
 

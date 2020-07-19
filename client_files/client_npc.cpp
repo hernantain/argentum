@@ -37,3 +37,8 @@ void NPC::render(SDL_Rect &camera) {
 		frame // ACA HAY QUE EDITAR
 	);
 }
+
+
+NPC::~NPC() {
+	delete npcPicture;
+}

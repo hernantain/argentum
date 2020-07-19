@@ -3,10 +3,11 @@
 
 
 IronHelmet::IronHelmet(SDL_Renderer* gRenderer) : Helmet(-2) {
-
     this->load_pictures(gRenderer);
 	this->id = 5;
 }
+
+IronHelmet::~IronHelmet() {}
 
 
 bool IronHelmet::load_pictures(SDL_Renderer* gRenderer) {
