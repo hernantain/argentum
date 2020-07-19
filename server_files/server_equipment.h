@@ -32,31 +32,31 @@ public:
     void equip_helmet(Helmet& item);
 
     // Obtiene el daño del arma equipada si la hubiere
-    int get_weapon_damage();
+    int get_weapon_damage() const;
 
     // Obtiene el consumo de mana del arma si lo hubiere
-    int get_weapon_consumption();
+    int get_weapon_consumption() const;
 
     // Devuelve verdadero si el arma equipada es magica, falso si no
-    bool is_weapon_magical();
+    bool is_weapon_magical() const;
 
     // Devuelve verdadero si el arma equipada es de rango, falso si no
-    bool is_weapon_ranged();
+    bool is_weapon_ranged() const;
 
     // Devuelve el arma actual equipada, -1 si es la default
-    int16_t current_weapon();
+    int16_t current_weapon() const;
 
     // Devuelve el escudo actual equipada, -1 si es la default
-    int16_t current_shield();
+    int16_t current_shield() const;
 
     // Devuelve la armadura actual equipada, -1 si es la default
-    int16_t current_armor();
+    int16_t current_armor() const;
 
     // Devuelve el casco actual equipada, -1 si es la default
-    int16_t current_helmet();
+    int16_t current_helmet() const;
 
     // Obtiene el daño del arma equipada si la hubiere
-    int get_equipment_defense();
+    int get_equipment_defense() const;
 };
 
 

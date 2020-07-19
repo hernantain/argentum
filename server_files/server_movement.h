@@ -67,49 +67,49 @@ public:
     _lastMovement get_facing_direction() const;
   
     // Booleano que devuelve verdadero si posX y posY estan cerca del personaje
-    bool is_near(int posX, int posY);
+    bool is_near(const int posX, const int posY) const;
 
     // Booleano que devuelve verdadero si posX esta cerca del personaje bodyPosX
-    bool is_near_X(int posX);
+    bool is_near_X(const int posX) const;
 
     // Booleano que devuelve verdadero si posY esta cerca del personaje bodyPosY
-    bool is_near_Y(int posY);
+    bool is_near_Y(const int posY) const;
 
     // Booleano que devuelve verdadero si posX y posY son atacables
-    bool is_attackable(int16_t posX, int16_t posY);
+    bool is_attackable(const int16_t posX, const int16_t posY) const;
 
     // Booleano que devuelve verdadero si posX es atacable
-    bool is_attackable_X(int16_t posX);
+    bool is_attackable_X(const int16_t posX) const;
 
     // Booleano que devuelve verdadero si posY es atacable
-    bool is_attackable_Y(int16_t posY);
+    bool is_attackable_Y(const int16_t posY) const;
 
     // Booleano que devuelve verdadero si la zona es segura o falso si no.
-    bool is_safe();
+    bool is_safe() const;
 
     // Devuelve true si el personaje está mirando hacia la derecha, false en caso contrario.
-    bool is_facing_right();
+    bool is_facing_right() const;
 
     // Devuelve true si el personaje está mirando hacia la izquierda, false en caso contrario.
-    bool is_facing_left();
+    bool is_facing_left() const;
 
     // Devuelve true si el personaje está mirando hacia arriba, false en caso contrario.
-    bool is_facing_top();
+    bool is_facing_top() const;
 
     // Devuelve true si el personaje está mirando hacia abajo, false en caso contrario.
-    bool is_facing_down();
+    bool is_facing_down() const;
 
     // Invierte hacia donde esta mirando el personaje, se usa en caso de que colisione
     void invert_body_facing();
 
     // Corrige la posicion en X si el personaje se va de los limites del mapa
-    void check_out_of_bounds_X(int velocity);
+    void check_out_of_bounds_X(const int velocity);
 
     // Corrige la posicion en Y si el personaje se va de los limites del mapa
-    void check_out_of_bounds_Y(int velocity);
+    void check_out_of_bounds_Y(const int velocity);
 
     // Chequea las colisiones estaticas contra el mapa del personaje
-    bool check_map_collision();
+    bool check_map_collision() const;
 };
 
 

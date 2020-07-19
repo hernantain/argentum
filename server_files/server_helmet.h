@@ -15,7 +15,7 @@ public:
     Helmet() = default;
 
     // Devuelve la defensa del casco
-    int get_defense();
+    int get_defense() const;
 };
 
 

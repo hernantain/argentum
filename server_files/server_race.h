@@ -21,31 +21,31 @@ public:
     explicit Race(int initial_attributes);
 
     // getter fuerza
-    int get_strength();
+    int get_strength() const;
 
     // getter agilidad
-    int get_agility();
+    int get_agility() const;
 
     // getter inteligencia
-    int get_intelligence();
+    int get_intelligence() const;
     
     // getter constitucion
-    int get_constitution();
+    int get_constitution() const;
 
     // getter life multiplier
-    float get_life_multiplier();
+    float get_life_multiplier() const;
 
     // getter mana multiplier
-    float get_mana_multiplier();
+    float get_mana_multiplier() const;
     
     // getter recovery factor
-    int get_recovery_factor();
+    int get_recovery_factor() const;
 
      // getter recovery factor
-    int get_width();
+    int get_width() const;
 
      // getter recovery factor
-    int get_height();
+    int get_height() const;
 
     // getter race id
     uint8_t get_id() const;

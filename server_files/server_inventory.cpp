@@ -22,7 +22,7 @@ bool Inventory::add_item(Item& item) {
     return true;
 }
 
-void Inventory::remove_item(uint8_t id) {
+void Inventory::remove_item(const uint8_t id) {
     int position = find(id);
     int16_t item_amount = items[position].get_amount();
     if (item_amount > 1) 
@@ -31,7 +31,7 @@ void Inventory::remove_item(uint8_t id) {
         drop_item(id);
 }
 
-Item Inventory::drop_item(uint8_t id) {
+Item Inventory::drop_item(const uint8_t id) {
     Item drop_item;
     std::vector<Item> tmp;
     std::vector<Item>::iterator it = items.begin();
@@ -82,7 +82,7 @@ void Inventory::drop_gold(int16_t posX, int16_t posY, int gold, std::vector<Item
     }
 }
 
-bool Inventory::has(int16_t id) {
+bool Inventory::has(const int16_t id) {
     if (id == DEFAULT_EQUIPMENT) return true;
     std::vector<Item>::iterator it = items.begin();
     for (; it != items.end(); ++it) {
@@ -94,7 +94,7 @@ bool Inventory::has(int16_t id) {
     return false;
 }
 
-int Inventory::find(int16_t id) {
+int Inventory::find(const int16_t id) const {
     for (unsigned int i = 0; i < items.size(); i++) {
         if (items[i].get_id() == id) {
             std::cout << "Inventory::ItemFound" << std::endl;
@@ -104,10 +104,10 @@ int Inventory::find(int16_t id) {
     return NOT_FOUND;
 }
 
-bool Inventory::is_full() {
+bool Inventory::is_full() const {
     return items.size() == max_size;
 }
 
-unsigned int Inventory::size() {
+unsigned int Inventory::size() const {
     return items.size();
 }

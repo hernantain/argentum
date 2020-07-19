@@ -16,12 +16,11 @@ public:
     // Contructor, recibe la cantidad de ese objeto
     Item();
 
-    std::string get_name();
-
-    int16_t get_id();
-    int16_t get_amount();
-    int16_t get_posX();
-    int16_t get_posY();
+    std::string get_name() const;
+    int16_t get_id() const;
+    int16_t get_amount() const;
+    int16_t get_posX() const;
+    int16_t get_posY() const;
   
     void set_id(int16_t new_id);
     void set_amount(int16_t item_amount);

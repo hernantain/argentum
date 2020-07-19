@@ -11,7 +11,7 @@ public:
     // Contructor
     Potion(int recovery_points);
 
-    int get_recovery_points();
+    int get_recovery_points() const;
 };
 
 #endif //_SERVER_POTION

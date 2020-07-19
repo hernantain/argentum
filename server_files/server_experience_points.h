@@ -16,10 +16,10 @@ public:
     ExperiencePoints(int difficulty_constant, float level_multiplier);
 
     // Disminuye la experiencia en points
-    void subtract(int points);
+    void subtract(const int points);
 
     // Aumenta la experiencia en _points
-    void add(int points);
+    void add(const int points);
     
     // Devuelve la experiencia actual
     int16_t current() const;
@@ -28,7 +28,7 @@ public:
     int16_t max() const;
 
     // Setter de la max experiencia para el nivel recibido
-    void set_new_max(int level);
+    void set_new_max(const int level);
 };
 
 

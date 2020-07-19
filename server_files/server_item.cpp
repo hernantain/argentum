@@ -2,23 +2,23 @@
 
 Item::Item() {}
 
-std::string Item::get_name() {
+std::string Item::get_name() const {
     return name;
 }
 
-int16_t Item::get_id() {
+int16_t Item::get_id() const {
     return id;
 }
 
-int16_t Item::get_posX() {
+int16_t Item::get_posX() const {
     return posX;
 }
 
-int16_t Item::get_posY() {
+int16_t Item::get_posY() const {
     return posY;
 }
 
-int16_t Item::get_amount() {
+int16_t Item::get_amount() const {
     return amount;
 }
 

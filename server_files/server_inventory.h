@@ -18,29 +18,29 @@ public:
     explicit Inventory(int size);
 
     // Remueve un item al inventario
-    void remove_item(uint8_t id);
+    void remove_item(const uint8_t id);
 
     // Agrega un item al inventario
     bool add_item(Item& item);
 
     // Droppea un item del inventario
-    Item drop_item(uint8_t id);
+    Item drop_item(const uint8_t id);
 
     // Dropea todos los items del inventario populando el mundo de items
     // Y recibiendo las posiciones del jugador como parametro y la cantidad de oro
     void drop_items(int16_t posX, int16_t posY, int gold, std::vector<Item> &worldItems);
 
     // Devuelve el tam del inventario
-    unsigned int size();
+    unsigned int size() const;
 
     // Boleana, verdadera si posee el item
-    bool has(int16_t id);
+    bool has(const int16_t id);
 
     // Devuelve el indice del item si esta en el inventario, -1 si no
-    int find(int16_t id);
+    int find(const int16_t id) const;
 
     // Booleana, esta lleno el inventario
-    bool is_full();
+    bool is_full() const;
 };
 
 

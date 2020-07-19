@@ -33,11 +33,11 @@ int16_t NPC::get_max_life() const {
     return max_life;
 }
 
-int NPC::get_width() {
+int NPC::get_width() const{
     return width;
 }
 
-int NPC::get_height() {
+int NPC::get_height() const {
     return height;
 }
 
@@ -45,7 +45,7 @@ bool NPC::is_alive() const {
     return alive;
 }
 
-bool NPC::is_newbie() {
+bool NPC::is_newbie() const {
     return false;
 }
 
@@ -74,13 +74,13 @@ void NPC::drop_items(std::vector<Item> &worldItems) {
     std::cout << "NPC::DroppingItem ID::" << drop_item.get_id() << std::endl;    
 }
 
-void NPC::drop_gold(Item &drop_item, int gold) {
+void NPC::drop_gold(Item &drop_item, int gold) const {
     std::cout << "Im going to drop Gold: " << gold << std::endl;
     drop_item = ItemFactory::make_gold(gold);
     std::cout << "NPC::DroppingItem::" << drop_item.get_name() << std::endl;
 }
 
-void NPC::drop_potion(Item &drop_item) {
+void NPC::drop_potion(Item &drop_item) const {
     int rand_potion = rand() % 2;
     if (rand_potion == 0) {
         int16_t mana_potion_id = config["manaPotion"]["id"].asInt();
@@ -91,13 +91,13 @@ void NPC::drop_potion(Item &drop_item) {
     }
 }
 
-void NPC::drop_random_item(Item &drop_item) {
+void NPC::drop_random_item(Item &drop_item) const {
     int16_t random_item_id = rand() % MAX_ITEM_ID + 1;
     drop_item = ItemFactory::make_item(random_item_id, config);
     std::cout << "NPC::DroppingItem::" << drop_item.get_name() << std::endl;
 }
 
-int NPC::gold_drop() {
+int NPC::gold_drop() const {
     float random = ((float) rand()) / (float) RAND_MAX;
     float gold_multiplier = random * (MAX_GOLD_MULTIPLIER - MIN_GOLD_MULTIPLIER);
     gold_multiplier += MIN_GOLD_MULTIPLIER;
@@ -105,20 +105,20 @@ int NPC::gold_drop() {
     return gold_drop;
 }
 
-int NPC::get_defense() {
+int NPC::get_defense() const{
     return defense_points;
 }
 
-int NPC::get_damage() {
+int NPC::get_damage() const {
     int damage = rand() % (max_damage - min_damage + 1) + min_damage;
     return damage;
 }
 
-bool NPC::is_safe() {
+bool NPC::is_safe() const {
     return movement.is_safe();
 }
 
-bool NPC::attack_zone(Attackable& other) {
+bool NPC::attack_zone(const Attackable& other) const {
     if (is_safe() || other.is_safe()) {
         std::cout << "SafeZone::Your or your rival are on safe zone" << std::endl;
         return false;
@@ -126,7 +126,7 @@ bool NPC::attack_zone(Attackable& other) {
     return true;
 }
 
-bool NPC::can_attack(Attackable& other) {
+bool NPC::can_attack(const Attackable& other) const {
     if(!alive || !other.is_alive()) {
         std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
         return false;
@@ -146,7 +146,7 @@ void NPC::attack(Attackable& other) {
     other.defense(damage);
 }
 
-int NPC::defense(int damage) {
+int NPC::defense(const int damage) {
     int defense = get_defense();
     std::cout << "Defensa:: " << defense << std::endl;
     if (damage <= defense) return NO_DAMAGE;
@@ -155,7 +155,7 @@ int NPC::defense(int damage) {
     return final_damage;
 }
 
-void NPC::take_off_life(int life_points) {
+void NPC::take_off_life(const int life_points) {
     if (life >= life_points) {
         life -= life_points;
     } else {
@@ -164,7 +164,7 @@ void NPC::take_off_life(int life_points) {
     } 
 }
 
-bool NPC::is_near(int posX, int posY) {
+bool NPC::is_near(const int posX, const int posY) const {
     return movement.is_near(posX, posY);
 }
 
@@ -188,7 +188,7 @@ void NPC::move_random() {
     movement.move_random(config["graphics"]["velocity"].asInt());
 }
 
-void NPC::move_to(Attackable& other) {
+void NPC::move_to(const Attackable& other) {
     if(!attack_zone(other)) {
         move_random();
         return;
@@ -198,7 +198,7 @@ void NPC::move_to(Attackable& other) {
     movement.move_to(config["graphics"]["velocity"].asInt(), posX, posY);
 }
 
-int NPC::get_body_facing() { 
+int NPC::get_body_facing() const { 
     return (int) movement.get_facing_direction();
 }
 

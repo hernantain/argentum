@@ -15,7 +15,7 @@ public:
     Shield() = default;
 
     // Devuelve la defensa del escudo
-    int get_defense();
+    int get_defense() const;
 };
 
 
