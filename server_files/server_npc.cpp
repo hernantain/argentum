@@ -202,7 +202,7 @@ int NPC::get_body_facing() const {
     return (int) movement.get_facing_direction();
 }
 
-int16_t NPC::get_body_pos_X() const{
+int16_t NPC::get_body_pos_X() const {
     return movement.get_horizontal_body_position();
 }
 

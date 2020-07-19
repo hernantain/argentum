@@ -133,7 +133,7 @@ void Game::run() {
 	SDL_Event e;
 	// Event handler
 	while(this->running) {	
-		while( SDL_PollEvent( &e ) != 0 ) {
+		while(SDL_PollEvent(&e) != 0) {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;				
 				std::vector<int16_t> args;
@@ -148,30 +148,35 @@ void Game::run() {
 				continue;
 
 			} else if ((e.type == SDL_MOUSEBUTTONDOWN) && (e.button.button == SDL_BUTTON_RIGHT)) {
+				std::cout << "RIGHT CLICK" << std::endl;
 				int x, y;
 				SDL_GetMouseState( &x, &y ); 
 				if (x > inventory.x) {
 					int clickX = x - inventory.x;
 					int itemId = infoView.handleDrop(clickX, y);
+					if (itemId < 0)
+						continue;
+
 					MessageToServer msg = world.player_handle_drop_event(this->player_id, itemId);
 					queue.push(msg);
 				}
-				// std::cout << "RIGHT CLICK" << std::endl;
 				continue;
 
 			} else if (e.type == SDL_MOUSEBUTTONDOWN) {
 				int x, y;
 				SDL_GetMouseState( &x, &y ); 
 				if (x > inventory.x) {
+					std::cout << "CLICK COMUN" << std::endl;
 					int clickX = x - inventory.x;
 					int itemId = infoView.handle_click(clickX, y); 
+					std::cout << "Item ID ES:: " << itemId << std::endl;
 					if (itemId < 0)
 						continue;
 
 					MessageToServer msg = world.player_handle_equip_event(this->player_id, itemId);
 					queue.push(msg);
-					continue;
 				}
+				continue;
 
 			} else if (e.type == SDL_MOUSEMOTION) {
 				continue;
@@ -201,8 +206,6 @@ void Game::run() {
 		system_clock::time_point t2 = system_clock::now();
 		duration<int,std::milli>rest = rate - duration_cast<std::chrono::duration<int,std::milli>>(t2 - t1);
 		
-		// std::cout << "DIFF: " << duration_cast<std::chrono::duration<int,std::milli>>(t2 - t1).count() << std::endl;
-		// std::cout << "REST: " << rest.count() << " - RATE: " << rate.count() << std::endl;
 		if (rest.count() < 0) {
 			duration<int, std::milli> behind = duration<int, std::milli>(-rest);
 			rest = rate - (behind % rate);
