@@ -26,6 +26,7 @@
 #define COMPOUND_BOW_CODE 17 // WEAPON
 #define LIFE_POTION_CODE 18
 #define MANA_POTION_CODE 19 // POTION
+#define GOLD_CODE 20
 
 #define BLUE_ROBE_IMAGE "images/icons/blue_robe_icon.png"
 #define LEATHER_ARMOR_IMAGE "images/icons/leather_armor_icon.png"
@@ -45,6 +46,7 @@
 #define GNARLED_STAFF_IMAGE "images/icons/baculo_nudoso_icon.png"
 #define ASH_STAFF_IMAGE "images/icons/vara_fesno_icon.png"
 #define SWORD_IMAGE "images/icons/sword_icon.png"
+#define GOLD_IMAGE "images/icons/gold_icon.png"
 
 class ItemViewer {
 

@@ -56,6 +56,7 @@ struct ClientWorld {
 
     MessageToServer player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera);
     MessageToServer player_handle_equip_event(uint16_t &player_id, int &itemId);
+    MessageToServer player_handle_drop_event(uint16_t &player_id, int &itemId);
 
     Player* get_player(uint16_t id);
 

@@ -43,6 +43,7 @@ class Player: public Drawable {
 
 		MessageToServer handleEvent( SDL_Event& e, SDL_Rect &camera );
         MessageToServer handleEquipEvent(int &itemId);
+        MessageToServer handleDropEvent(int &itemId);
 
 		void render(SDL_Rect &camera, int &it);
 

@@ -136,7 +136,7 @@ bool ClientWorld::item_in_world(ProtocolItem &item) {
 Item* ClientWorld::update_items(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);
 
-    std::cout << "LEN DE ITEMS ES: " << msg.items.size() << std::endl;
+    std::cout << "LEN DE ITEMS MSG ES: " << msg.items.size() << std::endl;
 
     Item* removedItem = NULL;
     for (unsigned int i = 0; i < items.size(); ++i) {
@@ -154,6 +154,12 @@ Item* ClientWorld::update_items(ProtocolMessage &msg) {
 MessageToServer ClientWorld::player_handle_equip_event(uint16_t &player_id, int &itemId) {
     std::unique_lock<std::mutex> lock(m);
     return std::move(players[player_id]->handleEquipEvent(itemId));
+}
+
+
+MessageToServer ClientWorld::player_handle_drop_event(uint16_t &player_id, int &itemId) {
+    std::unique_lock<std::mutex> lock(m);
+    return std::move(players[player_id]->handleDropEvent(itemId));
 }
 
 

@@ -37,7 +37,7 @@ void ClientReceiverThread::run() {
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
-    print_response_info(msg);
+    // print_response_info(msg);
     if (msg.id_message == PROTOCOL_MOVE_CONFIRM) this->process_move(msg);
     if (msg.id_message == PROTOCOL_DEPOSIT_CONFIRM) this->process_deposit(msg);
     if (msg.id_message == PROTOCOL_WITHDRAW_CONFIRM) this->process_withdraw(msg);
@@ -182,7 +182,7 @@ void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
         return;
     
     std::cout << "No es NULL" << std::endl;
-    if (msg.id_player == this->player_id) {
+    if ((msg.id_player == this->player_id) && (item->get_id() != 20)) {
         std::cout << "Agregando a infoview" << std::endl;        
         this->infoView.add_item(item);
 
@@ -195,7 +195,7 @@ void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
     std::cout << "ITEMS ANTES DROP" << world.items.size() << std::endl;
-    world.update_items(msg);
+    world.add_items(msg);
     std::cout << "ITEMS DESPUES DROP" << world.items.size() << std::endl;
 }
 

@@ -280,6 +280,18 @@ MessageToServer Player::handleEquipEvent(int &itemId) {
 }
 
 
+MessageToServer Player::handleDropEvent(int &itemId) {
+	std::vector<int16_t> args;
+	args.push_back(itemId);
+	MessageToServer msg(
+		PROTOCOL_DROP_ITEM, 
+		this->id,
+		args
+	);
+	return std::move(msg);
+}
+
+
 
 void Player::getPosArgs(std::vector<int16_t> &args) {
 	args.push_back(bodyPosX);
