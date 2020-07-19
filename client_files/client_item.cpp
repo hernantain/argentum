@@ -39,3 +39,4 @@ void Item::add_amount() {
 }
 
 
+Item::~Item() {}
