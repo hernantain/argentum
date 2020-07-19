@@ -115,7 +115,7 @@ void Game::run() {
 	
 	// using namespace std::chrono;
 	SoundManager sm;
-	sm.play_pause_music();
+	// sm.play_pause_music();
 
 	skt.connect_to("localhost", "8080");
 	skt >> this->player_id;

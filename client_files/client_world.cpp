@@ -234,7 +234,8 @@ void ClientWorld::remove_player(uint16_t id) {
 
 MessageToServer ClientWorld::player_handle_event(uint16_t &player_id, SDL_Event& e, SDL_Rect &camera) {
     std::unique_lock<std::mutex> lock(m);
-    return std::move(this->players[player_id]->handleEvent(e, camera));
+    MessageToServer msg = this->players[player_id]->handleEvent(e, camera);
+    return std::move(msg);
 }
 
 // RENDER

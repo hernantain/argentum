@@ -13,7 +13,6 @@ struct MessageToServer {
     uint16_t player_id;
     std::vector<int16_t> args;
 
-
     MessageToServer();
     MessageToServer(int16_t event_id, uint16_t player_id, std::vector<int16_t> &args);
 
