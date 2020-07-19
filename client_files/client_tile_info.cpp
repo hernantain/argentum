@@ -35,8 +35,8 @@ LTexture* TileInfo::getTexture(int i) {
 
 
 TileInfo::~TileInfo() {
-    std::cout << "Destroying TILE INFO TEXTURES" << std::endl;
-    std::map<int, LTexture*>::iterator itr;
-    for (itr = textures.begin(); itr != textures.end(); ++itr)  
-        itr->second->free();
+    // std::cout << "Destroying TILE INFO TEXTURES" << std::endl;
+    // std::map<int, LTexture*>::iterator itr;
+    // for (itr = textures.begin(); itr != textures.end(); ++itr)  
+    //     itr->second->free();
 }
