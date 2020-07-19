@@ -8,6 +8,7 @@
 #include "server_gnarled_staff.h"
 #include "server_mana_potion.h"
 #include "server_life_potion.h"
+#include "server_iron_shield.h"
 
 ServerProcessorThread::ServerProcessorThread(
     Queue_2 &receiversQueue,
@@ -27,6 +28,12 @@ void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
     i.set_posY(100);
     i.set_amount(1);
     world.items.push_back(i);
+
+    IronShield p(config);
+    p.set_posX(150);
+    p.set_posY(150);
+    p.set_amount(1);
+    world.items.push_back(p);
 
     GnarledStaff j(config);
     j.set_posX(200);

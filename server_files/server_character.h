@@ -167,10 +167,10 @@ public:
     void drop_item(uint8_t id, std::vector<Item> &worldItems);
 
     // Toma una suma de oro del suelo;
-    void take_gold(int amount);
+    bool take_gold(int amount);
 
     // Toma un item del suelo
-    void take_item(Item& item);
+    bool take_item(Item& item);
 
     // Equipa una pocion de vida
     void equip_life_potion(Potion& item);

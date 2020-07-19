@@ -207,9 +207,12 @@ void ProtocolTranslator::move_down_event(MessageToServer &msg, ProtocolMessage &
 
 void ProtocolTranslator::take_item_event(MessageToServer &msg, ProtocolMessage &clientMessage, ServerWorld &world) {
     
-    world.player_take_item(msg.player_id);
+    bool took = world.player_take_item(msg.player_id);
+    if (took)
+        clientMessage.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
+    else 
+        clientMessage.id_message = PROTOCOL_TAKE_ITEM_REFUSED;
 
-    clientMessage.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
     clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
