@@ -7,6 +7,7 @@
 #include "client_player.h"
 #include "client_world.h"
 #include "client_info_view.h"
+#include "client_sound_manager.h"
 
 #include "../common_files/common_sockets.h"
 #include "../common_files/common_thread.h"
@@ -20,6 +21,7 @@ class ClientReceiverThread : public Thread {
     ClientWorld &world;
     SDL_Rect &camera;
     InfoView &infoView;
+    SoundManager &soundManager;
     uint16_t player_id;
     std::atomic<bool> running;
 
@@ -51,7 +53,14 @@ class ClientReceiverThread : public Thread {
     void update_bars(ProtocolMessage &msg);
     
     public:
-        ClientReceiverThread(Socket &skt, ClientWorld &world, SDL_Rect &camera, InfoView &infoView, uint16_t player_id);
+        ClientReceiverThread(
+            Socket &skt, 
+            ClientWorld &world, 
+            SDL_Rect &camera, 
+            InfoView &infoView, 
+            SoundManager &soundManager, 
+            uint16_t player_id
+        );
     
         virtual void run() override;
         

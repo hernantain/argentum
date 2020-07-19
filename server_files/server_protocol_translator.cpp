@@ -104,7 +104,7 @@ void ProtocolTranslator::equip_armor_event(MessageToServer& msg, ProtocolMessage
         armor = ArmorFactory::make_armor(armor_id, config);
         clientMessage.id_message = PROTOCOL_ARMOR_CONFIRM;
     }
-    std::cout << "ARMOR A EQUIPAR: " << (int) armor_id << std::endl;
+
     world.characters[msg.player_id]->equip_armor(armor);
     clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);

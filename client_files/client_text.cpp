@@ -42,5 +42,5 @@ void TextLabel::render(int x, int y) {
 TextLabel::~TextLabel() {
     std::cout <<"DESTROYED?" << std::endl;
     textTexture.free();
-	TTF_CloseFont( gFont );
+	TTF_CloseFont(gFont);
 }

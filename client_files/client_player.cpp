@@ -254,8 +254,8 @@ MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		otherPosY = y + camera.y;
 		args.push_back(otherPosX);
 		args.push_back(otherPosY);
-		std::cout << "CLICK EN: " << x + camera.x << " Y EN: " << y + camera.y << std::endl; 
-		std::cout << "SIN CAMERA OFFSET - CLICK EN: " << x << " Y EN: " << y << std::endl; 
+		// std::cout << "CLICK EN: " << x + camera.x << " Y EN: " << y + camera.y << std::endl; 
+		// std::cout << "SIN CAMERA OFFSET - CLICK EN: " << x << " Y EN: " << y << std::endl; 
 	}
 
 	MessageToServer msg(

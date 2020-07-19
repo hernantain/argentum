@@ -33,7 +33,7 @@ void ClientManager::broadcastMessage(ProtocolMessage &updated_msg) {
     std::unique_lock<std::mutex> lock(this->m);
     for (unsigned int i = 0; i < clients.size(); ++i) {
         if (!this->clients[i]->is_active()) {
-            std::cout <<  "MUERTO" << std::endl;
+            // std::cout <<  "MUERTO" << std::endl;
             continue;
         }
 

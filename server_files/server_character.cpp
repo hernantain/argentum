@@ -473,11 +473,10 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.weaponId = this->current_weapon();
     protocolCharacter.helmetId = this->current_helmet();
     protocolCharacter.armorId = this->current_armor()   ;
-    protocolCharacter.itemId = 0; // HAY QUE PONER GETTERS DEL SHIELD/WEAPON/ITEM ID, etc correspondiente
+    protocolCharacter.itemId = 0;
     protocolCharacter.potionId = 0;
 
-    std::cout << "MANDANDO ARMOR ID: " << (int) protocolCharacter.armorId << std::endl;
-
+    // std::cout << "MANDANDO ARMOR ID: " << (int) protocolCharacter.armorId << std::endl;
     // std::cout << "PROT CHARACTER ID " << (int) protocolCharacter.id << std::endl;
     // std::cout << "PROT CHARACTER ID RACE " << (int) protocolCharacter.id_race << std::endl;
     // std::cout << "PROT CHARACTER ID CLASE " << (int) protocolCharacter.id_class << std::endl;

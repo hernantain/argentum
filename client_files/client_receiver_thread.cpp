@@ -10,10 +10,12 @@ ClientReceiverThread::ClientReceiverThread(
     ClientWorld &world,
     SDL_Rect &camera,
     InfoView &infoView,
+    SoundManager &soundManager,
     uint16_t player_id) : skt(skt), 
                         world(world),
                         camera(camera),
                         infoView(infoView),
+                        soundManager(soundManager),
                         player_id(player_id),
                         running(true) {}
 
@@ -216,6 +218,12 @@ void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
     update_bars(msg);
+    int i = msg.find(this->player_id);
+    std::cout << "es un attack !!" << std::endl;
+    if (msg.id_player == this->player_id) {
+        std::cout << "Seteando sonido: " << (int) msg.characters[i].weaponId << std::endl;
+        soundManager.set_sound(msg.characters[i].weaponId);
+    }
 }
 
 void ClientReceiverThread::process_death(ProtocolMessage &msg) {
