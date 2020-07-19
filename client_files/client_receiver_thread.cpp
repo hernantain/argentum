@@ -201,6 +201,10 @@ void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
 
 
 void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
+    int i = msg.find(this->player_id);
+    if (i != -1 && !msg.characters[i].alive)
+        infoView.clear_items();
+
     world.update_npcs(msg);
     world.update_player_alive_status(msg);
     world.add_items(msg);
