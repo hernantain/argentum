@@ -115,7 +115,7 @@ public:
     // Getter de la posicion de la cabeza en X
     int16_t get_body_pos_Y() const;
 
-    ~NPC() override;
+    virtual ~NPC();
 };
 
 

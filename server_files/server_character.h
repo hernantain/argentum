@@ -253,7 +253,7 @@ public:
 
     void populate_protocol_character(ProtocolCharacter &protocolCharacter);
 
-    ~Character() override;
+    virtual ~Character();
 };
 
 

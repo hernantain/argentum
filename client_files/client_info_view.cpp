@@ -9,10 +9,12 @@ InfoView::InfoView(
     SDL_Rect &infoPanel,
     ItemViewer &itemViewer) : infoPanel(infoPanel), 
                               itemViewer(itemViewer), 
-                              argentumLabel(gRenderer, "Argentum"),
-                              lifeLabel(gRenderer, "Vida"),
-                              manaLabel(gRenderer, "Mana"),
-                              expLabel(gRenderer, "Experiencia") {
+                              argentumLabel(gRenderer, "Argentum", 30),
+                              lifeLabel(gRenderer, "Vida", 30),
+                              manaLabel(gRenderer, "Mana", 30),
+                              expLabel(gRenderer, "Experiencia", 30) {
+                            //   currLifeLabel(gRenderer, "0", 20),
+                            //   maxLifeLabel(gRenderer, "0", 20) {
     
     this->manaColor =  {36, 255, 240, 0xFF};
     this->lifeColor =  {255, 175, 36, 0xFF};
@@ -157,6 +159,8 @@ void InfoView::set_life(int16_t currentLife, int16_t maxLife) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentLife = currentLife;
     this->maxLife = maxLife;
+    // this->currLifeLabel.set_new_label(std::to_string(this->currentLife));
+    // this->maxLifeLabel.set_new_label(std::to_string(this->maxLife));
 }
 
 
@@ -189,6 +193,8 @@ void InfoView::render() {
     this->render_items();
     argentumLabel.render((infoPanel.w - argentumLabel.getWidth()) / 2, 30);
     lifeLabel.render((infoPanel.w - lifeLabel.getWidth()) / 2, currentLifeRect.y - 40);
+    // currLifeLabel.render(maxLifeRect.x, maxLifeRect.y - 30);
+    // maxLifeLabel.    render(maxLifeRect.x + maxLifeRect.w, maxLifeRect.y - 30);
     manaLabel.render((infoPanel.w - manaLabel.getWidth()) / 2, currentManaRect.y - 40);
     expLabel.render((infoPanel.w - expLabel.getWidth()) / 2, currentExpRect.y - 40);
 }
@@ -215,6 +221,7 @@ void InfoView::adjust() {
 }
 
 void InfoView::clear_items() {
+    std::unique_lock<std::mutex> lock(this->m);
     for (unsigned int i = 0; i < items.size(); ++i) 
         delete items[i];
 

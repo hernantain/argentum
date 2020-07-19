@@ -6,7 +6,7 @@
 
 SenderThread::SenderThread(
     Socket &skt, 
-    Queue_2 &queue) : skt(skt), queue(queue), running(true) {}
+    MessageToServerQueue &queue) : skt(skt), queue(queue), running(true) {}
 
 
 void SenderThread::run() {

@@ -15,9 +15,11 @@ class TextLabel {
     LTexture textTexture;
     TTF_Font* gFont;
 
-    bool initMedia(SDL_Renderer* gRenderer, std::string &label);
+    bool initMedia(SDL_Renderer* gRenderer, std::string &label, int &size);
     public:
-        TextLabel(SDL_Renderer* gRenderer, std::string label);
+        TextLabel(SDL_Renderer* gRenderer, std::string label, int size);
+
+        void set_new_label(std::string newLabel);
 
         void render(int x, int y);
 

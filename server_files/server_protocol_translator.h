@@ -119,6 +119,9 @@ private:
     // Evento indefinid, security case
     void undefined_event(MessageToServer &msg, ProtocolMessage& clientMessage);
 
+
+    void check_dead_npcs(ServerWorld &world);
+
 public:
     ProtocolTranslator(Json::Value &config, CollisionInfo &collisionInfo);
 

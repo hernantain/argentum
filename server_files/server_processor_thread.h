@@ -18,7 +18,7 @@
 
 class ServerProcessorThread: public Thread {
 
-    Queue_2 &receiversQueue;
+    MessageToServerQueue &receiversQueue;
     ClientManager &clientManager;
     CollisionInfo &collisionInfo;
     Json::Value &config;
@@ -28,7 +28,7 @@ class ServerProcessorThread: public Thread {
     void addingHardcodedItems(ServerWorld &world);
 
     public:
-        ServerProcessorThread(Queue_2 &receiversQueue, ClientManager &clientManager, CollisionInfo &collisionInfo, Json::Value &config);
+        ServerProcessorThread(MessageToServerQueue &receiversQueue, ClientManager &clientManager, CollisionInfo &collisionInfo, Json::Value &config);
 
         virtual void run() override;
 

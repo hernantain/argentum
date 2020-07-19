@@ -12,11 +12,11 @@
 class SenderThread : public Thread {
 
     Socket &skt;
-    Queue_2 &queue;
+    MessageToServerQueue &queue;
     std::atomic<bool> running;
 
     public:
-        SenderThread(Socket &skt, Queue_2 &queue);
+        SenderThread(Socket &skt, MessageToServerQueue &queue);
 
         virtual void run() override;
 

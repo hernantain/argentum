@@ -180,7 +180,7 @@ void ServerWorld::move_character_right(uint16_t id) {
     if(check_characters_collision(id) || check_npcs_collision(id)) {
         this->characters[id]->move_left();
         this->characters[id]->invert_body_facing();
-        }
+    }
 }
 
 void ServerWorld::move_character_left(uint16_t id) {

@@ -22,7 +22,7 @@ AcceptorThread::AcceptorThread(
 void AcceptorThread::run() {
 
     Socket client_skt; 
-    Queue_2 receiversQueue;
+    MessageToServerQueue receiversQueue;
 
     MapInfo mapInfo;
     CollisionInfo collisionInfo = mapInfo.load();

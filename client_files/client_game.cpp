@@ -108,7 +108,7 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 
 void Game::run() {
 	
-	// using namespace std::chrono;
+	using namespace std::chrono;
 	SoundManager sm;
 	// sm.play_pause_music();
 
@@ -127,8 +127,8 @@ void Game::run() {
 	receiver->start();
 
 	int it = 0;	
-	// duration<double, std::milli> rate(float(1000)/60);
-	// system_clock::time_point t1 = system_clock::now();
+	duration<int, std::milli> rate(17);
+	system_clock::time_point t1 = system_clock::now();
 
 	SDL_Event e;
 	// Event handler
@@ -163,10 +163,8 @@ void Game::run() {
 				int x, y;
 				SDL_GetMouseState( &x, &y ); 
 				if (x > inventory.x) {
-					// std::cout << "INVENTORY_EVENT" << std::endl;
 					int clickX = x - inventory.x;
 					int itemId = infoView.handle_click(clickX, y); 
-					// std::cout << "Seleccionando item: " << itemId << std::endl;
 					if (itemId < 0)
 						continue;
 
@@ -200,25 +198,20 @@ void Game::run() {
 
 		SDL_RenderPresent(this->gRenderer); 
 				
-		// system_clock::time_point t2 = system_clock::now();
-		// duration<double,std::milli>rest = rate - duration_cast<std::chrono::duration<double,std::milli>>(t2 - t1);
+		system_clock::time_point t2 = system_clock::now();
+		duration<int,std::milli>rest = rate - duration_cast<std::chrono::duration<int,std::milli>>(t2 - t1);
 		
+		// std::cout << "DIFF: " << duration_cast<std::chrono::duration<int,std::milli>>(t2 - t1).count() << std::endl;
 		// std::cout << "REST: " << rest.count() << " - RATE: " << rate.count() << std::endl;
-		
-		// if (rest.count() < 0) {
-		// 	std::cout << "Es negativo" << std::endl;
-		// 	duration<double, std::milli> behind = duration<double, std::milli>(-rest);
-		// 	std::cout << "BEHIND: " << behind.count() << std::endl;
-		// 	duration<double, std::milli> rest = rate - duration<double, std::milli>(fmod(behind.count(), rate.count()));
-		// 	std::cout << "NEW REST: " << rest.count() << std::endl;
-		// 	duration<double, std::milli> lost = behind + rest;
-		// 	std::cout << "LOST: " << lost.count() << std::endl;
-		// 	duration<double, std::milli> t1 =  duration_cast<std::chrono::duration<double,std::milli>>(t1) + lost;
-		//  	it += (int) floor(lost.count() / rate.count());
-		// }
-		// std::this_thread::sleep_for(duration<double, std::milli>(rest.count()));
-		// duration<double, std::milli> t1 =  duration_cast<std::chrono::duration<double,std::milli>>(t1) + rate;
-		// std::cout << "T1 DSP: " << t1.count() << std::endl;
+		if (rest.count() < 0) {
+			duration<int, std::milli> behind = duration<int, std::milli>(-rest);
+			rest = rate - (behind % rate);
+			duration<int, std::milli> lost = behind + rest;
+			t1 += lost;
+		 	it += (int) floor(lost.count() / rate.count());
+		}
+		std::this_thread::sleep_for(duration<int, std::milli>(rest.count()));
+		t1 += rate;
 		it++;
 	}
 
