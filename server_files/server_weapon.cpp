@@ -12,19 +12,19 @@ Weapon::Weapon(int min_damage = DEFAULT_DAMAGE, int max_damage = DEFAULT_DAMAGE)
     this->mana_consumption = NO_MANA_CONSUMPTION;
 }
 
-int Weapon::get_damage() {
+int Weapon::get_damage() const {
     int damage = rand() % (max_damage - min_damage + 1) + min_damage;
     return damage;
 }
 
-int Weapon::is_magical() {
+int Weapon::is_magical() const {
     return magical;
 }
 
-int Weapon::is_ranged() {
+int Weapon::is_ranged() const {
     return ranged;
 }
 
-int Weapon::get_mana_consumption() {
+int Weapon::get_mana_consumption() const {
     return mana_consumption;
 }

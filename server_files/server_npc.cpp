@@ -8,6 +8,7 @@
 #define MIN_GOLD_MULTIPLIER 0.01
 #define MAX_GOLD_MULTIPLIER 0.2
 #define MAX_ITEM_ID 19
+#define GOLD_ITEM_ID 20
 #define DROP_ITEM_AMOUNT 1
 
 NPC::NPC(Json::Value &config, CollisionInfo &collisionInfo) : 
@@ -66,7 +67,7 @@ void NPC::drop_items(std::vector<Item> &worldItems) {
         drop_random_item(drop_item);
     }
 
-    drop_item.set_amount(DROP_ITEM_AMOUNT);
+    if(drop_item.get_id() != GOLD_ITEM_ID) drop_item.set_amount(DROP_ITEM_AMOUNT);
     drop_item.set_posX(get_body_pos_X());
     drop_item.set_posY(get_body_pos_Y());
     worldItems.push_back(drop_item);

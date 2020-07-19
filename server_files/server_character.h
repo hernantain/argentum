@@ -164,7 +164,7 @@ public:
     void drop_items(std::vector<Item> &worldItems);
 
     // Dropea el item que recibe por parametro y popula worldItems
-    void drop_item(uint8_t id, std::vector<Item> &worldItems);
+    bool drop_item(uint8_t id, std::vector<Item> &worldItems);
 
     // Toma una suma de oro del suelo;
     bool take_gold(int amount);
@@ -201,6 +201,9 @@ public:
 
     // Devuelve el id del casco actual, -1 si es el default
     int16_t current_helmet();
+
+    // Devuelve verdadero si el item con itemId esta equipado, falso si no
+    bool is_equiped(int16_t itemId);
 
     // Ataca a un NPC o a un personaje
     void attack(Attackable& other) override;

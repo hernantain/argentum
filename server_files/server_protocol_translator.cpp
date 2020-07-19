@@ -31,6 +31,7 @@ void ProtocolTranslator::translate(MessageToServer& msg, ProtocolMessage &client
         case PROTOCOL_EQUIP_ARMOR: return equip_armor_event(msg, clientMessage, world);
         case PROTOCOL_EQUIP_WEAPON: return equip_weapon_event(msg, clientMessage, world);
         case PROTOCOL_EQUIP_SHIELD: return equip_shield_event(msg, clientMessage, world);
+        case PROTOCOL_EQUIP_POTION: return equip_potion_event(msg, clientMessage, world);
         case PROTOCOL_MOVE_STOP: return stop_moving(msg, clientMessage, world);
         case PROTOCOL_ATTACK: return attack_event(msg, clientMessage, world);
         case PROTOCOL_MEDITATION: return meditation_event(msg, clientMessage, world);
@@ -40,7 +41,6 @@ void ProtocolTranslator::translate(MessageToServer& msg, ProtocolMessage &client
     }
     return undefined_event(msg, clientMessage);
 }
-
 
 void ProtocolTranslator::equip_potion_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
     uint8_t potion_id = msg.args[0];
@@ -63,9 +63,7 @@ void ProtocolTranslator::equip_shield_event(MessageToServer& msg, ProtocolMessag
     if (shield_id == current_shield) {
         shield = ShieldFactory::make_shield(DEFAULT_EQUIPMENT, config);
         clientMessage.id_message = PROTOCOL_SHIELD_DEFAULT;
-        std::cout << "EquipDefaultShie::" << std::endl;
-    }
-    else {
+    } else {
         shield = ShieldFactory::make_shield(shield_id, config);
         clientMessage.id_message = PROTOCOL_SHIELD_CONFIRM;
     }
@@ -81,7 +79,6 @@ void ProtocolTranslator::equip_weapon_event(MessageToServer& msg, ProtocolMessag
     if (weapon_id == current_weapon) {
         weapon = WeaponFactory::make_weapon(DEFAULT_EQUIPMENT, config);
         clientMessage.id_message = PROTOCOL_WEAPON_DEFAULT;
-        std::cout << "EquipDefaultWep::" << std::endl;
     } else {
         weapon = WeaponFactory::make_weapon(weapon_id, config);
         clientMessage.id_message = PROTOCOL_WEAPON_CONFIRM;
@@ -98,9 +95,7 @@ void ProtocolTranslator::equip_armor_event(MessageToServer& msg, ProtocolMessage
     if (armor_id == current_armor) {
         armor = ArmorFactory::make_armor(DEFAULT_EQUIPMENT, config);
         clientMessage.id_message = PROTOCOL_ARMOR_DEFAULT;
-        std::cout << "EquipDefaultArmor::" << std::endl;
-    }
-    else {
+    } else {
         armor = ArmorFactory::make_armor(armor_id, config);
         clientMessage.id_message = PROTOCOL_ARMOR_CONFIRM;
     }
@@ -118,9 +113,7 @@ void ProtocolTranslator::equip_helmet_event(MessageToServer& msg, ProtocolMessag
     if (helmet_id == current_helmet) {
         helmet = HelmetFactory::make_helmet(DEFAULT_EQUIPMENT, config);
         clientMessage.id_message = PROTOCOL_HELMET_DEFAULT;
-        std::cout << "EquipDefaultHelmet::" << std::endl;
-    }
-    else {
+    } else {
         helmet = HelmetFactory::make_helmet(helmet_id, config);
         clientMessage.id_message = PROTOCOL_HELMET_CONFIRM;
     }
@@ -208,22 +201,24 @@ void ProtocolTranslator::move_down_event(MessageToServer &msg, ProtocolMessage &
 void ProtocolTranslator::take_item_event(MessageToServer &msg, ProtocolMessage &clientMessage, ServerWorld &world) {
     
     bool took = world.player_take_item(msg.player_id);
-    if (took)
+    if (!took) clientMessage.id_message = NOTHING;
+    else {
         clientMessage.id_message = PROTOCOL_TAKE_ITEM_CONFIRM;
-    else 
-        clientMessage.id_message = PROTOCOL_TAKE_ITEM_REFUSED;
-
-    clientMessage.id_player = msg.player_id;
-    this->get_world(clientMessage, world);
+        clientMessage.id_player = msg.player_id;
+        this->get_world(clientMessage, world);
+    }
 }
 
 void ProtocolTranslator::drop_item_event(MessageToServer &msg, ProtocolMessage &clientMessage, ServerWorld &world) {
+    
     uint8_t item_id = msg.args[0];
-    world.characters[msg.player_id]->drop_item(item_id, world.items);
-
-    clientMessage.id_message = PROTOCOL_DROP_ITEM_CONFIRM;
-    clientMessage.id_player = msg.player_id;
-    this->get_world(clientMessage, world);
+    bool dropped = world.characters[msg.player_id]->drop_item(item_id, world.items);
+    if (!dropped) clientMessage.id_message = NOTHING;
+    else {
+        clientMessage.id_message = PROTOCOL_DROP_ITEM_CONFIRM;
+        clientMessage.id_player = msg.player_id;
+        this->get_world(clientMessage, world);
+    }    
 }
 
 void ProtocolTranslator::meditation_event(MessageToServer &msg, ProtocolMessage &clientMessage, ServerWorld &world) {

@@ -127,9 +127,9 @@ bool Movement::is_facing_down(){
 
 void Movement::invert_body_facing(){
     if (last_movement == DOWN) last_movement = TOP;
-    if (last_movement == TOP) last_movement = DOWN;
-    if (last_movement == LEFT) last_movement = RIGHT;
-    if (last_movement == RIGHT) last_movement = LEFT;
+    else if (last_movement == TOP) last_movement = DOWN;
+    else if (last_movement == LEFT) last_movement = RIGHT;
+    else last_movement = LEFT;
 }
 
 bool Movement::is_near_X(int posX){
