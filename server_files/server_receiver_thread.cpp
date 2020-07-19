@@ -23,7 +23,6 @@ void SrvClientReceiverThread::run() {
             running = false;
             std::cout << "LLEGO LOG OFF" << std::endl;
         }
-            
         this->receiversQueue.push(msg);
     }
 

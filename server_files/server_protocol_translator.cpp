@@ -38,6 +38,7 @@ void ProtocolTranslator::translate(MessageToServer& msg, ProtocolMessage &client
         case PROTOCOL_DROP_ITEM: return drop_item_event(msg, clientMessage, world);
         case PROTOCOL_LOG_OFF: return log_off_event(msg, clientMessage, world);
     }
+    return undefined_event(msg, clientMessage);
 }
 
 
@@ -366,4 +367,10 @@ void ProtocolTranslator::get_all_items(ProtocolMessage& msg, ServerWorld &world)
         tmp.push_back(protocolItem);
     }
     msg.items = tmp;
+}
+
+void ProtocolTranslator::undefined_event(MessageToServer &msg, ProtocolMessage &clientMessage) {
+
+    clientMessage.id_message = NOTHING;
+    std::cout << "It should never get in Here" << std::endl;
 }

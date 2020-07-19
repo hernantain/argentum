@@ -14,7 +14,6 @@ Weapon::Weapon(int min_damage = DEFAULT_DAMAGE, int max_damage = DEFAULT_DAMAGE)
 
 int Weapon::get_damage() {
     int damage = rand() % (max_damage - min_damage + 1) + min_damage;
-    // std::cout << "This weapon attacks: " << damage << std::endl;
     return damage;
 }
 
