@@ -158,12 +158,13 @@ int Character::withdraw_gold() {
     return amount;
 }
 
-void Character::drop_item(uint8_t id, std::vector<Item> &worldItems) {
-    if (!alive || !inventory.has(id)) return;
+bool Character::drop_item(uint8_t id, std::vector<Item> &worldItems) {
+    if (!alive || !inventory.has(id) || is_equiped(id)) return false;
     Item drop_item = inventory.drop_item(id);
     drop_item.set_posX(get_body_pos_X());
     drop_item.set_posY(get_body_pos_Y());
     worldItems.push_back(drop_item);
+    return true;
 }
 
 void Character::drop_items(std::vector<Item> &worldItems) {
@@ -194,6 +195,7 @@ const int Character::max_gold() {
 bool Character::take_gold(int amount) {
     if(!alive) return false;
     std::cout << "Current max gold is: "<< max_gold() << std::endl;
+    std::cout << "TakingGold:: "<< amount << std::endl;
     if (gold >= max_gold()) return false;
     if (gold + amount >= max_gold()) {
         gold = max_gold();
@@ -270,6 +272,11 @@ int16_t Character::current_shield() {
 
 int16_t Character::current_helmet() {
     return equipment.current_helmet();
+}
+
+bool Character::is_equiped(int16_t id) {
+    return current_helmet() == id || current_shield() == id || 
+           current_armor() == id || current_weapon() == id;
 }
 
 bool Character::is_safe() {
