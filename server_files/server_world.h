@@ -45,7 +45,7 @@ struct ServerWorld {
     void move_character_down(uint16_t id);
     void move_character_top(uint16_t id);
 
-    void player_take_item(uint16_t id);
+    bool player_take_item(uint16_t id);
     void update_world_items(unsigned int &i);
 
     bool check_characters_collision(uint16_t id);

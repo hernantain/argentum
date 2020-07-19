@@ -9,16 +9,17 @@ Inventory::Inventory(int size) {
     this->max_size = size;
 }
 
-void Inventory::add_item(Item& item) {
-    if (is_full()) return;
+bool Inventory::add_item(Item& item) {
+    if (is_full()) return false;
     int find_item = find(item.get_id());
     if (find_item != NOT_FOUND) {
         int16_t current_amount = items[find_item].get_amount();
         int16_t new_item_amount = item.get_amount();
         items[find_item].set_amount(current_amount + new_item_amount);
-        return;
+        return true;
     }
     items.push_back(item);
+    return true;
 }
 
 void Inventory::remove_item(uint8_t id) {

@@ -134,24 +134,23 @@ void ServerWorld::add(Priest priest) {
 }
 
 
-void ServerWorld::player_take_item(uint16_t id) {
-    std::cout << "Cantidad de items hasta el momento: " << items.size() << std::endl;
+bool ServerWorld::player_take_item(uint16_t id) {
     Character* current = characters[id];
+    bool took = false;
     for (unsigned int i = 0; i < items.size(); ++i) {
         int16_t item_posX = items[i].get_posX();
         int16_t item_posY = items[i].get_posY();
         if (current->is_near(item_posX, item_posY)) {
             if (items[i].get_id() == GOLD_ITEM_ID) {
-                characters[id]->take_gold(items[i].get_amount());
+                took = characters[id]->take_gold(items[i].get_amount());
             } else {
-                characters[id]->take_item(items[i]);
+                took = characters[id]->take_item(items[i]);
             }
-            // std::cout << "Estas cerca como para agarrar un item" << std::endl;
             this->update_world_items(i);
-            break;
+            return took;
         }
     }
-    // std::cout << "Cantidad de items despues: " << items.size() << std::endl;
+    return took;
 }
 
 

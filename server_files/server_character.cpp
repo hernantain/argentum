@@ -191,21 +191,23 @@ const int Character::max_gold() {
     return max_secure_gold() + excess;
 }
 
-void Character::take_gold(int amount) {
-    if(!alive) return;
+bool Character::take_gold(int amount) {
+    if(!alive) return false;
     std::cout << "Current max gold is: "<< max_gold() << std::endl;
+    if (gold >= max_gold()) return false;
     if (gold + amount >= max_gold()) {
         gold = max_gold();
         // drop_excess()
     } else {
         gold += amount;
     }
+    return true;
 }
 
-void Character::take_item(Item& item) {
-    if(!alive) return;
+bool Character::take_item(Item& item) {
+    if(!alive) return false;
     meditating = false;
-    inventory.add_item(item);
+    return inventory.add_item(item);
 }
 
 void Character::equip_life_potion(Potion& item) {

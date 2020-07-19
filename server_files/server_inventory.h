@@ -21,7 +21,7 @@ public:
     void remove_item(uint8_t id);
 
     // Agrega un item al inventario
-    void add_item(Item& item);
+    bool add_item(Item& item);
 
     // Droppea un item del inventario
     Item drop_item(uint8_t id);
