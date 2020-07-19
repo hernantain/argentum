@@ -110,11 +110,20 @@ int InfoView::handleDrop(int &x, int &y) {
     for (unsigned int i = 0; i < items.size(); ++i) {
         if (click_within_bounds(items[i], x, y)) {
             int id = items[i]->get_id();
-            this->cleanItems(i);
+            // this->cleanItems(i);
             return id;
         }
     }
     return -1;
+}
+
+
+void InfoView::dropItem(uint8_t &itemId) {
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        uint8_t id = items[i]->get_id();
+        if (id == itemId) 
+            this->cleanItems(i);
+    }
 }
 
 

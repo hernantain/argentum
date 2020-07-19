@@ -194,6 +194,11 @@ void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
+    if (msg.id_player == this->player_id) {
+        uint8_t itemId = world.get_dropped_item(this->player_id);
+        infoView.dropItem(itemId);
+    }
+
     world.add_items(msg);
 }
 

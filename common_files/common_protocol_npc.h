@@ -14,8 +14,6 @@ struct ProtocolNpc {
 
     ProtocolNpc();
 
-    ProtocolNpc(uint16_t id, int16_t npc_type);
-
     ProtocolNpc(
         uint16_t id,
         int16_t npc_type,

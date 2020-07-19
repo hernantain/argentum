@@ -18,7 +18,6 @@ ProtocolNpc::ProtocolNpc(
                     orientation(orientation) {}
 
 
-ProtocolNpc::ProtocolNpc(uint16_t id, int16_t npc_type) : id(id), npc_type(npc_type) {}
 
 
 

@@ -484,7 +484,7 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.shieldId = this->current_shield();
     protocolCharacter.weaponId = this->current_weapon();
     protocolCharacter.helmetId = this->current_helmet();
-    protocolCharacter.armorId = this->current_armor()   ;
+    protocolCharacter.armorId = this->current_armor();
     protocolCharacter.itemId = 0;
     protocolCharacter.potionId = 0;
 

@@ -225,6 +225,12 @@ void ClientWorld::player_set_shield(uint16_t id, uint8_t shield_id) {
     player->set_shield(shield_id);
 }
 
+uint8_t ClientWorld::get_dropped_item(uint16_t &id) {
+    std::unique_lock<std::mutex> lock(m);
+    Player* player = players[id];
+    return player->getDroppedItem();
+}
+
 
 // REMOVE PLAYER
 

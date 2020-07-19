@@ -57,6 +57,7 @@ class Player: public Drawable {
         void update_alive_status(bool alive);
 
         uint16_t getId() const;
+        uint8_t getDroppedItem() const;
 
         virtual ~Player();
 

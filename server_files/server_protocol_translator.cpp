@@ -284,6 +284,7 @@ void ProtocolTranslator::create_character_event(MessageToServer& msg, ProtocolMe
     this->get_world(clientMessage, world);
 }
 
+
 void ProtocolTranslator::log_off_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
     std::cout << "ALGUIEN SE VA. MUNDO ANTES: " << world.characters.size() << std::endl;
     world.remove_character(msg.player_id);
@@ -293,6 +294,7 @@ void ProtocolTranslator::log_off_event(MessageToServer& msg, ProtocolMessage &cl
     clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
+
 
 void ProtocolTranslator::create_npc_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
     size_t max_npcs = config["npc"]["max_limit"].asUInt();
@@ -351,7 +353,7 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
     std::vector<ProtocolNpc> tmp;
 
 
-    std::cout << "NPCS: " << std::endl; 
+    // std::cout << "NPCS: " << std::endl; 
     for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) {
         // if (!itr->second->is_alive()) {
         //     world.remove_npc(itr->first);
@@ -366,7 +368,7 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
             itr->second->get_body_facing()
         );
         tmp.push_back(protocolNpc);
-        std::cout << itr->first << " --- " << itr->second->get_id() << std::endl;
+        // std::cout << itr->first << " --- " << itr->second->get_id() << std::endl;
     }
     msg.npcs = tmp;
 }
@@ -387,7 +389,6 @@ void ProtocolTranslator::get_all_items(ProtocolMessage& msg, ServerWorld &world)
 }
 
 void ProtocolTranslator::undefined_event(MessageToServer &msg, ProtocolMessage &clientMessage) {
-
     clientMessage.id_message = NOTHING;
     std::cout << "It should never get in Here" << std::endl;
 }

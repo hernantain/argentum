@@ -270,6 +270,8 @@ MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 
 MessageToServer Player::handleEquipEvent(int &itemId) {
 	std::vector<int16_t> args;
+	args.push_back(itemId);
+	std::cout << "EQUIPANDO ITEM ID: " << itemId << std::endl;
 	int16_t event_id = this->getEventId(itemId, args);
 	MessageToServer msg(
 		event_id, 
@@ -283,6 +285,7 @@ MessageToServer Player::handleEquipEvent(int &itemId) {
 MessageToServer Player::handleDropEvent(int &itemId) {
 	std::vector<int16_t> args;
 	args.push_back(itemId);
+	this->itemId = itemId;
 	MessageToServer msg(
 		PROTOCOL_DROP_ITEM, 
 		this->id,
@@ -300,9 +303,12 @@ void Player::getPosArgs(std::vector<int16_t> &args) {
 
 
 
+uint8_t Player::getDroppedItem() const {
+	return this->itemId;
+}
+
 
 int16_t Player::getEventId(int &itemId, std::vector<int16_t> &args) {
-	args.push_back(itemId);
 	if (itemId < 4) {
 		armorId = itemId;
 		return PROTOCOL_EQUIP_ARMOR;
