@@ -38,6 +38,9 @@ class LTexture {
 		int getWidth();
 		int getHeight();
 
+		LTexture(LTexture&& other);
+        LTexture& operator=(LTexture&& other);
+
 	private:
 		//The actual hardware texture
 		SDL_Texture* mTexture;

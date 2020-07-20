@@ -9,6 +9,7 @@
 #include "server_mana_potion.h"
 #include "server_life_potion.h"
 #include "server_iron_shield.h"
+#include "server_banker.h"
 
 ServerProcessorThread::ServerProcessorThread(
     MessageToServerQueue &receiversQueue,
@@ -100,11 +101,13 @@ void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
 
 void ServerProcessorThread::run() {
 
-    Thread* game_loop = new GameLoopThread(receiversQueue);
-    game_loop->start();  // NPC THREAD
-
     ProtocolTranslator protocol_translator(config, collisionInfo);
     ServerWorld serverWorld;
+    
+    Banker banker(collisionInfo.get_banker_posX(), collisionInfo.get_banker_posY());
+
+    Thread* game_loop = new GameLoopThread(receiversQueue);
+    game_loop->start();  // NPC THREAD
 
     this->addingHardcodedItems(serverWorld); // HAY QUE SACAR
     

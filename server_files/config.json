@@ -22,7 +22,7 @@
     "goblin": {
         "id": 1,
         "level": 3,
-        "life": 50,
+        "life": 10,
         "min_damage": 5,
         "max_damage": 10,
         "defense": 0,
@@ -32,7 +32,7 @@
     "skeleton": {
         "id": 2,
         "level": 5,
-        "life": 70,
+        "life": 10,
         "min_damage": 5,
         "max_damage": 10,
         "defense": 2,
@@ -42,7 +42,7 @@
     "zombie": {
         "id": 3,
         "level": 8,
-        "life": 90,
+        "life": 10,
         "min_damage": 5,
         "max_damage": 10,
         "defense": 4,
@@ -52,7 +52,7 @@
     "spider": {
         "id": 4,
         "level": 10,
-        "life": 100,
+        "life": 15,
         "min_damage": 5,
         "max_damage": 10,
         "defense": 5,
