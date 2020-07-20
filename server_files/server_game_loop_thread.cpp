@@ -31,7 +31,7 @@ void GameLoopThread::run() {
     while (this->running) {
         update_game(iteration, npc_id, npc_type);
 
-        if(iteration % 3 == 0) {
+        if(iteration % NPC_CREATION_ITERATION == 0) {
             npc_id++;
             npc_type++;
             if(npc_type > MAX_NPC_TYPES) npc_type = NPC_INITIAL_TYPE;
