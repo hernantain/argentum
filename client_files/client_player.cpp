@@ -238,6 +238,10 @@ MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 				event_id = PROTOCOL_RESURRECT;
 				break;
 
+			case SDLK_c:
+				event_id = PROTOCOL_HEAL;
+				break;
+
 			case SDLK_z:
 				event_id = PROTOCOL_MEDITATION;
 				break;			

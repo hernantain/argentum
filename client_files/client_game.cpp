@@ -175,7 +175,6 @@ void Game::run() {
 					queue.push(msg);
 					continue;
 				}
-
 			} else if (e.type == SDL_MOUSEMOTION) {
 				continue;
 

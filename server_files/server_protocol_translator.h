@@ -59,6 +59,9 @@ private:
     // Evento para resucitar un personaje
     void resurrect_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
+    // Evento para curar un personaje
+    void heal_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
+
     // Evento para tomar un item del suelo
     void take_item_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world);
 
