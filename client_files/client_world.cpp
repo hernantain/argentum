@@ -264,9 +264,7 @@ void ClientWorld::render(uint16_t id, SDL_Rect &camera, int &it) {
         uint8_t itemId = items[i]->get_id();
         int16_t posX = items[i]->get_posX();
         int16_t posY = items[i]->get_posY();
-
-        // this->itemViewer.print_works();
-        // std::cout << "ITEM ACA LLEGA" << std::endl;
+        
         LTexture* item = this->itemViewer.get_item_icon(itemId);
         item->render(posX-camera.x, posY-camera.y, gRenderer);
     }
@@ -281,7 +279,13 @@ ClientWorld::~ClientWorld() {
     std::map<uint16_t, NPC*>::iterator npc_itr;
     for (npc_itr = npcs.begin(); npc_itr != npcs.end(); ++npc_itr)  
         delete npc_itr->second;
+
+    for (unsigned int i = 0; i < items.size(); ++i)
+        delete items[i];
 }
+
+
+
 
 // Constructor y asignacion por movimiento.
 

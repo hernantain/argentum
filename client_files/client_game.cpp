@@ -148,7 +148,7 @@ void Game::run() {
 				continue;
 
 			} else if ((e.type == SDL_MOUSEBUTTONDOWN) && (e.button.button == SDL_BUTTON_RIGHT)) {
-				std::cout << "RIGHT CLICK" << std::endl;
+				// std::cout << "RIGHT CLICK" << std::endl;
 				int x, y;
 				SDL_GetMouseState( &x, &y ); 
 				if (x > inventory.x) {
@@ -166,10 +166,8 @@ void Game::run() {
 				int x, y;
 				SDL_GetMouseState( &x, &y ); 
 				if (x > inventory.x) {
-					std::cout << "CLICK COMUN" << std::endl;
 					int clickX = x - inventory.x;
 					int itemId = infoView.handle_click(clickX, y); 
-					std::cout << "Item ID ES:: " << itemId << std::endl;
 					if (itemId < 0)
 						continue;
 
