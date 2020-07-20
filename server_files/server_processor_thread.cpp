@@ -10,6 +10,7 @@
 #include "server_life_potion.h"
 #include "server_iron_shield.h"
 #include "server_banker.h"
+#include "server_priest.h"
 
 ServerProcessorThread::ServerProcessorThread(
     MessageToServerQueue &receiversQueue,
@@ -106,6 +107,9 @@ void ServerProcessorThread::run() {
     
     Banker banker(collisionInfo.get_banker_posX(), collisionInfo.get_banker_posY());
     serverWorld.add(banker);
+
+    Priest priest(collisionInfo.get_priest_posX(), collisionInfo.get_priest_posY());
+    serverWorld.add(priest);
 
     Thread* game_loop = new GameLoopThread(receiversQueue);
     game_loop->start();  // NPC THREAD

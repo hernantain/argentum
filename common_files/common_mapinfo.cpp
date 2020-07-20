@@ -12,7 +12,6 @@ MapInfo::MapInfo() {}
 void MapInfo::loadCollisionInfo(CollisionInfo &collisionInfo, Json::Value &tileJson, int &first_tile_gid) {
 
     const Json::Value& tiles = tileJson["tiles"];
-    // nt id;
     for (unsigned int i = 0; i < tiles.size(); ++i) {
         CollisionTile collisionTile;
         collisionTile.x = tiles[i]["objectgroup"]["objects"][0]["x"].asInt();
@@ -45,14 +44,22 @@ CollisionInfo MapInfo::load() {
     const Json::Value& grounds = layers[0]["data"];
     const Json::Value& trees = layers[1]["data"];
     const Json::Value& bankersPos = obj["bankers"];
+    const Json::Value& priestsPos = obj["priests"];
 
     std::cout << "BANKERS POS X: " << bankersPos[0]["posX"].asInt() << std::endl;
+    std::cout << "PRIESTS POS X: " << priestsPos[0]["posX"].asInt() << std::endl;
     this->banker.push_back(bankersPos[0]["posX"].asInt());
     collisionInfo.banker.push_back(bankersPos[0]["posX"].asInt());
+    this->priest.push_back(priestsPos[0]["posX"].asInt());
+    collisionInfo.priest.push_back(priestsPos[0]["posX"].asInt());
 
     std::cout << "BANKERS POS Y: " << bankersPos[0]["posY"].asInt() << std::endl;
+    std::cout << "PRIESTS POS Y: " << priestsPos[0]["posY"].asInt() << std::endl;
     this->banker.push_back(bankersPos[0]["posY"].asInt());
     collisionInfo.banker.push_back(bankersPos[0]["posY"].asInt());
+    this->priest.push_back(priestsPos[0]["posY"].asInt());
+    collisionInfo.priest.push_back(priestsPos[0]["posY"].asInt());
+
 
 
     std::string source;
@@ -112,6 +119,15 @@ int MapInfo::get_banker_posX() const {
 
 int MapInfo::get_banker_posY() const {
     return banker[1];
+}
+
+int MapInfo::get_priest_posX() const {
+    return priest[0];
+}
+
+
+int MapInfo::get_priest_posY() const {
+    return priest[1];
 }
 
 

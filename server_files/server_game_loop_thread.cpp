@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <msgpack.hpp>
 #include <vector>
+#include <math.h>
 
 #include "../common_files/common_protocol_message.h"
 #include "../common_files/common_protocol_codes.h"

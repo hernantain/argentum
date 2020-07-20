@@ -11,7 +11,7 @@
 #include "client_texture.h"
 
 
-Map::Map(SDL_Renderer* gRenderer) : banker(gRenderer) {
+Map::Map(SDL_Renderer* gRenderer) : banker(gRenderer), priest(gRenderer) {
     this->gRenderer = gRenderer;
 }
 
@@ -63,6 +63,7 @@ void Map::load(MapInfo &mapInfo) {
     }
 
     banker.load(mapInfo.get_banker_posX(), mapInfo.get_banker_posY());
+    priest.load(mapInfo.get_priest_posX(), mapInfo.get_priest_posY());
 }
 
 
@@ -75,15 +76,17 @@ void Map::renderFirstLayer(SDL_Rect &camera) {
 
 void Map::renderSecondLayer(SDL_Rect &camera) {
     banker.render(camera);
+    priest.render(camera);
     for (unsigned int i = 0; i < tilesSecondLayer.size(); ++i) 
         tilesSecondLayer[i].render(tileInfo, gRenderer, camera);
 
 }
 
 
-Map::Map(Map&& other) : banker(other.gRenderer) {
+Map::Map(Map&& other) : banker(other.gRenderer), priest(other.gRenderer) {
     this->gRenderer = other.gRenderer;
     this->banker = std::move(other.banker);
+    this->priest = std::move(other.priest);
     this->tilesFirstLayer = std::move(other.tilesFirstLayer);
     this->tilesSecondLayer = std::move(other.tilesSecondLayer);
     this->tileInfo = std::move(other.tileInfo);
