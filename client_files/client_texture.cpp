@@ -7,7 +7,6 @@
 #include "client_texture.h"
 
 LTexture::LTexture() {
-	//Initialize
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
@@ -15,18 +14,18 @@ LTexture::LTexture() {
 
 LTexture::~LTexture() {
 	//Deallocate
-	free();
+	// free();
 }
 
-bool LTexture::loadFromFile( std::string path, SDL_Renderer *gRenderer ) {
+bool LTexture::loadFromFile(std::string path, SDL_Renderer *gRenderer) {
 
 	free(); //Get rid of preexisting texture
 
 	SDL_Texture* newTexture = NULL; //The final texture
 
-	SDL_Surface* loadedSurface = IMG_Load( path.c_str() ); //Load image at specified path
-	if( loadedSurface == NULL ) {
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str()); //Load image at specified path
+	if (loadedSurface == NULL) {
+		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
 		return false;
 	} 
 	
@@ -44,7 +43,6 @@ bool LTexture::loadFromFile( std::string path, SDL_Renderer *gRenderer ) {
 	mWidth = loadedSurface->w;
 	mHeight = loadedSurface->h;
 	
-
 	//Get rid of old loaded surface
 	SDL_FreeSurface( loadedSurface );
 
@@ -112,3 +110,18 @@ bool LTexture::loadFromRenderedText(SDL_Renderer *gRenderer, TTF_Font *gFont, st
 	//Return success
 	return mTexture != NULL;
 }
+
+LTexture::LTexture(LTexture&& other) {
+	this->mTexture = other.mTexture;
+	this->mWidth = std::move(other.mWidth);
+	this->mHeight = std::move(other.mHeight);
+}
+
+
+LTexture& LTexture::operator=(LTexture&& other) {
+	this->mTexture = other.mTexture;
+	this->mWidth = std::move(other.mWidth);
+	this->mHeight = std::move(other.mHeight);
+	return *this;
+}
+
