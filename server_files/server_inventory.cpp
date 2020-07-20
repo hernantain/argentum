@@ -75,10 +75,10 @@ void Inventory::drop_items(int16_t posX, int16_t posY, int gold, std::vector<Ite
 void Inventory::drop_gold(int16_t posX, int16_t posY, int gold, std::vector<Item> &worldItems) {
     if (gold > 0) {
         std::cout << "Inventory::DroppingGold:: " << gold << std::endl;
-        Gold drop_gold(drop_gold);
-        drop_gold.set_posX(posX - 2 * DROP_OFFSET_TOLERANCE);
-        drop_gold.set_posY(posY - 2 * DROP_OFFSET_TOLERANCE);
-        worldItems.push_back(drop_gold);
+        Gold to_drop(gold);
+        to_drop.set_posX(posX - 2 * DROP_OFFSET_TOLERANCE);
+        to_drop.set_posY(posY - 2 * DROP_OFFSET_TOLERANCE);
+        worldItems.push_back(to_drop);
     }
 }
 
