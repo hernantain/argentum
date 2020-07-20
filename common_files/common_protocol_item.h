@@ -12,8 +12,6 @@ struct ProtocolItem {
 
     ProtocolItem();
 
-    ProtocolItem(int16_t id, int16_t amount);
-
     ProtocolItem(
         int16_t id,
         int16_t posX,

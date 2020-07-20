@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 
+#include <iostream>
 #include "client_texture.h"
 
 LTexture::LTexture() {
@@ -14,7 +15,8 @@ LTexture::LTexture() {
 
 LTexture::~LTexture() {
 	//Deallocate
-	// free();
+	std::cout << "FREE TEXTURE" << std::endl;
+	free();
 }
 
 bool LTexture::loadFromFile(std::string path, SDL_Renderer *gRenderer) {
@@ -115,6 +117,7 @@ LTexture::LTexture(LTexture&& other) {
 	this->mTexture = other.mTexture;
 	this->mWidth = std::move(other.mWidth);
 	this->mHeight = std::move(other.mHeight);
+	other.mTexture = NULL;
 }
 
 
@@ -122,6 +125,7 @@ LTexture& LTexture::operator=(LTexture&& other) {
 	this->mTexture = other.mTexture;
 	this->mWidth = std::move(other.mWidth);
 	this->mHeight = std::move(other.mHeight);
+	other.mTexture = NULL;
 	return *this;
 }
 

@@ -286,21 +286,19 @@ ClientWorld::~ClientWorld() {
 
 
 
-
-// Constructor y asignacion por movimiento.
-
-
-// ClientWorld::ClientWorld(ClientWorld&& other) {
-//     this->players = other.players;
-//     this->npcs = other.npcs;
-//     this->gRenderer = other.gRenderer;
-// }
+ClientWorld::ClientWorld(ClientWorld&& other) : itemViewer(other.itemViewer) {
+    std::cout << "MOVEMENT WORLD" << std::endl;
+    this->players = std::move(other.players);
+    this->npcs = std::move(other.npcs);
+    this->itemViewer = std::move(other.itemViewer);
+    this->gRenderer = other.gRenderer;
+}
 
 
-// ClientWorld& ClientWorld::operator=(ClientWorld&& other) {
-//     this->players = other.players;
-//     this->npcs = other.npcs;
-//     this->gRenderer = other.gRenderer;
-//     return *this;
-// }
+ClientWorld& ClientWorld::operator=(ClientWorld&& other) {
+    this->players = other.players;
+    this->npcs = other.npcs;
+    this->gRenderer = other.gRenderer;
+    return *this;
+}
 

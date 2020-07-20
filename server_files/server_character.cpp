@@ -479,30 +479,31 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.alive = this->is_alive();
     protocolCharacter.meditating = this->is_meditating();   
   
-    protocolCharacter.otherPosX = 0;
-    protocolCharacter.otherPosY = 0;
+    // protocolCharacter.otherPosX = 0;
+    // protocolCharacter.otherPosY = 0;
     protocolCharacter.shieldId = this->current_shield();
     protocolCharacter.weaponId = this->current_weapon();
     protocolCharacter.helmetId = this->current_helmet();
     protocolCharacter.armorId = this->current_armor();
-    protocolCharacter.itemId = 0;
-    protocolCharacter.potionId = 0;
+    // protocolCharacter.itemId = 0;
+    // protocolCharacter.potionId = 0;
 
-    // std::cout << "MANDANDO ARMOR ID: " << (int) protocolCharacter.armorId << std::endl;
-    // std::cout << "PROT CHARACTER ID " << (int) protocolCharacter.id << std::endl;
-    // std::cout << "PROT CHARACTER ID RACE " << (int) protocolCharacter.id_race << std::endl;
-    // std::cout << "PROT CHARACTER ID CLASE " << (int) protocolCharacter.id_class << std::endl;
-    // std::cout << "PROT CHARACTER bodyposX " << (int) protocolCharacter.bodyPosX << std::endl;
-    // std::cout << "PROT CHARACTER bodyposY " << (int) protocolCharacter.bodyPosY << std::endl;
-    // std::cout << "PROT CHARACTER ORIENTAT " << (int) protocolCharacter.orientation << std::endl;
-    // std::cout << "PROT CHARACTER MANA " << (int) protocolCharacter.mana << std::endl;
-    // std::cout << "PROT CHARACTER MAX_MANA " << (int) protocolCharacter.max_mana << std::endl;
-    // std::cout << "PROT CHARACTER LIFE " << (int) protocolCharacter.life << std::endl;
-    // std::cout << "PROT CHARACTER MAX_LIFE " << (int) protocolCharacter.max_life << std::endl;
-    // std::cout << "PROT CHARACTER EXPERIEN " << (int) protocolCharacter.experience << std::endl;
-    // std::cout << "PROT CHARACTER MAX EXP " << (int) protocolCharacter.max_experience << std::endl;
-    // std::cout << "PROT CHARACTER ALIVE " << (int) protocolCharacter.alive << std::endl;
-    // std::cout << std::endl;
+    std::cout << "MANDANDO ARMOR ID: " << (int) protocolCharacter.armorId << std::endl;
+    std::cout << "PROT CHARACTER ID " << (int) protocolCharacter.id << std::endl;
+    std::cout << "PROT CHARACTER ID RACE " << (int) protocolCharacter.id_race << std::endl;
+    std::cout << "PROT CHARACTER ID CLASE " << (int) protocolCharacter.id_class << std::endl;
+    std::cout << "PROT CHARACTER bodyposX " << (int) protocolCharacter.bodyPosX << std::endl;
+    std::cout << "PROT CHARACTER bodyposY " << (int) protocolCharacter.bodyPosY << std::endl;
+    std::cout << "PROT CHARACTER ORIENTAT " << (int) protocolCharacter.orientation << std::endl;
+    std::cout << "PROT CHARACTER MANA " << (int) protocolCharacter.mana << std::endl;
+    std::cout << "PROT CHARACTER MAX_MANA " << (int) protocolCharacter.max_mana << std::endl;
+    std::cout << "PROT CHARACTER LIFE " << (int) protocolCharacter.life << std::endl;
+    std::cout << "PROT CHARACTER MAX_LIFE " << (int) protocolCharacter.max_life << std::endl;
+    std::cout << "PROT CHARACTER EXPERIEN " << (int) protocolCharacter.experience << std::endl;
+    std::cout << "PROT CHARACTER MAX EXP " << (int) protocolCharacter.max_experience << std::endl;
+    std::cout << "PROT CHARACTER ALIVE " << (int) protocolCharacter.alive << std::endl;
+    std::cout << "PROT CHARACTER MEDITATING " << (int) protocolCharacter.meditating << std::endl;
+    std::cout << std::endl;
 }
 
 uint16_t Character::get_id() const {

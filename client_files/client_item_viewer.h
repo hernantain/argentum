@@ -38,6 +38,7 @@
 #define IRON_SHIELD_IMAGE "images/icons/iron_shield_icon.png"
 #define IRON_HELMET_IMAGE "images/icons/iron_helmet_icon.png"
 #define HOOD_IMAGE "images/icons/hood_icon.png"
+#define MAGIC_HAT_IMAGE "images/icons/magic_hat_icon.png" 
 #define COMPOUND_BOW_IMAGE "images/icons/compound_bow_icon.png"
 #define SIMPLE_BOW_IMAGE "images/icons/simple_bow_icon.png"
 #define AXE_IMAGE "images/icons/axe_icon.png"
@@ -59,6 +60,12 @@ class ItemViewer {
         LTexture* get_item_icon(uint8_t id);    
 
         ItemViewer(SDL_Renderer* gRenderer);
+
+        ItemViewer(ItemViewer&& other);
+        ItemViewer& operator=(ItemViewer&& other);
+
+        ItemViewer(const ItemViewer&) = delete;
+        ItemViewer& operator=(const ItemViewer&) = delete;
 
         ~ItemViewer();
 };
