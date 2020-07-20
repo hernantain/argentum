@@ -169,23 +169,23 @@ bool NPC::is_near(const int posX, const int posY) const {
 }
 
 void NPC::move_right() {
-    movement.move_right(config["graphics"]["velocity"].asInt());
+    movement.move_right(config["npc"]["velocity"].asInt());
 }
 
 void NPC::move_left() {
-    movement.move_left(config["graphics"]["velocity"].asInt());
+    movement.move_left(config["npc"]["velocity"].asInt());
 }
 
 void NPC::move_top() {
-    movement.move_top(config["graphics"]["velocity"].asInt());
+    movement.move_top(config["npc"]["velocity"].asInt());
 }
 
 void NPC::move_down() {
-    movement.move_down(config["graphics"]["velocity"].asInt());
+    movement.move_down(config["npc"]["velocity"].asInt());
 }
 
 void NPC::move_random() {
-    movement.move_random(config["graphics"]["velocity"].asInt());
+    movement.move_random(config["npc"]["velocity"].asInt());
 }
 
 void NPC::move_to(const Attackable& other) {
@@ -195,7 +195,7 @@ void NPC::move_to(const Attackable& other) {
     }
     int16_t posX = other.get_body_pos_X();
     int16_t posY = other.get_body_pos_Y();
-    movement.move_to(config["graphics"]["velocity"].asInt(), posX, posY);
+    movement.move_to(config["npc"]["velocity"].asInt(), posX, posY);
 }
 
 int NPC::get_body_facing() const { 

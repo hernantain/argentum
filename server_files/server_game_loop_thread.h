@@ -15,6 +15,7 @@ private:
     MessageToServerQueue &queue;
     std::atomic<bool> running;
 
+    void update_game(int iteration, uint16_t npc_id, int16_t npc_type);
 public:
     GameLoopThread(MessageToServerQueue &queue);
 
