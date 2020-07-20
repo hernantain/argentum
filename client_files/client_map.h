@@ -15,10 +15,10 @@
 
 class Map {
     SDL_Renderer* gRenderer;
+    Banker banker;
     TileInfo tileInfo;
     std::vector<Tile> tilesFirstLayer;
     std::vector<Tile> tilesSecondLayer;
-    Banker banker;
 
     public:
         Map(SDL_Renderer* gRenderer);

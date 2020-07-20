@@ -12,14 +12,14 @@ struct ProtocolCharacter {
     int16_t bodyPosX; 
     int16_t bodyPosY;
     int16_t orientation;
-    int16_t otherPosX; 
-    int16_t otherPosY;
+    // int16_t otherPosX; 
+    // int16_t otherPosY;
     uint8_t helmetId;
     uint8_t armorId;
     uint8_t weaponId;
     uint8_t shieldId;
-    uint8_t potionId;
-    uint8_t itemId;
+    // uint8_t potionId;
+    // uint8_t itemId;
     int16_t life, max_life;
     int16_t mana, max_mana;
     // int16_t level;
@@ -37,8 +37,8 @@ struct ProtocolCharacter {
     // ProtocolCharacter(const ProtocolCharacter&) = delete;
     // ProtocolCharacter& operator=(const ProtocolCharacter&) = delete;
 
-    MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, orientation, otherPosX, otherPosY, 
-                   helmetId, armorId, weaponId, shieldId, potionId, itemId, life, max_life, mana, 
+    MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, orientation, 
+                   helmetId, armorId, weaponId, shieldId, life, max_life, mana, 
                    max_mana, experience, max_experience, alive, meditating)
 };
 

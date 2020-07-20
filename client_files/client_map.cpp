@@ -11,15 +11,12 @@
 #include "client_texture.h"
 
 
-Map::Map(SDL_Renderer* gRenderer) {
+Map::Map(SDL_Renderer* gRenderer) : banker(gRenderer) {
     this->gRenderer = gRenderer;
 }
 
 
 void Map::load(MapInfo &mapInfo) {
-    
-    std::cout << "LOADING BANKER" << std::endl;
-    banker.load(this->gRenderer, mapInfo.get_banker_posX(), mapInfo.get_banker_posY());
 
     std::vector<TileSetInfo> tileset_info = mapInfo.get_tileset_info();
     for (unsigned int i = 0; i < tileset_info.size(); ++i) {
@@ -64,6 +61,8 @@ void Map::load(MapInfo &mapInfo) {
             y += TILE_SIZE;
         }
     }
+
+    banker.load(mapInfo.get_banker_posX(), mapInfo.get_banker_posY());
 }
 
 
@@ -82,7 +81,7 @@ void Map::renderSecondLayer(SDL_Rect &camera) {
 }
 
 
-Map::Map(Map&& other) {
+Map::Map(Map&& other) : banker(other.gRenderer) {
     this->gRenderer = other.gRenderer;
     this->banker = std::move(other.banker);
     this->tilesFirstLayer = std::move(other.tilesFirstLayer);

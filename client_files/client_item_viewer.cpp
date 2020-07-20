@@ -37,6 +37,9 @@ void ItemViewer::add_item(uint8_t &id) {
             break;
 
         case MAGIC_HAT_CODE: 
+            texture->loadFromFile(MAGIC_HAT_IMAGE, gRenderer);
+            break;
+            
         case TURTLE_SHIELD_CODE: 
             texture->loadFromFile(TURTLE_SHIELD_IMAGE, gRenderer);
             break;
@@ -115,4 +118,16 @@ ItemViewer::~ItemViewer() {
     std::map<uint8_t, LTexture*>::iterator itr;
     for (itr = items.begin(); itr != items.end(); ++itr)  
         itr->second->free();
+}
+
+
+ItemViewer::ItemViewer(ItemViewer&& other) {
+    this->items = std::move(other.items);
+    this->gRenderer = other.gRenderer;
+}
+
+ItemViewer& ItemViewer::operator=(ItemViewer&& other) {
+    this->items = std::move(other.items);
+    this->gRenderer = other.gRenderer;
+    return *this;
 }

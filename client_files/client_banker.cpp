@@ -3,19 +3,40 @@
 
 #include <iostream>
 
-Banker::Banker() {
+// Banker::Banker() {
+//     this->gRenderer = NULL;
+//     this->posX = 0;
+//     this->posY = 0;
+// }
+
+
+// void Banker::load(SDL_Renderer* gRenderer, int posX, int posY) {
+//     if(!this->bankerTexture.loadFromFile("images/banker.png", gRenderer)) {
+// 		std::cout << "Failed to load banker texture!\n" << std::endl;
+// 	}
+//     this->gRenderer = gRenderer;
+//     this->posX = posX;
+//     this->posY = posY;
+//     this->bankerClip = {0, 0, 24, 45};    
+// }
+
+Banker::Banker(SDL_Renderer* gRenderer) {
+    this->gRenderer = gRenderer;
+    if(!this->bankerTexture.loadFromFile("images/banker.png", gRenderer)) {
+		std::cout << "Failed to load banker texture!\n" << std::endl;
+	}
     std::cout << "construyendo banker" << std::endl;
-    this->gRenderer = NULL;
+
     this->posX = 0;
     this->posY = 0;
 }
 
 
-void Banker::load(SDL_Renderer* gRenderer, int posX, int posY) {
-    if(!this->bankerTexture.loadFromFile("images/banker.png", gRenderer)) {
-		std::cout << "Failed to load banker texture!\n" << std::endl;
-	}
-    this->gRenderer = gRenderer;
+void Banker::load(int posX, int posY) {
+    // if(!this->bankerTexture.loadFromFile("images/banker.png", gRenderer)) {
+	// 	std::cout << "Failed to load banker texture!\n" << std::endl;
+	// }
+    // this->gRenderer = gRenderer;
     this->posX = posX;
     this->posY = posY;
     this->bankerClip = {0, 0, 24, 45};    
@@ -24,8 +45,6 @@ void Banker::load(SDL_Renderer* gRenderer, int posX, int posY) {
 
 
 void Banker::render(SDL_Rect &camera) {
-    // std::cout << "Rendereando banker" << std::endl;
-    // std::cout << posX << " " << posY << " " << bankerClip.w;
     this->bankerTexture.render(posX-camera.x, posY-camera.y, this->gRenderer, &this->bankerClip);
 }
 

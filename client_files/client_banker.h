@@ -11,9 +11,12 @@ class Banker {
     LTexture bankerTexture;
     SDL_Rect bankerClip;
     public:
-        Banker();
+        // Banker();
 
-        void load(SDL_Renderer* gRenderer, int posX, int posY);
+        Banker(SDL_Renderer* gRenderer);
+
+        // void load(SDL_Renderer* gRenderer, int posX, int posY);
+        void load(int posX, int posY);
 
         void render(SDL_Rect &camera);
 

@@ -101,7 +101,7 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 	for (unsigned int i = 0; i < rec_msg.items.size(); ++i)
 		clientWorld.add_item(rec_msg.items[i]);
 
-	return clientWorld;
+	return std::move(clientWorld); // MOVE SMTICS?
 }
 
 

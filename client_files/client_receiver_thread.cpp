@@ -216,7 +216,7 @@ void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
     world.update_npcs(msg);
     world.update_player_alive_status(msg);
     world.add_items(msg);
-    update_bars(msg);
+    // update_bars(msg);
 }
 
 void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
