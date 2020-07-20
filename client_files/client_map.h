@@ -1,13 +1,16 @@
 #ifndef _CLIENT_MAP
 #define _CLIENT_MAP
 
+#include <vector>
 #include "SDL2/SDL.h"
 #include "client_tile.h"
 #include "client_tile_info.h"
-
-#include <vector>
+#include "client_banker.h"
 
 #include "../common_files/common_mapinfo.h"
+
+
+#define TILE_SIZE 128
 
 
 class Map {
@@ -15,6 +18,7 @@ class Map {
     TileInfo tileInfo;
     std::vector<Tile> tilesFirstLayer;
     std::vector<Tile> tilesSecondLayer;
+    Banker banker;
 
     public:
         Map(SDL_Renderer* gRenderer);

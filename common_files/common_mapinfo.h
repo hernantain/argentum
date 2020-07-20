@@ -15,6 +15,7 @@ class MapInfo {
     int map_width, map_height;
     std::vector<int> layer1;
     std::vector<int> layer2;
+    std::vector<int> banker;
     std::vector<TileSetInfo> tileSetInfo;
 
     public:
@@ -25,10 +26,12 @@ class MapInfo {
         std::vector<TileSetInfo> get_tileset_info() const;
         std::vector<int> get_layer1() const;
         std::vector<int> get_layer2() const;
+        int get_banker_posX() const;
+        int get_banker_posY() const;
         void loadCollisionInfo(CollisionInfo &collisionInfo, Json::Value &tileJson, int &first_tile_gid);
 
 
-    MSGPACK_DEFINE(layer1, layer2, tileSetInfo, tile_width, tile_height, map_width, map_height)
+    MSGPACK_DEFINE(tile_width, tile_height, map_width, map_height, layer1, layer2, banker, tileSetInfo)
 
 };
 

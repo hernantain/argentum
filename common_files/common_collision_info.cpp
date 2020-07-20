@@ -20,6 +20,7 @@ CollisionInfo::CollisionInfo(CollisionInfo&& other) {
     this->mapheight = std::move(other.mapheight); 
     this->layer1 = std::move(other.layer1);
     this->layer2 = std::move(other.layer2);
+    this->banker = std::move(other.banker);
     this->tiles = std::move(other.tiles);
 }
 
@@ -49,4 +50,14 @@ int CollisionInfo::find(int tileId) const {
     }
 
     return -1;
+}
+
+
+int CollisionInfo::get_banker_posX() const {
+    return banker[0];
+}
+
+
+int CollisionInfo::get_banker_posY() const {
+    return banker[1];
 }

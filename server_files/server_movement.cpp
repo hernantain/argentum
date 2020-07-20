@@ -186,13 +186,15 @@ bool Movement::check_map_collision() const {
     int tileNumber = (offsetY * 25) + offsetX; 
     int tile = collisionInfo.layer2[tileNumber];
 
+    if (citizen_collision())
+        return true;
+
     if (tile == 0)
         return false;
 
     int pos = collisionInfo.find(tile); //  tiles[tile];
     if (pos == -1)
         return false; // shouldn't happen
-
 
     int collisionX = offsetX * collisionInfo.get_tile_width() + collisionInfo.tiles[pos].x;
     int collisionY = offsetY * collisionInfo.get_tile_height() + collisionInfo.tiles[pos].y;
@@ -204,3 +206,19 @@ bool Movement::check_map_collision() const {
 
     return true;
 }
+
+
+bool Movement::citizen_collision() const {
+
+    int bankerPosX = collisionInfo.get_banker_posX();
+    int bankerPosY = collisionInfo.get_banker_posY();
+
+    if( this->bodyPosY + 31 <= bankerPosY ) return false;
+    if( this->bodyPosY >= bankerPosY + 45 ) return false;
+    if( this->bodyPosX + 21 <= bankerPosX ) return false;
+    if( this->bodyPosX >= bankerPosX + 24 ) return false;
+
+    return true;
+}
+
+

@@ -20,17 +20,7 @@ void MapInfo::loadCollisionInfo(CollisionInfo &collisionInfo, Json::Value &tileJ
         collisionTile.w = tiles[i]["objectgroup"]["objects"][0]["width"].asInt();
         collisionTile.h = tiles[i]["objectgroup"]["objects"][0]["height"].asInt();
         collisionTile.id = tiles[i]["id"].asInt() + first_tile_gid;
-        // collisionInfo.tiles.insert(std::pair<int, CollisionTile> (id+first_tile_gid, collisionTile));
         collisionInfo.tiles.push_back(collisionTile);
-
-        // CollisionTile collisionTile(
-        //     tiles[i]["objectgroup"]["objects"][0]["x"].asInt(),
-        //     tiles[i]["objectgroup"]["objects"][0]["y"].asInt(),
-        //     tiles[i]["objectgroup"]["objects"][0]["width"].asInt(),
-        //     tiles[i]["objectgroup"]["objects"][0]["height"].asInt()
-        // );
-        // id = tiles[i]["id"].asInt();
-        // collisionInfo.tiles.insert(std::pair<int, CollisionTile> (id+first_tile_gid, collisionTile));
     }
 }
 
@@ -54,6 +44,16 @@ CollisionInfo MapInfo::load() {
     const Json::Value& layers = obj["layers"];
     const Json::Value& grounds = layers[0]["data"];
     const Json::Value& trees = layers[1]["data"];
+    const Json::Value& bankersPos = obj["bankers"];
+
+    std::cout << "BANKERS POS X: " << bankersPos[0]["posX"].asInt() << std::endl;
+    this->banker.push_back(bankersPos[0]["posX"].asInt());
+    collisionInfo.banker.push_back(bankersPos[0]["posX"].asInt());
+
+    std::cout << "BANKERS POS Y: " << bankersPos[0]["posY"].asInt() << std::endl;
+    this->banker.push_back(bankersPos[0]["posY"].asInt());
+    collisionInfo.banker.push_back(bankersPos[0]["posY"].asInt());
+
 
     std::string source;
     for (unsigned int i = 0; i < tilesets.size(); ++i) {
@@ -103,3 +103,15 @@ std::vector<int> MapInfo::get_layer1() const {
 std::vector<int> MapInfo::get_layer2() const {
     return this->layer2;
 }
+
+
+int MapInfo::get_banker_posX() const {
+    return banker[0];
+}
+
+
+int MapInfo::get_banker_posY() const {
+    return banker[1];
+}
+
+

@@ -83,8 +83,8 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
     msgpack::object obj = oh.get();
     obj.convert(rec_msg);
     
+	
 	ClientWorld clientWorld(gRenderer, itemViewer);
-
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
 		if (rec_msg.characters[i].id == this->player_id) {
 			infoView.set_life(rec_msg.characters[i].life, rec_msg.characters[i].max_life);
@@ -107,10 +107,8 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 
 
 void Game::run() {
-	
-	using namespace std::chrono;
 	SoundManager sm;
-	// sm.play_pause_music();
+	using namespace std::chrono;
 
 	skt.connect_to("localhost", "8080");
 	skt >> this->player_id;
