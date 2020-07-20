@@ -21,7 +21,7 @@ class ClientManager {
 
         void broadcastMessage(ProtocolMessage &msg);
 
-
+        ~ClientManager();
 };
 
 
