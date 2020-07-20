@@ -253,3 +253,19 @@ bool ServerWorld::check_collision(Attackable* me, Attackable* other) const {
 
     return true;
 }
+
+ServerWorld::~ServerWorld() {
+    std::map<uint16_t, Character*>::iterator itr;
+    for (itr = characters.begin(); itr != characters.end();) {
+        delete itr->second;
+        itr = characters.erase(itr);
+    }
+
+    std::map<uint16_t, NPC*>::iterator npc_itr;
+    for (npc_itr = npcs.begin(); npc_itr != npcs.end();) {
+        delete npc_itr->second;
+        npc_itr = npcs.erase(npc_itr);
+    }
+
+    items.clear();
+}

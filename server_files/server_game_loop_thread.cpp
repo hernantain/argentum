@@ -61,11 +61,11 @@ void GameLoopThread::update_game(int iteration, uint16_t npc_id, int16_t npc_typ
         queue.push(npc_creation);
     }
     // Every second
-    std::vector<int16_t> npc_args{ 0 };
+    std::vector<int16_t> npc_args;
     MessageToServer npc_update(PROTOCOL_UPDATE_NPCS, -1, npc_args);
     queue.push(npc_update);
     // Every second
-    std::vector<int16_t> character_args{ 0 };
+    std::vector<int16_t> character_args;
     MessageToServer characters_update(PROTOCOL_UPDATE_CHARACTERS, -1, character_args);
     queue.push(characters_update);
 }

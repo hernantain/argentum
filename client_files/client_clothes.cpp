@@ -10,7 +10,6 @@ Clothes::Clothes(int width, int height) : width(width), height(height) {}
 
 
 void Clothes::render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int &orientation, int &frame) {
-    // Show Character
     if (orientation == RIGHT) {
 		int it = frame % (walkingRightPlayer.size() * DESACCELERATING_RATE);
 		SDL_Rect* currentClip = &this->walkingRightPlayer[it / DESACCELERATING_RATE];

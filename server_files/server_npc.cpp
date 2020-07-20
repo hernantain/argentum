@@ -5,6 +5,7 @@
 
 #define NO_LIFE 0
 #define NO_DAMAGE 0
+#define NO_GOLD 0
 #define MIN_GOLD_MULTIPLIER 0.01
 #define MAX_GOLD_MULTIPLIER 0.2
 #define MAX_ITEM_ID 19
@@ -75,6 +76,7 @@ void NPC::drop_items(std::vector<Item> &worldItems) {
 }
 
 void NPC::drop_gold(Item &drop_item, int gold) const {
+    if(gold == NO_GOLD) gold++;
     std::cout << "Im going to drop Gold: " << gold << std::endl;
     drop_item = ItemFactory::make_gold(gold);
     std::cout << "NPC::DroppingItem::" << drop_item.get_name() << std::endl;

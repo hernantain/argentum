@@ -19,7 +19,6 @@ void ClientManager::cleanDeadClients() {
     this->clients.swap(tmp);
 }
 
-
 void ClientManager::add_client(uint16_t client_id, Socket &skt, MessageToServerQueue &receiversQueue) {
     std::unique_lock<std::mutex> lock(this->m);
     this->cleanDeadClients();
@@ -41,3 +40,6 @@ void ClientManager::broadcastMessage(ProtocolMessage &updated_msg) {
     }
 }
 
+ClientManager::~ClientManager() {
+    clients.clear();
+}
