@@ -111,7 +111,9 @@ public:
     // Chequea las colisiones estaticas contra el mapa del personaje
     bool check_map_collision() const;
 
-    bool citizen_collision() const;
+    bool banker_collision() const;
+
+    bool priest_collision() const;
 };
 
 

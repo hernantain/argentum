@@ -6,6 +6,7 @@
 #include "client_tile.h"
 #include "client_tile_info.h"
 #include "client_banker.h"
+#include "client_priest.h"
 
 #include "../common_files/common_mapinfo.h"
 
@@ -16,6 +17,7 @@
 class Map {
     SDL_Renderer* gRenderer;
     Banker banker;
+    Priest priest;
     TileInfo tileInfo;
     std::vector<Tile> tilesFirstLayer;
     std::vector<Tile> tilesSecondLayer;

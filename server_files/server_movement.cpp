@@ -33,7 +33,6 @@ int16_t Movement::get_vertical_body_position() const {
 
 
 void Movement::move_right(int velocity) {
-
     bodyPosX += velocity;
     last_movement = RIGHT;
     check_out_of_bounds_X(velocity);
@@ -186,7 +185,7 @@ bool Movement::check_map_collision() const {
     int tileNumber = (offsetY * 25) + offsetX; 
     int tile = collisionInfo.layer2[tileNumber];
 
-    if (citizen_collision())
+    if (banker_collision() || priest_collision())
         return true;
 
     if (tile == 0)
@@ -208,11 +207,11 @@ bool Movement::check_map_collision() const {
 }
 
 
-bool Movement::citizen_collision() const {
+bool Movement::banker_collision() const {
 
     int bankerPosX = collisionInfo.get_banker_posX();
     int bankerPosY = collisionInfo.get_banker_posY();
-
+    
     if( this->bodyPosY + 31 <= bankerPosY ) return false;
     if( this->bodyPosY >= bankerPosY + 45 ) return false;
     if( this->bodyPosX + 21 <= bankerPosX ) return false;
@@ -222,3 +221,15 @@ bool Movement::citizen_collision() const {
 }
 
 
+bool Movement::priest_collision() const {
+
+    int priestPosX = collisionInfo.get_priest_posX();
+    int priestPosY = collisionInfo.get_priest_posY();
+
+    if( this->bodyPosY + 31 <= priestPosY ) return false;
+    if( this->bodyPosY >= priestPosY + 45 ) return false;
+    if( this->bodyPosX + 21 <= priestPosX ) return false;
+    if( this->bodyPosX >= priestPosX + 24 ) return false;
+
+    return true;
+}

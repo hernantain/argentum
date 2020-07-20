@@ -83,13 +83,13 @@
         }],
  "bankers": [
         {
-         "posX": 2600,
-         "posY": 450
+         "posX": 2450,
+         "posY": 550
         }],
  "priests": [
         {
-        "posX": 100,
-        "posY": 100
+        "posX": 3000,
+        "posY": 900
         }],
  "merchants": [
        {

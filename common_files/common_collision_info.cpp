@@ -21,6 +21,7 @@ CollisionInfo::CollisionInfo(CollisionInfo&& other) {
     this->layer1 = std::move(other.layer1);
     this->layer2 = std::move(other.layer2);
     this->banker = std::move(other.banker);
+    this->priest = std::move(other.priest);
     this->tiles = std::move(other.tiles);
 }
 
@@ -61,3 +62,15 @@ int CollisionInfo::get_banker_posX() const {
 int CollisionInfo::get_banker_posY() const {
     return banker[1];
 }
+
+
+int CollisionInfo::get_priest_posX() const {
+    return priest[0];
+}
+
+
+int CollisionInfo::get_priest_posY() const {
+    return priest[1];
+}
+
+
