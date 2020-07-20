@@ -321,7 +321,6 @@ void ProtocolTranslator::log_off_event(MessageToServer& msg, ProtocolMessage &cl
 void ProtocolTranslator::create_npc_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
     size_t max_npcs = config["npc"]["max_limit"].asUInt();
     if (world.empty() || world.is_full(max_npcs)) {
-        std::cout << "Tamos Empty: " << world.characters.size() << std::endl;
         clientMessage.id_message = NOTHING;
         return;
     }
