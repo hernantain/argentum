@@ -253,13 +253,13 @@ void ProtocolTranslator::meditation_event(MessageToServer &msg, ProtocolMessage 
 
 void ProtocolTranslator::check_dead_npcs(ServerWorld &world) {
     std::map<uint16_t, NPC*>::iterator itr;
-    for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) {
+    for (itr = world.npcs.begin(); itr != world.npcs.end();) {
         if (!itr->second->is_alive()) {
-            // world.remove_npc(itr->first);
             delete world.npcs[itr->first];
-            world.npcs.erase(itr);
+            itr = world.npcs.erase(itr);
             std::cout << "ServerWorld::RemovingDeadNpc" << std::endl;
-            continue;
+        } else {
+            itr++;
         }
     }
 }
@@ -321,6 +321,7 @@ void ProtocolTranslator::log_off_event(MessageToServer& msg, ProtocolMessage &cl
 void ProtocolTranslator::create_npc_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
     size_t max_npcs = config["npc"]["max_limit"].asUInt();
     if (world.empty() || world.is_full(max_npcs)) {
+        std::cout << "Tamos Empty: " << world.characters.size() << std::endl;
         clientMessage.id_message = NOTHING;
         return;
     }
@@ -337,12 +338,20 @@ void ProtocolTranslator::create_npc_event(MessageToServer& msg, ProtocolMessage 
 }
 
 void ProtocolTranslator::update_npcs_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
+    if (world.empty()) {
+        clientMessage.id_message = NOTHING;
+        return;
+    }
     world.move_npcs();
     clientMessage.id_message = PROTOCOL_UPDATE_NPCS_CONFIRM;
     this->get_world(clientMessage, world);
 }
 
 void ProtocolTranslator::update_characters_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
+    if (world.empty()) {
+        clientMessage.id_message = NOTHING;
+        return;
+    }
     world.recover_characters();
     clientMessage.id_message = PROTOCOL_UPDATE_CHARACTERS_CONFIRM;
     this->get_world(clientMessage, world);
@@ -373,14 +382,7 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
     std::map<uint16_t, NPC*>::iterator itr;
     std::vector<ProtocolNpc> tmp;
 
-
-    // std::cout << "NPCS: " << std::endl; 
     for (itr = world.npcs.begin(); itr != world.npcs.end(); ++itr) {
-        // if (!itr->second->is_alive()) {
-        //     world.remove_npc(itr->first);
-        //     std::cout << "ServerWorld::RemovingDeadNpc" << std::endl;
-        //     continue;
-        // }
         ProtocolNpc protocolNpc(
             itr->first,
             itr->second->get_id(),
@@ -389,7 +391,6 @@ void ProtocolTranslator::get_all_npcs(ProtocolMessage& msg, ServerWorld &world) 
             itr->second->get_body_facing()
         );
         tmp.push_back(protocolNpc);
-        // std::cout << itr->first << " --- " << itr->second->get_id() << std::endl;
     }
     msg.npcs = tmp;
 }

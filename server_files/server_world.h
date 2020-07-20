@@ -19,6 +19,7 @@ struct ServerWorld {
     std::vector<Priest> priests;
 
     ServerWorld();
+    ~ServerWorld();
 
     Character* get(uint16_t message_id);
     Attackable* get_closest_from_position(int16_t npc_posX, int16_t npc_posY);

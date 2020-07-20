@@ -105,6 +105,7 @@ void ServerProcessorThread::run() {
     ServerWorld serverWorld;
     
     Banker banker(collisionInfo.get_banker_posX(), collisionInfo.get_banker_posY());
+    serverWorld.add(banker);
 
     Thread* game_loop = new GameLoopThread(receiversQueue);
     game_loop->start();  // NPC THREAD
