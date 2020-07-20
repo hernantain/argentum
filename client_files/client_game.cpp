@@ -175,9 +175,8 @@ void Game::run() {
 
 					MessageToServer msg = world.player_handle_equip_event(this->player_id, itemId);
 					queue.push(msg);
+					continue;
 				}
-				continue;
-
 			} else if (e.type == SDL_MOUSEMOTION) {
 				continue;
 

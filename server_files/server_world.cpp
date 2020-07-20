@@ -53,7 +53,7 @@ bool ServerWorld::has_priest_close(const uint16_t id) {
     for (unsigned int i = 0; i < priests.size(); i++) {
         int16_t posX = priests[i].get_pos_X();
         int16_t posY = priests[i].get_pos_Y();
-        if (player->can_resurrect(posX, posY)) {
+        if (player->is_near(posX, posY)) {
             return true;
         }
     }
