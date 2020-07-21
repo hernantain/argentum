@@ -10,7 +10,6 @@
 #define NO_GOLD 0
 #define INITIAL_GOLD 0
 #define INITIAL_LEVEL 1
-#define CRITICAL_MULTIPLIER 2
 #define LOW_CONSTANT_EXP 0
 #define HIGH_CONSTANT_EXP 10
 
@@ -99,6 +98,7 @@ void Character::restore_equipment() {
 }
 
 void Character::restore_life_and_mana() {
+    if(!alive) return;
     mana.add(get_max_mana());
     life.add(get_max_life());
 }
@@ -144,7 +144,6 @@ int Character::deposit_gold() {
     if (gold < amount) amount = gold;
     gold -= amount;
     bank_gold += amount;
-    std::cout << "DepositGold::::" << amount << std::endl;
     return amount;
 }
 
@@ -154,7 +153,6 @@ int Character::withdraw_gold() {
     if (bank_gold < amount) amount = bank_gold;
     gold += amount;
     bank_gold -= amount;
-    std::cout << "WithdrawingGold::::" << amount << std::endl;
     return amount;
 }
 
@@ -176,7 +174,6 @@ int Character::drop_gold() {
     if (gold > max_secure_gold()) {
         const int dropped_gold = gold - max_secure_gold();
         gold -= dropped_gold;
-        std::cout << "DroppingGold:: "<< dropped_gold << std::endl;
         return dropped_gold;
     }
     return 0;
@@ -194,15 +191,11 @@ const int Character::max_gold() const {
 
 bool Character::take_gold(const int amount) {
     if(!alive) return false;
-    std::cout << "Current max gold is: "<< max_gold() << std::endl;
-    std::cout << "TakingGold:: "<< amount << std::endl;
     if (gold >= max_gold()) return false;
-    if (gold + amount >= max_gold()) {
+    if (gold + amount >= max_gold())
         gold = max_gold();
-        // drop_excess()
-    } else {
+    else
         gold += amount;
-    }
     return true;
 }
 
@@ -217,7 +210,6 @@ void Character::equip_life_potion(Potion& item) {
     if (inventory.has(item.get_id()) && !life.is_full()) {
         life.add(recovery);
         inventory.remove_item(item.get_id());
-        std::cout << "Applying life potion::LifeNow::" << get_life() << std::endl;
     } 
 }
 
@@ -226,7 +218,6 @@ void Character::equip_mana_potion(Potion& item) {
     if (inventory.has(item.get_id()) && !mana.is_full()) {
         mana.add(recovery);
         inventory.remove_item(item.get_id());
-        std::cout << "Applying mana potion::ManaNow::" << get_mana() << std::endl;
     } 
 }
 
@@ -286,7 +277,6 @@ bool Character::is_safe() const {
 bool Character::fairplay(const Attackable& other) const {
     int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
     if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) {
-        std::cout << "Fairplay::You are newbie or the other is newbie or big diff lvl" << std::endl;
         return false;
     }
     return true;
@@ -294,7 +284,6 @@ bool Character::fairplay(const Attackable& other) const {
 
 bool Character::attack_zone(const Attackable& other) const {
     if (is_safe() || other.is_safe()) {
-        std::cout << "SafeZone::Your or your rival are on safe zone" << std::endl;
         return false;
     }
     return true;
@@ -303,7 +292,6 @@ bool Character::attack_zone(const Attackable& other) const {
 void Character::consume_mana() {
     if(!equipment.is_weapon_magical()) return;
     int mana_consumption = equipment.get_weapon_consumption();
-    std::cout << "Consumiendo mana: " << mana_consumption << std::endl;
     take_off_mana(mana_consumption);
 }
 
@@ -316,23 +304,17 @@ bool Character::is_critical() const {
 
 bool Character::can_attack(const Attackable& other) const {
     if(!alive || !other.is_alive()) {
-        std::cout << "CantAttack::Vos o el esta muerto" << std::endl;
         return false;
     }
-    // This is commented in order to try the attack between players
-    // if(!fairplay(other) || !attack_zone(other)) return false;
+    if(!fairplay(other) || !attack_zone(other)) return false;
     if (!attack_zone(other)) return false;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
         int posY = other.get_body_pos_Y();
-        std::cout << "other posX: " << posX << std::endl;
-        std::cout << "other posY: " << posY << std::endl;
         return movement.is_near(posX, posY);
     }
-    if (equipment.is_weapon_magical() && equipment.get_weapon_consumption() > get_mana()) {
-        std::cout << "CantAttack::No te da la mana" << std::endl;
+    if (equipment.is_weapon_magical() && equipment.get_weapon_consumption() > get_mana())
         return false;
-    }
     return true;
 }
 
@@ -341,8 +323,7 @@ void Character::attack(Attackable& other) {
     if(!can_attack(other)) return;
     consume_mana();
     int damage = equipment.get_weapon_damage();
-    if (is_critical()) damage *= CRITICAL_MULTIPLIER;
-    std::cout << "Ataque::Dano:: " << damage << std::endl;
+    if (is_critical()) damage *= config["attack"]["critical_multiplier"].asInt();
     int final_damage = other.defense(damage);
     get_experience(other, final_damage);
     update_level();
@@ -352,7 +333,6 @@ bool Character::evade_attack() const {
     double evasion_chances = ((double) rand() / (RAND_MAX));
     double evasion_power = pow(evasion_chances, race.get_agility());
     bool evade = evasion_power < config["defense"]["evasion_constant"].asDouble();
-    std::cout << "AtaqueEvadido::" << evade << std::endl;
     return evade;
 }
 
@@ -360,10 +340,8 @@ int Character::defense(const int damage) {
     meditating = false;
     if (evade_attack()) return NO_DAMAGE;
     int defense = equipment.get_equipment_defense();
-    std::cout << "Defensa:: " << defense << std::endl;
     if (damage <= defense) return NO_DAMAGE;
     int final_damage = damage - defense;
-    std::cout << "Defensa::FinalDamage " << final_damage << std::endl;
     take_off_life(final_damage);
     if (life.current() == NO_LIFE) alive = false;
     return final_damage;
@@ -379,7 +357,6 @@ int Character::get_extra_experience(const int enemy_life, const int enemy_level)
     float random = ((float) rand()) / (float) RAND_MAX;
     float ponderation = min + (random * (max - min));
     int extra_exp = ponderation * enemy_life * experience_formula(enemy_level);
-    std::cout << "ExtraExperienceWon:: " << extra_exp << std::endl;
     return extra_exp;
 }
 
@@ -387,17 +364,14 @@ void Character::get_experience(const Attackable& other, const int damage) {
     int enemy_level = other.get_level();
     int enemy_life = other.get_max_life();
     int won_experience = damage * experience_formula(enemy_level);
-    std::cout << "ExperienceWon:: " << won_experience << std::endl;
-    if (!other.is_alive()) {
+    if (!other.is_alive()) 
         won_experience += get_extra_experience(enemy_life, enemy_level);
-    }
     experience.add(won_experience);
 }
 
 void Character::update_level() {
     while (experience.current() >= experience.max()) {
         level++;
-        std::cout << "LevelUp:: " << level << std::endl;
         life.set_new_max(level);
         mana.set_new_max(level);
         update_newbie();
@@ -408,9 +382,7 @@ void Character::update_level() {
 
 void Character::update_newbie() {
     int newbie_limit = config["newbieLimit"].asInt();
-    if (level > newbie_limit) {
-        newbie = false;
-    }
+    if (level > newbie_limit) newbie = false;
 }
 
 bool Character::is_near(const int posX, const int posY) const {
@@ -486,23 +458,6 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.gold = this->get_gold();
     protocolCharacter.alive = this->is_alive();
     protocolCharacter.meditating = this->is_meditating();   
-
-    // std::cout << "MANDANDO ARMOR ID: " << (int) protocolCharacter.armorId << std::endl;
-    // std::cout << "PROT CHARACTER ID " << (int) protocolCharacter.id << std::endl;
-    // std::cout << "PROT CHARACTER ID RACE " << (int) protocolCharacter.id_race << std::endl;
-    // std::cout << "PROT CHARACTER ID CLASE " << (int) protocolCharacter.id_class << std::endl;
-    // std::cout << "PROT CHARACTER bodyposX " << (int) protocolCharacter.bodyPosX << std::endl;
-    // std::cout << "PROT CHARACTER bodyposY " << (int) protocolCharacter.bodyPosY << std::endl;
-    // std::cout << "PROT CHARACTER ORIENTAT " << (int) protocolCharacter.orientation << std::endl;
-    // std::cout << "PROT CHARACTER MANA " << (int) protocolCharacter.mana << std::endl;
-    // std::cout << "PROT CHARACTER MAX_MANA " << (int) protocolCharacter.max_mana << std::endl;
-    // std::cout << "PROT CHARACTER LIFE " << (int) protocolCharacter.life << std::endl;
-    // std::cout << "PROT CHARACTER MAX_LIFE " << (int) protocolCharacter.max_life << std::endl;
-    // std::cout << "PROT CHARACTER EXPERIEN " << (int) protocolCharacter.experience << std::endl;
-    // std::cout << "PROT CHARACTER MAX EXP " << (int) protocolCharacter.max_experience << std::endl;
-    // std::cout << "PROT CHARACTER ALIVE " << (int) protocolCharacter.alive << std::endl;
-    // std::cout << "PROT CHARACTER MEDITATING " << (int) protocolCharacter.meditating << std::endl;
-    // std::cout << std::endl;
 }
 
 uint16_t Character::get_id() const {

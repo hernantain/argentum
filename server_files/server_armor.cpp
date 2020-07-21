@@ -10,6 +10,5 @@ Armor::Armor(int min_defense = 0, int max_defense = 0) {
 
 int Armor::get_defense() const {
     int defense = rand() % (max_defense - min_defense + 1) + min_defense;
-    // std::cout << "This armor defends: " << defense << std::endl;
     return defense;
 }

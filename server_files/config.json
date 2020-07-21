@@ -127,7 +127,8 @@
         "max_extra_probability": 0.1
     },
     "attack": {
-        "critical_probability": 0.2
+        "critical_probability": 0.2,
+        "critical_multiplier": 2
     },
     "defense": {
         "evasion_constant": 0.001

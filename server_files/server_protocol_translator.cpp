@@ -14,7 +14,6 @@ ProtocolTranslator::ProtocolTranslator(
 
 void ProtocolTranslator::translate(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld& world) {
     int code = msg.event_id;
-    // std::cout << "PROCESANDO: " << code << std::endl;
     switch (code) {
         case PROTOCOL_CREATE_CHARACTER: return create_character_event(msg, clientMessage, world);
         case PROTOCOL_CREATE_NPC: return create_npc_event(msg, clientMessage, world);
@@ -139,7 +138,6 @@ void ProtocolTranslator::resurrect_event(MessageToServer &msg, ProtocolMessage &
     bool can_resurrect = world.has_priest_close(msg.player_id) && !world.characters[msg.player_id]->is_alive();    
     if (!can_resurrect) clientMessage.id_message = NOTHING;
     else {
-        std::cout << "Resucitando" << std::endl;
         world.characters[msg.player_id]->resurrect();
         clientMessage.id_message = PROTOCOL_RESURRECT_CONFIRM;
         clientMessage.id_player = msg.player_id;
@@ -257,7 +255,6 @@ void ProtocolTranslator::check_dead_npcs(ServerWorld &world) {
         if (!itr->second->is_alive()) {
             delete world.npcs[itr->first];
             itr = world.npcs.erase(itr);
-            std::cout << "ServerWorld::RemovingDeadNpc" << std::endl;
         } else {
             itr++;
         }
@@ -272,7 +269,6 @@ void ProtocolTranslator::attack_event(MessageToServer &msg, ProtocolMessage &cli
     Attackable* other = world.get_from_position(player_id, other_posX, other_posY);
     if (!other) clientMessage.id_message = NOTHING;
     else {
-        std::cout << "Enemy Found" << std::endl;
         world.characters[msg.player_id]->attack(*other);
         if (!other->is_alive()) {
             other->drop_items(world.items);
@@ -291,9 +287,6 @@ void ProtocolTranslator::create_character_event(MessageToServer& msg, ProtocolMe
     uint8_t id_race = msg.args[0];
     uint8_t id_class = msg.args[1];
 
-    std::cout << "HAY QUE CREAR UN CLASE: " << (int) id_class << std::endl;
-    std::cout << "HAY QUE CREAR UN RAZA: " << (int) id_race << std::endl;
-
     CharacterClass c = CharacterFactory::make_class(id_class, config);
     Race race = CharacterFactory::make_race(id_race, config);
     Character* character = new Character(msg.player_id, config, c, race, collisionInfo);
@@ -308,11 +301,8 @@ void ProtocolTranslator::create_character_event(MessageToServer& msg, ProtocolMe
 
 
 void ProtocolTranslator::log_off_event(MessageToServer& msg, ProtocolMessage &clientMessage, ServerWorld &world) {
-    std::cout << "ALGUIEN SE VA. MUNDO ANTES: " << world.characters.size() << std::endl;
     world.remove_character(msg.player_id);
-
     clientMessage.id_message = PROTOCOL_LOG_OFF_CONFIRM;
-    std::cout << "ALGUIEN SE VA. MUNDO DESPUES: " << world.characters.size() << std::endl;
     clientMessage.id_player = msg.player_id;
     this->get_world(clientMessage, world);
 }
@@ -328,7 +318,6 @@ void ProtocolTranslator::create_npc_event(MessageToServer& msg, ProtocolMessage 
     NPC* npc = NPCFactory::make_npc(npc_type, config, collisionInfo);
     if (!npc) clientMessage.id_message = NOTHING;
     else {
-        std::cout << "NPC CREADO con ID: " << msg.player_id << std::endl;
         world.add(msg.player_id, npc);
         clientMessage.id_message = PROTOCOL_CREATE_NPC_CONFIRM;
         clientMessage.id_player = msg.player_id;
@@ -411,5 +400,4 @@ void ProtocolTranslator::get_all_items(ProtocolMessage& msg, ServerWorld &world)
 
 void ProtocolTranslator::undefined_event(MessageToServer &msg, ProtocolMessage &clientMessage) {
     clientMessage.id_message = NOTHING;
-    std::cout << "It should never get in Here" << std::endl;
 }

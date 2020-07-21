@@ -112,9 +112,9 @@ void ServerProcessorThread::run() {
     serverWorld.add(priest);
 
     GameLoopThread* game_loop = new GameLoopThread(receiversQueue);
-    game_loop->start();  // NPC THREAD
+    game_loop->start();
 
-    this->addingHardcodedItems(serverWorld); // HAY QUE SACAR
+    this->addingHardcodedItems(serverWorld); // This might be deleted
     
     while (running) {
         ProtocolMessage client_response;
@@ -125,7 +125,6 @@ void ServerProcessorThread::run() {
             this->clientManager.broadcastMessage(client_response);
         } catch (QueueNotOperatingException& e) {
             this->running = false;
-            std::cout << "Exception en el Processor thread !" << std::endl;
         }
     }
 

@@ -30,9 +30,6 @@ void SrvClientSenderThread::run() {
             skt << message;
         } catch (QueueNotOperatingException& e) {
             this->running = false;
-            std::cout << "Exception en el sender thread !" << std::endl;
         }
     }
-
-    std::cout << "Cerrando SENDER THREAD EN EL SERVER" << std::endl;
 }

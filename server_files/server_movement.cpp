@@ -131,13 +131,11 @@ void Movement::invert_body_facing(){
 
 bool Movement::is_near_X(const int posX) const{
     int diff = std::abs(bodyPosX - posX);
-    std::cout << "Diff in X " << diff << std::endl;
     return diff <= MAX_OFFSET_TOLERANCE;
 }
 
 bool Movement::is_near_Y(const int posY) const {
     int diff = std::abs(bodyPosY - posY);
-    std::cout << "Diff in Y " << diff << std::endl;
     return diff <= MAX_OFFSET_TOLERANCE;
 }
 
@@ -191,9 +189,9 @@ bool Movement::check_map_collision() const {
     if (tile == 0)
         return false;
 
-    int pos = collisionInfo.find(tile); //  tiles[tile];
+    int pos = collisionInfo.find(tile);
     if (pos == -1)
-        return false; // shouldn't happen
+        return false;
 
     int collisionX = offsetX * collisionInfo.get_tile_width() + collisionInfo.tiles[pos].x;
     int collisionY = offsetY * collisionInfo.get_tile_height() + collisionInfo.tiles[pos].y;

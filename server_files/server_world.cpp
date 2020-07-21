@@ -105,7 +105,6 @@ void ServerWorld::recover_characters() {
     for (itr = characters.begin(); itr != characters.end(); ++itr) {
         if(itr->second->is_meditating()) {
             itr->second->meditate();
-            std::cout << "Estoy meditando" << std::endl;
             continue;
         }
         itr->second->recover_life();
@@ -146,7 +145,6 @@ bool ServerWorld::player_take_item(const uint16_t id) {
             } else {
                 took = characters[id]->take_item(items[i]);
             }
-            std::cout << "Took item???" << took << std::endl;
             if(took) this->update_world_items(i);
             return took;
         }
