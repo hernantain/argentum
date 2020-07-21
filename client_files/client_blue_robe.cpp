@@ -13,7 +13,7 @@ BlueTallRobe::BlueTallRobe(
 
 
 bool BlueTallRobe::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->bodyTexture.loadFromFile( "images/tunica_azul_he.png", gRenderer ) ) {
+    if( !this->bodyTexture.loadFromFile( "media/images/tunica_azul_he.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
@@ -38,7 +38,7 @@ BlueShortRobe::BlueShortRobe(
 
 
 bool BlueShortRobe::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->bodyTexture.loadFromFile( "images/tunica_azul_eg.png", gRenderer ) ) {
+    if( !this->bodyTexture.loadFromFile( "media/images/tunica_azul_eg.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

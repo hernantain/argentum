@@ -27,7 +27,7 @@ Game::Game(
 							player_class(player_class) {
 	if( !this->init() ) {
 		printf( "Failed to initialize!\n" );
-		exit(1); // LANZAR EXCEPCION?
+		exit(1); // EXCEPTION?
 	}
 
 	inventory.x =  3 * (this->window.getWidth() / 4);
@@ -69,7 +69,6 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 	args.push_back(this->player_class);
 	MessageToServer msg(PROTOCOL_CREATE_CHARACTER, this->player_id, args);
 
-
 	msgpack::sbuffer buffer;
 	msgpack::packer<msgpack::sbuffer> pk(&buffer);
 	pk.pack(msg);
@@ -83,7 +82,6 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
     msgpack::object obj = oh.get();
     obj.convert(rec_msg);
     
-	
 	ClientWorld clientWorld(gRenderer, itemViewer);
 	for (unsigned int i = 0; i < rec_msg.characters.size(); ++i) {
 		if (rec_msg.characters[i].id == this->player_id) {
@@ -125,7 +123,7 @@ void Game::run() {
 	receiver->start();
 
 	int it = 0;	
-	duration<int, std::milli> rate(17);
+	duration<int, std::milli> rate(FRAME_RATE);
 	system_clock::time_point t1 = system_clock::now();
 
 	SDL_Event e;
@@ -135,7 +133,6 @@ void Game::run() {
 			if( e.type == SDL_QUIT ) {
 				this->running = false;				
 				std::vector<int16_t> args;
-				args.push_back(0); // no va
 				MessageToServer msg(PROTOCOL_LOG_OFF, this->player_id, args);
 				queue.push(msg);
 				break;
@@ -146,7 +143,6 @@ void Game::run() {
 				continue;
 
 			} else if ((e.type == SDL_MOUSEBUTTONDOWN) && (e.button.button == SDL_BUTTON_RIGHT)) {
-				// std::cout << "RIGHT CLICK" << std::endl;
 				int x, y;
 				SDL_GetMouseState( &x, &y ); 
 				if (x > inventory.x) {

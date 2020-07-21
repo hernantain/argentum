@@ -15,6 +15,7 @@
 #include <vector>
 #include <stdint.h>
 
+#define MAP_SIZE 3200
 
 class Player: public Drawable {
     protected:

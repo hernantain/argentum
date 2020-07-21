@@ -3,7 +3,7 @@
 
 
 Goblin::Goblin(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
-    if (this->load_pictures("images/goblin.png"))
+    if (this->load_pictures("media/images/goblin.png"))
         this->set_sprites();
 }
 

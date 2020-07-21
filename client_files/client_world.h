@@ -13,6 +13,11 @@
 #include "client_item.h"
 #include "../common_files/common_message_to_server.h"
 
+#define HUMAN 1
+#define ELF 2
+#define DWARF 3
+#define GNOME 4
+
 
 struct ClientWorld {
     SDL_Renderer *gRenderer;
@@ -25,22 +30,22 @@ struct ClientWorld {
 
     ClientWorld(SDL_Renderer *gRenderer, ItemViewer &itemViewer);
 
-    void add_player(uint16_t id, Player* player);
-    void add_npc(uint16_t id, NPC* npc);
+    void set_current_clothes(ProtocolCharacter &protocolCharacter, Player* player);
+    void add_player(uint16_t &id, Player* player);
+    void add_npc(uint16_t &id, NPC* npc);
 
     void add_player(ProtocolCharacter &protocolCharacter);
     void add_npc(ProtocolNpc &protocolNpc);
     void add_item(ProtocolItem &protocolItem);
 
-    void remove_player(uint16_t id);
-    void remove_npc(int16_t id);
+    void remove_player(uint16_t &id);
 
-    void move_player(uint16_t id, int16_t newPosX, int16_t newPosY, int16_t orientation);
+    void move_player(uint16_t &id, int16_t &newPosX, int16_t &newPosY, int16_t &orientation);
 
-    void player_set_helmet(uint16_t id, uint8_t helmet_id);
-    void player_set_armor(uint16_t id, uint8_t armor_id);
-    void player_set_weapon(uint16_t id, uint8_t weapon_id);
-    void player_set_shield(uint16_t id, uint8_t shield_id);
+    void player_set_helmet(uint16_t &id, uint8_t helmet_id);
+    void player_set_armor(uint16_t &id, uint8_t armor_id);
+    void player_set_weapon(uint16_t &id, uint8_t weapon_id);
+    void player_set_shield(uint16_t &id, uint8_t shield_id);
 
     void update_npcs(ProtocolMessage &msg);
     void update_player_alive_status(ProtocolMessage &msg);
@@ -50,7 +55,7 @@ struct ClientWorld {
 
     bool item_exists(ProtocolMessage &msg, unsigned int &i);
     bool item_in_world(ProtocolItem &item);
-    Item* cleanItems(unsigned int i);
+    Item* cleanItems(unsigned int &i);
 
     void render(uint16_t id, SDL_Rect &camera, int &it);
 
@@ -58,7 +63,6 @@ struct ClientWorld {
     MessageToServer player_handle_equip_event(uint16_t &player_id, int &itemId);
     MessageToServer player_handle_drop_event(uint16_t &player_id, int &itemId);
 
-    Player* get_player(uint16_t id);
     uint8_t get_dropped_item(uint16_t &id);
 
     ClientWorld(ClientWorld&& other);

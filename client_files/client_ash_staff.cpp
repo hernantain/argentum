@@ -12,7 +12,7 @@ AshStaff::~AshStaff() {}
 
 
 bool AshStaff::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/vara_fresno_1.png", gRenderer ) ) {
+    if( !this->weaponTexture.loadFromFile( "media/images/vara_fresno_1.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

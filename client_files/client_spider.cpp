@@ -4,7 +4,7 @@
 
 
 Spider::Spider(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
-    if (this->load_pictures("images/arana3.png"))
+    if (this->load_pictures("media/images/arana3.png"))
         this->set_sprites();
 }
 

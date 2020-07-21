@@ -12,7 +12,7 @@ Hood::~Hood() {}
 
 
 bool Hood::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->helmetTexture.loadFromFile( "images/capucha.png", gRenderer ) ) {
+    if( !this->helmetTexture.loadFromFile( "media/images/capucha.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

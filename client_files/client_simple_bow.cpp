@@ -12,7 +12,7 @@ SimpleBow::~SimpleBow() {}
 
 
 bool SimpleBow::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/arco_simple_1.png", gRenderer ) ) {
+    if( !this->weaponTexture.loadFromFile( "media/images/arco_simple_1.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

@@ -19,7 +19,7 @@ void SenderThread::run() {
         msgpack::sbuffer buffer;
         msgpack::packer<msgpack::sbuffer> pk(&buffer);
         pk.pack(msg);
-        if (msg.event_id == 67) {
+        if (msg.event_id == PROTOCOL_LOG_OFF) {
             running = false;
             std::cout << "MANDANDO ULTIMO MENSAJE" << std::endl;
         }

@@ -3,7 +3,7 @@
 
 
 Zombie::Zombie(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
-    if (this->load_pictures("images/zombie.png"))
+    if (this->load_pictures("media/images/zombie.png"))
         this->set_sprites();
 }
 

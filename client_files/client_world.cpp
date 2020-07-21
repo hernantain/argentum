@@ -15,44 +15,54 @@ ClientWorld::ClientWorld(SDL_Renderer *gRenderer, ItemViewer &itemViewer) : item
 }
     
 
-void ClientWorld::add_player(uint16_t id, Player* player) {
-    // std::cout << "Antes de insertar, tamanio: " << players.size() << std::endl;
-    // std::cout << "Insertando " << id << std::endl;
+void ClientWorld::add_player(uint16_t &id, Player* player) {
     this->players.insert(std::pair<uint16_t, Player*> (id, player));
-    // std::cout << "Despues de insertar, tamanio: " << players.size() << std::endl;
 }
 
-void ClientWorld::add_npc(uint16_t id, NPC* npc) {
-    // std::cout << "Insertando " << id << std::endl;
+void ClientWorld::add_npc(uint16_t &id, NPC* npc) {
     this->npcs.insert(std::pair<uint16_t, NPC*> (id, npc));
 }
 
 
-Player* ClientWorld::get_player(uint16_t id) {
-    std::unique_lock<std::mutex> lock(m);
-    return this->players[id];
+void ClientWorld::set_current_clothes(ProtocolCharacter &protocolCharacter, Player* player) {
+    if (protocolCharacter.armorId != 0)
+        player->set_armor(protocolCharacter.armorId);
+
+    if (protocolCharacter.helmetId != 0)
+        player->set_helmet(protocolCharacter.helmetId);
+
+    if (protocolCharacter.shieldId != 0)
+        player->set_shield(protocolCharacter.shieldId);
+
+    if (protocolCharacter.weaponId != 0)
+        player->set_weapon(protocolCharacter.weaponId);        
 }
+
 
 // ADD PLAYER
 
 void ClientWorld::add_player(ProtocolCharacter &protocolCharacter) {
     std::unique_lock<std::mutex> lock(m);
     Player* player = NULL;
-    if (protocolCharacter.id_race == 1) {
+    if (protocolCharacter.id_race == HUMAN) {
         player = new Human(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
+        this->set_current_clothes(protocolCharacter, player);
         this->add_player(protocolCharacter.id, player);
-    } else if (protocolCharacter.id_race == 2) {
+    } else if (protocolCharacter.id_race == ELF) {
         player = new Elf(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
+        this->set_current_clothes(protocolCharacter, player);
         this->add_player(protocolCharacter.id, player);
     
-    } else if (protocolCharacter.id_race == 3) {
+    } else if (protocolCharacter.id_race == DWARF) {
         player = new Dwarf(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
+        this->set_current_clothes(protocolCharacter, player);
         this->add_player(protocolCharacter.id, player);
 
     } else {
         player = new Gnome(gRenderer, protocolCharacter.id, protocolCharacter.bodyPosX, protocolCharacter.bodyPosY);
+        this->set_current_clothes(protocolCharacter, player);
         this->add_player(protocolCharacter.id, player);
-    }
+    }    
 }
 
 
@@ -173,7 +183,7 @@ bool ClientWorld::item_exists(ProtocolMessage &msg, unsigned int &i) {
 }
 
 
-Item* ClientWorld::cleanItems(unsigned int i) {
+Item* ClientWorld::cleanItems(unsigned int &i) {
     std::vector<Item*> tmp;
     Item* itemToRemove = NULL;
     for (unsigned int j = 0; j < items.size(); ++j) {
@@ -191,7 +201,7 @@ Item* ClientWorld::cleanItems(unsigned int i) {
 // MOVE PLAYER
 
 
-void ClientWorld::move_player(uint16_t id, int16_t newPosX, int16_t newPosY, int16_t orientation) {
+void ClientWorld::move_player(uint16_t &id, int16_t &newPosX, int16_t &newPosY, int16_t &orientation) {
     std::unique_lock<std::mutex> lock(m);
     Player* player = players[id];
     player->set_position(newPosX, newPosY, orientation);
@@ -200,25 +210,25 @@ void ClientWorld::move_player(uint16_t id, int16_t newPosX, int16_t newPosY, int
 
 // SETTER OBJECTS
 
-void ClientWorld::player_set_helmet(uint16_t id, uint8_t helmet_id) {
+void ClientWorld::player_set_helmet(uint16_t &id, uint8_t helmet_id) {
     std::unique_lock<std::mutex> lock(m);
     Player* player = players[id];
     player->set_helmet(helmet_id);
 }
 
-void ClientWorld::player_set_armor(uint16_t id, uint8_t armor_id) {
+void ClientWorld::player_set_armor(uint16_t &id, uint8_t armor_id) {
     std::unique_lock<std::mutex> lock(m);
     Player* player = players[id];
     player->set_armor(armor_id);
 }
 
-void ClientWorld::player_set_weapon(uint16_t id, uint8_t weapon_id) {
+void ClientWorld::player_set_weapon(uint16_t &id, uint8_t weapon_id) {
     std::unique_lock<std::mutex> lock(m);
     Player* player = players[id];
     player->set_weapon(weapon_id);
 }
 
-void ClientWorld::player_set_shield(uint16_t id, uint8_t shield_id) {
+void ClientWorld::player_set_shield(uint16_t &id, uint8_t shield_id) {
     std::unique_lock<std::mutex> lock(m);
     Player* player = players[id];
     player->set_shield(shield_id);
@@ -233,7 +243,7 @@ uint8_t ClientWorld::get_dropped_item(uint16_t &id) {
 
 // REMOVE PLAYER
 
-void ClientWorld::remove_player(uint16_t id) {
+void ClientWorld::remove_player(uint16_t &id) {
     std::unique_lock<std::mutex> lock(m);
     delete this->players[id];
     this->players.erase(id);
@@ -286,7 +296,6 @@ ClientWorld::~ClientWorld() {
 
 
 ClientWorld::ClientWorld(ClientWorld&& other) : itemViewer(other.itemViewer) {
-    std::cout << "MOVEMENT WORLD" << std::endl;
     this->players = std::move(other.players);
     this->npcs = std::move(other.npcs);
     this->itemViewer = std::move(other.itemViewer);

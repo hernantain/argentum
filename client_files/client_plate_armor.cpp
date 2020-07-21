@@ -13,7 +13,7 @@ PlateTallArmor::PlateTallArmor(
 
 
 bool PlateTallArmor::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->bodyTexture.loadFromFile( "images/armadura_placas_he.png", gRenderer ) ) {
+    if( !this->bodyTexture.loadFromFile( "media/images/armadura_placas_he.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
@@ -37,7 +37,7 @@ PlateShortArmor::PlateShortArmor(
 
 
 bool PlateShortArmor::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->bodyTexture.loadFromFile( "images/armadura_placas_eg.png", gRenderer ) ) {
+    if( !this->bodyTexture.loadFromFile( "media/images/armadura_placas_eg.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

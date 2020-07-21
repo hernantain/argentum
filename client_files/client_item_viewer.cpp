@@ -13,7 +13,6 @@ bool ItemViewer::exists(uint8_t id) {
 
 
 void ItemViewer::add_item(uint8_t &id) {
-    std::cout << "Agregando " << (int) id << std::endl;
     LTexture* texture = new LTexture();
     switch(id) {
         case LEATHER_ARMOR_CODE: 
@@ -103,10 +102,8 @@ void ItemViewer::add_item(uint8_t &id) {
 
 LTexture* ItemViewer::get_item_icon(uint8_t id) {
     if (this->exists(id)) {
-        // std::cout << "Existe. Toma" << std::endl;
         return this->items[id];
     } else {
-        // std::cout << "No existe" << std::endl;
         this->add_item(id);
         return this->items[id];
     }

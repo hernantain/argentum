@@ -7,7 +7,7 @@ Gnome::Gnome(
     int bodyPosX, 
     int bodyPosY) : ShortPlayer(
                         gRenderer, 
-                        "images/gnomo.png", 
+                        "media/images/gnomo.png", 
                         id,
                         bodyPosX, 
                         bodyPosY) {}

@@ -12,7 +12,7 @@ TurtleShield::~TurtleShield() {}
 
 
 bool TurtleShield::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->shieldTexture.loadFromFile( "images/escudo_tortuga.png", gRenderer ) ) {
+    if( !this->shieldTexture.loadFromFile( "media/images/escudo_tortuga.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

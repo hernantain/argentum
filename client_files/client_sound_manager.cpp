@@ -14,7 +14,7 @@ SoundManager::SoundManager() {
 
 
 bool SoundManager::loadMusic() {
-    this->gMusic = Mix_LoadMUS("sound/music2.wav");
+    this->gMusic = Mix_LoadMUS("media/sound/music2.wav");
 	if(gMusic == NULL) {
 		printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
@@ -25,31 +25,31 @@ bool SoundManager::loadMusic() {
 
 
 bool SoundManager::loadSounds() {
-    swordSound = Mix_LoadWAV("sound/sword.wav");
+    swordSound = Mix_LoadWAV("media/sound/sword.wav");
 	if(swordSound == NULL) {
 		printf("Failed to load sword sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
 	}
 
-    axeSound = Mix_LoadWAV("sound/axe.wav");
+    axeSound = Mix_LoadWAV("media/sound/axe.wav");
 	if(axeSound == NULL) {
 		printf("Failed to load axe sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
 	}
 
-    hammerSound = Mix_LoadWAV("sound/hammer.wav");
+    hammerSound = Mix_LoadWAV("media/sound/hammer.wav");
 	if(hammerSound == NULL) {
 		printf("Failed to load hammer sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
 	}
 
-    explosionSound = Mix_LoadWAV("sound/explosion.wav");
+    explosionSound = Mix_LoadWAV("media/sound/explosion.wav");
 	if(explosionSound == NULL) {
 		printf("Failed to load explosion sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
 	}
 
-    arrowSound = Mix_LoadWAV("sound/arrow.wav");
+    arrowSound = Mix_LoadWAV("media/sound/arrow.wav");
 	if(arrowSound == NULL) {
 		printf("Failed to load arrow sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		return false;
@@ -82,27 +82,27 @@ void SoundManager::play_sound() {
         case 0:
             return;
 
-        case 9: // SWORD
+        case SWORD_CODE:
             Mix_PlayChannel(-1, swordSound, 0);
             break;
 
-        case 10: // AXE
+        case AXE_CODE:
             Mix_PlayChannel(-1, axeSound, 0);
             break;
 
-        case 11: // HAMMER
+        case HAMMER_CODE:
             Mix_PlayChannel(-1, hammerSound, 0);
             break;
 
-        case 15: // ENGARZADO
+        case CRIMP_STAFF_CODE:
             Mix_PlayChannel(-1, explosionSound, 0);
             break;
 
-        case 16: // ARROW
+        case SIMPLE_BOW_CODE:
             Mix_PlayChannel(-1, arrowSound, 0);
             break;
 
-        case 17: // ARROW
+        case COMPOUND_BOW_CODE:
             Mix_PlayChannel(-1, arrowSound, 0);
             break;
         }

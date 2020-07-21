@@ -74,37 +74,29 @@ void ClientReceiverThread::process_move(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_deposit(ProtocolMessage &msg) {
-    // update_gold_status()
     int i = msg.find(msg.id_player);
     if (i != -1) 
         infoView.set_gold(msg.characters[i].gold);
-    std::cout << "Depositando OK" << std::endl;
 }
 
 void ClientReceiverThread::process_withdraw(ProtocolMessage &msg) {
-    // TODO: is the same for the deposit and withdraw -> make just One Method
-    // update_gold_status()
     int i = msg.find(msg.id_player);
     if (i != -1) 
         infoView.set_gold(msg.characters[i].gold);
-    std::cout << "Retirando OK" << std::endl;
 }
 
 void ClientReceiverThread::process_resurrection(ProtocolMessage &msg) {
     update_bars(msg);
     world.update_player_alive_status(msg);
-    std::cout << "Resucitando OK" << std::endl;
 }
 
 void ClientReceiverThread::process_healing(ProtocolMessage &msg) {
     update_bars(msg);
-    std::cout << "Curando OK" << std::endl;
 }
 
 void ClientReceiverThread::process_equip_helmet(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
-    std::cout << "HELMET ID: " << (int) msg.characters[i].helmetId << std::endl;
     if (i != -1 && is_alive)
         world.player_set_helmet(msg.id_player, msg.characters[i].helmetId);
 }
@@ -124,7 +116,6 @@ void ClientReceiverThread::process_default_shield(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_default_weapon(ProtocolMessage &msg) {
-    std::cout << "EQUIP WEAPON" << std::endl;
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
     if (i != -1 && is_alive)
@@ -141,7 +132,6 @@ void ClientReceiverThread::process_default_helmet(ProtocolMessage &msg) {
 void ClientReceiverThread::process_equip_armor(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
-    std::cout << "ARMOR ID: " << (int) msg.characters[i].armorId << std::endl;
     if (i != -1 && is_alive)
         world.player_set_armor(msg.id_player, msg.characters[i].armorId);
 }
@@ -154,7 +144,6 @@ void ClientReceiverThread::process_equip_shield(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
-    std::cout << "EQUIP WEAPON" << std::endl;
     int i = msg.find(msg.id_player);
     bool is_alive = msg.characters[i].alive;
     if (i != -1 && is_alive)
@@ -162,7 +151,7 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_equip_potion(ProtocolMessage &msg) {
-    std::cout << "EQUIP POTION" << std::endl;
+    std::cout << "POTION CONFIRM" << std::endl;
     update_bars(msg);
 }
 
@@ -207,6 +196,7 @@ void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
         infoView.set_gold(msg.characters[i].gold);
 
     std::cout << "ITEMS DESPUES: " << world.items.size() << std::endl;
+    std::cout << std::endl;
 }
 
 void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
@@ -246,11 +236,7 @@ void ClientReceiverThread::process_attack(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_death(ProtocolMessage &msg) {
-    std::cout << "DEATH: " << (int) msg.id_player << std::endl;
     int i = msg.find(this->player_id);
-    std::cout << "i es: " << i << std::endl;
-    std::cout << "SOY PLAYER: " << player_id << " Y estoy: " << ((msg.characters[i].alive) ? "vivo!" : "muerto") << std::endl;
-    std::cout << "PLAYER: " << msg.characters[i].id << " ALIVE? " << msg.characters[i].alive << std::endl;
     if (!msg.characters[i].alive)
         infoView.clear_items();
         
@@ -278,7 +264,6 @@ void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
         this->running = false;
     } else {
         world.remove_player(msg.id_player);
-        std::cout << "BORRANDO OTRO JUGADOR" << std::endl;
     }
 }
 

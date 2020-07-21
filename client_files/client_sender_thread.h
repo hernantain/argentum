@@ -7,7 +7,7 @@
 #include "../common_files/common_thread.h"
 #include "../common_files/common_queue.h"
 #include "../common_files/common_message_to_server.h"
-
+#include "../common_files/common_protocol_codes.h"
 
 class SenderThread : public Thread {
 
@@ -19,10 +19,6 @@ class SenderThread : public Thread {
         SenderThread(Socket &skt, MessageToServerQueue &queue);
 
         virtual void run() override;
-
-
-
-
 };
 
 

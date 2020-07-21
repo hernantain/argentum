@@ -16,13 +16,13 @@ Ghost::~Ghost() {
 
 bool Ghost::load_pictures(SDL_Renderer* gRenderer) {
 
-    if( !this->bodyTexture.loadFromFile( "images/ghost.png", gRenderer ) ) {
+    if( !this->bodyTexture.loadFromFile( "media/images/ghost.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
 
 
-    if( !this->headTexture.loadFromFile( "images/ghost_head.png", gRenderer ) ) {
+    if( !this->headTexture.loadFromFile( "media/images/ghost_head.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
