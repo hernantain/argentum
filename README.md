@@ -7,6 +7,14 @@
 * Tomas Szemzo - 97771
 * Hernan Tain - 98070
 
+## Documentos del Proyecto
+
+* Manual del proyecto: https://docs.google.com/document/d/1GmcXl18Py0kkTP8LkjxQ08TCIwdhX_ad7nioDZlPvL4/edit?usp=sharing
+* Documentación técnica: https://docs.google.com/document/d/1kRTEceXyvtzqqkpvy2Lk5dLBvfUDv6I6VGAHoJygDIU/edit?usp=sharing
+* Manual de usuario:
+  https://docs.google.com/document/d/1_Pc4m-L8o1Re2u4rDfyTD-45QZyEbK-9hg-p50h0FEw/edit?usp=sharing
+
+
 ## Introducción
 
 El presente trabajo práctico busca replicar el famoso juego online Argentum, en el cual cada jugador se crea un personaje escogiendo raza y clase, e irá aventurandose al mundo de Argentum en busca de oro, mágicos items y batallas que pueden ser contra criaturas (NPC) u otros jugadores que se encuentren conectados.
@@ -122,13 +130,6 @@ Para poder jugar al Argentum se utilizarán las siguientes teclas:
 * a-> toma un item del suelo si se encuentra debajo nuestro
 * d-> deposita el oro del personaje en el banco en caso de que se encuentre un banquero próximo al personaje.
 * s-> retira el oro del personaje del banco en caso de que se encuentre un banquero próximo al personaje.
-
-## Links de interés
-
-* Manual del proyecto: https://docs.google.com/document/d/1GmcXl18Py0kkTP8LkjxQ08TCIwdhX_ad7nioDZlPvL4/edit?usp=sharing
-* Documentación técnica: https://docs.google.com/document/d/1kRTEceXyvtzqqkpvy2Lk5dLBvfUDv6I6VGAHoJygDIU/edit?usp=sharing
-* Manual de usuario:
-  https://docs.google.com/document/d/1_Pc4m-L8o1Re2u4rDfyTD-45QZyEbK-9hg-p50h0FEw/edit?usp=sharing
 
 
 
