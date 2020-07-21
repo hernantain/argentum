@@ -124,7 +124,7 @@ Para esta primera versión se utilizarán las siguientes teclas:
 
 ## Links de interés
 
-* Manual del proyecto:
+* Manual del proyecto: https://docs.google.com/document/d/1GmcXl18Py0kkTP8LkjxQ08TCIwdhX_ad7nioDZlPvL4/edit?usp=sharing
 * Documentación técnica:
 * Manual de usuario:
   https://docs.google.com/document/d/1_Pc4m-L8o1Re2u4rDfyTD-45QZyEbK-9hg-p50h0FEw/edit?usp=sharing
