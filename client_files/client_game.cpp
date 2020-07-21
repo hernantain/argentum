@@ -110,10 +110,10 @@ void Game::connect() {
 
 void Game::run() {
 	using namespace std::chrono;
+	
 	SoundManager sm;
-
 	connect();
-	// skt.connect_to("localhost", "8080");
+	
 	skt >> this->player_id;
 	Map map = this->loadMap();
 
@@ -132,7 +132,7 @@ void Game::run() {
 	system_clock::time_point t1 = system_clock::now();
 
 	SDL_Event e;
-	// Event handler
+	
 	while(this->running) {	
 		while(SDL_PollEvent(&e) != 0) {
 			if( e.type == SDL_QUIT ) {
