@@ -1,7 +1,6 @@
 #include "server_armor.h"
 #include <stdlib.h>
 #include <time.h>
-#include <iostream> 
 
 Armor::Armor(int min_defense = 0, int max_defense = 0) {
     this->min_defense = min_defense;

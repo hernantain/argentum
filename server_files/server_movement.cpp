@@ -1,6 +1,4 @@
 #include "server_movement.h"
-#include "server_os_error.h"
-#include <iostream>
 #include <cstdlib>
 
 #define HEAD_SIZE 20

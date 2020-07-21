@@ -1,9 +1,6 @@
 
 #include "server_receiver_thread.h"
 
-#include <iostream>
-
-
 SrvClientReceiverThread::SrvClientReceiverThread(
     uint16_t client_id, 
     Socket &skt, 

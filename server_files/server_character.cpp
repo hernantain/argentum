@@ -1,9 +1,7 @@
 #include <math.h>
-#include <iostream>
 #include <stdio.h>
 #include <cstdlib>
 #include "server_character.h"
-#include "server_npc.h"
 
 #define NO_LIFE 0
 #define NO_DAMAGE 0
@@ -276,11 +274,7 @@ bool Character::is_safe() const {
 }
 
 bool Character::fairplay(const Attackable& other) const {
-    if (other.get_id() >= NPC_INITIAL_ID) {
-        std::cout << "No pasa nada soy NPC" << std::endl;
-        return true;
-    }
-    std::cout << "Paso il fairplay" << std::endl;
+    if (other.is_npc()) return true;
     int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
     if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) return false;
     return true;
@@ -306,9 +300,7 @@ bool Character::is_critical() const {
 
 bool Character::can_attack(const Attackable& other) const {
     if(!alive || !other.is_alive()) return false;
-    std::cout << "Pre fairplay" << std::endl;
     if(!fairplay(other) || !attack_zone(other)) return false;
-    std::cout << "Llega??" << std::endl;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
         int posY = other.get_body_pos_Y();
@@ -482,6 +474,10 @@ int16_t Character::get_current_experience() const {
 
 int16_t Character::get_max_experience() const {
     return experience.max();
+}
+
+bool Character::is_npc() const {
+    return false;
 }
 
 Character::~Character() {}

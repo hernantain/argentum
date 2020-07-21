@@ -1,16 +1,7 @@
-#include <iostream>
 
 #include "server_game_loop_thread.h"
 #include "server_processor_thread.h"
 #include "../common_files/common_mapinfo.h"
-
-#include "server_sword.h"
-#include "server_gnarled_staff.h"
-#include "server_mana_potion.h"
-#include "server_life_potion.h"
-#include "server_iron_shield.h"
-#include "server_banker.h"
-#include "server_priest.h"
 
 ServerProcessorThread::ServerProcessorThread(
     MessageToServerQueue &receiversQueue,

@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <iostream>
 
 #include "server_world.h"
 #include "server_protocol_translator.h"

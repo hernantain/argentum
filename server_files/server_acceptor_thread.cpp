@@ -1,6 +1,3 @@
-
-#include <iostream>
-
 #include "server_acceptor_thread.h"
 #include "server_processor_thread.h"
 

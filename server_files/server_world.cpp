@@ -1,6 +1,5 @@
 
 #include "server_world.h"
-#include <iostream>
 
 #define GOLD_ITEM_ID 20
 

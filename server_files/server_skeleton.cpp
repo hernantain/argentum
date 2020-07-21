@@ -1,5 +1,3 @@
-#include <math.h>
-#include <iostream>
 #include "server_skeleton.h"
 
 Skeleton::Skeleton(Json::Value &config, CollisionInfo &collisionInfo) : NPC(config, collisionInfo) {

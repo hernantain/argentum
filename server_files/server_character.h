@@ -106,6 +106,9 @@ public:
     // Devuelve un booleano que indica si el jugador es newbie o no
     bool is_newbie() const;
 
+    // Devuelve un booleano que indica si el attackable es npc
+    bool is_npc() const;
+
     // Devuelve un booleano que indica si el jugador esta meditando o no
     bool is_meditating() const;
 

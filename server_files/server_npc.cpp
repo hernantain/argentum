@@ -1,5 +1,4 @@
 #include <math.h>
-#include <iostream>
 #include <stdio.h>
 #include "server_npc.h"
 
@@ -48,6 +47,10 @@ bool NPC::is_alive() const {
 
 bool NPC::is_newbie() const {
     return false;
+}
+
+bool NPC::is_npc() const {
+    return true;
 }
 
 void NPC::drop_items(std::vector<Item> &worldItems) {

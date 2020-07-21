@@ -1,5 +1,4 @@
 #include "server_inventory.h"
-#include <iostream>
 
 #define DROP_OFFSET_TOLERANCE 30
 #define NOT_FOUND -1
