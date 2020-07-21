@@ -102,30 +102,27 @@ y clase:
 * guerrero
 
 ### Teclas para jugar
-Para esta primera versión se utilizarán las siguientes teclas:
+
+Para poder jugar al Argentum se utilizarán las siguientes teclas:
 
 * key_left-> mover el personaje a la izquierda.
 * key_right-> mover el personaje a la derecha.
 * key_down-> mover el personaje hacia abajo.
 * key_up-> mover el personaje hacia arriba.
-* y-> equipa un arma Hacha.
-* u-> equipa un arma Espada.
-* i-> equipa un arma Martillo.
-* o-> equipa un arma Báculo Nudoso.
-* p-> equipa un arma Báculo Engarzado.
-* h-> equipa un casco Capucha.
-* j-> equipa un casco Casco de Hierro.
-* k-> equipa un casco Sombrero Mágico.
-* l-> desequipa cualquier casco que posea.
-* b-> desequipa cualquier armadura que posea.
-* n-> equipa una armadura Armadura de Placas.
-* m-> equipa una armadura Armadura de Cuero.
-* click-> ataca a otro personaje o npc ubicado en la posición clickeada (en caso de que pueda)
+* click (sobre NPC o personaje)-> intentará atacar si se encuentra a la distancia adecuada. Recordar que los báculos y los arcos son armas de larga distancia, es decir, podremos atacar desde donde sea, mientras que para las armas de melee uno debe estar a poca distancia para que se concrete.
+* click (sobre un ítem en el inventario)-> equipa o desequipa el ítem del inventario según este se encuentre ya equipado o no.
+* click derecho (sobre un ítem en el inventario)-> droppea el ítem al suelo en caso de que este no esté equipado.
+* f-> resucita al personaje si este se encuentra muerto y a corta distancia del sacerdote
+* c-> cura al personaje (mana y vida) si este se encuentra vivo y a corta distancia del sacerdote
+* z-> pone al personaje en estado de meditación para aumentar su mana.
+* a-> toma un item del suelo si se encuentra debajo nuestro
+* d-> deposita el oro del personaje en el banco en caso de que se encuentre un banquero próximo al personaje.
+* s-> retira el oro del personaje del banco en caso de que se encuentre un banquero próximo al personaje.
 
 ## Links de interés
 
 * Manual del proyecto: https://docs.google.com/document/d/1GmcXl18Py0kkTP8LkjxQ08TCIwdhX_ad7nioDZlPvL4/edit?usp=sharing
-* Documentación técnica:
+* Documentación técnica: https://docs.google.com/document/d/1kRTEceXyvtzqqkpvy2Lk5dLBvfUDv6I6VGAHoJygDIU/edit?usp=sharing
 * Manual de usuario:
   https://docs.google.com/document/d/1_Pc4m-L8o1Re2u4rDfyTD-45QZyEbK-9hg-p50h0FEw/edit?usp=sharing
 
