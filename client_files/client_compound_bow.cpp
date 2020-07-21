@@ -12,7 +12,7 @@ CompoundBow::~CompoundBow() {}
 
 
 bool CompoundBow::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/arco_compuesto_1.png", gRenderer ) ) {
+    if( !this->weaponTexture.loadFromFile( "media/images/arco_compuesto_1.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

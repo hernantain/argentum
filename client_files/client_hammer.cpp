@@ -20,7 +20,7 @@ void Hammer::set_sprites() {
 
 
 bool Hammer::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/martillo.png", gRenderer ) ) {
+    if( !this->weaponTexture.loadFromFile( "media/images/martillo.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

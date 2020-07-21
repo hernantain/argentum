@@ -11,7 +11,7 @@ IronHelmet::~IronHelmet() {}
 
 
 bool IronHelmet::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->helmetTexture.loadFromFile( "images/casco_hierro.png", gRenderer ) ) {
+    if( !this->helmetTexture.loadFromFile( "media/images/casco_hierro.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

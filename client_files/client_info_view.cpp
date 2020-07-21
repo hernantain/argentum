@@ -211,34 +211,33 @@ bool InfoView::y_within_bounds(Item* item, int &y) {
 }
 
 
-void InfoView::set_mana(int16_t currentMana, int16_t maxMana) {
+void InfoView::set_mana(int16_t &currentMana, int16_t &maxMana) {
     std::unique_lock<std::mutex> lock(this->m);
-    // std::cout << "SETTING MANA: " << currentMana << " AND MAX: " << maxMana << std::endl;
     this->currentMana = currentMana;
     this->maxMana = maxMana;
 }
 
 
-void InfoView::set_life(int16_t currentLife, int16_t maxLife) {
+void InfoView::set_life(int16_t &currentLife, int16_t &maxLife) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentLife = currentLife;
     this->maxLife = maxLife;
 }
 
 
-void InfoView::set_experience(int16_t currentExp, int16_t maxExp) {
+void InfoView::set_experience(int16_t &currentExp, int16_t &maxExp) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentExp = currentExp;
     this->maxExp = maxExp;
 }
 
 
-void InfoView::set_gold(int16_t gold) {
+void InfoView::set_gold(int16_t &gold) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentGold = gold;
 }
 
-void InfoView::set_level(int16_t level) {
+void InfoView::set_level(int16_t &level) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentLevel = level;
 }
@@ -251,6 +250,7 @@ void InfoView::add_item(Item* item) {
         if (items[i]->get_id() == item->get_id()) {
             this->items[i]->add_amount();
             delete item;
+            return;
         }
     }
     this->items.push_back(item);
@@ -267,7 +267,6 @@ void InfoView::render() {
     this->render_life();
     this->render_mana();
     this->render_experience();
-
 }
 
 
@@ -275,7 +274,6 @@ void InfoView::adjust() {
     std::unique_lock<std::mutex> lock(this->m);
     int paddedX = infoPanel.w / 8;
     int paddedW = infoPanel.w - (2*paddedX);
-
     int half = infoPanel.h / 2;
     
     // LIFE

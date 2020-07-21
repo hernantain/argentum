@@ -55,7 +55,7 @@ void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
     axe.set_amount(1);
     world.items.push_back(axe);
 
-    Hammer hammer(config);
+    Axe hammer(config);
     hammer.set_posX(100);
     hammer.set_posY(300);
     hammer.set_amount(1);

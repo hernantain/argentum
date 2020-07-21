@@ -12,7 +12,7 @@ Sword::~Sword() {}
 
 
 bool Sword::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/espada2.png", gRenderer ) ) {
+    if( !this->weaponTexture.loadFromFile( "media/images/espada2.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

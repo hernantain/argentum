@@ -3,7 +3,7 @@
 
 
 Skeleton::Skeleton(SDL_Renderer* gRenderer) : NpcPicture(gRenderer) {
-    if (this->load_pictures("images/esqueleto.png"))
+    if (this->load_pictures("media/images/esqueleto.png"))
         this->set_sprites();
 }
 

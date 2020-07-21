@@ -7,10 +7,9 @@
 
 Priest::Priest(SDL_Renderer* gRenderer) {
     this->gRenderer = gRenderer;
-    if(!this->priestTexture.loadFromFile("images/priest.png", gRenderer)) {
+    if(!this->priestTexture.loadFromFile("media/images/priest.png", gRenderer)) {
 		std::cout << "Failed to load priest texture!\n" << std::endl;
 	}
-    std::cout << "construyendo priest" << std::endl;
 
     this->posX = 0;
     this->posY = 0;
@@ -30,10 +29,7 @@ void Priest::render(SDL_Rect &camera) {
 }
 
 
-Priest::~Priest() {
-    std::cout << "DESTRUYENDO Priest" << std::endl;
-    //bankerTexture.free();
-}
+Priest::~Priest() {}
 
 
 Priest::Priest(Priest&& other) {

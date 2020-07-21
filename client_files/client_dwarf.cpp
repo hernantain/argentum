@@ -7,7 +7,7 @@ Dwarf::Dwarf(
     int bodyPosX, 
     int bodyPosY) : ShortPlayer(
                         gRenderer, 
-                        "images/enano.png", 
+                        "media/images/enano.png", 
                         id,
                         bodyPosX, 
                         bodyPosY) {}

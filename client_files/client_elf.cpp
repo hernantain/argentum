@@ -8,7 +8,7 @@ Elf::Elf(
     int bodyPosX, 
     int bodyPosY) : TallPlayer(
                         gRenderer, 
-                        "images/elfo.png", 
+                        "media/images/elfo.png", 
                         id,
                         bodyPosX, 
                         bodyPosY) {}

@@ -55,11 +55,11 @@ void Player::set_camera(SDL_Rect &camera) {
 	if( camera.y < 0 ) 
 		camera.y = 0;
 	
-	if( camera.x > 3200 - camera.w )
-		camera.x = 3200 - camera.w;
+	if( camera.x > MAP_SIZE - camera.w )
+		camera.x = MAP_SIZE - camera.w;
 	
-	if( camera.y > 3200 - camera.h )
-		camera.y = 3200 - camera.h; 
+	if( camera.y > MAP_SIZE - camera.h )
+		camera.y = MAP_SIZE - camera.h; 
 }
 
 void Player::set_position(int16_t newBodyPosX, int16_t newBodyPosY, int orientation) {
@@ -149,21 +149,21 @@ void Player::load_weapons() {
 }
 
 void Player::set_weapon(int weaponId) {
-	if (weaponId == 9) {
+	if (weaponId == SWORD_CODE) {
 		this->equippedPlayer->setWeapon(this->weapons[0]);
-	} else if (weaponId == 10) {
+	} else if (weaponId == AXE_CODE) {
 		this->equippedPlayer->setWeapon(this->weapons[1]);
-	} else if (weaponId == 11) {
+	} else if (weaponId == HAMMER_CODE) {
 		this->equippedPlayer->setWeapon(this->weapons[2]);
-	} else if (weaponId == 13) {
+	} else if (weaponId == ASH_STAFF_CODE) {
 		this->equippedPlayer->setWeapon(this->weapons[7]);
-	} else if (weaponId == 14) {
+	} else if (weaponId == GNARLED_STAFF_CODE) {
 		this->equippedPlayer->setWeapon(this->weapons[3]);
-	} else if (weaponId == 15) {
+	} else if (weaponId == CRIMP_STAFF_CODE) {
 		this->equippedPlayer->setWeapon(this->weapons[4]);
-	} else if (weaponId == 16) {
+	} else if (weaponId == SIMPLE_BOW_CODE) {
 		this->equippedPlayer->setWeapon(this->weapons[6]);
-	} else if (weaponId == 17) { 
+	} else if (weaponId == COMPOUND_BOW_CODE) { 
 		this->equippedPlayer->setWeapon(this->weapons[5]);
 	} else {
 		this->equippedPlayer->setWeapon(NULL);
@@ -171,11 +171,11 @@ void Player::set_weapon(int weaponId) {
 }
 
 void Player::set_helmet(int helmetId) {
-	if (helmetId == 4) {
+	if (helmetId == HOOD_CODE) {
 		this->equippedPlayer->setHelmet(this->helmets[0]);
-	} else if (helmetId == 5) {
+	} else if (helmetId == IRON_HELMET_CODE) {
 		this->equippedPlayer->setHelmet(this->helmets[1]);
-	} else if (helmetId == 6) {
+	} else if (helmetId == MAGIC_HAT_CODE) {
 		this->equippedPlayer->setHelmet(this->helmets[2]);
 	} else {
 		this->equippedPlayer->setHelmet(NULL);
@@ -183,11 +183,11 @@ void Player::set_helmet(int helmetId) {
 }
 
 void Player::set_armor(int armorId) {
-	if (armorId == 1) {
+	if (armorId == LEATHER_ARMOR_CODE) {
 		this->playerPicture->set_clothes(this->clothes[1]);
-	} else if (armorId == 2) {
+	} else if (armorId == PLATE_ARMOR_CODE) {
 		this->playerPicture->set_clothes(this->clothes[2]);
-	} else if (armorId == 3) { 
+	} else if (armorId == BLUE_ROBE_CODE) { 
 		this->playerPicture->set_clothes(this->clothes[3]);
 	} else {
 		this->playerPicture->set_clothes(this->clothes[0]);
@@ -195,9 +195,9 @@ void Player::set_armor(int armorId) {
 }
 
 void Player::set_shield(int shieldId) {
-	if (shieldId == 7) {
+	if (shieldId == TURTLE_SHIELD_CODE) {
 		this->equippedPlayer->setShield(this->shields[1]);
-	} else if (shieldId == 8){
+	} else if (shieldId == IRON_SHIELD_CODE){
 		this->equippedPlayer->setShield(this->shields[0]);
 	} else {
 		this->equippedPlayer->setShield(NULL);
@@ -321,16 +321,16 @@ uint8_t Player::getDroppedItem() const {
 
 
 int16_t Player::getEventId(int &itemId, std::vector<int16_t> &args) {
-	if (itemId < 4) {
+	if (itemId < HOOD_CODE) {
 		armorId = itemId;
 		return PROTOCOL_EQUIP_ARMOR;
-	} else if ((itemId >= 4) && (itemId < 7)) {
+	} else if ((itemId >= HOOD_CODE) && (itemId < TURTLE_SHIELD_CODE)) {
 		helmetId = itemId;	
 		return PROTOCOL_EQUIP_HELMET;
-	} else if ((itemId >= 7) && (itemId < 9)) {
+	} else if ((itemId >= TURTLE_SHIELD_CODE) && (itemId < SWORD_CODE)) {
 		shieldId = itemId;
 		return PROTOCOL_EQUIP_SHIELD;
-	} else if ((itemId >= 9) && (itemId < 18)) { 
+	} else if ((itemId >= SWORD_CODE) && (itemId < LIFE_POTION_CODE)) { 
 		weaponId = itemId;
 		return PROTOCOL_EQUIP_WEAPON;
 	} else {

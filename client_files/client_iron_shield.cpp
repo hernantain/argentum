@@ -12,7 +12,7 @@ IronShield::~IronShield() {}
 
 
 bool IronShield::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->shieldTexture.loadFromFile( "images/escudo_hierro.png", gRenderer ) ) {
+    if( !this->shieldTexture.loadFromFile( "media/images/escudo_hierro.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

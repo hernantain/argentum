@@ -11,7 +11,7 @@
 
 
 // void Banker::load(SDL_Renderer* gRenderer, int posX, int posY) {
-//     if(!this->bankerTexture.loadFromFile("images/banker.png", gRenderer)) {
+//     if(!this->bankerTexture.loadFromFile("media/images/banker.png", gRenderer)) {
 // 		std::cout << "Failed to load banker texture!\n" << std::endl;
 // 	}
 //     this->gRenderer = gRenderer;
@@ -22,7 +22,7 @@
 
 Banker::Banker(SDL_Renderer* gRenderer) {
     this->gRenderer = gRenderer;
-    if(!this->bankerTexture.loadFromFile("images/banker.png", gRenderer)) {
+    if(!this->bankerTexture.loadFromFile("media/images/banker.png", gRenderer)) {
 		std::cout << "Failed to load banker texture!\n" << std::endl;
 	}
     std::cout << "construyendo banker" << std::endl;
@@ -33,7 +33,7 @@ Banker::Banker(SDL_Renderer* gRenderer) {
 
 
 void Banker::load(int posX, int posY) {
-    // if(!this->bankerTexture.loadFromFile("images/banker.png", gRenderer)) {
+    // if(!this->bankerTexture.loadFromFile("media/images/banker.png", gRenderer)) {
 	// 	std::cout << "Failed to load banker texture!\n" << std::endl;
 	// }
     // this->gRenderer = gRenderer;

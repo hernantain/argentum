@@ -21,7 +21,7 @@ Axe::Axe(SDL_Renderer* gRenderer) : Weapon(0) {
 
 
 bool Axe::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/hacha.png", gRenderer ) ) {
+    if( !this->weaponTexture.loadFromFile( "media/images/hacha.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

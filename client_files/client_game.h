@@ -21,6 +21,7 @@
 #include "../common_files/common_queue.h"
 #include "../common_files/common_protocol_codes.h"
 
+#define FRAME_RATE 17
 
 class Game {
 	

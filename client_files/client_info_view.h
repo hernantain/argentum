@@ -13,6 +13,14 @@
 #define ICON_SIZE 32
 #define BAR_HEIGHT 10 
 
+
+
+/**
+ * Clase InfoView: Se encarde de manejar el panel
+ * de informacion de al derecha de la pantalla. Desde la 
+ * logica de la renderizacion de las barras, hasta agregar 
+ * y borrar items del inventario.
+ */
 class InfoView {
 
     std::mutex m;
@@ -61,11 +69,11 @@ class InfoView {
     public:
         InfoView(SDL_Renderer* gRenderer, SDL_Rect &infoPanel, ItemViewer &itemViewer);
 
-        void set_mana(int16_t currentMana, int16_t maxMana);
-        void set_life(int16_t currentLife, int16_t maxLife);
-        void set_experience(int16_t currentExp, int16_t maxExperience);
-        void set_gold(int16_t gold);
-        void set_level(int16_t level);
+        void set_mana(int16_t &currentMana, int16_t &maxMana);
+        void set_life(int16_t &currentLife, int16_t &maxLife);
+        void set_experience(int16_t &currentExp, int16_t &maxExperience);
+        void set_gold(int16_t &gold);
+        void set_level(int16_t &level);
 
         void add_item(Item* item);
 
@@ -74,7 +82,6 @@ class InfoView {
         void dropItem(uint8_t &itemId);
 
         void render();
-
         void adjust();
 
         void clear_items();

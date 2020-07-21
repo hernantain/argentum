@@ -4,7 +4,7 @@
 #include <mutex>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
-
+#include "../common_files/common_protocol_codes.h"
 
 class SoundManager {
 

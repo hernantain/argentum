@@ -10,7 +10,7 @@ BaculoNudoso::BaculoNudoso(SDL_Renderer* gRenderer) : Weapon(0) {
 }
 
 bool BaculoNudoso::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->weaponTexture.loadFromFile( "images/baculo_nudoso_1.png", gRenderer ) ) {
+    if( !this->weaponTexture.loadFromFile( "media/images/baculo_nudoso_1.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}

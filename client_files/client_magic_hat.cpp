@@ -13,7 +13,7 @@ MagicHat::~MagicHat() {}
 
 
 bool MagicHat::load_pictures(SDL_Renderer* gRenderer) {
-    if( !this->helmetTexture.loadFromFile( "images/sombrero_magico.png", gRenderer ) ) {
+    if( !this->helmetTexture.loadFromFile( "media/images/sombrero_magico.png", gRenderer ) ) {
 		printf( "Failed to load walking animation texture!\n" );
 		return false;
 	}
