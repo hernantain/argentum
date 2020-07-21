@@ -35,6 +35,8 @@ Se puede instalar SDL 2 en el sistema corriendo los siguientes comandos en la te
 
 `sudo apt-get install libsdl2-ttf-dev`
 
+`sudo apt-get install libsdl2-mixer-dev`
+
 ## msgpack y CMake
 
 Para poder instalar msgpack, debemos tener previamente instalado CMake en nuestro sistema. 
@@ -86,6 +88,8 @@ Se provee un archivo de configuración en el proyecto ubicado en la carpeta serv
 Se ejecuta corriendo: 
 
 `./client <raza> <clase>`
+
+Se provee un archivo de configuración en el proyecto ubicado en la carpeta client_files/client_config.json para modificar el host y puerto 
 
 Donde raza debe ser alguna de las siguientes:
 
