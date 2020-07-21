@@ -5,11 +5,7 @@
     "newbieLimit": 12,
     "maxAttackLvlDiff": 10,
     "graphics": {
-        "velocity": 10,
-        "screen_width": 640,
-        "screen_height": 480,
-        "character_width": 21,
-        "character_height": 31
+        "velocity": 10
     },
     "npc": {
         "max_limit": 5,

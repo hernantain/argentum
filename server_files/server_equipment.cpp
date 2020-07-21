@@ -4,9 +4,11 @@
 #define NO_DEFENSE 0
 #define DEFAULT_EQUIPMENT 0
 
-Equipment::Equipment() {
-    initialize_equipment();
-}
+Equipment::Equipment() : 
+    weapon(NO_DAMAGE, NO_DAMAGE), 
+    shield(NO_DEFENSE, NO_DEFENSE), 
+    helmet(NO_DEFENSE, NO_DEFENSE), 
+    armor(NO_DEFENSE, NO_DEFENSE) {}
 
 void Equipment::equip_weapon(Weapon& item) {
     weapon = std::move(item);
@@ -65,16 +67,4 @@ int Equipment::get_equipment_defense() const {
     int shield_defense = shield.get_defense();
     int helmet_defense = helmet.get_defense();
     return armor_defense + shield_defense + helmet_defense;
-}
-
-void Equipment::initialize_equipment() {
-    DefaultArmor default_armor;
-    DefaultHelmet default_helmet;
-    DefaultWeapon default_weapon;
-    DefaultShield default_shield;
-
-    equip_armor(default_armor);
-    equip_helmet(default_helmet);
-    equip_weapon(default_weapon);
-    equip_shield(default_shield);
 }

@@ -4,7 +4,7 @@
 #define HEAD_SIZE 20
 #define CHARACTER_WIDTH 21
 #define CHARACTER_HEIGHT 31
-#define MAX_OFFSET_TOLERANCE 30
+#define MAX_OFFSET_TOLERANCE 35
 #define MAX_ATTACK_OFFSET_TOLERANCE 330
 
 Movement::Movement(CollisionInfo &collisionInfo) : collisionInfo(collisionInfo) {
