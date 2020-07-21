@@ -39,17 +39,27 @@ void AcceptorThread::run() {
 
     while (this->running) {
         client_skt = this->acceptor_skt.accept_client();
-        // IF NOT VALID ....
+        if (socket_not_valid(client_skt))
+            break;
+            
         std::cout << "SOCKET FD: " << client_skt.fd << std::endl;
-
         client_skt << this->client_id;
         client_skt << mapBuffer;
 
         clientManager.add_client(client_id, client_skt, receiversQueue);
-
         client_id++;
     }
+
+    receiversQueue.stop();
+    processorThread->join();
+    delete processorThread;
 }
 
 
 
+bool AcceptorThread::socket_not_valid(Socket &skt) {
+    return (skt.fd == -1);
+}
+
+
+AcceptorThread::~AcceptorThread() {}

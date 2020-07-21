@@ -111,16 +111,25 @@ void ServerProcessorThread::run() {
     Priest priest(collisionInfo.get_priest_posX(), collisionInfo.get_priest_posY());
     serverWorld.add(priest);
 
-    Thread* game_loop = new GameLoopThread(receiversQueue);
+    GameLoopThread* game_loop = new GameLoopThread(receiversQueue);
     game_loop->start();  // NPC THREAD
 
     this->addingHardcodedItems(serverWorld); // HAY QUE SACAR
     
     while (running) {
         ProtocolMessage client_response;
-        MessageToServer received_msg = this->receiversQueue.pop();
-        protocol_translator.translate(received_msg, client_response, serverWorld);
-        if (client_response.id_message != NOTHING)
-           this->clientManager.broadcastMessage(client_response);
+        try {
+            MessageToServer received_msg = this->receiversQueue.pop();
+            protocol_translator.translate(received_msg, client_response, serverWorld);
+            if (client_response.id_message != NOTHING)
+            this->clientManager.broadcastMessage(client_response);
+        } catch (QueueNotOperatingException& e) {
+            this->running = false;
+            std::cout << "Exception en el Processor thread !" << std::endl;
+        }
     }
+
+    game_loop->stop();
+    game_loop->join();
+    delete game_loop;
 }

@@ -20,11 +20,14 @@ class AcceptorThread: public Thread {
     uint16_t client_id;
     ClientManager clientManager;
 
-    void cleanDeadClients();
+    bool socket_not_valid(Socket &skt);
     public:
         AcceptorThread(Socket &acceptor_skt, Json::Value &config);
 
         virtual void run() override;
+
+
+        virtual ~AcceptorThread();
 
 
 };

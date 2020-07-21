@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <atomic>
+#include <sys/socket.h>
 
 #include "server_receiver_thread.h"
 #include "server_sender_thread.h"
@@ -11,6 +12,7 @@
 #include "../common_files/common_queue.h"
 #include "../common_files/common_sockets.h"
 #include "../common_files/common_mapinfo.h"
+#include "../common_files/common_protocol_codes.h"
 
 
 class SrvClient {
@@ -29,7 +31,9 @@ class SrvClient {
 
         void send_message(ProtocolMessage &updated_msg);
 
-        bool is_active();
+        bool is_active() const;
+
+        void stop();
 
         ~SrvClient();
 };

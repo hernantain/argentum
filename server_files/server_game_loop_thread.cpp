@@ -51,6 +51,8 @@ void GameLoopThread::run() {
 		initial += rate;
 		iteration++;
     }
+
+    std::cout << "CERRANDO GAME LOOP" << std::endl;
 }
 
 void GameLoopThread::update_game(int iteration, uint16_t npc_id, int16_t npc_type) {
@@ -69,4 +71,9 @@ void GameLoopThread::update_game(int iteration, uint16_t npc_id, int16_t npc_typ
     std::vector<int16_t> character_args;
     MessageToServer characters_update(PROTOCOL_UPDATE_CHARACTERS, -1, character_args);
     queue.push(characters_update);
+}
+
+
+void GameLoopThread::stop() {
+    this->running = false;
 }

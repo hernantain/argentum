@@ -9,6 +9,7 @@
 #include "../common_files/common_sockets.h"
 #include "../common_files/common_queue.h"
 #include "../common_files/common_mapinfo.h"
+#include "../common_files/common_queue_exception.h"
 
 
 class SrvClientSenderThread: public Thread {

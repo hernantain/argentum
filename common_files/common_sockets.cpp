@@ -208,3 +208,15 @@ void Socket::operator>>(msgpack::unpacker &pack) const {
 	this->receive(pack.buffer(), size);
 	pack.buffer_consumed(size);
 }
+
+
+Socket::Socket(Socket&& other) {
+	this->fd = std::move(other.fd);
+}
+
+Socket& Socket::operator=(Socket&& other) {
+	this->fd = std::move(other.fd);
+	return *this;
+}
+
+

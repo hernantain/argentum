@@ -4,11 +4,13 @@
 #include <stdint.h>
 #include <atomic>
 
+#include "../common_files/common_protocol_codes.h"
 #include "../common_files/common_thread.h"
 #include "../common_files/common_sockets.h"
 #include "../common_files/common_queue.h"
 #include "../common_files/common_protocol_message.h"
 #include "../common_files/common_message_to_server.h"
+#include "server_receiver_thread_exception.h"
 
 class SrvClientReceiverThread: public Thread {
 
@@ -22,9 +24,9 @@ class SrvClientReceiverThread: public Thread {
     public:
         SrvClientReceiverThread(uint16_t client_id, Socket &skt, MessageToServerQueue &receiversQueue);
 
-
         virtual void run() override;
 
+        virtual ~SrvClientReceiverThread();
 
 };
 
