@@ -13,7 +13,7 @@
  * 
  * El accept devuelve un nuevo Socket usando move semantics.
  * 
- * Tiene sobrecargados los operadores '()' y '>>'.
+ * Tiene sobrecargados los operadores '<<' y '>>'.
  * 
  * operator<<: para hacer el envio de mensajes de distinto tipo 
  *              usando la notacion skt << MESSAGE.
@@ -55,6 +55,12 @@ class Socket {
         void operator>>(uint32_t &len) const;
         void operator>>(std::string &message) const;
         void operator>>(msgpack::unpacker &pack) const;
+
+        Socket(Socket&& other);
+        Socket& operator=(Socket&& other);
+
+        Socket(const Socket&) = delete;
+        Socket& operator=(const Socket&) = delete;
 };
 
 

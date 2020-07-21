@@ -19,10 +19,11 @@ void ClientManager::cleanDeadClients() {
     this->clients.swap(tmp);
 }
 
+
 void ClientManager::add_client(uint16_t client_id, Socket &skt, MessageToServerQueue &receiversQueue) {
     std::unique_lock<std::mutex> lock(this->m);
     this->cleanDeadClients();
-    SrvClient* client = new SrvClient(client_id, skt, receiversQueue);
+    SrvClient* client = new SrvClient(client_id, std::move(skt), receiversQueue);
     this->clients.push_back(client);
 }
 
@@ -41,5 +42,10 @@ void ClientManager::broadcastMessage(ProtocolMessage &updated_msg) {
 }
 
 ClientManager::~ClientManager() {
-    clients.clear();
+    for (unsigned int i = 0; i < clients.size(); ++i) {
+        clients[i]->stop();
+        delete clients[i];
+    }
+
+    // clients.clear();
 }

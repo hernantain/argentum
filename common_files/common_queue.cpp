@@ -78,11 +78,3 @@ void MessageToServerQueue::stop() {
 
 MessageToServerQueue::~MessageToServerQueue() {}
 
-
-
-
-
-
-
-
-

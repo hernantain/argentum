@@ -20,6 +20,8 @@ public:
     GameLoopThread(MessageToServerQueue &queue);
 
     virtual void run() override;
+
+    void stop();
 };
 
 #endif

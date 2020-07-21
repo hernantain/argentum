@@ -9,9 +9,9 @@ SrvClient::SrvClient(
     uint16_t client_id, 
     Socket skt, 
     MessageToServerQueue &receiversQueue) : client_id(client_id), 
-                            skt(skt),
-                            receiversQueue(receiversQueue),
-                            active(true) {
+                                            skt(std::move(skt)),
+                                            receiversQueue(receiversQueue),
+                                            active(true) {
 
     cReceiverThread = new SrvClientReceiverThread(client_id, this->skt, receiversQueue);
     cReceiverThread->start();
@@ -22,7 +22,7 @@ SrvClient::SrvClient(
 
 
 void SrvClient::send_message(ProtocolMessage &updated_msg) {
-    if (updated_msg.id_message == 68 && updated_msg.id_player == this->client_id)
+    if (updated_msg.id_message == PROTOCOL_LOG_OFF_CONFIRM && updated_msg.id_player == this->client_id)
         this->active = false;
         
     // std::cout << "EMPEZANDO EL BROADCAST" << std::endl;
@@ -43,13 +43,19 @@ void SrvClient::send_message(ProtocolMessage &updated_msg) {
         // std::cout << "ENVIANDO --> PROT CHARACTER ALIVE " << (int) updated_msg.characters[i].alive << std::endl;
         // std::cout << std::endl;
     //     std::cout << "ENVIANDO --> PROT ARMOR " << (int) updated_msg.characters[i].armorId << std::endl;
-    // }    
+    // }
     this->messageQueue.push(updated_msg);
 }
 
 
-bool SrvClient::is_active() {
+bool SrvClient::is_active() const {
     return this->active;
+}
+
+void SrvClient::stop() {
+    this->skt.turnoff_channel(SHUT_RD);
+    messageQueue.stop();
+    this->skt.close_socket();
 }
 
 
