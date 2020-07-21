@@ -21,11 +21,12 @@ class InfoView {
     SDL_Rect &infoPanel;
     ItemViewer &itemViewer;
     TextLabel argentumLabel;
-    TextLabel lifeLabel; 
-    TextLabel manaLabel;
-    TextLabel expLabel;
-    // TextLabel currLifeLabel;
-    // TextLabel maxLifeLabel;
+    TextLabel lifeLabel, manaLabel, expLabel; 
+    TextLabel currLifeLabel, maxLifeLabel;
+    TextLabel currManaLabel, maxManaLabel;
+    TextLabel currExpLabel, maxExpLabel;
+    TextLabel goldLabel, goldNumberLabel;
+    TextLabel levelLabel, levelNumberLabel;
     
     SDL_Renderer* gRenderer;
 
@@ -38,11 +39,18 @@ class InfoView {
     int16_t currentMana, maxMana;
     int16_t currentLife, maxLife;
     int16_t currentExp, maxExp;
+    int16_t currentGold;
+    int16_t currentLevel;
+
 
     void render_life();
     void render_mana();
     void render_experience();
+    void render_life_bar();
+    void render_mana_bar();
+    void render_experience_bar();
     void render_items();
+    void render_gold_level();
 
     bool click_within_bounds(Item* item, int &x, int &y);
     bool x_within_bounds(Item* item, int &x);
@@ -56,6 +64,8 @@ class InfoView {
         void set_mana(int16_t currentMana, int16_t maxMana);
         void set_life(int16_t currentLife, int16_t maxLife);
         void set_experience(int16_t currentExp, int16_t maxExperience);
+        void set_gold(int16_t gold);
+        void set_level(int16_t level);
 
         void add_item(Item* item);
 

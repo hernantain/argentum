@@ -48,15 +48,19 @@ CollisionInfo MapInfo::load() {
 
     std::cout << "BANKERS POS X: " << bankersPos[0]["posX"].asInt() << std::endl;
     std::cout << "PRIESTS POS X: " << priestsPos[0]["posX"].asInt() << std::endl;
+    
     this->banker.push_back(bankersPos[0]["posX"].asInt());
     collisionInfo.banker.push_back(bankersPos[0]["posX"].asInt());
+    
     this->priest.push_back(priestsPos[0]["posX"].asInt());
     collisionInfo.priest.push_back(priestsPos[0]["posX"].asInt());
 
     std::cout << "BANKERS POS Y: " << bankersPos[0]["posY"].asInt() << std::endl;
     std::cout << "PRIESTS POS Y: " << priestsPos[0]["posY"].asInt() << std::endl;
+    
     this->banker.push_back(bankersPos[0]["posY"].asInt());
     collisionInfo.banker.push_back(bankersPos[0]["posY"].asInt());
+    
     this->priest.push_back(priestsPos[0]["posY"].asInt());
     collisionInfo.priest.push_back(priestsPos[0]["posY"].asInt());
 

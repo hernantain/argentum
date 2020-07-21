@@ -12,15 +12,25 @@ InfoView::InfoView(
                               argentumLabel(gRenderer, "Argentum", 30),
                               lifeLabel(gRenderer, "Vida", 30),
                               manaLabel(gRenderer, "Mana", 30),
-                              expLabel(gRenderer, "Experiencia", 30) {
-                            //   currLifeLabel(gRenderer, "0", 20),
-                            //   maxLifeLabel(gRenderer, "0", 20) {
+                              expLabel(gRenderer, "Exp.", 30), 
+                              currLifeLabel(gRenderer, "0", 20),
+                              maxLifeLabel(gRenderer, "0", 20),
+                              currManaLabel(gRenderer, "0", 20),
+                              maxManaLabel(gRenderer, "0", 20),
+                              currExpLabel(gRenderer, "0", 18),
+                              maxExpLabel(gRenderer, "0", 18),
+                              goldLabel(gRenderer, "Oro", 30),
+                              goldNumberLabel(gRenderer, "0", 30),
+                              levelLabel(gRenderer, "Nivel", 30),
+                              levelNumberLabel(gRenderer, "1", 30) {
     
     this->manaColor =  {36, 255, 240, 0xFF};
     this->lifeColor =  {255, 175, 36, 0xFF};
     this->bgdColor = {20, 11, 11, 0xFF};
     this->expColor = {240, 255, 26, 0xFF};
 
+    this->currentLevel = 1;
+    this->currentGold = 0;
     this->currentMana = 0;
     this->maxMana = 0;
     this->currentExp = 0;
@@ -34,7 +44,7 @@ InfoView::InfoView(
 }
 
 
-void InfoView::render_life() {
+void InfoView::render_life_bar() {
     SDL_SetRenderDrawColor(gRenderer, bgdColor.r, bgdColor.g, bgdColor.b, bgdColor.a);
     SDL_RenderFillRect(gRenderer, &maxLifeRect);
 
@@ -46,7 +56,7 @@ void InfoView::render_life() {
 }
 
 
-void InfoView::render_mana() {
+void InfoView::render_mana_bar() {
     SDL_SetRenderDrawColor(gRenderer, bgdColor.r, bgdColor.g, bgdColor.b, bgdColor.a);
     SDL_RenderFillRect(gRenderer, &maxManaRect);
 
@@ -57,7 +67,7 @@ void InfoView::render_mana() {
 }
 
 
-void InfoView::render_experience() {
+void InfoView::render_experience_bar() {
     SDL_SetRenderDrawColor(gRenderer, bgdColor.r, bgdColor.g, bgdColor.b, bgdColor.a);
     SDL_RenderFillRect(gRenderer, &maxExpRect);
 
@@ -65,6 +75,49 @@ void InfoView::render_experience() {
     float pct = float(this->currentExp) / this->maxExp;
     currentExpRect.w = maxExpRect.w * pct;
     SDL_RenderFillRect(gRenderer, &currentExpRect);
+}
+
+void InfoView::render_life() {
+    this->render_life_bar();
+    lifeLabel.render((infoPanel.w - lifeLabel.getWidth()) / 2, currentLifeRect.y - 40);
+    this->currLifeLabel.set_new_label(std::to_string(this->currentLife));
+    this->maxLifeLabel.set_new_label(std::to_string(this->maxLife));
+    currLifeLabel.render(maxLifeRect.x, maxLifeRect.y - 30);
+    maxLifeLabel.render(maxLifeRect.x + maxLifeRect.w - 10, maxLifeRect.y - 30);
+}
+
+
+void InfoView::render_mana() {
+    this->render_mana_bar();
+    manaLabel.render((infoPanel.w - manaLabel.getWidth()) / 2, currentManaRect.y - 40);
+    this->currManaLabel.set_new_label(std::to_string(this->currentMana));
+    this->maxManaLabel.set_new_label(std::to_string(this->maxMana));
+    currManaLabel.render(maxManaRect.x, maxManaRect.y - 30);
+    maxManaLabel.render(maxManaRect.x + maxManaRect.w - 10, maxManaRect.y - 30);
+}
+
+
+void InfoView::render_experience() {
+    this->render_experience_bar();
+    expLabel.render((infoPanel.w - expLabel.getWidth()) / 2, currentExpRect.y - 40);
+    this->currExpLabel.set_new_label(std::to_string(this->currentExp));
+    this->maxExpLabel.set_new_label(std::to_string(this->maxExp));
+    currExpLabel.render(maxExpRect.x, maxExpRect.y - 30);
+    maxExpLabel.render(maxExpRect.x + maxExpRect.w - 20, maxExpRect.y - 30);
+}
+
+
+void InfoView::render_gold_level() {
+    int half = infoPanel.h / 2;
+
+    goldLabel.render(20, half);
+    goldNumberLabel.set_new_label(std::to_string(this->currentGold));
+    goldNumberLabel.render(goldLabel.getWidth() + 30, half);
+
+    int padding = goldLabel.getWidth() + goldNumberLabel.getWidth() + 70;
+    levelLabel.render(padding, half);
+    levelNumberLabel.set_new_label(std::to_string(this->currentLevel));
+    levelNumberLabel.render(padding + levelLabel.getWidth() + 10, half);
 }
 
 
@@ -170,8 +223,6 @@ void InfoView::set_life(int16_t currentLife, int16_t maxLife) {
     std::unique_lock<std::mutex> lock(this->m);
     this->currentLife = currentLife;
     this->maxLife = maxLife;
-    // this->currLifeLabel.set_new_label(std::to_string(this->currentLife));
-    // this->maxLifeLabel.set_new_label(std::to_string(this->maxLife));
 }
 
 
@@ -180,6 +231,18 @@ void InfoView::set_experience(int16_t currentExp, int16_t maxExp) {
     this->currentExp = currentExp;
     this->maxExp = maxExp;
 }
+
+
+void InfoView::set_gold(int16_t gold) {
+    std::unique_lock<std::mutex> lock(this->m);
+    this->currentGold = gold;
+}
+
+void InfoView::set_level(int16_t level) {
+    std::unique_lock<std::mutex> lock(this->m);
+    this->currentLevel = level;
+}
+
 
 
 void InfoView::add_item(Item* item) {
@@ -198,16 +261,13 @@ void InfoView::add_item(Item* item) {
 
 void InfoView::render() {
     std::unique_lock<std::mutex> lock(this->m);
+    this->render_items();
+    argentumLabel.render((infoPanel.w - argentumLabel.getWidth()) / 2, 30);
+    this->render_gold_level();
     this->render_life();
     this->render_mana();
     this->render_experience();
-    this->render_items();
-    argentumLabel.render((infoPanel.w - argentumLabel.getWidth()) / 2, 30);
-    lifeLabel.render((infoPanel.w - lifeLabel.getWidth()) / 2, currentLifeRect.y - 40);
-    // currLifeLabel.render(maxLifeRect.x, maxLifeRect.y - 30);
-    // maxLifeLabel.render(maxLifeRect.x + maxLifeRect.w, maxLifeRect.y - 30);
-    manaLabel.render((infoPanel.w - manaLabel.getWidth()) / 2, currentManaRect.y - 40);
-    expLabel.render((infoPanel.w - expLabel.getWidth()) / 2, currentExpRect.y - 40);
+
 }
 
 
@@ -216,20 +276,23 @@ void InfoView::adjust() {
     int paddedX = infoPanel.w / 8;
     int paddedW = infoPanel.w - (2*paddedX);
 
+    int half = infoPanel.h / 2;
+    
     // LIFE
-    currentLifeRect = {paddedX, infoPanel.h / 2, paddedW, BAR_HEIGHT};
-    maxLifeRect = {paddedX, infoPanel.h / 2, paddedW, BAR_HEIGHT};
+    currentLifeRect = {paddedX, half + (half/4) + 30, paddedW, BAR_HEIGHT};
+    maxLifeRect = {paddedX, half + (half/4) + 30, paddedW, BAR_HEIGHT};
 
     // MANA
-    currentManaRect = {paddedX, (currentLifeRect.y + infoPanel.h) / 2, paddedW, BAR_HEIGHT};
-    maxManaRect = {paddedX, (maxLifeRect.y + infoPanel.h) / 2, paddedW, BAR_HEIGHT};
+    currentManaRect = {paddedX, half + 2*(half/4) + 30, paddedW, BAR_HEIGHT};
+    maxManaRect = {paddedX, half + 2*(half/4) + 30, paddedW, BAR_HEIGHT};
 
     // EXP
-    currentExpRect = {paddedX, (currentManaRect.y + infoPanel.h) / 2, paddedW, BAR_HEIGHT};
-    maxExpRect = {paddedX, (maxManaRect.y + infoPanel.h) / 2, paddedW, BAR_HEIGHT};
+    currentExpRect = {paddedX, half + 3*(half/4) + 30, paddedW, BAR_HEIGHT};
+    maxExpRect = {paddedX, half + 3*(half/4) + 30, paddedW, BAR_HEIGHT};
 
     this->adjust_items();
 }
+
 
 void InfoView::clear_items() {
     std::unique_lock<std::mutex> lock(this->m);

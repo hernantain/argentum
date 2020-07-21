@@ -12,20 +12,19 @@ TextLabel::TextLabel(SDL_Renderer* gRenderer, std::string label, int size) {
 
 
 bool TextLabel::initMedia(SDL_Renderer* gRenderer, std::string &label, int &size) {
-    bool success = true;
 
 	gFont = TTF_OpenFont("fonts/medieval.ttf", size);
 	if( gFont == NULL ) {   
 		printf("Failed to load medieval font! SDL_ttf Error: %s\n", TTF_GetError());
-		success = false;
+		return false;
 	} else {
 		SDL_Color textColor = {255, 255, 255};
 		if(!textTexture.loadFromRenderedText( gRenderer, gFont, label, textColor)) {
 			printf("Failed to render text texture!\n");
-			success = false;
+			return false;
 		}
 	}
-	return success;    
+	return true;    
 }
 
 

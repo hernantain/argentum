@@ -12,20 +12,16 @@ struct ProtocolCharacter {
     int16_t bodyPosX; 
     int16_t bodyPosY;
     int16_t orientation;
-    // int16_t otherPosX; 
-    // int16_t otherPosY;
     uint8_t helmetId;
     uint8_t armorId;
     uint8_t weaponId;
     uint8_t shieldId;
-    // uint8_t potionId;
-    // uint8_t itemId;
     int16_t life, max_life;
     int16_t mana, max_mana;
-    // int16_t level;
+    int16_t level;
     int16_t experience;
     int16_t max_experience;
-    // int16_t gold;
+    int16_t gold;
     bool alive;
     bool meditating;
 
@@ -39,7 +35,7 @@ struct ProtocolCharacter {
 
     MSGPACK_DEFINE(id, id_race, id_class, bodyPosX, bodyPosY, orientation, 
                    helmetId, armorId, weaponId, shieldId, life, max_life, mana, 
-                   max_mana, experience, max_experience, alive, meditating)
+                   max_mana, level, experience, max_experience, gold, alive, meditating)
 };
 
 #endif
