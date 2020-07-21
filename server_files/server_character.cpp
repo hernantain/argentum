@@ -470,23 +470,22 @@ void Character::populate_protocol_character(ProtocolCharacter &protocolCharacter
     protocolCharacter.bodyPosX = this->get_body_pos_X();
     protocolCharacter.bodyPosY = this->get_body_pos_Y();
     protocolCharacter.orientation = this->get_body_facing();
-    protocolCharacter.mana = this->get_mana();
-    protocolCharacter.max_mana = this->get_max_mana();
-    protocolCharacter.life = this->get_life();
-    protocolCharacter.max_life = this->get_max_life();
-    protocolCharacter.experience = this->get_current_experience();
-    protocolCharacter.max_experience = this->get_max_experience();
-    protocolCharacter.alive = this->is_alive();
-    protocolCharacter.meditating = this->is_meditating();   
-  
-    // protocolCharacter.otherPosX = 0;
-    // protocolCharacter.otherPosY = 0;
-    protocolCharacter.shieldId = this->current_shield();
-    protocolCharacter.weaponId = this->current_weapon();
+
     protocolCharacter.helmetId = this->current_helmet();
     protocolCharacter.armorId = this->current_armor();
-    // protocolCharacter.itemId = 0;
-    // protocolCharacter.potionId = 0;
+    protocolCharacter.weaponId = this->current_weapon();
+    protocolCharacter.shieldId = this->current_shield();
+    protocolCharacter.life = this->get_life();
+    protocolCharacter.max_life = this->get_max_life();
+
+    protocolCharacter.mana = this->get_mana();
+    protocolCharacter.max_mana = this->get_max_mana();
+    protocolCharacter.level = this->get_level();
+    protocolCharacter.experience = this->get_current_experience();
+    protocolCharacter.max_experience = this->get_max_experience();
+    protocolCharacter.gold = this->get_gold();
+    protocolCharacter.alive = this->is_alive();
+    protocolCharacter.meditating = this->is_meditating();   
 
     // std::cout << "MANDANDO ARMOR ID: " << (int) protocolCharacter.armorId << std::endl;
     // std::cout << "PROT CHARACTER ID " << (int) protocolCharacter.id << std::endl;

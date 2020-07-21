@@ -75,12 +75,18 @@ void ClientReceiverThread::process_move(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_deposit(ProtocolMessage &msg) {
     // update_gold_status()
+    int i = msg.find(msg.id_player);
+    if (i != -1) 
+        infoView.set_gold(msg.characters[i].gold);
     std::cout << "Depositando OK" << std::endl;
 }
 
 void ClientReceiverThread::process_withdraw(ProtocolMessage &msg) {
     // TODO: is the same for the deposit and withdraw -> make just One Method
     // update_gold_status()
+    int i = msg.find(msg.id_player);
+    if (i != -1) 
+        infoView.set_gold(msg.characters[i].gold);
     std::cout << "Retirando OK" << std::endl;
 }
 
@@ -196,6 +202,10 @@ void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
         delete item;
     }
 
+    int i = msg.find(msg.id_player);
+    if (i != -1) 
+        infoView.set_gold(msg.characters[i].gold);
+
     std::cout << "ITEMS DESPUES: " << world.items.size() << std::endl;
 }
 
@@ -216,7 +226,7 @@ void ClientReceiverThread::process_move_npcs(ProtocolMessage &msg) {
     world.update_npcs(msg);
     world.update_player_alive_status(msg);
     world.add_items(msg);
-    // update_bars(msg);
+    update_bars(msg);
 }
 
 void ClientReceiverThread::process_recover_characters(ProtocolMessage &msg) {
@@ -256,8 +266,10 @@ void ClientReceiverThread::update_bars(ProtocolMessage &msg) {
         this->infoView.set_life(msg.characters[i].life, msg.characters[i].max_life);
         this->infoView.set_mana(msg.characters[i].mana, msg.characters[i].max_mana);
         this->infoView.set_experience(msg.characters[i].experience, msg.characters[i].max_experience);
+        this->infoView.set_level(msg.characters[i].level);
     }
 }
+
 
 void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
     if (msg.id_player == this->player_id) {
@@ -269,6 +281,7 @@ void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
         std::cout << "BORRANDO OTRO JUGADOR" << std::endl;
     }
 }
+
 
 void ClientReceiverThread::print_response_info(ProtocolMessage &msg) {
     std::cout << "TAMANIO MUNDO: " << world.players.size() << std::endl;

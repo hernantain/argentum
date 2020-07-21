@@ -73,6 +73,16 @@ void Player::set_position(int16_t newBodyPosX, int16_t newBodyPosY, int orientat
 
 void Player::update_alive_status(bool alive) {
 	this->alive = alive;
+	if (!this->alive) {
+		this->equippedPlayer->setHelmet(NULL);
+		this->equippedPlayer->setShield(NULL);
+		this->equippedPlayer->setWeapon(NULL);
+		this->playerPicture->set_clothes(this->clothes[0]);
+		armorId = 0;
+		shieldId = 0;
+		weaponId = 0;
+		helmetId = 0;
+	}
 }
 
 
@@ -258,8 +268,6 @@ MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 		otherPosY = y + camera.y;
 		args.push_back(otherPosX);
 		args.push_back(otherPosY);
-		// std::cout << "CLICK EN: " << x + camera.x << " Y EN: " << y + camera.y << std::endl; 
-		// std::cout << "SIN CAMERA OFFSET - CLICK EN: " << x << " Y EN: " << y << std::endl; 
 	}
 
 	MessageToServer msg(

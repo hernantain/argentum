@@ -7,6 +7,8 @@
 
 #include "client_texture.h"
 
+#define DESACCELERATING_RATE 4
+
 class Ghost {
 
     LTexture bodyTexture;

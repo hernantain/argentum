@@ -37,19 +37,23 @@ void Ghost::render(int16_t bodyPosX, int16_t bodyPosY, SDL_Renderer* gRenderer, 
     SDL_Rect *currentClip, *headClip;
 	if (orientation == RIGHT) {
         headClip = &this->headOrientations[1];
-		currentClip = &this->rightOrientation[frame % rightOrientation.size()];
+        int it = frame % (rightOrientation.size() * DESACCELERATING_RATE);
+		currentClip = &this->rightOrientation[it / DESACCELERATING_RATE];
         
 	} else if(orientation == LEFT)  {
         headClip = &this->headOrientations[2];
-        currentClip = &this->leftOrientation[frame % leftOrientation.size()];
+        int it = frame % (leftOrientation.size() * DESACCELERATING_RATE);
+        currentClip = &this->leftOrientation[it / DESACCELERATING_RATE];
 	
     } else if(orientation == UP)  {
         headClip = &this->headOrientations[3];
-		currentClip = &this->backOrientation[frame % backOrientation.size()];
+        int it = frame % (backOrientation.size() * DESACCELERATING_RATE);
+		currentClip = &this->backOrientation[it / DESACCELERATING_RATE];
 	
     } else if(orientation == DOWN)  {
         headClip = &this->headOrientations[0];
-		currentClip = &this->frontOrientation[frame % frontOrientation.size()];
+        int it = frame % (frontOrientation.size() * DESACCELERATING_RATE);
+		currentClip = &this->frontOrientation[it / DESACCELERATING_RATE];
 
 	} else {
         headClip = &this->headOrientations[0];
