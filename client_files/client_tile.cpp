@@ -1,7 +1,6 @@
 
 #include "client_tile.h"
 
-#include <iostream>
 
 void Tile::render(TileInfo &tileInfo, SDL_Renderer* gRenderer, SDL_Rect &camera) {
     if (this->mType != 0) {

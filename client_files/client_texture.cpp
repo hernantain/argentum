@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <string>
 
-#include <iostream>
 #include "client_texture.h"
 
 LTexture::LTexture() {
@@ -14,8 +13,6 @@ LTexture::LTexture() {
 }
 
 LTexture::~LTexture() {
-	//Deallocate
-	std::cout << "FREE TEXTURE" << std::endl;
 	free();
 }
 
@@ -59,10 +56,8 @@ void LTexture::free() {
 
 
 void LTexture::render( int x, int y, SDL_Renderer* gRenderer, SDL_Rect* clip, SDL_RendererFlip flip) {
-	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
 
-	//Set clip rendering dimensions
 	if( clip != NULL ) {
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;

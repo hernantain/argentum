@@ -1,6 +1,4 @@
 
-#include <iostream>
-
 #include "client_weapon.h"
 #include "client_player.h"
 
@@ -9,7 +7,6 @@
 Weapon::Weapon(int offset) : offset(offset) {}
 
 Weapon::~Weapon() {
-	std::cout << "DESTRUYENDO WEAPON" << std::endl;
 	// weaponTexture.free();
 }
 

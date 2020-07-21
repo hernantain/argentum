@@ -1,6 +1,5 @@
 
 
-#include <iostream>
 #include <fstream>
 #include <jsoncpp/json/json.h>
 
@@ -45,26 +44,18 @@ CollisionInfo MapInfo::load() {
     const Json::Value& trees = layers[1]["data"];
     const Json::Value& bankersPos = obj["bankers"];
     const Json::Value& priestsPos = obj["priests"];
-
-    std::cout << "BANKERS POS X: " << bankersPos[0]["posX"].asInt() << std::endl;
-    std::cout << "PRIESTS POS X: " << priestsPos[0]["posX"].asInt() << std::endl;
     
     this->banker.push_back(bankersPos[0]["posX"].asInt());
     collisionInfo.banker.push_back(bankersPos[0]["posX"].asInt());
     
     this->priest.push_back(priestsPos[0]["posX"].asInt());
     collisionInfo.priest.push_back(priestsPos[0]["posX"].asInt());
-
-    std::cout << "BANKERS POS Y: " << bankersPos[0]["posY"].asInt() << std::endl;
-    std::cout << "PRIESTS POS Y: " << priestsPos[0]["posY"].asInt() << std::endl;
     
     this->banker.push_back(bankersPos[0]["posY"].asInt());
     collisionInfo.banker.push_back(bankersPos[0]["posY"].asInt());
     
     this->priest.push_back(priestsPos[0]["posY"].asInt());
     collisionInfo.priest.push_back(priestsPos[0]["posY"].asInt());
-
-
 
     std::string source;
     for (unsigned int i = 0; i < tilesets.size(); ++i) {

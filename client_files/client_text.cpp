@@ -1,8 +1,6 @@
 
 #include "client_text.h"
 
-#include <iostream>
-
 TextLabel::TextLabel(SDL_Renderer* gRenderer, std::string label, int size) {
     if (initMedia(gRenderer, label, size))
         this->gRenderer = gRenderer;
@@ -43,13 +41,11 @@ int TextLabel::getWidth() {
 
 
 void TextLabel::render(int x, int y) {
-    // std::cout << "PASA POR ACA" << std::endl;
     this->textTexture.render(x, y, gRenderer);
 }
 
 
 TextLabel::~TextLabel() {
-    std::cout <<"DESTROYED TEXT" << std::endl;
     // textTexture.free();
 	TTF_CloseFont(gFont);
 }

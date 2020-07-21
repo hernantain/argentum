@@ -21,11 +21,8 @@ void SenderThread::run() {
         pk.pack(msg);
         if (msg.event_id == PROTOCOL_LOG_OFF) {
             running = false;
-            std::cout << "MANDANDO ULTIMO MENSAJE" << std::endl;
         }
 
         this->skt << buffer;
     }
-
-    std::cout << "CERRANDO SENDERS QUEUE" << std::endl;
 }

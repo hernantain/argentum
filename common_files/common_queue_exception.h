@@ -1,7 +1,6 @@
 #ifndef _QUEUE_EXCEPTION
 #define _QUEUE_EXCEPTION
 
-#include <iostream>
 #include <exception>
 
 

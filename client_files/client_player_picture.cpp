@@ -1,5 +1,4 @@
 
-#include <iostream>
 #include "client_player.h"
 #include "client_player_picture.h"
 
@@ -122,6 +121,4 @@ void EquippedPlayer::render(
 }
 
 
-EquippedPlayer::~EquippedPlayer() {
-	std::cout << "Destruyendo EQUIPPED PLAYER" << std::endl;
-}
+EquippedPlayer::~EquippedPlayer() {}

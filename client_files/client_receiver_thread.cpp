@@ -36,7 +36,6 @@ void ClientReceiverThread::run() {
 
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
-    // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
     if (msg.id_message == PROTOCOL_MOVE_CONFIRM) this->process_move(msg);
     if (msg.id_message == PROTOCOL_DEPOSIT_CONFIRM) this->process_deposit(msg);
     if (msg.id_message == PROTOCOL_WITHDRAW_CONFIRM) this->process_withdraw(msg);
@@ -150,7 +149,6 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_equip_potion(ProtocolMessage &msg) {
-    std::cout << "POTION CONFIRM" << std::endl;
     update_bars(msg);
     if (msg.id_player == this->player_id) {
         uint8_t itemId = world.get_equipped_potion(this->player_id);
@@ -166,10 +164,8 @@ void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_create_player(ProtocolMessage &msg) {
     int i = msg.find(msg.id_player);
-    if (i != -1) {
-        std::cout << "HAY QUE CREAR OTRO PLAYER: " << msg.id_player << "EN POS: " << i << std::endl;
+    if (i != -1) 
         world.add_player(msg.characters[i]);
-    }
 }
 
 
@@ -180,26 +176,18 @@ void ClientReceiverThread::process_create_npc(ProtocolMessage &msg) {
 }
 
 void ClientReceiverThread::process_take_item(ProtocolMessage &msg) {
-    std::cout << "ITEMS ANTES: " << world.items.size() << std::endl;
     Item* item = world.update_items(msg);
     if (item == NULL) 
         return;
     
-    std::cout << "No es NULL" << std::endl;
-    if ((msg.id_player == this->player_id) && (item->get_id() != 20)) {
-        std::cout << "Agregando a infoview" << std::endl;        
+    if ((msg.id_player == this->player_id) && (item->get_id() != 20))         
         this->infoView.add_item(item);
-
-    } else { 
+    else 
         delete item;
-    }
 
     int i = msg.find(msg.id_player);
     if (i != -1) 
         infoView.set_gold(msg.characters[i].gold);
-
-    std::cout << "ITEMS DESPUES: " << world.items.size() << std::endl;
-    std::cout << std::endl;
 }
 
 void ClientReceiverThread::process_drop_item(ProtocolMessage &msg) {
@@ -262,8 +250,6 @@ void ClientReceiverThread::update_bars(ProtocolMessage &msg) {
 
 void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
     if (msg.id_player == this->player_id) {
-        // TEAR DOWN LOGIC
-        std::cout << "CERRANDO RECEIVERS THREAD" << std::endl;
         this->running = false;
     } else {
         world.remove_player(msg.id_player);

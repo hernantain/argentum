@@ -25,7 +25,7 @@
 #define HAMMER_IMAGE "media/images/icons/hammer_icon.png"
 #define CRIMP_STAFF_IMAGE "media/images/icons/baculo_engarzado_icon.png"
 #define GNARLED_STAFF_IMAGE "media/images/icons/baculo_nudoso_icon.png"
-#define ASH_STAFF_IMAGE "media/images/icons/vara_fesno_icon.png"
+#define ASH_STAFF_IMAGE "media/images/icons/vara_fresno_icon.png"
 #define SWORD_IMAGE "media/images/icons/sword_icon.png"
 #define GOLD_IMAGE "media/images/icons/gold_icon.png"
 

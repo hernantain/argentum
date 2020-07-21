@@ -13,7 +13,6 @@
 #include "client_ash_staff.h"
 #include "client_sword.h"
 #include "client_player.h"
-#include <iostream>
 
 #include "../common_files/common_message_to_server.h"
 
@@ -285,7 +284,6 @@ MessageToServer Player::handleEvent( SDL_Event& e, SDL_Rect &camera ) {
 MessageToServer Player::handleEquipEvent(int &itemId) {
 	std::vector<int16_t> args;
 	args.push_back(itemId);
-	std::cout << "EQUIPANDO ITEM ID: " << itemId << std::endl;
 	int16_t event_id = this->getEventId(itemId, args);
 	MessageToServer msg(
 		event_id, 
