@@ -1,6 +1,4 @@
 
-#include <iostream>
-
 #include "client_player.h"
 #include "client_elf.h"
 #include "client_human.h"
@@ -104,7 +102,6 @@ void ClientWorld::update_dead_npcs(ProtocolMessage &msg) {
         if(msg.find_npc(npc_id) != -1) {
             npc_itr++;
         } else {
-            std::cout << "Borrando un NPC: " << npc_itr->first << std::endl;
             delete this->npcs[npc_itr->first];
             npc_itr = this->npcs.erase(npc_itr);
         }
@@ -144,13 +141,9 @@ bool ClientWorld::item_in_world(ProtocolItem &item) {
 
 Item* ClientWorld::update_items(ProtocolMessage &msg) {
     std::unique_lock<std::mutex> lock(m);
-
-    std::cout << "LEN DE ITEMS MSG ES: " << msg.items.size() << std::endl;
-
     Item* removedItem = NULL;
     for (unsigned int i = 0; i < items.size(); ++i) {
         if (!this->item_exists(msg, i)) {
-            std::cout << "Voy a hacer clean" << std::endl;
             removedItem = this->cleanItems(i);
             break;
         }

@@ -1,7 +1,6 @@
 #define _POSIX_C_SOURCE 200112L
 
 #include <msgpack.hpp>
-#include <iostream>
 #include <utility>
 #include <stdio.h>
 #include <stdlib.h>

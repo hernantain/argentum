@@ -20,7 +20,6 @@ GameLoopThread::GameLoopThread(MessageToServerQueue &queue) : queue(queue), runn
 
 
 void GameLoopThread::run() {
-    std::cout << "GameLoopThread Running::" << std::endl;
     using namespace std::chrono;
     uint16_t npc_id = NPC_INITIAL_ID;
     int16_t npc_type = NPC_INITIAL_TYPE;

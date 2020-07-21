@@ -1,6 +1,7 @@
 #ifndef _CLIENT_GAME
 #define _CLIENT_GAME
 
+#include <jsoncpp/json/json.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -42,7 +43,7 @@ class Game {
 
 	Map loadMap(); 
 	ClientWorld loadWorld(InfoView &infoView, ItemViewer &itemViewer);
-
+	void connect();
 
 	public:
 		Game(uint8_t player_race, uint8_t player_class);

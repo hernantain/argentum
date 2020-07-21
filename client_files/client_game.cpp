@@ -1,9 +1,6 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <stdio.h>
-#include <string>
 #include <iostream>
 #include <chrono>
+#include <fstream>
 
 #include "client_game.h"
 #include "client_sender_thread.h"
@@ -102,12 +99,21 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 	return std::move(clientWorld); // MOVE SMTICS?
 }
 
-
+void Game::connect() {
+    std::ifstream file("client_files/client_config.json");
+	Json::Value config;
+    Json::Reader reader;
+    reader.parse(file, config);
+	skt.connect_to(config["host"].asCString(), config["port"].asCString());
+    file.close();
+}
 
 void Game::run() {
 	using namespace std::chrono;
 	SoundManager sm;
-	skt.connect_to("localhost", "8080");
+
+	connect();
+	// skt.connect_to("localhost", "8080");
 	skt >> this->player_id;
 	Map map = this->loadMap();
 

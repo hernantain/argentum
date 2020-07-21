@@ -14,89 +14,6 @@ ServerProcessorThread::ServerProcessorThread(
                             running(true) {}
 
 
-
-void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
-    Sword i(config);
-    i.set_posX(100);
-    i.set_posY(100);
-    i.set_amount(1);
-    world.items.push_back(i);
-
-    IronShield p(config);
-    p.set_posX(150);
-    p.set_posY(150);
-    p.set_amount(1);
-    world.items.push_back(p);
-
-    GnarledStaff j(config);
-    j.set_posX(200);
-    j.set_posY(200);
-    j.set_amount(1);
-    world.items.push_back(j);
-
-    GnarledStaff k(config);
-    k.set_posX(30);
-    k.set_posY(30);
-    k.set_amount(5);
-    world.items.push_back(k);
-
-    CrimpStaff z(config);
-    z.set_posX(50);
-    z.set_posY(50);
-    z.set_amount(1);
-    world.items.push_back(z);
-
-    Axe axe(config);
-    axe.set_posX(100);
-    axe.set_posY(200);
-    axe.set_amount(1);
-    world.items.push_back(axe);
-
-    Axe hammer(config);
-    hammer.set_posX(100);
-    hammer.set_posY(300);
-    hammer.set_amount(1);
-    world.items.push_back(hammer);
-
-    SimpleBow sb(config);
-    sb.set_posX(100);
-    sb.set_posY(400);
-    sb.set_amount(1);
-    world.items.push_back(sb);
-
-    Hood hood(config);
-    hood.set_posX(100);
-    hood.set_posY(500);
-    hood.set_amount(1);
-    world.items.push_back(hood);
-
-    PlateArmor armor(config);
-    armor.set_posX(300);
-    armor.set_posY(300);
-    armor.set_amount(1);
-    world.items.push_back(armor);
-
-    LifePotion shield(config);
-    shield.set_posX(200);
-    shield.set_posY(100);
-    shield.set_amount(1);
-    world.items.push_back(shield);
-
-    ManaPotion mana(config);
-    mana.set_posX(75);
-    mana.set_posY(75);
-    mana.set_amount(1);
-    world.items.push_back(mana);
-
-    LifePotion life(config);
-    life.set_posX(125);
-    life.set_posY(100);
-    life.set_amount(1);
-    world.items.push_back(life);
-}
-
-
-
 void ServerProcessorThread::run() {
 
     ProtocolTranslator protocol_translator(config, collisionInfo);
@@ -129,3 +46,120 @@ void ServerProcessorThread::run() {
     game_loop->join();
     delete game_loop;
 }
+
+
+
+
+void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
+
+    LeatherArmor leatherArmor(config);
+    leatherArmor.set_posX(100);
+    leatherArmor.set_posY(10);
+    leatherArmor.set_amount(1);
+    world.items.push_back(leatherArmor);
+
+    PlateArmor plateArmor(config);
+    plateArmor.set_posX(200);
+    plateArmor.set_posY(10);
+    plateArmor.set_amount(1);
+    world.items.push_back(plateArmor);
+
+    BlueRobe blueRobe(config);
+    blueRobe.set_posX(300);
+    blueRobe.set_posY(10);
+    blueRobe.set_amount(1);
+    world.items.push_back(blueRobe);
+
+    Hood hood(config);
+    hood.set_posX(400);
+    hood.set_posY(10);
+    hood.set_amount(1);
+    world.items.push_back(hood);
+
+    IronHelmet ironHelmet(config);
+    ironHelmet.set_posX(500);
+    ironHelmet.set_posY(10);
+    ironHelmet.set_amount(1);
+    world.items.push_back(ironHelmet);
+
+    MagicHat magicHat(config);
+    magicHat.set_posX(600);
+    magicHat.set_posY(10);
+    magicHat.set_amount(1);
+    world.items.push_back(magicHat);
+
+    TortoiseShield tortoiseShield(config);
+    tortoiseShield.set_posX(700);
+    tortoiseShield.set_posY(10);
+    tortoiseShield.set_amount(1);
+    world.items.push_back(tortoiseShield);
+
+    IronShield ironShield(config);
+    ironShield.set_posX(800);
+    ironShield.set_posY(10);
+    ironShield.set_amount(1);
+    world.items.push_back(ironShield);
+
+    Sword sword(config);
+    sword.set_posX(900);
+    sword.set_posY(10);
+    sword.set_amount(1);
+    world.items.push_back(sword);
+
+    Axe axe(config);
+    axe.set_posX(1000);
+    axe.set_posY(10);
+    axe.set_amount(1);
+    world.items.push_back(axe);
+
+    Hammer hammer(config);
+    hammer.set_posX(100);
+    hammer.set_posY(90);
+    hammer.set_amount(1);
+    world.items.push_back(hammer);
+
+    AshStaff ashStaff(config);
+    ashStaff.set_posX(200);
+    ashStaff.set_posY(90);
+    ashStaff.set_amount(1);
+    world.items.push_back(ashStaff);
+
+    GnarledStaff gnarledStaff(config);
+    gnarledStaff.set_posX(300);
+    gnarledStaff.set_posY(90);
+    gnarledStaff.set_amount(5);
+    world.items.push_back(gnarledStaff);
+
+    CrimpStaff crimpStaff(config);
+    crimpStaff.set_posX(400);
+    crimpStaff.set_posY(90);
+    crimpStaff.set_amount(1);
+    world.items.push_back(crimpStaff);
+
+    SimpleBow sb(config);
+    sb.set_posX(500);
+    sb.set_posY(90);
+    sb.set_amount(1);
+    world.items.push_back(sb);
+
+    CompoundBow cb(config);
+    cb.set_posX(600);
+    cb.set_posY(90);
+    cb.set_amount(1);
+    world.items.push_back(cb);
+
+    LifePotion life(config);
+    life.set_posX(700);
+    life.set_posY(90);
+    life.set_amount(1);
+    world.items.push_back(life);
+
+    ManaPotion mana(config);
+    mana.set_posX(800);
+    mana.set_posY(90);
+    mana.set_amount(1);
+    world.items.push_back(mana);
+}
+
+
+

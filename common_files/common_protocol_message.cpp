@@ -1,5 +1,4 @@
 
-#include <iostream>
 #include <utility>
 #include "common_protocol_message.h"
 
@@ -33,7 +32,6 @@ ProtocolMessage::ProtocolMessage() {}
 
 
 ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
-    // std::cout << "Constructor por movimiento" << std::endl;
     this->id_message = other.id_message;
     this->id_player = other.id_player;
     this->characters = other.characters;
@@ -42,7 +40,6 @@ ProtocolMessage::ProtocolMessage(ProtocolMessage&& other) {
 }
 
 ProtocolMessage& ProtocolMessage::operator=(ProtocolMessage&& other) {
-    // std::cout << "Asignando por movimiento" << std::endl;
     this->id_message = other.id_message;
     this->id_player = other.id_player;
     this->characters = other.characters;
