@@ -38,5 +38,13 @@ void Item::add_amount() {
     this->amount++;
 }
 
+void Item::decrease_amount() {
+    this->amount--;
+}
+
+int16_t Item::get_amount() const {
+    return this->amount;
+}
+
 
 Item::~Item() {}

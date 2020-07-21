@@ -82,6 +82,8 @@ void Player::update_alive_status(bool alive) {
 		shieldId = 0;
 		weaponId = 0;
 		helmetId = 0;
+		potionId = 0;
+		itemId = 0;
 	}
 }
 
@@ -317,6 +319,10 @@ void Player::getPosArgs(std::vector<int16_t> &args) {
 
 uint8_t Player::getDroppedItem() const {
 	return this->itemId;
+}
+
+uint8_t Player::getEquippedPotion() const {
+	return this->potionId;
 }
 
 

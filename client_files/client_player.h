@@ -59,6 +59,7 @@ class Player: public Drawable {
 
         uint16_t getId() const;
         uint8_t getDroppedItem() const;
+        uint8_t getEquippedPotion() const;
 
         virtual ~Player();
 

@@ -105,9 +105,8 @@ ClientWorld Game::loadWorld(InfoView &infoView, ItemViewer &itemViewer) {
 
 
 void Game::run() {
-	SoundManager sm;
 	using namespace std::chrono;
-
+	SoundManager sm;
 	skt.connect_to("localhost", "8080");
 	skt >> this->player_id;
 	Map map = this->loadMap();

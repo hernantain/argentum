@@ -1,42 +1,19 @@
 
+#include <iostream>
 #include "client_banker.h"
 
-#include <iostream>
-
-// Banker::Banker() {
-//     this->gRenderer = NULL;
-//     this->posX = 0;
-//     this->posY = 0;
-// }
-
-
-// void Banker::load(SDL_Renderer* gRenderer, int posX, int posY) {
-//     if(!this->bankerTexture.loadFromFile("media/images/banker.png", gRenderer)) {
-// 		std::cout << "Failed to load banker texture!\n" << std::endl;
-// 	}
-//     this->gRenderer = gRenderer;
-//     this->posX = posX;
-//     this->posY = posY;
-//     this->bankerClip = {0, 0, 24, 45};    
-// }
 
 Banker::Banker(SDL_Renderer* gRenderer) {
     this->gRenderer = gRenderer;
     if(!this->bankerTexture.loadFromFile("media/images/banker.png", gRenderer)) {
 		std::cout << "Failed to load banker texture!\n" << std::endl;
 	}
-    std::cout << "construyendo banker" << std::endl;
-
     this->posX = 0;
     this->posY = 0;
 }
 
 
 void Banker::load(int posX, int posY) {
-    // if(!this->bankerTexture.loadFromFile("media/images/banker.png", gRenderer)) {
-	// 	std::cout << "Failed to load banker texture!\n" << std::endl;
-	// }
-    // this->gRenderer = gRenderer;
     this->posX = posX;
     this->posY = posY;
     this->bankerClip = {0, 0, 24, 45};    
@@ -49,10 +26,7 @@ void Banker::render(SDL_Rect &camera) {
 }
 
 
-Banker::~Banker() {
-    std::cout << "DESTRUYENDO BANKER" << std::endl;
-    //bankerTexture.free();
-}
+Banker::~Banker() {}
 
 
 Banker::Banker(Banker&& other) {

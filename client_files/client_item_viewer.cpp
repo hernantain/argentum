@@ -1,6 +1,5 @@
 
 #include "client_item_viewer.h"
-#include <iostream>
 
 ItemViewer::ItemViewer(SDL_Renderer* gRenderer) {
     this->gRenderer = gRenderer;
@@ -111,7 +110,6 @@ LTexture* ItemViewer::get_item_icon(uint8_t id) {
 
 
 ItemViewer::~ItemViewer() {
-    std::cout << "Destroying Item Viewer" << std::endl;
     std::map<uint8_t, LTexture*>::iterator itr;
     for (itr = items.begin(); itr != items.end(); ++itr)  
         itr->second->free();

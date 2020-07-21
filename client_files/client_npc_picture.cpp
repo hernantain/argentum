@@ -1,4 +1,4 @@
-#include <iostream>
+
 
 #include "client_npc_picture.h"
 
@@ -18,6 +18,5 @@ NpcPicture::NpcPicture(SDL_Renderer* gRenderer) {
 }
 
 NpcPicture::~NpcPicture() {
-    std::cout << "Destruyendo NPC" << std::endl;
-    npcTexture.free();
+    // npcTexture.free();
 }

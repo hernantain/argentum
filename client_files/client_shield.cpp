@@ -8,7 +8,7 @@ Shield::Shield(int offset) : offset(offset) {}
 
 Shield::~Shield() {
 	std::cout << "Destruyendo SHIELD" << std::endl;
-	shieldTexture.free();
+	// shieldTexture.free();
 }
 
 

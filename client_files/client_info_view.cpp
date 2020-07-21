@@ -1,8 +1,6 @@
 
-#include <iostream>
-
 #include "client_info_view.h"
-
+#include <iostream>
 
 InfoView::InfoView(
     SDL_Renderer* gRenderer, 
@@ -182,11 +180,31 @@ void InfoView::dropItem(uint8_t &itemId) {
 }
 
 
+void InfoView::decreaseItem(uint8_t &itemId) {
+    std::unique_lock<std::mutex> lock(this->m);
+    for (unsigned int i = 0; i < items.size(); ++i) {
+        uint8_t id = items[i]->get_id();
+        if (id != itemId)
+            continue;
+
+        int16_t amount = items[i]->get_amount();
+        if (amount == 1) {
+            std::cout << "ES SOLO UNA" << std::endl;
+            this->cleanItems(i);
+        } else { 
+            items[i]->decrease_amount();
+            std::cout << "BAJANDO EN UNA LA AMOUNT" << std::endl;
+        }
+    }
+}
+
+
 void InfoView::cleanItems(unsigned int i) {
     std::vector<Item*> tmp;
     for (unsigned int j = 0; j < items.size(); ++j) {
         if (j == i) {
             delete items[j];
+            std::cout << "BOrrando" << std::endl;
             continue;
         }
 
