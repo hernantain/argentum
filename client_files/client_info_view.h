@@ -80,6 +80,7 @@ class InfoView {
         int handle_click(int &x, int &y);
         int handleDrop(int &x, int &y);
         void dropItem(uint8_t &itemId);
+        void decreaseItem(uint8_t &itemId);
 
         void render();
         void adjust();

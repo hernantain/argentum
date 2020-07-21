@@ -37,7 +37,6 @@ void ClientReceiverThread::run() {
 
 void ClientReceiverThread::process_response(ProtocolMessage &msg) {
     // std::cout << "PROCESANDO RESPUESTA: " << msg.id_message << std::endl;
-    // print_response_info(msg);
     if (msg.id_message == PROTOCOL_MOVE_CONFIRM) this->process_move(msg);
     if (msg.id_message == PROTOCOL_DEPOSIT_CONFIRM) this->process_deposit(msg);
     if (msg.id_message == PROTOCOL_WITHDRAW_CONFIRM) this->process_withdraw(msg);
@@ -153,6 +152,10 @@ void ClientReceiverThread::process_equip_weapon(ProtocolMessage &msg) {
 void ClientReceiverThread::process_equip_potion(ProtocolMessage &msg) {
     std::cout << "POTION CONFIRM" << std::endl;
     update_bars(msg);
+    if (msg.id_player == this->player_id) {
+        uint8_t itemId = world.get_equipped_potion(this->player_id);
+        infoView.decreaseItem(itemId);
+    }
 }
 
 void ClientReceiverThread::process_meditation(ProtocolMessage &msg) {
@@ -267,23 +270,3 @@ void ClientReceiverThread::process_log_off(ProtocolMessage &msg) {
     }
 }
 
-
-void ClientReceiverThread::print_response_info(ProtocolMessage &msg) {
-    std::cout << "TAMANIO MUNDO: " << world.players.size() << std::endl;
-    for (unsigned int i = 0; i < msg.characters.size(); ++i) {
-        std::cout << "PROT CHARACTER ID " << (int) msg.characters[i].id << std::endl;
-        std::cout << "PROT CHARACTER ID RACE " << (int) msg.characters[i].id_race << std::endl;
-        std::cout << "PROT CHARACTER ID CLASE " << (int) msg.characters[i].id_class << std::endl;
-        std::cout << "PROT CHARACTER bodyposX " << (int) msg.characters[i].bodyPosX << std::endl;
-        std::cout << "PROT CHARACTER bodyposY " << (int) msg.characters[i].bodyPosY << std::endl;
-        std::cout << "PROT CHARACTER ORIENTAT " << (int) msg.characters[i].orientation << std::endl;
-        std::cout << "PROT CHARACTER MANA " << (int) msg.characters[i].mana << std::endl;
-        std::cout << "PROT CHARACTER MAX_MANA " << (int) msg.characters[i].max_mana << std::endl;
-        std::cout << "PROT CHARACTER LIFE " << (int) msg.characters[i].life << std::endl;
-        std::cout << "PROT CHARACTER MAX_LIFE " << (int) msg.characters[i].max_life << std::endl;
-        std::cout << "PROT CHARACTER EXPERIEN " << (int) msg.characters[i].experience << std::endl;
-        std::cout << "PROT CHARACTER MAX EXP " << (int) msg.characters[i].max_experience << std::endl;
-        std::cout << "PROT CHARACTER ALIVE " << (int) msg.characters[i].alive << std::endl;
-        std::cout << std::endl;
-    }
-}

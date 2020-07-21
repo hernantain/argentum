@@ -7,9 +7,6 @@
 
 Picture::~Picture() {}
 
-/**
- * PlayerPicture
- */
 
 PlayerPicture::PlayerPicture(SDL_Renderer* gRenderer, const char* head_path) {
     this->load_pictures(gRenderer, head_path); 
@@ -80,8 +77,7 @@ void PlayerPicture::render(int bodyPosX, int bodyPosY, int headPosX, int headPos
 
 
 PlayerPicture::~PlayerPicture() {
-	std::cout << "Destruyendo PLAYER PICTURE" << std::endl;
-	headTexture.free();
+	// headTexture.free();
 }
 
 

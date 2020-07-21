@@ -240,6 +240,12 @@ uint8_t ClientWorld::get_dropped_item(uint16_t &id) {
     return player->getDroppedItem();
 }
 
+uint8_t ClientWorld::get_equipped_potion(uint16_t &id) {
+    std::unique_lock<std::mutex> lock(m);
+    Player* player = players[id];
+    return player->getEquippedPotion();
+}
+
 
 // REMOVE PLAYER
 

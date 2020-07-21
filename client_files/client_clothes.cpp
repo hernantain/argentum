@@ -1,6 +1,4 @@
 
-#include <iostream>
-
 #include "client_clothes.h"
 #include "client_player.h"
 
@@ -38,8 +36,7 @@ void Clothes::render(int &bodyPosX, int &bodyPosY, SDL_Renderer* gRenderer, int 
 
 
 Clothes::~Clothes() {
-	std::cout << "DESTROYING CLOTHES" << std::endl;
-	bodyTexture.free();
+	// bodyTexture.free();
 }
 
 

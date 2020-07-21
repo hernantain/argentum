@@ -1,7 +1,6 @@
 
 #include "client_map.h"
 
-#include <iostream>
 #include <fstream>
 #include <jsoncpp/json/json.h>
 

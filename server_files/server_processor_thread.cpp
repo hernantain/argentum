@@ -76,7 +76,7 @@ void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
     armor.set_amount(1);
     world.items.push_back(armor);
 
-    TortoiseShield shield(config);
+    LifePotion shield(config);
     shield.set_posX(200);
     shield.set_posY(100);
     shield.set_amount(1);

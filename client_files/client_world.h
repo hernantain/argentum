@@ -64,6 +64,7 @@ struct ClientWorld {
     MessageToServer player_handle_drop_event(uint16_t &player_id, int &itemId);
 
     uint8_t get_dropped_item(uint16_t &id);
+    uint8_t get_equipped_potion(uint16_t &id);
 
     ClientWorld(ClientWorld&& other);
     ClientWorld& operator=(ClientWorld&& other);
