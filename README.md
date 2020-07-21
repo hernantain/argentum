@@ -130,6 +130,7 @@ Para poder jugar al Argentum se utilizarán las siguientes teclas:
 * a-> toma un item del suelo si se encuentra debajo nuestro
 * d-> deposita el oro del personaje en el banco en caso de que se encuentre un banquero próximo al personaje.
 * s-> retira el oro del personaje del banco en caso de que se encuentre un banquero próximo al personaje.
+* 0-> activa y desactiva la música.
 
 
 
