@@ -43,6 +43,12 @@ void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
     j.set_amount(1);
     world.items.push_back(j);
 
+    GnarledStaff k(config);
+    k.set_posX(30);
+    k.set_posY(30);
+    k.set_amount(5);
+    world.items.push_back(k);
+
     CrimpStaff z(config);
     z.set_posX(50);
     z.set_posY(50);

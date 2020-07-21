@@ -251,6 +251,7 @@ void InfoView::add_item(Item* item) {
         if (items[i]->get_id() == item->get_id()) {
             this->items[i]->add_amount();
             delete item;
+            return;
         }
     }
     this->items.push_back(item);

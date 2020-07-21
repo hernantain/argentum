@@ -12,6 +12,7 @@
 #define INITIAL_LEVEL 1
 #define LOW_CONSTANT_EXP 0
 #define HIGH_CONSTANT_EXP 10
+#define NPC_INITIAL_ID 100
 
 Character::Character(uint16_t id, Json::Value &config, CharacterClass character_class, Race race, CollisionInfo &collisionInfo) : 
     config(config),
@@ -275,17 +276,18 @@ bool Character::is_safe() const {
 }
 
 bool Character::fairplay(const Attackable& other) const {
-    int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
-    if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) {
-        return false;
+    if (other.get_id() >= NPC_INITIAL_ID) {
+        std::cout << "No pasa nada soy NPC" << std::endl;
+        return true;
     }
+    std::cout << "Paso il fairplay" << std::endl;
+    int max_lvl_diff = config["maxAttackLvlDiff"].asInt();
+    if (is_newbie() || other.is_newbie() || std::abs(level - other.get_level()) > max_lvl_diff) return false;
     return true;
 }
 
 bool Character::attack_zone(const Attackable& other) const {
-    if (is_safe() || other.is_safe()) {
-        return false;
-    }
+    if (is_safe() || other.is_safe()) return false;
     return true;
 }
 
@@ -303,11 +305,10 @@ bool Character::is_critical() const {
 }
 
 bool Character::can_attack(const Attackable& other) const {
-    if(!alive || !other.is_alive()) {
-        return false;
-    }
+    if(!alive || !other.is_alive()) return false;
+    std::cout << "Pre fairplay" << std::endl;
     if(!fairplay(other) || !attack_zone(other)) return false;
-    if (!attack_zone(other)) return false;
+    std::cout << "Llega??" << std::endl;
     if (!equipment.is_weapon_ranged()) {
         int posX = other.get_body_pos_X();
         int posY = other.get_body_pos_Y();
