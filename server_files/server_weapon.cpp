@@ -1,7 +1,6 @@
 #include "server_weapon.h"
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
 
 #define NO_MANA_CONSUMPTION 0
 #define DEFAULT_DAMAGE 0

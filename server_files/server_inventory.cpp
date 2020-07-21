@@ -1,5 +1,4 @@
 #include "server_inventory.h"
-#include <iostream>
 
 #define DROP_OFFSET_TOLERANCE 30
 #define NOT_FOUND -1
@@ -38,7 +37,6 @@ Item Inventory::drop_item(const uint8_t id) {
     for (; it != items.end(); ++it) {
         if (it->get_id() == id) {
             drop_item = (*it);
-            std::cout << "Inventory::Deleting Item::" << drop_item.get_name() << std::endl;
             continue;
         }
         tmp.push_back(*it);
@@ -69,12 +67,10 @@ void Inventory::drop_items(int16_t posX, int16_t posY, int gold, std::vector<Ite
     }
     items.clear();
     drop_gold(posX, posY, gold, worldItems);
-    std::cout << "InventorySize::ShouldBe0:: " << items.size() << std::endl;
 }
 
 void Inventory::drop_gold(int16_t posX, int16_t posY, int gold, std::vector<Item> &worldItems) {
     if (gold > 0) {
-        std::cout << "Inventory::DroppingGold:: " << gold << std::endl;
         Gold to_drop(gold);
         to_drop.set_posX(posX - 2 * DROP_OFFSET_TOLERANCE);
         to_drop.set_posY(posY - 2 * DROP_OFFSET_TOLERANCE);
@@ -86,20 +82,16 @@ bool Inventory::has(const int16_t id) {
     if (id == DEFAULT_EQUIPMENT) return true;
     std::vector<Item>::iterator it = items.begin();
     for (; it != items.end(); ++it) {
-        if (it->get_id() == id) {
-            std::cout << "Inventory::ItemFound" << std::endl;
+        if (it->get_id() == id) 
             return true;
-        }
     }
     return false;
 }
 
 int Inventory::find(const int16_t id) const {
     for (unsigned int i = 0; i < items.size(); i++) {
-        if (items[i].get_id() == id) {
-            std::cout << "Inventory::ItemFound" << std::endl;
+        if (items[i].get_id() == id) 
             return i;
-        }
     }
     return NOT_FOUND;
 }

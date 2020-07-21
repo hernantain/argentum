@@ -6,6 +6,10 @@
 #include "server_shield.h"
 #include "server_helmet.h"
 #include "server_item.h"
+#include "server_default_armor.h"
+#include "server_default_shield.h"
+#include "server_default_helmet.h"
+#include "server_default_weapon.h"
 
 /* Clase que representa a un item del juego */
 class Equipment {
@@ -18,6 +22,9 @@ private:
 public:
     // Contructor
     Equipment();
+
+    // Initializer of equipment
+    void initialize_equipment();
 
     // Equipa un arma al personaje
     void equip_weapon(Weapon& item);

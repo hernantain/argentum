@@ -22,10 +22,8 @@ int main(int argc, char* argv[]) {
 
         return SUCCESS;
     } catch (const std::exception(&e)) {
-        std::cout << e.what() << std::endl;
         return ERROR;
     } catch (...) {
-        std::cout << "Ocurrió un problema" << std::endl;
         return ERROR;
     }
 }

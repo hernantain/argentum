@@ -66,6 +66,9 @@ public:
     // Booleano devuelve verdadero si esta vivo el NPC
     bool is_alive() const;
 
+    // Booleano devuelve verdadero si es NPC
+    bool is_npc() const;
+
     bool is_newbie() const;
 
     // Le quita vida al personaje

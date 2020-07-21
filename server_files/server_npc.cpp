@@ -1,5 +1,4 @@
 #include <math.h>
-#include <iostream>
 #include <stdio.h>
 #include "server_npc.h"
 
@@ -50,6 +49,10 @@ bool NPC::is_newbie() const {
     return false;
 }
 
+bool NPC::is_npc() const {
+    return true;
+}
+
 void NPC::drop_items(std::vector<Item> &worldItems) {
     int nothing_percentage = config["npc"]["nothing_drop_probability"].asFloat() * 100;
     int gold_percentage = config["npc"]["gold_drop_probability"].asFloat() * 100;
@@ -72,14 +75,11 @@ void NPC::drop_items(std::vector<Item> &worldItems) {
     drop_item.set_posX(get_body_pos_X());
     drop_item.set_posY(get_body_pos_Y());
     worldItems.push_back(drop_item);
-    std::cout << "NPC::DroppingItem ID::" << drop_item.get_id() << std::endl;    
 }
 
 void NPC::drop_gold(Item &drop_item, int gold) const {
     if(gold == NO_GOLD) gold++;
-    std::cout << "Im going to drop Gold: " << gold << std::endl;
     drop_item = ItemFactory::make_gold(gold);
-    std::cout << "NPC::DroppingItem::" << drop_item.get_name() << std::endl;
 }
 
 void NPC::drop_potion(Item &drop_item) const {
@@ -96,7 +96,6 @@ void NPC::drop_potion(Item &drop_item) const {
 void NPC::drop_random_item(Item &drop_item) const {
     int16_t random_item_id = rand() % MAX_ITEM_ID + 1;
     drop_item = ItemFactory::make_item(random_item_id, config);
-    std::cout << "NPC::DroppingItem::" << drop_item.get_name() << std::endl;
 }
 
 int NPC::gold_drop() const {
@@ -121,36 +120,26 @@ bool NPC::is_safe() const {
 }
 
 bool NPC::attack_zone(const Attackable& other) const {
-    if (is_safe() || other.is_safe()) {
-        std::cout << "SafeZone::Your or your rival are on safe zone" << std::endl;
-        return false;
-    }
+    if (is_safe() || other.is_safe()) return false;
     return true;
 }
 
 bool NPC::can_attack(const Attackable& other) const {
-    if(!alive || !other.is_alive()) {
-        std::cout << "NPC::CantAttack::Vos o el esta muerto" << std::endl;
-        return false;
-    }
+    if(!alive || !other.is_alive())  return false;
     if(!attack_zone(other)) return false;
     int posX = other.get_body_pos_X();
     int posY = other.get_body_pos_Y();
-    std::cout << "NPC::other posX: " << posX << std::endl;
-    std::cout << "NPC::other posY: " << posY << std::endl;
     return movement.is_near(posX, posY);
 }
 
 void NPC::attack(Attackable& other) {
     if(!can_attack(other)) return;
     int damage = get_damage();
-    std::cout << "AtaqueNPC::Dano:: " << damage << std::endl;
     other.defense(damage);
 }
 
 int NPC::defense(const int damage) {
     int defense = get_defense();
-    std::cout << "Defensa:: " << defense << std::endl;
     if (damage <= defense) return NO_DAMAGE;
     int final_damage = damage - defense;
     take_off_life(final_damage);

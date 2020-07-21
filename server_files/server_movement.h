@@ -26,9 +26,6 @@ private:
     Movement& operator=(const Movement&) = delete;
 
 public:
-    // Constructor.
-    // explicit Movement();
-
     Movement(CollisionInfo &collisionInfo);
 
     // Devuelve un int indicando la posicion en X del cuerpo.
@@ -111,8 +108,10 @@ public:
     // Chequea las colisiones estaticas contra el mapa del personaje
     bool check_map_collision() const;
 
+    // Chequea las colisiones estaticas contra los banqueros del mapa
     bool banker_collision() const;
 
+    // Chequea las colisiones estaticas contra los sacerdotes del mapa
     bool priest_collision() const;
 };
 

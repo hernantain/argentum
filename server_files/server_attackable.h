@@ -14,6 +14,7 @@ private:
     virtual bool can_attack(const Attackable& other) const = 0;
 
 public:
+    virtual bool is_npc() const = 0;
     virtual bool is_safe() const = 0;
     virtual bool is_newbie() const = 0;
     virtual bool is_alive() const = 0;

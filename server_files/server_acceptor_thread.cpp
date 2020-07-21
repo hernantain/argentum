@@ -1,6 +1,3 @@
-
-#include <iostream>
-
 #include "server_acceptor_thread.h"
 #include "server_processor_thread.h"
 
@@ -31,8 +28,6 @@ void AcceptorThread::run() {
     msgpack::packer<msgpack::sbuffer> pk(&mapBuffer);
     pk.pack(mapInfo);
 
-
-    // PROCCESSOR THREAD
     Thread* processorThread = new ServerProcessorThread(receiversQueue, clientManager, collisionInfo, config);
     processorThread->start(); 
 
@@ -42,7 +37,6 @@ void AcceptorThread::run() {
         if (socket_not_valid(client_skt))
             break;
             
-        std::cout << "SOCKET FD: " << client_skt.fd << std::endl;
         client_skt << this->client_id;
         client_skt << mapBuffer;
 

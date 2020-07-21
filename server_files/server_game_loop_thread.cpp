@@ -14,7 +14,7 @@
 #define NPC_INITIAL_TYPE 1
 #define MAX_NPC_TYPES 4
 #define NPC_CREATION_ITERATION 3
-
+#define CHARACTER_UPDATE_ITERATION 2
 
 GameLoopThread::GameLoopThread(MessageToServerQueue &queue) : queue(queue), running(true) {}
 
@@ -51,8 +51,6 @@ void GameLoopThread::run() {
 		initial += rate;
 		iteration++;
     }
-
-    std::cout << "CERRANDO GAME LOOP" << std::endl;
 }
 
 void GameLoopThread::update_game(int iteration, uint16_t npc_id, int16_t npc_type) {
@@ -63,14 +61,16 @@ void GameLoopThread::update_game(int iteration, uint16_t npc_id, int16_t npc_typ
         MessageToServer npc_creation(PROTOCOL_CREATE_NPC, npc_id, args);
         queue.push(npc_creation);
     }
+    // Every 2 seconds
+    if (iteration % CHARACTER_UPDATE_ITERATION == 0) {
+        std::vector<int16_t> character_args;
+        MessageToServer characters_update(PROTOCOL_UPDATE_CHARACTERS, -1, character_args);
+        queue.push(characters_update);
+    }
     // Every second
     std::vector<int16_t> npc_args;
     MessageToServer npc_update(PROTOCOL_UPDATE_NPCS, -1, npc_args);
     queue.push(npc_update);
-    // Every second
-    std::vector<int16_t> character_args;
-    MessageToServer characters_update(PROTOCOL_UPDATE_CHARACTERS, -1, character_args);
-    queue.push(characters_update);
 }
 
 

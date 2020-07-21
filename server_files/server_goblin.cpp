@@ -1,5 +1,3 @@
-#include <math.h>
-#include <iostream>
 #include "server_goblin.h"
 
 Goblin::Goblin(Json::Value &config, CollisionInfo &collisionInfo) : NPC(config, collisionInfo) {

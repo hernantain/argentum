@@ -1,16 +1,7 @@
-#include <iostream>
 
 #include "server_game_loop_thread.h"
 #include "server_processor_thread.h"
 #include "../common_files/common_mapinfo.h"
-
-#include "server_sword.h"
-#include "server_gnarled_staff.h"
-#include "server_mana_potion.h"
-#include "server_life_potion.h"
-#include "server_iron_shield.h"
-#include "server_banker.h"
-#include "server_priest.h"
 
 ServerProcessorThread::ServerProcessorThread(
     MessageToServerQueue &receiversQueue,
@@ -42,6 +33,12 @@ void ServerProcessorThread::addingHardcodedItems(ServerWorld &world) {
     j.set_posY(200);
     j.set_amount(1);
     world.items.push_back(j);
+
+    GnarledStaff k(config);
+    k.set_posX(30);
+    k.set_posY(30);
+    k.set_amount(5);
+    world.items.push_back(k);
 
     CrimpStaff z(config);
     z.set_posX(50);
@@ -112,9 +109,9 @@ void ServerProcessorThread::run() {
     serverWorld.add(priest);
 
     GameLoopThread* game_loop = new GameLoopThread(receiversQueue);
-    game_loop->start();  // NPC THREAD
+    game_loop->start();
 
-    this->addingHardcodedItems(serverWorld); // HAY QUE SACAR
+    this->addingHardcodedItems(serverWorld); // This might be deleted
     
     while (running) {
         ProtocolMessage client_response;
@@ -125,7 +122,6 @@ void ServerProcessorThread::run() {
             this->clientManager.broadcastMessage(client_response);
         } catch (QueueNotOperatingException& e) {
             this->running = false;
-            std::cout << "Exception en el Processor thread !" << std::endl;
         }
     }
 

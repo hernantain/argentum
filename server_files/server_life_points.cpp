@@ -1,5 +1,4 @@
 #include "server_life_points.h"
-#include <iostream>
 
 #define INITIAL_LEVEL 1
 
